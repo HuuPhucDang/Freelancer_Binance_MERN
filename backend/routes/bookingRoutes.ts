@@ -1,6 +1,13 @@
-import express from 'express';
-import { getAll, newBooking, checkRoomIsAvailble, getBookedDates, myBookings, deleteBooking } from '../controllers/bookingController';
-import { protect, admin } from '../middlewares/authMiddleware';
+import express from "express";
+import {
+  getAll,
+  newBooking,
+  checkRoomIsAvailble,
+  getBookedDates,
+  myBookings,
+  deleteBooking,
+} from "../controllers/bookingController";
+import { protect, admin } from "../middlewares/authMiddleware";
 
 const router = express.Router();
 
