@@ -10,7 +10,6 @@ const NotFound = () => {
         justifyContent: 'center',
         alignItems: 'center',
         my: { xs: '3em', md: '5em' },
-        fontFamily: 'Plus Jakarta Sans',
       }}
     >
       <Helmet>
@@ -66,7 +65,6 @@ const NotFound = () => {
           textAlign="center"
           fontSize={{ xs: '16px', md: '24px' }}
           fontWeight={400}
-          fontFamily="Plus Jakarta Sans"
           marginTop={{
             xs: '12px',
             md: '29px',

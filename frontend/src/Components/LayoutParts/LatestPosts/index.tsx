@@ -13,7 +13,6 @@ const LatestPosts: React.FC = () => {
     <Stack direction="column" marginTop={{ xs: '16px', md: '20px' }}>
       <Typography
         sx={{
-          fontFamily: 'inherit',
           fontWeight: 400,
           fontSize: { md: 18, xs: 14 },
           lineHeight: '26px',
@@ -23,7 +22,6 @@ const LatestPosts: React.FC = () => {
       </Typography>
       <Typography
         sx={{
-          fontFamily: 'Plus Jakarta Sans',
           fontWeight: 500,
           fontSize: { xs: 10, md: 12 },
           lineHeight: '20px',
@@ -41,7 +39,6 @@ const LatestPosts: React.FC = () => {
     <Stack
       flexDirection="column"
       sx={{
-        fontFamily: 'Merriweather',
         background: '#F9F9F9',
         borderRadius: 2,
         padding: {
@@ -56,7 +53,6 @@ const LatestPosts: React.FC = () => {
     >
       <Typography
         sx={{
-          fontFamily: 'inherit',
           fontWeight: 700,
           fontSize: { xs: 16, md: 24 },
           lineHeight: '30px',
@@ -69,7 +65,6 @@ const LatestPosts: React.FC = () => {
       {_renderItem()}
       <Typography
         sx={{
-          fontFamily: 'Plus Jakarta Sans',
           fontWeight: 600,
           fontSize: 14,
           lineHeight: '24px',

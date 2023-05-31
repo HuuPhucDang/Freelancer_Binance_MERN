@@ -1,12 +1,7 @@
 body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  content-visibility: auto;
-  contain-intrinsic-size: 1px 5000px;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
 }
-.alice-carousel__dots-item:not(.__custom):hover,
-.alice-carousel__dots-item:not(.__custom).__active {
-  background: black!important;
+
+html {
+  font-family: 'Inter';
 }

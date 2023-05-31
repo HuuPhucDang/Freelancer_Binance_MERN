@@ -26,4 +26,7 @@ export default {
   raven: '#737A86',
   zircon: '#F3F8FF',
   white: '#FFFFFF',
+  paleGoldenrod: '#F3ECAE',
+  sunglow: '#FCCE2E',
+  lightSilver: "#D9D9D9"
 };

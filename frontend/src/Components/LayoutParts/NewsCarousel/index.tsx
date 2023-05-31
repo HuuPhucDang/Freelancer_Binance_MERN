@@ -45,7 +45,6 @@ const Blogs: React.FC = () => {
       <Grid item xs={7} sx={{ mt: '7em' }}>
         <Typography
           sx={{
-            fontFamily: 'Merriweather',
             fontWeight: 700,
             fontSize: 12,
             textAlign: 'center',
@@ -55,7 +54,6 @@ const Blogs: React.FC = () => {
         </Typography>
         <Typography
           sx={{
-            fontFamily: 'Plus Jakarta Sans',
             fontSize: 10,
             fontWeight: 500,
             mt: 2,
@@ -69,7 +67,6 @@ const Blogs: React.FC = () => {
         </Typography>
         <Typography
           sx={{
-            fontFamily: 'Merriweather',
             fontWeight: 700,
             fontSize: 12,
             textAlign: 'center',
@@ -79,7 +76,6 @@ const Blogs: React.FC = () => {
         </Typography>
         <Typography
           sx={{
-            fontFamily: 'Plus Jakarta Sans',
             fontSize: 10,
             fontWeight: 500,
             mt: 2,
@@ -93,7 +89,6 @@ const Blogs: React.FC = () => {
         </Typography>
         <Typography
           sx={{
-            fontFamily: 'Merriweather',
             fontWeight: 700,
             fontSize: 12,
             textAlign: 'center',
@@ -103,7 +98,6 @@ const Blogs: React.FC = () => {
         </Typography>
         <Typography
           sx={{
-            fontFamily: 'Plus Jakarta Sans',
             fontSize: 10,
             fontWeight: 500,
             mt: 2,
@@ -119,7 +113,6 @@ const Blogs: React.FC = () => {
       <Grid item xs={7} sx={{ mt: 'auto' }}>
         <Typography
           sx={{
-            fontFamily: 'Plus Jakarta Sans',
             fontWeight: 600,
             fontSize: 14,
             lineHeight: '24px',

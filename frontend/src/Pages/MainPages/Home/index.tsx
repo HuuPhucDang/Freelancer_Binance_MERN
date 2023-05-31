@@ -1,152 +1,916 @@
 import React from 'react';
-import { Container, Box, Typography, Grid, Grow } from '@mui/material';
-
+import {
+  Container,
+  Box,
+  Typography,
+  Grid,
+  Button,
+  Stack,
+  Link,
+} from '@mui/material';
+import PersonIcon from '@mui/icons-material/Person';
 // Import local
 import DefaultLayout from '@/Components/DefaultLayout';
 import Assets from '@/Assets';
-import { CommonStyles } from '@/Components/Common';
 
 const Home: React.FC = () => {
   // Constructors
 
   // Renders
-  const _renderImage = () => (
-    <Grid
-      container
-      justifyContent="center"
-      sx={{
-        width: { md: 0.5, xs: 1 },
-      }}
-    >
-      {/* <Grid item xs={12} textAlign="center">
-        <Box
-          component="img"
-          alt="mobile"
-          src={Assets.rateStartYellowImage}
-          sx={{ width: 293, height: 96 }}
-        />
+  const _renderHero = () => {
+    return (
+      <Grid container>
+        <Grid item md={6}>
+          <Stack direction="column" height="100%">
+            <Stack flex={1}>
+              <Typography
+                sx={{
+                  fontSize: '34px',
+                  fontWeight: 700,
+                  lineHeight: '41px',
+                  flex: 1,
+                  textAlign: 'left',
+                }}
+              >
+                Giao dịch cả khi đang di chuyển. Mọi lúc, mọi nơi.
+              </Typography>
+            </Stack>
+            <Stack direction="column" width="100%" maxWidth="300px">
+              <Link
+                sx={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  marginBottom: '20px',
+                }}
+              >
+                <Box
+                  component="img"
+                  src={Assets.giftIcon}
+                  sx={{ width: '34px', height: 'auto', objectFit: 'contain' }}
+                />
+                <Typography
+                  sx={{
+                    fontSize: '12px',
+                    fontWeight: 400,
+                    lineHeight: '15px',
+                    color: 'text.primary',
+                  }}
+                >
+                  Giao dịch Bitcoin mà không mất phí
+                </Typography>
+              </Link>
+              <Button
+                sx={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  backgroundColor: 'background.primary',
+                  height: '27px',
+                  color: 'text.secondary',
+                }}
+                startIcon={<PersonIcon />}
+              >
+                <Typography
+                  sx={{
+                    fontSize: '12px',
+                  }}
+                >
+                  Đăng kí bằng Email hoặc Điện thoại
+                </Typography>
+              </Button>
+              <Typography
+                sx={{ fontSize: '12px', lineHeight: '15px', margin: '10px 0' }}
+              >
+                Hoặc tiếp tục bằng{' '}
+              </Typography>
+              <Grid container spacing={2}>
+                <Grid item>
+                  <Button
+                    sx={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      maxWidth: '140px',
+                      backgroundColor: 'background.lightSilver',
+                    }}
+                  >
+                    <Box
+                      component="img"
+                      src={Assets.googleStoreIcon}
+                      style={{
+                        width: '24px',
+                        height: '24px',
+                        marginRight: '5px',
+                      }}
+                    />
+                    <Typography
+                      sx={{ fontSize: '12px', color: 'text.secondary' }}
+                    >
+                      Download app android
+                    </Typography>
+                  </Button>
+                </Grid>
+                <Grid item>
+                  <Button
+                    sx={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      maxWidth: '140px',
+                      backgroundColor: 'background.lightSilver',
+                    }}
+                  >
+                    <Box
+                      component="img"
+                      src={Assets.appleIcon}
+                      style={{
+                        width: '24px',
+                        height: '24px',
+                        marginRight: '5px',
+                      }}
+                    />
+                    <Typography
+                      sx={{ fontSize: '12px', color: 'text.secondary' }}
+                    >
+                      Download app ios
+                    </Typography>
+                  </Button>
+                </Grid>
+              </Grid>
+            </Stack>
+          </Stack>
+        </Grid>
+        <Grid item md={6}>
+          <Box
+            component="img"
+            src={Assets.deviceImage}
+            sx={{ width: '100%', height: 'auto', objectFit: 'contain' }}
+          />
+          <Typography
+            sx={{ fontSize: '16px', lineHeight: '20px', fontWeight: 600 }}
+          >
+            Luôn cập nhật thông tin với ứng dụng trên app và desktop của chúng
+            tôi
+          </Typography>
+        </Grid>
       </Grid>
-      <Grid item xs={12} md={6} textAlign="right">
-        <Box
-          component="img"
-          alt="mobile"
-          src={Assets.appStoreFullIcon}
-          sx={{
-            height: 80,
-            // objectFit: 'contain',
-            cursor: 'pointer',
-            position: 'relative',
-          }}
-        />
+    );
+  };
+
+  const _renderNumber = () => {
+    return (
+      <Grid container sx={{ marginTop: '40px' }} spacing={2}>
+        <Grid item md={4}>
+          <Stack direction="column">
+            <Typography
+              sx={{
+                fontSize: '32px',
+                lineHeight: '39px',
+                fontWeight: 700,
+                marginBottom: '10px',
+              }}
+            >
+              38 tỷ dô la
+            </Typography>
+            <Typography
+              sx={{ fontSize: '13px', fontWeight: 400, lineHeight: '16px' }}
+            >
+              38 tỷ đô la Khối lượng giao dịch trong vòng 24 giờ trên sàn giao
+              dịch Binance
+            </Typography>
+          </Stack>
+        </Grid>
+        <Grid item md={4}>
+          <Stack direction="column">
+            <Typography
+              sx={{
+                fontSize: '32px',
+                lineHeight: '39px',
+                fontWeight: 700,
+                marginBottom: '10px',
+              }}
+            >
+              120 triệu
+            </Typography>
+            <Typography
+              sx={{ fontSize: '13px', fontWeight: 400, lineHeight: '16px' }}
+            >
+              Những người dùng đăng kí{' '}
+            </Typography>
+          </Stack>
+        </Grid>
+        <Grid item md={4}>
+          <Stack direction="column">
+            <Typography
+              sx={{
+                fontSize: '32px',
+                lineHeight: '39px',
+                fontWeight: 700,
+                marginBottom: '10px',
+              }}
+            >
+              {' '}
+              &lt; 0,10%{' '}
+            </Typography>
+            <Typography
+              sx={{ fontSize: '13px', fontWeight: 400, lineHeight: '16px' }}
+            >
+              Phí giao dịch thấp nhất
+            </Typography>
+          </Stack>
+        </Grid>
       </Grid>
-      <Grid item xs={12} md={6} textAlign="left">
-        <Box
-          component="img"
-          alt="mobile"
-          src={Assets.playFullIcon}
+    );
+  };
+
+  const _renderChance = () => {
+    return (
+      <Stack direction="column" marginTop="60px">
+        <Typography
           sx={{
-            height: 80,
-            // objectFit: 'contain',
-            cursor: 'pointer',
-            position: 'relative',
+            fontSize: '34px',
+            lineHeight: '41px',
+            fontWeight: 700,
+            textAlign: 'left',
           }}
-        />
-      </Grid> */}
-    </Grid>
-  );
+        >
+          Khám phá vô vàn cơ hội đầu tư trên Binance{' '}
+        </Typography>
+        <Grid container spacing={6} marginTop="20px">
+          <Grid item md={4}>
+            <Stack
+              direction="column"
+              sx={{
+                backgroundColor: 'background.secondary',
+                padding: '15px',
+                height: '100%',
+              }}
+            >
+              <Box component="img" src={Assets.exploreImage} />
+              <Typography
+                sx={{
+                  color: 'text.primary',
+                  fontSize: '16px',
+                  fontWeight: 700,
+                  lienHeight: '20px',
+                  textAlign: 'left',
+                }}
+              >
+                Khám phá thế giới NFT{' '}
+              </Typography>
+              <Typography
+                sx={{
+                  fontSize: '11px',
+                  lineHeight: '14px',
+                  fontWeight: 400,
+                  color: 'text.primary',
+                  textAlign: 'left',
+                }}
+              >
+                Mở các hộp bí hiểm, khám phá IGO (đợt phát hành sản phẩm trong
+                game lần đầu), Fan TokenToken, v.v. với ....
+              </Typography>
+              <Link
+                sx={{
+                  fontSize: '11px',
+                  lineHeight: '14px',
+                  fontWeight: 400,
+                  color: 'text.burntSienna',
+                  textAlign: 'left',
+                  marginTop: '20px',
+                }}
+              >
+                Tìm hiểu thêm
+              </Link>
+            </Stack>
+          </Grid>
+          <Grid item md={4}>
+            <Stack
+              direction="column"
+              sx={{
+                backgroundColor: 'background.secondary',
+                padding: '15px',
+                height: '100%',
+              }}
+            >
+              <Typography
+                sx={{
+                  color: 'text.primary',
+                  fontSize: '16px',
+                  fontWeight: 700,
+                  lienHeight: '20px',
+                  textAlign: 'left',
+                }}
+              >
+                Phát triển doanh nghiệp với Binance Pay{' '}
+              </Typography>
+              <Typography
+                sx={{
+                  fontSize: '11px',
+                  lineHeight: '14px',
+                  fontWeight: 400,
+                  color: 'text.primary',
+                  textAlign: 'left',
+                }}
+              >
+                Thu hút thêm nhiều khách hàng bằng cách thanh toán và nhận khoản
+                thanh toán bằng tiền mã hóa với công nghệ thanh toán không biên
+                giới{' '}
+              </Typography>
+              <Link
+                sx={{
+                  fontSize: '11px',
+                  lineHeight: '14px',
+                  fontWeight: 400,
+                  color: 'text.burntSienna',
+                  textAlign: 'left',
+                  marginTop: '20px',
+                }}
+              >
+                Tìm hiểu thêm
+              </Link>
+              <Box component="img" src={Assets.growImage} />
+            </Stack>
+          </Grid>
+          <Grid item md={4}>
+            <Stack
+              direction="column"
+              sx={{
+                backgroundColor: 'background.secondary',
+                padding: '15px',
+                height: '100%',
+              }}
+            >
+              <Box component="img" src={Assets.earnImage} />
+              <Typography
+                sx={{
+                  color: 'text.primary',
+                  fontSize: '16px',
+                  fontWeight: 700,
+                  lienHeight: '20px',
+                  textAlign: 'left',
+                }}
+              >
+                Binance Earn{' '}
+              </Typography>
+              <Typography
+                sx={{
+                  fontSize: '11px',
+                  lineHeight: '14px',
+                  fontWeight: 400,
+                  color: 'text.primary',
+                  textAlign: 'left',
+                }}
+              >
+                Gửi tiền mã hóa và bắt đầu tăng thu nhập ất
+              </Typography>
+              <Link
+                sx={{
+                  fontSize: '11px',
+                  lineHeight: '14px',
+                  fontWeight: 400,
+                  color: 'text.burntSienna',
+                  textAlign: 'left',
+                  marginTop: '20px',
+                }}
+              >
+                Tìm hiểu thêm
+              </Link>
+            </Stack>
+          </Grid>
+        </Grid>
+      </Stack>
+    );
+  };
+
+  const _renderAbout = () => {
+    return (
+      <Stack direction="column" marginTop="60px">
+        <Typography
+          sx={{
+            fontSize: '34px',
+            lineHeight: '41px',
+            fontWeight: 700,
+            textAlign: 'left',
+          }}
+        >
+          Sàn giao dịch mã hóa đáng tin cậy của bạn{' '}
+        </Typography>
+        <Typography
+          sx={{
+            fontSize: '13px',
+            fontWeight: 400,
+            lineHeight: '16px',
+            textAlign: 'left',
+            marginTop: '6px',
+          }}
+        >
+          Tại Binance, chúng tôi cam kết bảo vệ người dùng bằng các quy định
+          nghiêm ngặt và các biện pháp kĩ thuật đầu ngành{' '}
+        </Typography>
+        <Grid container marginTop="50px" columnSpacing={8}>
+          <Grid item md={6}>
+            <Stack direction="row" alignItems="flex-start">
+              <Box
+                component="img"
+                src={Assets.safeIcon}
+                sx={{
+                  width: '50px',
+                  height: 'auto',
+                  objectFit: 'contain',
+                  marginRight: '15px',
+                }}
+              />
+              <Stack direction="column">
+                <Typography
+                  sx={{
+                    fontSize: '14px',
+                    fontWeight: 700,
+                    lineHeight: '17px',
+                    textAlign: 'left',
+                  }}
+                >
+                  Quỹ tài sản an toàn cho người dùng{' '}
+                </Typography>
+                <Typography
+                  sx={{
+                    fontSize: '14px',
+                    fontWeight: 400,
+                    lineHeight: '17px',
+                    textAlign: 'left',
+                    marginTop: '5px',
+                  }}
+                >
+                  Binance trích 10% phí giao dịch trong một quỹ tài sản để bảo
+                  vệ một phần tiền của người dùng{' '}
+                </Typography>
+              </Stack>
+            </Stack>
+            <Stack direction="row" alignItems="flex-start" marginTop="36px">
+              <Box
+                component="img"
+                src={Assets.eyeIcon}
+                sx={{
+                  width: '50px',
+                  height: 'auto',
+                  objectFit: 'contain',
+                  marginRight: '15px',
+                }}
+              />{' '}
+              <Stack direction="column">
+                <Typography
+                  sx={{
+                    fontSize: '14px',
+                    fontWeight: 700,
+                    lineHeight: '17px',
+                    textAlign: 'left',
+                  }}
+                >
+                  Kiểm soát quyền truy cập theo ý muốn riêng{' '}
+                </Typography>
+                <Typography
+                  sx={{
+                    fontSize: '14px',
+                    fontWeight: 400,
+                    lineHeight: '17px',
+                    textAlign: 'left',
+                    marginTop: '5px',
+                  }}
+                >
+                  Tính năng kiểm soát quyền truy cập cá nhân hóa cho phép bạn
+                  hạn chế các thiết bị và địa chỉ có thể truy cập vào tài khoản
+                  của bạn, giúp bạn yên tâm hơn.{' '}
+                </Typography>
+              </Stack>
+            </Stack>
+            <Stack direction="row" alignItems="flex-start" marginTop="36px">
+              <Box
+                component="img"
+                src={Assets.lockIcon}
+                sx={{
+                  width: '50px',
+                  height: 'auto',
+                  objectFit: 'contain',
+                  marginRight: '15px',
+                }}
+              />{' '}
+              <Stack direction="column">
+                <Typography
+                  sx={{
+                    fontSize: '14px',
+                    fontWeight: 700,
+                    lineHeight: '17px',
+                    textAlign: 'left',
+                  }}
+                >
+                  Công nghệ mã hóa dữ liệu nâng cao{' '}
+                </Typography>
+                <Typography
+                  sx={{
+                    fontSize: '14px',
+                    fontWeight: 400,
+                    lineHeight: '17px',
+                    textAlign: 'left',
+                    marginTop: '5px',
+                  }}
+                >
+                  Dữ liệu giao dịch của bạn được bảo mật thông qua công nghệ mã
+                  hóa đầu cuối, đảm bảo chỉ bạn mới có quyền truy cập thông tin
+                  cá nhân của mình.{' '}
+                </Typography>
+              </Stack>
+            </Stack>
+          </Grid>
+          <Grid item md={6}>
+            <Link
+              sx={{
+                fontSize: '11px',
+                lineHeight: '14px',
+                fontWeight: 400,
+                color: 'text.burntSienna',
+                textAlign: 'left',
+                marginTop: '20px',
+              }}
+            >
+              Tìm hiểu thêm
+            </Link>
+            <Box
+              component="img"
+              src={Assets.preventImage}
+              sx={{ width: '100%', height: 'auto', objectFit: 'contain' }}
+            />
+          </Grid>
+        </Grid>
+      </Stack>
+    );
+  };
+
+  const _renderReason = () => {
+    return (
+      <Stack direction="column" marginTop="80px">
+        <Typography
+          sx={{
+            fontSize: '34px',
+            lineHeight: '41px',
+            fontWeight: 700,
+            textAlign: 'left',
+          }}
+        >
+          Lí do nên giao dịch cùng chúng tôi{' '}
+        </Typography>
+        <Grid container rowSpacing={7} columnSpacing={4} marginTop="20px">
+          <Grid item md={6}>
+            <Stack direction="row" alignItems="flex-start">
+              <Box
+                component="img"
+                src={Assets.personIcon}
+                sx={{
+                  width: '80px',
+                  height: 'auto',
+                  objectFit: 'contain',
+                  marginRight: '16px',
+                }}
+              />
+              <Stack direction="column">
+                <Typography
+                  sx={{
+                    fontSize: '17px',
+                    lineHeight: '21px',
+                    fontWeight: 600,
+                    textAlign: 'left',
+                  }}
+                >
+                  Lấy người dùng làm trung tâm{' '}
+                </Typography>
+                <Typography
+                  sx={{
+                    fontSize: '12px',
+                    lineHeight: '15px',
+                    fontWeight: 400,
+                    textAlign: 'left',
+                    marginTop: '10px',
+                  }}
+                >
+                  Sản phẩm sáng tạo, nâng cao trải nghiệm người dùng và đồng
+                  thời cung cấp hiệu suất ổn định và liền mạch mà người dùng có
+                  thể tin tưởng. Bộ phận Hỗ trợ Khách hàng 24/7 sẽ giải đáp tất
+                  cả thắc mắc của bạn.
+                </Typography>
+              </Stack>
+            </Stack>
+          </Grid>
+          <Grid item md={6}>
+            <Stack direction="row" alignItems="flex-start">
+              <Box
+                component="img"
+                src={Assets.systemIcon}
+                sx={{
+                  width: '80px',
+                  height: 'auto',
+                  objectFit: 'contain',
+                  marginRight: '16px',
+                }}
+              />{' '}
+              <Stack direction="column">
+                <Typography
+                  sx={{
+                    fontSize: '17px',
+                    lineHeight: '21px',
+                    fontWeight: 600,
+                    textAlign: 'left',
+                  }}
+                >
+                  Cơ chế khớp lệnh hàng đầu thị trường
+                </Typography>
+                <Typography
+                  sx={{
+                    fontSize: '12px',
+                    lineHeight: '15px',
+                    fontWeight: 400,
+                    textAlign: 'left',
+                    marginTop: '10px',
+                  }}
+                >
+                  Cơ chế khớp lệnh nhanh và ổn định của chúng tôi có thể xử lý
+                  đến 100.000 lệnh mỗi giây, độ trễ tối thiểu chỉ là 5 mili
+                  giây.
+                </Typography>
+              </Stack>
+            </Stack>
+          </Grid>
+          <Grid item md={6}>
+            <Stack direction="row" alignItems="flex-start">
+              <Box
+                component="img"
+                src={Assets.contactIcon}
+                sx={{
+                  width: '80px',
+                  height: 'auto',
+                  objectFit: 'contain',
+                  marginRight: '16px',
+                }}
+              />{' '}
+              <Stack direction="column">
+                <Typography
+                  sx={{
+                    fontSize: '17px',
+                    lineHeight: '21px',
+                    fontWeight: 600,
+                    textAlign: 'left',
+                  }}
+                >
+                  Lựa chọn các Sản phẩm Hợp đồng Tương lai Tiền mã hóa đa dạng{' '}
+                </Typography>
+                <Typography
+                  sx={{
+                    fontSize: '12px',
+                    lineHeight: '15px',
+                    fontWeight: 400,
+                    textAlign: 'left',
+                    marginTop: '10px',
+                  }}
+                >
+                  Lựa chọn hơn 90 hợp đồng, bao gồm các hợp đồng ký quỹ bằng
+                  USDT và bằng Coin.
+                </Typography>
+              </Stack>
+            </Stack>
+          </Grid>
+          <Grid item md={6}>
+            <Stack direction="row" alignItems="flex-start">
+              <Box
+                component="img"
+                src={Assets.batteryIcon}
+                sx={{
+                  width: '80px',
+                  height: 'auto',
+                  objectFit: 'contain',
+                  marginRight: '16px',
+                }}
+              />{' '}
+              <Stack direction="column">
+                <Typography
+                  sx={{
+                    fontSize: '17px',
+                    lineHeight: '21px',
+                    fontWeight: 600,
+                    textAlign: 'left',
+                  }}
+                >
+                  Giao dịch ngay cả khi đang di chuyển{' '}
+                </Typography>
+                <Typography
+                  sx={{
+                    fontSize: '12px',
+                    lineHeight: '15px',
+                    fontWeight: 400,
+                    textAlign: 'left',
+                    marginTop: '10px',
+                  }}
+                >
+                  Truy cập một cách nhanh chóng và an toàn ngay từ smartphone
+                  của bạn. Đã hỗ trợ Android và iOS!
+                </Typography>
+              </Stack>
+            </Stack>
+          </Grid>
+        </Grid>
+      </Stack>
+    );
+  };
+
+  const _renderFeedback = () => {
+    return (
+      <Stack direction="column" marginTop="80px">
+        <Typography
+          sx={{
+            fontSize: '34px',
+            lineHeight: '41px',
+            fontWeight: 700,
+            textAlign: 'left',
+          }}
+        >
+          Phản hồi từ người dùng{' '}
+        </Typography>
+        <Grid container columnSpacing={7} marginTop="60px">
+          <Grid item md={4}>
+            <Stack direction="column">
+              <Box
+                component="img"
+                src={Assets.greenIcon}
+                sx={{ width: '80px', height: '80px', objectFit: 'contain' }}
+              />
+              <Typography
+                sx={{
+                  textAlign: 'left',
+                  fontSize: '14px',
+                  fontWeight: 400,
+                  lineHeight: '17px',
+                }}
+              >
+                Rất nhiều đồng coin. Chưa kể Binance vẫn chưa một lần làm tôi
+                thất vọng trong 4 năm giao dịch tiền mã hóa tính đến nay.
+              </Typography>
+              <Typography
+                sx={{
+                  fontSize: '14px',
+                  lineHeight: '17px',
+                  fontWeight: 400,
+                  textAlign: 'left',
+                  marginTop: '20px',
+                }}
+              >
+                <Typography
+                  component="span"
+                  sx={{ color: 'text.burntSienna', fontSize: 'inherit' }}
+                >
+                  #twitter
+                </Typography>{' '}
+                | by...
+              </Typography>
+            </Stack>
+          </Grid>
+          <Grid item md={4}>
+            <Stack direction="column">
+              <Box
+                component="img"
+                src={Assets.redIcon}
+                sx={{ width: '80px', height: '80px', objectFit: 'contain' }}
+              />{' '}
+              <Typography
+                sx={{
+                  textAlign: 'left',
+                  fontSize: '14px',
+                  fontWeight: 400,
+                  lineHeight: '17px',
+                }}
+              >
+                Cơ chế khớp lệnh nhanh và ổn định của chúng tôi có thể xử lý đến
+                100.000 lệnh mỗi giây, độ trễ tối thiểu chỉ là 5 mili giây.
+              </Typography>
+              <Typography
+                sx={{
+                  fontSize: '14px',
+                  lineHeight: '17px',
+                  fontWeight: 400,
+                  textAlign: 'left',
+                  marginTop: '20px',
+                }}
+              >
+                <Typography
+                  component="span"
+                  sx={{ color: 'text.burntSienna', fontSize: 'inherit' }}
+                >
+                  #twitter
+                </Typography>{' '}
+                | by...
+              </Typography>
+            </Stack>
+          </Grid>
+          <Grid item md={4}>
+            <Stack direction="column">
+              <Box
+                component="img"
+                src={Assets.blueIcon}
+                sx={{ width: '80px', height: '80px', objectFit: 'contain' }}
+              />{' '}
+              <Typography
+                sx={{
+                  textAlign: 'left',
+                  fontSize: '14px',
+                  fontWeight: 400,
+                  lineHeight: '17px',
+                }}
+              >
+                Nhanh chóng, dễ dàng, thu nhập cao và phí thấp, Binance mang đến
+                cho bạn tất cả những gì bạn cần với tiền mã hoá, thật tuyệt
+                vời！
+              </Typography>
+              <Typography
+                sx={{
+                  fontSize: '14px',
+                  lineHeight: '17px',
+                  fontWeight: 400,
+                  textAlign: 'left',
+                  marginTop: '20px',
+                }}
+              >
+                <Typography
+                  component="span"
+                  sx={{ color: 'text.burntSienna', fontSize: 'inherit' }}
+                >
+                  #twitter
+                </Typography>{' '}
+                | by...
+              </Typography>
+            </Stack>
+          </Grid>
+        </Grid>
+      </Stack>
+    );
+  };
+
+  const _renderInvite = () => {
+    return (
+      <Stack direction="column" marginTop="80px">
+        <Typography
+          sx={{ fontSize: '24px', lineHeight: '29px', fontWeight: 700 }}
+        >
+          Bắt đầu giao dịch Hợp đồng tương lai tiền mã hóa ngay{' '}
+        </Typography>
+        <Stack
+          direction="row"
+          marginTop="20px"
+          justifyContent="center"
+          columnGap="40px"
+        >
+          <Button
+            sx={{
+              backgroundColor: 'background.burntSienna',
+              color: 'text.secondary',
+              textTransform: 'unset',
+              height: '53px',
+              width: '220px',
+              fontWeight: 700,
+              fontSize: "14px",
+            }}
+          >
+            Mở Tài Khoản (đăng kí)
+          </Button>
+          <Button
+            sx={{
+              backgroundColor: 'background.lightSilver',
+              color: 'text.secondary',
+              textTransform: 'unset',
+              height: '53px',
+              width: '220px',
+              fontWeight: 700,
+              fontSize: "14px",
+            }}
+          >
+            Giao dịch ngay (đăng nhập){' '}
+          </Button>
+        </Stack>
+      </Stack>
+    );
+  };
 
   const renderMain = () => {
     return (
       <Container
         component="main"
-        maxWidth="md"
+        maxWidth="lg"
         sx={{ my: { xs: '3em', md: '5em', textAlign: '-webkit-center' } }}
       >
-        {/* <Box
-          sx={{
-            width: 1,
-            position: 'relative',
-            display: 'flex',
-            justifyContent: 'center',
-            flexDirection: 'column',
-          }}
-        >
-          <Grow in timeout={1000}>
-            <Box
-              component="img"
-              alt="mobile"
-              src={Assets.mobileGif}
-              sx={{
-                width: 550,
-                // height: 600,
-                objectFit: 'contain',
-                position: 'absolute',
-                right: 0,
-                ...CommonStyles.displayInDesktop,
-              }}
-            />
-          </Grow>
-          <Grow in timeout={500}>
-            <Typography
-              sx={{
-                fontWeight: 400,
-                fontSize: { xs: 32, md: 48 },
-                lineHeight: '70px',
-                width: { md: 0.5, xs: 1 },
-                px: { xs: 4, md: 0 },
-                textAlign: 'center',
-                mb: 3,
-              }}
-            >
-              Your{' '}
-              <Box component="b">
-                24x7{' '}
-                <Box
-                  component="span"
-                  sx={{
-                    position: 'relative',
-                    '&:after': {
-                      content: '""',
-                      position: 'absolute',
-                      height: '5px',
-                      backgroundImage: `url(${Assets.underlineImage})`,
-                      backgroundSize: 'cover',
-                      backgroundRepeat: 'round',
-                      transition: 'all 0.5s',
-                      bottom: -8,
-                      left: 0,
-                      width: 1,
-                    },
-                  }}
-                >
-                  personal Guide
-                </Box>
-              </Box>{' '}
-              <br /> to a healthier happier mind
-            </Typography>
-          </Grow>
-          <Grow in timeout={1000}>
-            <Box
-              component="img"
-              alt="mobile"
-              src={Assets.mobileGif}
-              sx={{
-                // height: 400,
-                mb: 2,
-                width: 1,
-                objectFit: 'contain',
-                ...CommonStyles.displayInMobile,
-              }}
-            />
-          </Grow>
-          <Grow in timeout={1500}>
-            {_renderImage()}
-          </Grow>
-        </Box> */}
+        {_renderHero()}
+        {_renderNumber()}
+        {_renderChance()}
+        {_renderAbout()}
+        {_renderReason()}
+        {_renderFeedback()}
+        {_renderInvite()}
       </Container>
     );
   };
-  return <DefaultLayout content={renderMain()} screenTitle='heyy,' />;
+  return <DefaultLayout content={renderMain()} screenTitle="heyy," />;
 };
 
 export default Home;

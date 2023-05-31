@@ -67,7 +67,6 @@ const RecommendPosts: React.FC<IRecommendPost> = (props: IRecommendPost) => {
           />
           <Link
             sx={{
-              fontFamily: 'Merriweather',
               fontWeight: 900,
               fontSize: 20,
             }}
@@ -77,7 +76,6 @@ const RecommendPosts: React.FC<IRecommendPost> = (props: IRecommendPost) => {
           </Link>
           <Typography
             sx={{
-              fontFamily: 'Plus Jakarta Sans',
               fontSize: 14,
               fontWeight: 500,
               my: 2,
@@ -88,7 +86,6 @@ const RecommendPosts: React.FC<IRecommendPost> = (props: IRecommendPost) => {
           </Typography>
           <Link
             sx={{
-              fontFamily: 'Plus Jakarta Sans',
               fontWeight: 600,
               fontSize: 14,
               lineHeight: '34px',
@@ -108,7 +105,6 @@ const RecommendPosts: React.FC<IRecommendPost> = (props: IRecommendPost) => {
       <Grid item xs={12}>
         <Typography
           sx={{
-            fontFamily: 'Merriweather',
             fontWeight: 700,
             fontSize: 32,
             lineHeight: '56px',

@@ -9,7 +9,6 @@ const saveThemeMode = (mode: 'dark' | 'light') => {
 
 const getThemeMode = () => {
   const mode = cookies.get(COOKIE_KEYS.THEME_MODE) || 'light';
-  console.log(mode);
   return mode
 };
 

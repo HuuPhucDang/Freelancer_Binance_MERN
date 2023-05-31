@@ -20,6 +20,8 @@ declare module '@mui/material/styles' {
     yellowBus: PaletteColorOptions;
     black: PaletteColorOptions;
     white: PaletteColorOptions;
+    paleGoldenrod: PaletteColorOptions;
+    sunglow: PaletteColorOptions;
   }
   interface Palette extends CustomPalette {}
   interface PaletteOptions extends CustomPalette {}
@@ -43,6 +45,8 @@ declare module '@mui/material/Button' {
     yellowBus: true;
     black: true;
     white: true;
+    paleGoldenrod: true;
+    sunglow: true;
   }
 }
 
@@ -85,18 +89,38 @@ const CoreTheme = createTheme({
     yellowBus: createColor(CommonColor.yellowBus),
     black: createColor(CommonColor.black),
     white: createColor(CommonColor.white),
+    paleGoldenrod: createColor(CommonColor.paleGoldenrod),
+    sunglow: createColor(CommonColor.sunglow),
     mode: Utils.getThemeMode(),
     ...(Utils.getThemeMode() === 'light'
       ? {
           // palette values for light mode
           text: {
             primary: '#000000',
+            secondary: '#000000',
+            burntSienna: '#E87844',
+          },
+          background: {
+            default: '#FFFFFF',
+            primary: '#FFB23F',
+            secondary: '#F5F5F5',
+            burntSienna: '#E87844',
+            lightSilver: "#D9D9D9",
           },
         }
       : {
           // palette values for dark mode
           text: {
-            primary: '#ffffff',
+            primary: '#D9D9D9',
+            secondary: '#000000',
+            burntSienna: '#E87844',
+          },
+          background: {
+            default: '#191A1F',
+            primary: '#FFB23F',
+            secondary: '#0A0E11',
+            burntSienna: '#E87844',
+            lightSilver: "#D9D9D9",
           },
         }),
   },
@@ -127,14 +151,14 @@ const CoreTheme = createTheme({
             WebkitAppearance: 'none',
             margin: 0,
           },
-          fontFamily: 'Merriweather',
+          fontFamily: 'Inter',
         },
       },
     },
     MuiTypography: {
       styleOverrides: {
         root: {
-          fontFamily: 'Merriweather',
+          fontFamily: 'Inter',
         },
       },
     },
