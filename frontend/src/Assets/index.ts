@@ -26,6 +26,24 @@ import googleStoreIcon from './google_play.png';
 import appleIcon from './apple.png';
 import giftIcon from './gift.png';
 
+import bnbIcon from './bnb.png';
+import btcIcon from './btc.png';
+import ethIcon from './eth.png';
+import pepeIcon from './pepe.png';
+import eduIcon from './edu.png';
+import drepIcon from './drep.png';
+import suiIcon from './sui.png';
+import funIcon from './fun.png';
+import idIcon from './id.png';
+import hookIcon from './hook.png';
+import securityIcon from './security.png';
+
+import phoneVerifyIcon from './phone_verify.png';
+import mailVerifyIcon from './mail_verify.png';
+import passwordIcon from './password.png';
+import otpIcon from './otp.png';
+import qrImage from './qr.png';
+
 export default {
   darkIconDarkTheme,
   darkIconLightTheme,
@@ -50,4 +68,20 @@ export default {
   googleStoreIcon,
   appleIcon,
   giftIcon,
+  bnbIcon,
+  btcIcon,
+  ethIcon,
+  pepeIcon,
+  eduIcon,
+  drepIcon,
+  suiIcon,
+  funIcon,
+  idIcon,
+  hookIcon,
+  securityIcon,
+  phoneVerifyIcon,
+  mailVerifyIcon,
+  passwordIcon,
+  otpIcon,
+  qrImage,
 };

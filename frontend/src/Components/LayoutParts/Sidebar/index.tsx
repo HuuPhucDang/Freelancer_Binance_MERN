@@ -58,6 +58,7 @@ const Sidebar = () => {
           key={item.path}
           startIcon={item.icon}
           variant="text"
+          href={item.path}
           sx={{
             color: 'text.primary',
             justifyContent: 'flex-start',
