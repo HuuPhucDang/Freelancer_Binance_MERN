@@ -35,7 +35,19 @@ const Home: React.FC = () => {
                 Giao dịch cả khi đang di chuyển. Mọi lúc, mọi nơi.
               </Typography>
             </Stack>
-            <Stack direction="column" width="100%" maxWidth="300px">
+            <Stack
+              direction="column"
+              width="100%"
+              maxWidth="300px"
+              marginX={{
+                xs: 'auto',
+                md: 'unset',
+              }}
+              marginY={{
+                xs: '30px',
+                md: 'unset',
+              }}
+            >
               <Link
                 sx={{
                   display: 'flex',
@@ -158,8 +170,8 @@ const Home: React.FC = () => {
   const _renderNumber = () => {
     return (
       <Grid container sx={{ marginTop: '40px' }} spacing={2}>
-        <Grid item md={4}>
-          <Stack direction="column">
+        <Grid item xs={12} sm={4} md={4}>
+          <Stack direction="column" padding="20px 0">
             <Typography
               sx={{
                 fontSize: '32px',
@@ -168,7 +180,7 @@ const Home: React.FC = () => {
                 marginBottom: '10px',
               }}
             >
-              38 tỷ dô la
+              38 tỷ đô la
             </Typography>
             <Typography
               sx={{ fontSize: '13px', fontWeight: 400, lineHeight: '16px' }}
@@ -178,8 +190,8 @@ const Home: React.FC = () => {
             </Typography>
           </Stack>
         </Grid>
-        <Grid item md={4}>
-          <Stack direction="column">
+        <Grid item xs={12} sm={4} md={4}>
+          <Stack direction="column" padding="20px 0">
             <Typography
               sx={{
                 fontSize: '32px',
@@ -197,8 +209,8 @@ const Home: React.FC = () => {
             </Typography>
           </Stack>
         </Grid>
-        <Grid item md={4}>
-          <Stack direction="column">
+        <Grid item xs={12} sm={4} md={4}>
+          <Stack direction="column" padding="20px 0">
             <Typography
               sx={{
                 fontSize: '32px',
@@ -244,7 +256,11 @@ const Home: React.FC = () => {
                 height: '100%',
               }}
             >
-              <Box component="img" src={Assets.exploreImage} />
+              <Box
+                component="img"
+                src={Assets.exploreImage}
+                sx={{ width: '100%', height: 'auto', objectFit: 'contain' }}
+              />
               <Typography
                 sx={{
                   color: 'text.primary',
@@ -327,7 +343,11 @@ const Home: React.FC = () => {
               >
                 Tìm hiểu thêm
               </Link>
-              <Box component="img" src={Assets.growImage} />
+              <Box
+                component="img"
+                src={Assets.growImage}
+                sx={{ width: '100%', height: 'auto', objectFit: 'contain' }}
+              />
             </Stack>
           </Grid>
           <Grid item md={4}>
@@ -339,7 +359,11 @@ const Home: React.FC = () => {
                 height: '100%',
               }}
             >
-              <Box component="img" src={Assets.earnImage} />
+              <Box
+                component="img"
+                src={Assets.earnImage}
+                sx={{ width: '100%', height: 'auto', objectFit: 'contain' }}
+              />
               <Typography
                 sx={{
                   color: 'text.primary',
@@ -870,7 +894,7 @@ const Home: React.FC = () => {
               height: '53px',
               width: '220px',
               fontWeight: 700,
-              fontSize: "14px",
+              fontSize: '14px',
             }}
           >
             Mở Tài Khoản (đăng kí)
@@ -883,7 +907,7 @@ const Home: React.FC = () => {
               height: '53px',
               width: '220px',
               fontWeight: 700,
-              fontSize: "14px",
+              fontSize: '14px',
             }}
           >
             Giao dịch ngay (đăng nhập){' '}
@@ -910,7 +934,7 @@ const Home: React.FC = () => {
       </Container>
     );
   };
-  return <DefaultLayout content={renderMain()} screenTitle="heyy," />;
+  return <DefaultLayout content={renderMain()} screenTitle="Binance" />;
 };
 
 export default Home;

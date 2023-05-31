@@ -124,43 +124,50 @@ const AppBarComponent: React.FC = () => {
     [pathname, mobileOpen]
   );
 
-  const _renderMainBar = () => (
-    <Grid container justifyContent="space-between" alignItems="center">
-      <Grid item xs={2} md={1}>
-        <Link href={ROUTERS.HOME}>Logo</Link>
-      </Grid>
-      {_renderMenuNav}
-      <Grid
-        item
-        xs={6}
-        sm={2}
-        display="flex"
-        alignItems="center"
-        justifyContent="center"
-        gap={1}
-      >
-        <IconButton
-          focusRipple
-          onClick={() => {
-            Utils.saveThemeMode('light');
-            window.location.reload();
-          }}
-          size="small"
+  const _renderMainBar = () => {
+    const isDarkMode = Utils.getThemeMode() === 'dark';
+    return (
+      <Grid container justifyContent="space-between" alignItems="center">
+        <Grid item xs={2} md={1}>
+          <Link href={ROUTERS.HOME} sx={{ color: 'text.primary' }}>
+            Logo
+          </Link>
+        </Grid>
+        {_renderMenuNav}
+        <Grid
+          item
+          xs={6}
+          sm={2}
+          display="flex"
+          alignItems="center"
+          justifyContent="flex-end"
+          gap={1}
         >
-          <LightModeIcon sx={{ fontSize: '20px' }} />
-        </IconButton>
-        <IconButton
-          onClick={() => {
-            Utils.saveThemeMode('dark');
-            window.location.reload();
-          }}
-          size="small"
-        >
-          <DarkModeIcon sx={{ fontSize: '20px' }} />
-        </IconButton>
+          <IconButton
+            focusRipple
+            onClick={() => {
+              Utils.saveThemeMode('light');
+              window.location.reload();
+            }}
+            disabled={!isDarkMode}
+            size="small"
+          >
+            <LightModeIcon sx={{ fontSize: '20px' }} />
+          </IconButton>
+          <IconButton
+            onClick={() => {
+              Utils.saveThemeMode('dark');
+              window.location.reload();
+            }}
+            disabled={isDarkMode}
+            size="small"
+          >
+            <DarkModeIcon sx={{ fontSize: '20px' }} />
+          </IconButton>
+        </Grid>
       </Grid>
-    </Grid>
-  );
+    );
+  };
 
   const _renderDrawer = () => (
     <Drawer
@@ -185,7 +192,9 @@ const AppBarComponent: React.FC = () => {
         rowGap={5}
         sx={{ width: '100vw', py: 4, height: '80%' }}
       >
-        <Link href={ROUTERS.HOME}>Logo</Link>
+        <Link href={ROUTERS.HOME} sx={{ color: 'text.primary' }}>
+          Logo
+        </Link>
         {_renderMenuItem()}
         <Box mt="auto">
           <IconButton
@@ -207,12 +216,13 @@ const AppBarComponent: React.FC = () => {
           width: '100%',
           alignItems: 'center',
           justifyContent: 'center',
-          height: '30px',
+          minHeight: '30px',
           background: 'palegoldenrod',
+          padding: '10px'
         }}
       >
-        <PersonIcon sx={{ color: 'sunglow' }} />
-        <Typography sx={{ color: '#000000', fontSize: '10px' }}>
+        <PersonIcon sx={{ color: 'text.burntSienna' }} />
+        <Typography sx={{ color: '#000000', fontSize: '10px', textAlign: 'center' }}>
           Đăng kí ngay - Nhận chiết khấu giao dịch lên tới 100 USD (dành cho
           người dùng đã xác minh)
         </Typography>

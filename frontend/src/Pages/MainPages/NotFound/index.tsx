@@ -30,24 +30,6 @@ const NotFound = () => {
         >
           Oops...
         </Typography>
-        <Stack direction="row" justifyContent="center" marginTop="60px">
-          <Box
-            component="img"
-            src={Assets.notFoundIll}
-            alt="Not found illustrator"
-            width={368}
-            height={366}
-            sx={{
-              width: '100%',
-              maxWidth: {
-                xs: '219px',
-                md: '368px',
-              },
-              height: 'auto',
-              objectFit: 'contain',
-            }}
-          />
-        </Stack>
         <Typography
           variant="h6"
           textAlign="center"

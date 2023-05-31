@@ -105,7 +105,7 @@ const CoreTheme = createTheme({
             primary: '#FFB23F',
             secondary: '#F5F5F5',
             burntSienna: '#E87844',
-            lightSilver: "#D9D9D9",
+            lightSilver: '#D9D9D9',
           },
         }
       : {
@@ -120,7 +120,7 @@ const CoreTheme = createTheme({
             primary: '#FFB23F',
             secondary: '#0A0E11',
             burntSienna: '#E87844',
-            lightSilver: "#D9D9D9",
+            lightSilver: '#D9D9D9',
           },
         }),
   },
@@ -180,6 +180,11 @@ const CoreTheme = createTheme({
           color: '#000',
           textDecoration: 'none',
         },
+      },
+    },
+    MuiButtonBase: {
+      defaultProps: {
+        LinkComponent: LinkBehavior,
       },
     },
   },

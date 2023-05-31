@@ -25,10 +25,7 @@ interface IProps {
 }
 
 const labelStyles: SxProps<Theme> = {
-  fontSize: {
-    xs: '12px',
-    md: '18px',
-  },
+  fontSize: '15px',
   fontWeight: 700,
   letterSpacing: '-1.5%',
   color: 'rgba(0,0,0,0.8)',
@@ -87,23 +84,24 @@ const Select: React.FC<IProps> = ({
         styles={{
           container: (base) => ({
             ...base,
-            width: matchUpMd ? '212px' : '204px',
+            width: '180px',
             boxSizing: 'border-box',
-            fontSize: matchUpMd ? '16px' : '14px',
+            fontSize: '15px',
             fontWeight: 500,
           }),
           control: (base, props) => ({
             ...base,
-            borderRadius: '12px',
             boxSizing: 'border-box',
             borderColor: '#2E2800',
-            boxShadow: props.isFocused ? '0 0 0 1px #FFDD00' : 'none',
+            boxShadow: props.isFocused ? '0 0 0 1px #E87844' : 'none',
+            borderRadius: '0px',
+            minHeight: '37px',
+            border: 'none'
           }),
           valueContainer: (base) => ({
             ...base,
-            borderRadius: '12px',
             boxSizing: 'border-box',
-            height: matchUpMd ? '56px' : '48px',
+            height: '37px',
             padding: matchUpMd ? '0 16px' : '0 12px',
           }),
           menuList: (base) => ({
@@ -111,14 +109,12 @@ const Select: React.FC<IProps> = ({
             border: '1px solid #2E2800',
             width: 'auto',
             height: '100%',
-            borderRadius: '12px',
             maxHeight: '400px',
           }),
           menu: (base) => ({
             ...base,
             minWidth: '100%',
             width: 'auto',
-            borderRadius: '12px',
             boxSizing: 'border-box',
             overflow: 'hidden',
           }),
@@ -134,7 +130,7 @@ const Select: React.FC<IProps> = ({
               backgroundColor: 'rgba(255, 221, 0, 1.0)',
             },
             ':hover': {
-              backgroundColor: 'rgba(255, 221, 0, 0.5)',
+              backgroundColor: '#E87844',
             },
           }),
         }}
