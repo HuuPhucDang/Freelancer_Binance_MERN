@@ -84,7 +84,7 @@ const Select: React.FC<IProps> = ({
         styles={{
           container: (base) => ({
             ...base,
-            width: '180px',
+            width: '150px',
             boxSizing: 'border-box',
             fontSize: '15px',
             fontWeight: 500,

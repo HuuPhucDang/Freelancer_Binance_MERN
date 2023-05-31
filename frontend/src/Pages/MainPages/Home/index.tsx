@@ -22,7 +22,7 @@ const Home: React.FC = () => {
   const _renderHero = () => {
     return (
       <Grid container>
-        <Grid item md={6}>
+        <Grid item md={5.5}>
           <Stack direction="column" height="100%">
             <Stack flex={1}>
               <Typography
@@ -55,7 +55,7 @@ const Home: React.FC = () => {
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  marginBottom: '20px',
+                  marginBottom: '12px',
                 }}
               >
                 <Box
@@ -71,7 +71,7 @@ const Home: React.FC = () => {
                     color: 'text.primary',
                   }}
                 >
-                  Giao dịch Bitcoin mà không mất phí
+                  Giao dịch Bitcoin mà không mất phí &gt;
                 </Typography>
               </Link>
               <Button
@@ -81,6 +81,7 @@ const Home: React.FC = () => {
                   backgroundColor: 'background.primary',
                   height: '27px',
                   color: 'text.secondary',
+                  textTransform: 'unset',
                 }}
                 startIcon={<PersonIcon />}
               >
@@ -97,14 +98,15 @@ const Home: React.FC = () => {
               >
                 Hoặc tiếp tục bằng{' '}
               </Typography>
-              <Grid container spacing={2}>
+              <Grid container spacing={5}>
                 <Grid item>
                   <Button
                     sx={{
                       display: 'flex',
                       alignItems: 'center',
-                      maxWidth: '140px',
+                      width: '130px',
                       backgroundColor: 'background.lightSilver',
+                      textTransform: 'unset',
                     }}
                   >
                     <Box
@@ -119,7 +121,8 @@ const Home: React.FC = () => {
                     <Typography
                       sx={{ fontSize: '12px', color: 'text.secondary' }}
                     >
-                      Download app android
+                      Download <br />
+                      app android
                     </Typography>
                   </Button>
                 </Grid>
@@ -128,8 +131,9 @@ const Home: React.FC = () => {
                     sx={{
                       display: 'flex',
                       alignItems: 'center',
-                      maxWidth: '140px',
+                      width: '130px',
                       backgroundColor: 'background.lightSilver',
+                      textTransform: 'unset',
                     }}
                   >
                     <Box
@@ -144,7 +148,8 @@ const Home: React.FC = () => {
                     <Typography
                       sx={{ fontSize: '12px', color: 'text.secondary' }}
                     >
-                      Download app ios
+                      Download <br />
+                      app ios
                     </Typography>
                   </Button>
                 </Grid>
@@ -152,14 +157,19 @@ const Home: React.FC = () => {
             </Stack>
           </Stack>
         </Grid>
-        <Grid item md={6}>
+        <Grid item md={6.5}>
           <Box
             component="img"
             src={Assets.deviceImage}
             sx={{ width: '100%', height: 'auto', objectFit: 'contain' }}
           />
           <Typography
-            sx={{ fontSize: '16px', lineHeight: '20px', fontWeight: 600 }}
+            sx={{
+              fontSize: '16px',
+              lineHeight: '20px',
+              fontWeight: 600,
+              padding: '0 10px',
+            }}
           >
             Luôn cập nhật thông tin với ứng dụng trên app và desktop của chúng
             tôi
@@ -185,10 +195,16 @@ const Home: React.FC = () => {
               38 tỷ đô la
             </Typography>
             <Typography
-              sx={{ fontSize: '13px', fontWeight: 400, lineHeight: '16px' }}
+              sx={{
+                fontSize: '13px',
+                fontWeight: 400,
+                lineHeight: '16px',
+                maxWidth: '210px',
+                textAlign: 'left',
+                margin: '0 auto',
+              }}
             >
-              38 tỷ đô la Khối lượng giao dịch trong vòng 24 giờ trên sàn giao
-              dịch Binance
+              Khối lượng giao dịch trong vòng 24 giờ trên sàn giao dịch Binance
             </Typography>
           </Stack>
         </Grid>
@@ -248,7 +264,7 @@ const Home: React.FC = () => {
         >
           Khám phá vô vàn cơ hội đầu tư trên Binance{' '}
         </Typography>
-        <Grid container spacing={6} marginTop="20px">
+        <Grid container spacing={6} marginTop="20px" padding="0 16px">
           <Grid item md={4}>
             <Stack
               direction="column"
@@ -270,6 +286,7 @@ const Home: React.FC = () => {
                   fontWeight: 700,
                   lienHeight: '20px',
                   textAlign: 'left',
+                  marginTop: '10px',
                 }}
               >
                 Khám phá thế giới NFT{' '}
@@ -281,6 +298,7 @@ const Home: React.FC = () => {
                   fontWeight: 400,
                   color: 'text.primary',
                   textAlign: 'left',
+                  marginTop: '10px',
                 }}
               >
                 Mở các hộp bí hiểm, khám phá IGO (đợt phát hành sản phẩm trong
@@ -327,6 +345,7 @@ const Home: React.FC = () => {
                   fontWeight: 400,
                   color: 'text.primary',
                   textAlign: 'left',
+                  marginTop: '10px',
                 }}
               >
                 Thu hút thêm nhiều khách hàng bằng cách thanh toán và nhận khoản
@@ -384,6 +403,7 @@ const Home: React.FC = () => {
                   fontWeight: 400,
                   color: 'text.primary',
                   textAlign: 'left',
+                  marginTop: '10px',
                 }}
               >
                 Gửi tiền mã hóa và bắt đầu tăng thu nhập ất
@@ -410,28 +430,49 @@ const Home: React.FC = () => {
   const _renderAbout = () => {
     return (
       <Stack direction="column" marginTop="60px">
-        <Typography
-          sx={{
-            fontSize: '34px',
-            lineHeight: '41px',
-            fontWeight: 700,
-            textAlign: 'left',
-          }}
-        >
-          Sàn giao dịch mã hóa đáng tin cậy của bạn{' '}
-        </Typography>
-        <Typography
-          sx={{
-            fontSize: '13px',
-            fontWeight: 400,
-            lineHeight: '16px',
-            textAlign: 'left',
-            marginTop: '6px',
-          }}
-        >
-          Tại Binance, chúng tôi cam kết bảo vệ người dùng bằng các quy định
-          nghiêm ngặt và các biện pháp kĩ thuật đầu ngành{' '}
-        </Typography>
+        <Grid container>
+          <Grid item md={11}>
+            <Typography
+              sx={{
+                fontSize: '34px',
+                lineHeight: '41px',
+                fontWeight: 700,
+                textAlign: 'left',
+              }}
+            >
+              Sàn giao dịch mã hóa đáng tin cậy của bạn{' '}
+            </Typography>
+            <Typography
+              sx={{
+                fontSize: '13px',
+                fontWeight: 400,
+                lineHeight: '16px',
+                textAlign: 'left',
+                marginTop: '6px',
+              }}
+            >
+              Tại Binance, chúng tôi cam kết bảo vệ người dùng bằng các quy định
+              nghiêm ngặt và các biện pháp kĩ thuật đầu ngành{' '}
+            </Typography>
+          </Grid>
+          <Grid item md={1}>
+            <Link
+              sx={{
+                fontSize: '14px',
+                lineHeight: '14px',
+                fontWeight: 400,
+                textAlign: 'left',
+                marginTop: '20px',
+                color: "text.primary"
+              }}
+            >
+              Tìm hiểu thêm
+              <span style={{ display: 'inline-block', marginLeft: '10px' }}>
+                &gt;
+              </span>
+            </Link>
+          </Grid>
+        </Grid>
         <Grid container marginTop="50px" columnSpacing={8}>
           <Grid item md={6}>
             <Stack direction="row" alignItems="flex-start">
@@ -470,7 +511,7 @@ const Home: React.FC = () => {
                 </Typography>
               </Stack>
             </Stack>
-            <Stack direction="row" alignItems="flex-start" marginTop="36px">
+            <Stack direction="row" alignItems="flex-start" marginTop="30px">
               <Box
                 component="img"
                 src={Assets.eyeIcon}
@@ -507,7 +548,7 @@ const Home: React.FC = () => {
                 </Typography>
               </Stack>
             </Stack>
-            <Stack direction="row" alignItems="flex-start" marginTop="36px">
+            <Stack direction="row" alignItems="flex-start" marginTop="30px">
               <Box
                 component="img"
                 src={Assets.lockIcon}
@@ -546,18 +587,6 @@ const Home: React.FC = () => {
             </Stack>
           </Grid>
           <Grid item md={6}>
-            <Link
-              sx={{
-                fontSize: '11px',
-                lineHeight: '14px',
-                fontWeight: 400,
-                color: 'text.burntSienna',
-                textAlign: 'left',
-                marginTop: '20px',
-              }}
-            >
-              Tìm hiểu thêm
-            </Link>
             <Box
               component="img"
               src={Assets.preventImage}
@@ -582,7 +611,7 @@ const Home: React.FC = () => {
         >
           Lí do nên giao dịch cùng chúng tôi{' '}
         </Typography>
-        <Grid container rowSpacing={7} columnSpacing={4} marginTop="20px">
+        <Grid container rowSpacing={7} columnSpacing={3} marginTop="20px">
           <Grid item md={6}>
             <Stack direction="row" alignItems="flex-start">
               <Box
@@ -612,7 +641,7 @@ const Home: React.FC = () => {
                     lineHeight: '15px',
                     fontWeight: 400,
                     textAlign: 'left',
-                    marginTop: '10px',
+                    marginTop: '8px',
                   }}
                 >
                   Sản phẩm sáng tạo, nâng cao trải nghiệm người dùng và đồng
@@ -652,7 +681,7 @@ const Home: React.FC = () => {
                     lineHeight: '15px',
                     fontWeight: 400,
                     textAlign: 'left',
-                    marginTop: '10px',
+                    marginTop: '8px',
                   }}
                 >
                   Cơ chế khớp lệnh nhanh và ổn định của chúng tôi có thể xử lý
@@ -691,7 +720,7 @@ const Home: React.FC = () => {
                     lineHeight: '15px',
                     fontWeight: 400,
                     textAlign: 'left',
-                    marginTop: '10px',
+                    marginTop: '8px',
                   }}
                 >
                   Lựa chọn hơn 90 hợp đồng, bao gồm các hợp đồng ký quỹ bằng
@@ -729,7 +758,7 @@ const Home: React.FC = () => {
                     lineHeight: '15px',
                     fontWeight: 400,
                     textAlign: 'left',
-                    marginTop: '10px',
+                    marginTop: '8px',
                   }}
                 >
                   Truy cập một cách nhanh chóng và an toàn ngay từ smartphone
@@ -923,7 +952,7 @@ const Home: React.FC = () => {
     return (
       <Container
         component="main"
-        maxWidth="lg"
+        maxWidth="md"
         sx={{ my: { xs: '3em', md: '5em', textAlign: '-webkit-center' } }}
       >
         <Grow in timeout={500}>

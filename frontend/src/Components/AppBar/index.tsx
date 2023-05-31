@@ -22,10 +22,13 @@ import { ROUTERS, MENU_NAVIGATION } from '@/Constants';
 import { CommonStyles } from '../Common';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
-import LoginIcon from '@mui/icons-material/Login';
 import PersonIcon from '@mui/icons-material/Person';
-
+import { RootState, useTypedSelector } from '../../Reducers/store';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 const AppBarComponent: React.FC = () => {
+  const isLogged: boolean = useTypedSelector(
+    (state: RootState) => state.AUTH?.isLogged
+  );
   // Constructors
   const pathname = useLocation().pathname;
   const [mobileOpen, setMobileOpen] = useState<boolean>(false);
@@ -70,16 +73,25 @@ const AppBarComponent: React.FC = () => {
         justifyContent="space-between"
         sx={CommonStyles.displayInDesktop}
       >
-        <Box component="img" src={Assets.moneyIcon} />
+        <Link
+          href={ROUTERS.TRANSACTION}
+          sx={{ display: 'flex', alignItems: 'center' }}
+        >
+          <Box
+            component="img"
+            src={Assets.transactionIcon}
+            sx={{ width: '33px', height: 'auto', objectFit: 'contain' }}
+          />
+        </Link>
         <Stack
           flexDirection="row"
           alignItems="center"
           justifyContent="space-evenly"
           sx={{
             flex: 1,
-            background: '#D9D9D9',
+            backgroundColor: 'background.newsHeader',
             height: '29px',
-            margin: '0 12px',
+            margin: '0 8px',
           }}
         >
           <Typography sx={{ fontSize: '12px', color: '#000' }}>
@@ -92,33 +104,81 @@ const AppBarComponent: React.FC = () => {
             IUDST -2,59
           </Typography>
         </Stack>
-        <Button
-          startIcon={<LoginIcon />}
-          variant="text"
-          size="small"
-          sx={{
-            fontSize: '12px',
-            marginRight: '10px',
-            textTransform: 'unset',
-            backgroundColor: 'background.lightSilver',
-            color: 'text.secondary',
-          }}
-        >
-          Đăng ký
-        </Button>
-        <Button
-          startIcon={<PersonIcon />}
-          variant="text"
-          size="small"
-          sx={{
-            fontSize: '12px',
-            textTransform: 'unset',
-            backgroundColor: 'background.burntSienna',
-            color: 'text.secondary',
-          }}
-        >
-          Đăng nhập
-        </Button>
+        {isLogged ? (
+          <>
+            <Button
+              variant="text"
+              size="small"
+              href={ROUTERS.RECHARGE}
+              sx={{
+                fontSize: '12px',
+                paddingX: '8px',
+                textTransform: 'unset',
+                backgroundColor: 'background.burntSienna',
+                color: 'text.secondary',
+                marginRight: '10px',
+              }}
+            >
+              Nạp
+            </Button>
+            <Button
+              variant="text"
+              size="small"
+              href={ROUTERS.WITHDRAW_MONEY}
+              sx={{
+                fontSize: '12px',
+                paddingX: '8px',
+                textTransform: 'unset',
+                backgroundColor: 'background.lightSilver',
+                color: 'text.secondary',
+                marginRight: '10px',
+              }}
+            >
+              Rút
+            </Button>
+            <IconButton
+              onClick={() => {
+                Utils.redirect(ROUTERS.OVERVIEW);
+              }}
+              size="small"
+            >
+              <AccountCircleIcon sx={{ fontSize: '28px' }} />
+            </IconButton>
+          </>
+        ) : (
+          <>
+            <Button
+              variant="text"
+              size="small"
+              href={ROUTERS.SIGN_IN}
+              sx={{
+                fontSize: '12px',
+                marginRight: '10px',
+                paddingX: '8px',
+                textTransform: 'unset',
+                backgroundColor: 'background.lightSilver',
+                color: 'text.secondary',
+              }}
+            >
+              Đăng nhập
+            </Button>
+            <Button
+              startIcon={<PersonIcon />}
+              variant="text"
+              size="small"
+              href={ROUTERS.SIGN_UP}
+              sx={{
+                fontSize: '12px',
+                paddingX: '8px',
+                textTransform: 'unset',
+                backgroundColor: 'background.burntSienna',
+                color: 'text.secondary',
+              }}
+            >
+              Đăng ký
+            </Button>
+          </>
+        )}
       </Grid>
     ),
     [pathname, mobileOpen]
@@ -218,11 +278,13 @@ const AppBarComponent: React.FC = () => {
           justifyContent: 'center',
           minHeight: '30px',
           background: 'palegoldenrod',
-          padding: '10px'
+          padding: '10px',
         }}
       >
         <PersonIcon sx={{ color: 'text.burntSienna' }} />
-        <Typography sx={{ color: '#000000', fontSize: '10px', textAlign: 'center' }}>
+        <Typography
+          sx={{ color: '#000000', fontSize: '10px', textAlign: 'center' }}
+        >
           Đăng kí ngay - Nhận chiết khấu giao dịch lên tới 100 USD (dành cho
           người dùng đã xác minh)
         </Typography>
@@ -230,9 +292,11 @@ const AppBarComponent: React.FC = () => {
     );
   };
 
+  if (pathname === ROUTERS.SIGN_IN || pathname === ROUTERS.SIGN_UP) return null;
+
   return (
     <AppBar position="sticky" sx={appBarStyles}>
-      <Container maxWidth="lg">
+      <Container maxWidth="md">
         <Toolbar>{_renderMainBar()}</Toolbar>
         {_renderDrawer()}
       </Container>

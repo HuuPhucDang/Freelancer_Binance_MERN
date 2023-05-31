@@ -36,6 +36,8 @@ const _asyncActions: ActionTypes = generateSyncActions([
 ]);
 
 const _singleActions: ActionTypes = {
+  // Auth actions
+  SET_LOGGED: 'SET_LOGGED',
   // Widget actions
   SET_NOTIFICATION_MESSAGE: 'SET_NOTIFICATION_MESSAGE',
   SET_ALERT_MESSAGE: 'SET_ALERT_MESSAGE',

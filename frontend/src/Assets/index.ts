@@ -43,6 +43,7 @@ import mailVerifyIcon from './mail_verify.png';
 import passwordIcon from './password.png';
 import otpIcon from './otp.png';
 import qrImage from './qr.png';
+import transactionIcon from './transaction.jpg';
 
 export default {
   darkIconDarkTheme,
@@ -84,4 +85,5 @@ export default {
   passwordIcon,
   otpIcon,
   qrImage,
+  transactionIcon,
 };

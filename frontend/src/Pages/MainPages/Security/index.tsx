@@ -67,18 +67,18 @@ const Security: React.FC = () => {
     return (
       <Container
         component="main"
-        maxWidth="lg"
+        maxWidth="md"
         sx={{
           minHeight: 'calc(100vh - 94px)',
           padding: '1em 0',
           mx: 'auto',
         }}
       >
-        <Grid container>
+        <Grid container columnSpacing={2} >
           <Grid item md={3}>
             <Sidebar />
           </Grid>
-          <Grid item md={9}>
+          <Grid item md={9} borderLeft="1px solid #949494">
             <Stack direction="column">
               <Stack direction="row" justifyContent="space-between">
                 <Typography
