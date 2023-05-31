@@ -54,47 +54,47 @@ const rows = [
   createData(2634.56, 0.05766, 6.86906, 'up', '11:04:50'),
   createData(2623.66, 0.00975, 86.8989038, 'up', '11:04:50'),
   createData(2634.56, 0.08648, 82.5888, 'up', '11:04:50'),
-  // createData(2623.66, 0.09475, 12.56879, 'up', '11:04:50'),
-  // createData(2634.56, 0.00265, 55.68797, 'up', '11:04:50'),
-  // createData(2623.66, 0.00473, 8.879789, 'up', '11:04:50'),
-  // createData(2634.56, 0.05766, 1.136468, 'up', '11:04:50'),
-  // createData(2623.66, 0.00975, 6.86906, 'up', '11:04:50'),
-  // createData(2623.66, 0.00473, 1.136468, 'up', '11:04:50'),
-  // createData(2634.56, 0.05766, 6.86906, 'up', '11:04:50'),
-  // createData(2623.66, 0.00975, 86.8989038, 'up', '11:04:50'),
-  // createData(2634.56, 0.08648, 82.5888, 'up', '11:04:50'),
-  // createData(2623.66, 0.09475, 12.56879, 'up', '11:04:50'),
-  // createData(2634.56, 0.00265, 55.68797, 'up', '11:04:50'),
-  // createData(2623.66, 0.00473, 8.879789, 'up', '11:04:50'),
-  // createData(2634.56, 0.05766, 1.136468, 'up', '11:04:50'),
-  // createData(2623.66, 0.00975, 6.86906, 'up', '11:04:50'),
-  // createData(2634.56, 0.08648, 86.8989038, 'down', '11:04:51'),
-  // createData(2623.66, 0.09475, 82.5888, 'down', '11:04:51'),
-  // createData(2634.56, 0.00265, 12.56879, 'down', '11:04:51'),
-  // createData(2623.66, 0.00473, 86.8989038, 'down', '11:04:51'),
-  // createData(2634.56, 0.05766, 55.68797, 'down', '11:04:51'),
-  // createData(2623.66, 0.00975, 8.879789, 'down', '11:04:51'),
-  // createData(2634.56, 0.08648, 1.136468, 'down', '11:04:51'),
-  // createData(2623.66, 0.09475, 6.86906, 'down', '11:04:51'),
-  // createData(2634.56, 0.00265, 82.5888, 'down', '11:04:51'),
-  // createData(2634.56, 0.08648, 86.8989038, 'down', '11:04:51'),
-  // createData(2623.66, 0.09475, 82.5888, 'down', '11:04:51'),
-  // createData(2634.56, 0.00265, 12.56879, 'down', '11:04:51'),
-  // createData(2623.66, 0.00473, 86.8989038, 'down', '11:04:51'),
-  // createData(2634.56, 0.05766, 55.68797, 'down', '11:04:51'),
-  // createData(2623.66, 0.00975, 8.879789, 'down', '11:04:51'),
-  // createData(2634.56, 0.08648, 1.136468, 'down', '11:04:51'),
-  // createData(2623.66, 0.09475, 6.86906, 'down', '11:04:51'),
-  // createData(2634.56, 0.00265, 82.5888, 'down', '11:04:51'),
-  // createData(2634.56, 0.08648, 86.8989038, 'down', '11:04:51'),
-  // createData(2623.66, 0.09475, 82.5888, 'down', '11:04:51'),
-  // createData(2634.56, 0.00265, 12.56879, 'down', '11:04:51'),
-  // createData(2623.66, 0.00473, 86.8989038, 'down', '11:04:51'),
-  // createData(2634.56, 0.05766, 55.68797, 'down', '11:04:51'),
-  // createData(2623.66, 0.00975, 8.879789, 'down', '11:04:51'),
-  // createData(2634.56, 0.08648, 1.136468, 'down', '11:04:51'),
-  // createData(2623.66, 0.09475, 6.86906, 'down', '11:04:51'),
-  // createData(2634.56, 0.00265, 82.5888, 'down', '11:04:51'),
+  createData(2623.66, 0.09475, 12.56879, 'up', '11:04:50'),
+  createData(2634.56, 0.00265, 55.68797, 'up', '11:04:50'),
+  createData(2623.66, 0.00473, 8.879789, 'up', '11:04:50'),
+  createData(2634.56, 0.05766, 1.136468, 'up', '11:04:50'),
+  createData(2623.66, 0.00975, 6.86906, 'up', '11:04:50'),
+  createData(2623.66, 0.00473, 1.136468, 'up', '11:04:50'),
+  createData(2634.56, 0.05766, 6.86906, 'up', '11:04:50'),
+  createData(2623.66, 0.00975, 86.8989038, 'up', '11:04:50'),
+  createData(2634.56, 0.08648, 82.5888, 'up', '11:04:50'),
+  createData(2623.66, 0.09475, 12.56879, 'up', '11:04:50'),
+  createData(2634.56, 0.00265, 55.68797, 'up', '11:04:50'),
+  createData(2623.66, 0.00473, 8.879789, 'up', '11:04:50'),
+  createData(2634.56, 0.05766, 1.136468, 'up', '11:04:50'),
+  createData(2623.66, 0.00975, 6.86906, 'up', '11:04:50'),
+  createData(2634.56, 0.08648, 86.8989038, 'down', '11:04:51'),
+  createData(2623.66, 0.09475, 82.5888, 'down', '11:04:51'),
+  createData(2634.56, 0.00265, 12.56879, 'down', '11:04:51'),
+  createData(2623.66, 0.00473, 86.8989038, 'down', '11:04:51'),
+  createData(2634.56, 0.05766, 55.68797, 'down', '11:04:51'),
+  createData(2623.66, 0.00975, 8.879789, 'down', '11:04:51'),
+  createData(2634.56, 0.08648, 1.136468, 'down', '11:04:51'),
+  createData(2623.66, 0.09475, 6.86906, 'down', '11:04:51'),
+  createData(2634.56, 0.00265, 82.5888, 'down', '11:04:51'),
+  createData(2634.56, 0.08648, 86.8989038, 'down', '11:04:51'),
+  createData(2623.66, 0.09475, 82.5888, 'down', '11:04:51'),
+  createData(2634.56, 0.00265, 12.56879, 'down', '11:04:51'),
+  createData(2623.66, 0.00473, 86.8989038, 'down', '11:04:51'),
+  createData(2634.56, 0.05766, 55.68797, 'down', '11:04:51'),
+  createData(2623.66, 0.00975, 8.879789, 'down', '11:04:51'),
+  createData(2634.56, 0.08648, 1.136468, 'down', '11:04:51'),
+  createData(2623.66, 0.09475, 6.86906, 'down', '11:04:51'),
+  createData(2634.56, 0.00265, 82.5888, 'down', '11:04:51'),
+  createData(2634.56, 0.08648, 86.8989038, 'down', '11:04:51'),
+  createData(2623.66, 0.09475, 82.5888, 'down', '11:04:51'),
+  createData(2634.56, 0.00265, 12.56879, 'down', '11:04:51'),
+  createData(2623.66, 0.00473, 86.8989038, 'down', '11:04:51'),
+  createData(2634.56, 0.05766, 55.68797, 'down', '11:04:51'),
+  createData(2623.66, 0.00975, 8.879789, 'down', '11:04:51'),
+  createData(2634.56, 0.08648, 1.136468, 'down', '11:04:51'),
+  createData(2623.66, 0.09475, 6.86906, 'down', '11:04:51'),
+  createData(2634.56, 0.00265, 82.5888, 'down', '11:04:51'),
 ];
 
 const bottomRightRows = [
@@ -107,32 +107,50 @@ const bottomRightRows = [
   createData(2623.66, 0.00975, 8.879789, 'down', '11:04:51'),
   createData(2634.56, 0.08648, 1.136468, 'down', '11:04:51'),
   createData(2634.56, 0.05766, 6.86906, 'up', '11:04:50'),
-  // createData(2623.66, 0.09475, 82.5888, 'down', '11:04:51'),
-  // createData(2623.66, 0.00975, 86.8989038, 'up', '11:04:50'),
-  // createData(2623.66, 0.09475, 82.5888, 'down', '11:04:51'),
-  // createData(2634.56, 0.08648, 82.5888, 'up', '11:04:50'),
-  // createData(2623.66, 0.09475, 12.56879, 'up', '11:04:50'),
-  // createData(2623.66, 0.00975, 8.879789, 'down', '11:04:51'),
-  // createData(2634.56, 0.08648, 1.136468, 'down', '11:04:51'),
-  // createData(2634.56, 0.05766, 6.86906, 'up', '11:04:50'),
-  // createData(2623.66, 0.09475, 82.5888, 'down', '11:04:51'),
-  // createData(2623.66, 0.00975, 86.8989038, 'up', '11:04:50'),
-  // createData(2623.66, 0.09475, 82.5888, 'down', '11:04:51'),
-  // createData(2634.56, 0.08648, 82.5888, 'up', '11:04:50'),
-  // createData(2623.66, 0.09475, 12.56879, 'up', '11:04:50'),
-  // createData(2623.66, 0.00975, 8.879789, 'down', '11:04:51'),
-  // createData(2634.56, 0.08648, 1.136468, 'down', '11:04:51'),
-  // createData(2634.56, 0.05766, 6.86906, 'up', '11:04:50'),
-  // createData(2623.66, 0.09475, 82.5888, 'down', '11:04:51'),
-  // createData(2623.66, 0.00975, 86.8989038, 'up', '11:04:50'),
-  // createData(2623.66, 0.00975, 86.8989038, 'up', '11:04:50'),
-  // createData(2623.66, 0.00975, 86.8989038, 'up', '11:04:50'),
-  // createData(2623.66, 0.00975, 86.8989038, 'up', '11:04:50'),
-  // createData(2623.66, 0.09475, 82.5888, 'down', '11:04:51'),
-  // createData(2634.56, 0.08648, 82.5888, 'up', '11:04:50'),
-  // createData(2623.66, 0.09475, 12.56879, 'up', '11:04:50'),
-  // createData(2623.66, 0.00975, 8.879789, 'down', '11:04:51'),
-  // createData(2634.56, 0.08648, 1.136468, 'down', '11:04:51'),
+  createData(2623.66, 0.09475, 82.5888, 'down', '11:04:51'),
+  createData(2623.66, 0.00975, 86.8989038, 'up', '11:04:50'),
+  createData(2623.66, 0.09475, 82.5888, 'down', '11:04:51'),
+  createData(2634.56, 0.08648, 82.5888, 'up', '11:04:50'),
+  createData(2623.66, 0.09475, 12.56879, 'up', '11:04:50'),
+  createData(2623.66, 0.00975, 8.879789, 'down', '11:04:51'),
+  createData(2634.56, 0.08648, 1.136468, 'down', '11:04:51'),
+  createData(2634.56, 0.05766, 6.86906, 'up', '11:04:50'),
+  createData(2623.66, 0.09475, 82.5888, 'down', '11:04:51'),
+  createData(2623.66, 0.00975, 86.8989038, 'up', '11:04:50'),
+  createData(2623.66, 0.09475, 82.5888, 'down', '11:04:51'),
+  createData(2634.56, 0.08648, 82.5888, 'up', '11:04:50'),
+  createData(2623.66, 0.09475, 12.56879, 'up', '11:04:50'),
+  createData(2623.66, 0.00975, 8.879789, 'down', '11:04:51'),
+  createData(2634.56, 0.08648, 1.136468, 'down', '11:04:51'),
+  createData(2634.56, 0.05766, 6.86906, 'up', '11:04:50'),
+  createData(2623.66, 0.09475, 82.5888, 'down', '11:04:51'),
+  createData(2623.66, 0.00975, 86.8989038, 'up', '11:04:50'),
+  createData(2623.66, 0.00975, 86.8989038, 'up', '11:04:50'),
+  createData(2623.66, 0.00975, 86.8989038, 'up', '11:04:50'),
+  createData(2623.66, 0.00975, 86.8989038, 'up', '11:04:50'),
+  createData(2623.66, 0.09475, 82.5888, 'down', '11:04:51'),
+  createData(2634.56, 0.08648, 82.5888, 'up', '11:04:50'),
+  createData(2623.66, 0.09475, 12.56879, 'up', '11:04:50'),
+  createData(2623.66, 0.00975, 8.879789, 'down', '11:04:51'),
+  createData(2623.66, 0.09475, 82.5888, 'down', '11:04:51'),
+  createData(2623.66, 0.00975, 86.8989038, 'up', '11:04:50'),
+  createData(2623.66, 0.00975, 86.8989038, 'up', '11:04:50'),
+  createData(2623.66, 0.00975, 86.8989038, 'up', '11:04:50'),
+  createData(2623.66, 0.00975, 86.8989038, 'up', '11:04:50'),
+  createData(2623.66, 0.09475, 82.5888, 'down', '11:04:51'),
+  createData(2634.56, 0.08648, 82.5888, 'up', '11:04:50'),
+  createData(2623.66, 0.09475, 12.56879, 'up', '11:04:50'),
+  createData(2623.66, 0.00975, 8.879789, 'down', '11:04:51'),
+  createData(2623.66, 0.09475, 82.5888, 'down', '11:04:51'),
+  createData(2623.66, 0.00975, 86.8989038, 'up', '11:04:50'),
+  createData(2623.66, 0.00975, 86.8989038, 'up', '11:04:50'),
+  createData(2623.66, 0.00975, 86.8989038, 'up', '11:04:50'),
+  createData(2623.66, 0.00975, 86.8989038, 'up', '11:04:50'),
+  createData(2623.66, 0.09475, 82.5888, 'down', '11:04:51'),
+  createData(2634.56, 0.08648, 82.5888, 'up', '11:04:50'),
+  createData(2623.66, 0.09475, 12.56879, 'up', '11:04:50'),
+  createData(2623.66, 0.00975, 8.879789, 'down', '11:04:51'),
+  createData(2634.56, 0.08648, 1.136468, 'down', '11:04:51'),
 ];
 
 const topRightRows = [
@@ -147,12 +165,48 @@ const topRightRows = [
   createTopRightData('1INCH/BTC ', 0.0000623),
   createTopRightData('1INCH/BTC ', 0.0000623),
   createTopRightData('1INCH/BTC ', 0.0000623),
-  // createTopRightData('1INCH/BTC ', 0.0000623),
-  // createTopRightData('1INCH/BTC ', 0.0000623),
-  // createTopRightData('1INCH/BTC ', 0.0000623),
-  // createTopRightData('1INCH/BTC ', 0.0000623),
-  // createTopRightData('1INCH/BTC ', 0.0000623),
-  // createTopRightData('1INCH/BTC ', 0.0000623),
+  createTopRightData('1INCH/BTC ', 0.0000623),
+  createTopRightData('1INCH/BTC ', 0.0000623),
+  createTopRightData('1INCH/BTC ', 0.0000623),
+  createTopRightData('1INCH/BTC ', 0.0000623),
+  createTopRightData('1INCH/BTC ', 0.0000623),
+  createTopRightData('1INCH/BTC ', 0.0000623),
+  createTopRightData('1INCH/BTC ', 0.0000623),
+  createTopRightData('1INCH/BTC ', 0.0000623),
+  createTopRightData('1INCH/BTC ', 0.0000623),
+  createTopRightData('1INCH/BTC ', 0.0000623),
+  createTopRightData('1INCH/BTC ', 0.0000623),
+  createTopRightData('1INCH/BTC ', 0.0000623),
+  createTopRightData('1INCH/BTC ', 0.0000623),
+  createTopRightData('1INCH/BTC ', 0.0000623),
+  createTopRightData('1INCH/BTC ', 0.0000623),
+  createTopRightData('1INCH/BTC ', 0.0000623),
+  createTopRightData('1INCH/BTC ', 0.0000623),
+  createTopRightData('1INCH/BTC ', 0.0000623),
+  createTopRightData('1INCH/BTC ', 0.0000623),
+  createTopRightData('1INCH/BTC ', 0.0000623),
+  createTopRightData('1INCH/BTC ', 0.0000623),
+  createTopRightData('1INCH/BTC ', 0.0000623),
+  createTopRightData('1INCH/BTC ', 0.0000623),
+  createTopRightData('1INCH/BTC ', 0.0000623),
+  createTopRightData('1INCH/BTC ', 0.0000623),
+  createTopRightData('1INCH/BTC ', 0.0000623),
+  createTopRightData('1INCH/BTC ', 0.0000623),
+  createTopRightData('1INCH/BTC ', 0.0000623),
+  createTopRightData('1INCH/BTC ', 0.0000623),
+  createTopRightData('1INCH/BTC ', 0.0000623),
+  createTopRightData('1INCH/BTC ', 0.0000623),
+  createTopRightData('1INCH/BTC ', 0.0000623),
+  createTopRightData('1INCH/BTC ', 0.0000623),
+  createTopRightData('1INCH/BTC ', 0.0000623),
+  createTopRightData('1INCH/BTC ', 0.0000623),
+  createTopRightData('1INCH/BTC ', 0.0000623),
+  createTopRightData('1INCH/BTC ', 0.0000623),
+  createTopRightData('1INCH/BTC ', 0.0000623),
+  createTopRightData('1INCH/BTC ', 0.0000623),
+  createTopRightData('1INCH/BTC ', 0.0000623),
+  createTopRightData('1INCH/BTC ', 0.0000623),
+  createTopRightData('1INCH/BTC ', 0.0000623),
 ];
 
 const Transaction: React.FC = () => {
@@ -278,7 +332,7 @@ const Transaction: React.FC = () => {
               </Stack>
               <TableContainer
                 component={Paper}
-                sx={{ maxHeight: 465, overflow: 'auto' }}
+                sx={{ maxHeight: 'calc(100vh - 258px)', overflow: 'auto' }}
               >
                 <Table
                   size="small"
@@ -384,7 +438,7 @@ const Transaction: React.FC = () => {
                   sx={{
                     width: '100%',
                     maxWidth: '475px',
-                    height: '252px',
+                    height: 'calc(100vh - 460px) !important',
                     background: '#000',
                   }}
                 >
@@ -403,7 +457,7 @@ const Transaction: React.FC = () => {
                           marginTop: '10px',
                           backgroundColor: 'background.secondary',
                           padding: '10px',
-                          borderRadius: '10px',
+                          borderRadius: '5px',
                         }}
                       >
                         <TextField
@@ -416,10 +470,16 @@ const Transaction: React.FC = () => {
                               padding: '6px 12px 6px 4px',
                               fontSize: '8px',
                             },
+                            '> ::before': {
+                              borderBottom: 'none',
+                            },
+                            '> ::after': {
+                              borderBottom: 'none',
+                            },
                           }}
                         />
                         <Typography
-                          sx={{ fontSize: '12px', marginLeft: '16px' }}
+                          sx={{ marginLeft: '16px', fontSize: '8px' }}
                         >
                           USDT
                         </Typography>
@@ -433,7 +493,7 @@ const Transaction: React.FC = () => {
                           marginTop: '10px',
                           backgroundColor: 'background.secondary',
                           padding: '10px',
-                          borderRadius: '10px',
+                          borderRadius: '5px',
                         }}
                       >
                         <TextField
@@ -446,10 +506,16 @@ const Transaction: React.FC = () => {
                               padding: '6px 12px 6px 4px',
                               fontSize: '8px',
                             },
+                            '> ::before': {
+                              borderBottom: 'none',
+                            },
+                            '> ::after': {
+                              borderBottom: 'none',
+                            },
                           }}
                         />
                         <Typography
-                          sx={{ fontSize: '12px', marginLeft: '16px' }}
+                          sx={{ marginLeft: '16px', fontSize: '8px' }}
                         >
                           USDT
                         </Typography>
@@ -463,7 +529,7 @@ const Transaction: React.FC = () => {
                           marginTop: '10px',
                           backgroundColor: 'background.secondary',
                           padding: '10px',
-                          borderRadius: '10px',
+                          borderRadius: '5px',
                         }}
                       >
                         <TextField
@@ -476,10 +542,16 @@ const Transaction: React.FC = () => {
                               padding: '6px 12px 6px 4px',
                               fontSize: '8px',
                             },
+                            '> ::before': {
+                              borderBottom: 'none',
+                            },
+                            '> ::after': {
+                              borderBottom: 'none',
+                            },
                           }}
                         />
                         <Typography
-                          sx={{ fontSize: '12px', marginLeft: '16px' }}
+                          sx={{ marginLeft: '16px', fontSize: '8px' }}
                         >
                           USDT
                         </Typography>
@@ -493,7 +565,7 @@ const Transaction: React.FC = () => {
                           marginTop: '10px',
                           backgroundColor: 'background.secondary',
                           padding: '10px',
-                          borderRadius: '10px',
+                          borderRadius: '5px',
                         }}
                       >
                         <TextField
@@ -506,10 +578,16 @@ const Transaction: React.FC = () => {
                               padding: '6px 12px 6px 4px',
                               fontSize: '8px',
                             },
+                            '> ::before': {
+                              borderBottom: 'none',
+                            },
+                            '> ::after': {
+                              borderBottom: 'none',
+                            },
                           }}
                         />
                         <Typography
-                          sx={{ fontSize: '12px', marginLeft: '16px' }}
+                          sx={{ marginLeft: '16px', fontSize: '8px' }}
                         >
                           USDT
                         </Typography>
@@ -521,7 +599,7 @@ const Transaction: React.FC = () => {
                             sx={{
                               fontSize: '10px',
                               textTransform: 'unset',
-                              backgroundColor: 'background.lightSilver',
+                              backgroundColor: 'background.newsHeader',
                               color: 'text.secondary',
                               width: '45px',
                               paddingX: '0',
@@ -537,24 +615,7 @@ const Transaction: React.FC = () => {
                             sx={{
                               fontSize: '10px',
                               textTransform: 'unset',
-                              backgroundColor: 'background.lightSilver',
-                              color: 'text.secondary',
-                              width: '45px',
-                              paddingX: '0',
-                              minWidth: 'unset',
-                            }}
-                            fullWidth
-                          >
-                            Moonbot
-                          </Button>
-                        </Grid>
-                        <Grid item xs={6} md={3}>
-                          <Button
-                            variant="contained"
-                            sx={{
-                              fontSize: '10px',
-                              textTransform: 'unset',
-                              backgroundColor: 'background.lightSilver',
+                              backgroundColor: 'background.newsHeader',
                               color: 'text.secondary',
                               width: '45px',
                               paddingX: '0',
@@ -571,7 +632,24 @@ const Transaction: React.FC = () => {
                             sx={{
                               fontSize: '10px',
                               textTransform: 'unset',
-                              backgroundColor: 'background.lightSilver',
+                              backgroundColor: 'background.newsHeader',
+                              color: 'text.secondary',
+                              width: '45px',
+                              paddingX: '0',
+                              minWidth: 'unset',
+                            }}
+                            fullWidth
+                          >
+                            Moonbot
+                          </Button>
+                        </Grid>
+                        <Grid item xs={6} md={3}>
+                          <Button
+                            variant="contained"
+                            sx={{
+                              fontSize: '10px',
+                              textTransform: 'unset',
+                              backgroundColor: 'background.newsHeader',
                               color: 'text.secondary',
                               width: '45px',
                               paddingX: '0',
@@ -611,7 +689,7 @@ const Transaction: React.FC = () => {
                           marginTop: '10px',
                           backgroundColor: 'background.secondary',
                           padding: '10px',
-                          borderRadius: '10px',
+                          borderRadius: '5px',
                         }}
                       >
                         <TextField
@@ -624,10 +702,16 @@ const Transaction: React.FC = () => {
                               padding: '6px 12px 6px 4px',
                               fontSize: '8px',
                             },
+                            '> ::before': {
+                              borderBottom: 'none',
+                            },
+                            '> ::after': {
+                              borderBottom: 'none',
+                            },
                           }}
                         />
                         <Typography
-                          sx={{ fontSize: '12px', marginLeft: '16px' }}
+                          sx={{ marginLeft: '16px', fontSize: '8px' }}
                         >
                           USDT
                         </Typography>
@@ -641,7 +725,7 @@ const Transaction: React.FC = () => {
                           marginTop: '10px',
                           backgroundColor: 'background.secondary',
                           padding: '10px',
-                          borderRadius: '10px',
+                          borderRadius: '5px',
                         }}
                       >
                         <TextField
@@ -654,10 +738,16 @@ const Transaction: React.FC = () => {
                               padding: '6px 12px 6px 4px',
                               fontSize: '8px',
                             },
+                            '> ::before': {
+                              borderBottom: 'none',
+                            },
+                            '> ::after': {
+                              borderBottom: 'none',
+                            },
                           }}
                         />
                         <Typography
-                          sx={{ fontSize: '12px', marginLeft: '16px' }}
+                          sx={{ marginLeft: '16px', fontSize: '8px' }}
                         >
                           USDT
                         </Typography>
@@ -671,7 +761,7 @@ const Transaction: React.FC = () => {
                           marginTop: '10px',
                           backgroundColor: 'background.secondary',
                           padding: '10px',
-                          borderRadius: '10px',
+                          borderRadius: '5px',
                         }}
                       >
                         <TextField
@@ -684,10 +774,16 @@ const Transaction: React.FC = () => {
                               padding: '6px 12px 6px 4px',
                               fontSize: '8px',
                             },
+                            '> ::before': {
+                              borderBottom: 'none',
+                            },
+                            '> ::after': {
+                              borderBottom: 'none',
+                            },
                           }}
                         />
                         <Typography
-                          sx={{ fontSize: '12px', marginLeft: '16px' }}
+                          sx={{ marginLeft: '16px', fontSize: '8px' }}
                         >
                           USDT
                         </Typography>
@@ -701,7 +797,7 @@ const Transaction: React.FC = () => {
                           marginTop: '10px',
                           backgroundColor: 'background.secondary',
                           padding: '10px',
-                          borderRadius: '10px',
+                          borderRadius: '5px',
                         }}
                       >
                         <TextField
@@ -714,10 +810,16 @@ const Transaction: React.FC = () => {
                               padding: '6px 12px 6px 4px',
                               fontSize: '8px',
                             },
+                            '> ::before': {
+                              borderBottom: 'none',
+                            },
+                            '> ::after': {
+                              borderBottom: 'none',
+                            },
                           }}
                         />
                         <Typography
-                          sx={{ fontSize: '12px', marginLeft: '16px' }}
+                          sx={{ marginLeft: '16px', fontSize: '8px' }}
                         >
                           USDT
                         </Typography>
@@ -730,7 +832,7 @@ const Transaction: React.FC = () => {
                               fontSize: '10px',
                               marginRight: '10px',
                               textTransform: 'unset',
-                              backgroundColor: 'background.lightSilver',
+                              backgroundColor: 'background.newsHeader',
                               color: 'text.secondary',
                               width: '45px',
                               minWidth: 'unset',
@@ -746,7 +848,7 @@ const Transaction: React.FC = () => {
                               fontSize: '10px',
                               marginRight: '10px',
                               textTransform: 'unset',
-                              backgroundColor: 'background.lightSilver',
+                              backgroundColor: 'background.newsHeader',
                               color: 'text.secondary',
                               width: '45px',
                               minWidth: 'unset',
@@ -762,7 +864,7 @@ const Transaction: React.FC = () => {
                               fontSize: '10px',
                               marginRight: '10px',
                               textTransform: 'unset',
-                              backgroundColor: 'background.lightSilver',
+                              backgroundColor: 'background.newsHeader',
                               color: 'text.secondary',
                               width: '45px',
                               minWidth: 'unset',
@@ -778,7 +880,7 @@ const Transaction: React.FC = () => {
                               fontSize: '10px',
                               marginRight: '10px',
                               textTransform: 'unset',
-                              backgroundColor: 'background.lightSilver',
+                              backgroundColor: 'background.newsHeader',
                               color: 'text.secondary',
                               width: '45px',
                               minWidth: 'unset',
@@ -815,21 +917,29 @@ const Transaction: React.FC = () => {
 
   const _renderRightSection = () => {
     return (
-      <Grid
-        container
+      <Stack
+        direction="column"
+        // container
         // spacing={{ lg: 0, md: 2 }}
         borderLeft="1px solid #ccc"
         borderRight="1px solid #ccc"
+        height="100%"
+        maxHeight="calc(100vh - 148px)"
       >
-        <Grid item xs={12} lg={12} borderBottom="1px solid #ccc">
+        <Stack
+          direction="column"
+          flex={1}
+          borderBottom="1px solid #ccc"
+          sx={{ maxHeight: '50%' }}
+        >
           <TableContainer
-            component={Paper}
-            sx={{ maxHeight: '285px', overflow: 'auto' }}
+          sx={{ maxHeight: '100%', overflow: 'auto' }}
           >
             <Table
               size="small"
               sx={{
                 minWidth: '100%',
+                height: '100%',
                 backgroundColor: 'background.secondary',
               }}
               aria-label="simple table"
@@ -901,8 +1011,8 @@ const Transaction: React.FC = () => {
               </TableBody>
             </Table>
           </TableContainer>
-        </Grid>
-        <Grid item xs={12} lg={12}>
+        </Stack>
+        <Stack direction="column" flex={1} maxHeight="50%">
           <Typography
             sx={{
               fontSize: '11px',
@@ -917,7 +1027,6 @@ const Transaction: React.FC = () => {
             component={Paper}
             sx={{
               marginTop: '20px',
-              maxHeight: 240,
               overflow: 'auto',
             }}
           >
@@ -998,8 +1107,8 @@ const Transaction: React.FC = () => {
               </TableBody>
             </Table>
           </TableContainer>
-        </Grid>
-      </Grid>
+        </Stack>
+      </Stack>
     );
   };
 
