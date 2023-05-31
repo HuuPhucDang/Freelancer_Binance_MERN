@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-  Container,
   Grid,
   Button,
   Stack,
@@ -45,9 +44,11 @@ const Invoice: React.FC = () => {
     return (
       <Box
         component="main"
+        maxWidth="lg"
         sx={{
           minHeight: 'calc(100vh - 94px)',
           padding: '1em 0',
+          mx: 'auto',
         }}
       >
         <Grid container>

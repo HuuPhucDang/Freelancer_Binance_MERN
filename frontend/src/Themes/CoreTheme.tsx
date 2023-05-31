@@ -106,7 +106,7 @@ const CoreTheme = createTheme({
             secondary: '#F5F5F5',
             burntSienna: '#FFB23F',
             lightSilver: '#D9D9D9',
-          },
+          } as any,
         }
       : {
           // palette values for dark mode
