@@ -273,19 +273,31 @@ const Transaction: React.FC = () => {
                     <TableRow>
                       <TableCell
                         align="center"
-                        sx={{ fontSize: '10px', fontWeight: 600 }}
+                        sx={{
+                          fontSize: '10px',
+                          fontWeight: 600,
+                          padding: '4px 0',
+                        }}
                       >
                         Giá (USDT)
                       </TableCell>
                       <TableCell
                         align="center"
-                        sx={{ fontSize: '10px', fontWeight: 600 }}
+                        sx={{
+                          fontSize: '10px',
+                          fontWeight: 600,
+                          padding: '4px 0',
+                        }}
                       >
                         Số lượng (EDU)
                       </TableCell>
                       <TableCell
                         align="center"
-                        sx={{ fontSize: '10px', fontWeight: 600 }}
+                        sx={{
+                          fontSize: '10px',
+                          fontWeight: 600,
+                          padding: '4px 0',
+                        }}
                       >
                         Tổng
                       </TableCell>
@@ -306,6 +318,7 @@ const Transaction: React.FC = () => {
                               lineHeight: '24px',
                               color:
                                 row.direction === 'up' ? '#408827' : '#F21616',
+                              padding: '4px 0',
                             }}
                           >
                             {row.price}
@@ -317,6 +330,7 @@ const Transaction: React.FC = () => {
                               fontSize: '10px',
                               lineHeight: '24px',
                               color: 'text.primary',
+                              padding: '4px 0',
                             }}
                           >
                             {row.quantity}
@@ -328,6 +342,7 @@ const Transaction: React.FC = () => {
                               fontSize: '10px',
                               lineHeight: '24px',
                               color: 'text.primary',
+                              padding: '4px 0',
                             }}
                           >
                             {row.total}
@@ -746,8 +761,8 @@ const Transaction: React.FC = () => {
 
   const _renderRightSection = () => {
     return (
-      <Grid container spacing={{lg: 0, md: 2}}>
-        <Grid item md={6} lg={12}>
+      <Grid container spacing={{ lg: 0, md: 2 }}>
+        <Grid item md={12} lg={12}>
           <TableContainer
             component={Paper}
             sx={{ maxHeight: '100%', overflow: 'auto' }}
@@ -823,7 +838,7 @@ const Transaction: React.FC = () => {
             </Table>
           </TableContainer>
         </Grid>
-        <Grid item md={6} lg={12}>
+        <Grid item md={12} lg={12}>
           <Typography
             sx={{
               fontSize: '11px',
@@ -838,10 +853,7 @@ const Transaction: React.FC = () => {
             component={Paper}
             sx={{
               marginTop: '20px',
-              maxHeight: {
-                md: 620,
-                lg: 490,
-              },
+              maxHeight: 490,
               overflow: 'auto',
             }}
           >
