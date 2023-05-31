@@ -25,7 +25,8 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import MarkChatUnreadIcon from '@mui/icons-material/MarkChatUnread';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import { StocksChart } from '@/Components/LayoutParts';
-import Assets from '../../../Assets';
+import Assets from '@/Assets';
+import UnfoldMoreIcon from '@mui/icons-material/UnfoldMore';
 function createData(
   price: number,
   quantity: number,
@@ -932,9 +933,7 @@ const Transaction: React.FC = () => {
           borderBottom="1px solid #ccc"
           sx={{ maxHeight: '50%' }}
         >
-          <TableContainer
-          sx={{ maxHeight: '100%', overflow: 'auto' }}
-          >
+          <TableContainer sx={{ maxHeight: '100%', overflow: 'auto' }}>
             <Table
               size="small"
               sx={{
@@ -947,17 +946,29 @@ const Transaction: React.FC = () => {
             >
               <TableHead>
                 <TableRow>
-                  <TableCell
-                    align="center"
-                    sx={{ fontSize: '10px', fontWeight: 600 }}
-                  >
-                    Cặp
+                  <TableCell align="center">
+                    <Stack
+                      direction="row"
+                      alignItems="center"
+                      justifyContent="center"
+                    >
+                      <Typography sx={{ fontSize: '10px', fontWeight: 600 }}>
+                        Cặp
+                      </Typography>
+                      <UnfoldMoreIcon sx={{ fontSize: '16px' }} />
+                    </Stack>
                   </TableCell>
-                  <TableCell
-                    align="center"
-                    sx={{ fontSize: '10px', fontWeight: 600 }}
-                  >
-                    Giá
+                  <TableCell align="center">
+                    <Stack
+                      direction="row"
+                      alignItems="center"
+                      justifyContent="center"
+                    >
+                      <Typography sx={{ fontSize: '10px', fontWeight: 600 }}>
+                        Giá
+                      </Typography>{' '}
+                      <UnfoldMoreIcon sx={{ fontSize: '16px' }} />
+                    </Stack>
                   </TableCell>
                 </TableRow>
               </TableHead>
