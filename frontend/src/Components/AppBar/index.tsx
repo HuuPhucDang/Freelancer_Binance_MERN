@@ -79,7 +79,7 @@ const AppBarComponent: React.FC = () => {
         >
           <Box
             component="img"
-            src={Assets.transactionIcon}
+            src={Assets.transactionDarkIcon}
             sx={{ width: '33px', height: 'auto', objectFit: 'contain' }}
           />
         </Link>
