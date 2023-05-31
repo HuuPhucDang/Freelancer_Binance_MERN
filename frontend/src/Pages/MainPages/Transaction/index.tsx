@@ -15,6 +15,7 @@ import {
   Button,
   TextField,
   Chip,
+  Container,
 } from '@mui/material';
 import VerticalSplitIcon from '@mui/icons-material/VerticalSplit';
 import DefaultLayout from '@/Components/DefaultLayout';
@@ -257,7 +258,7 @@ const Transaction: React.FC = () => {
               </Stack>
               <TableContainer
                 component={Paper}
-                sx={{ maxHeight: 1000, overflow: 'auto' }}
+                sx={{ maxHeight: 1050, overflow: 'auto' }}
               >
                 <Table
                   size="small"
@@ -467,65 +468,68 @@ const Transaction: React.FC = () => {
                           USDT
                         </Typography>
                       </Stack>
-                      <Stack
-                        direction="row"
-                        alignItems="center"
-                        justifyContent="space-between"
-                        marginTop="10px"
-                      >
-                        <Button
-                          variant="contained"
-                          size="small"
-                          sx={{
-                            fontSize: '10px',
-                            marginRight: '10px',
-                            textTransform: 'unset',
-                            backgroundColor: 'background.lightSilver',
-                            color: 'text.secondary',
-                          }}
-                        >
-                          Moonbot
-                        </Button>
-                        <Button
-                          variant="contained"
-                          size="small"
-                          sx={{
-                            fontSize: '10px',
-                            marginRight: '10px',
-                            textTransform: 'unset',
-                            backgroundColor: 'background.lightSilver',
-                            color: 'text.secondary',
-                          }}
-                        >
-                          Moonbot
-                        </Button>
-                        <Button
-                          variant="contained"
-                          size="small"
-                          sx={{
-                            fontSize: '10px',
-                            marginRight: '10px',
-                            textTransform: 'unset',
-                            backgroundColor: 'background.lightSilver',
-                            color: 'text.secondary',
-                          }}
-                        >
-                          Moonbot
-                        </Button>
-                        <Button
-                          variant="contained"
-                          size="small"
-                          sx={{
-                            fontSize: '10px',
-                            marginRight: '10px',
-                            textTransform: 'unset',
-                            backgroundColor: 'background.lightSilver',
-                            color: 'text.secondary',
-                          }}
-                        >
-                          Moonbot
-                        </Button>
-                      </Stack>
+                      <Grid container spacing={2} marginTop="5px">
+                        <Grid item md={6} lg={6}>
+                          <Button
+                            variant="contained"
+                            sx={{
+                              fontSize: '10px',
+                              marginRight: '10px',
+                              textTransform: 'unset',
+                              backgroundColor: 'background.lightSilver',
+                              color: 'text.secondary',
+                            }}
+                            fullWidth
+                          >
+                            Moonbot
+                          </Button>
+                        </Grid>
+                        <Grid item md={6} lg={6}>
+                          <Button
+                            variant="contained"
+                            sx={{
+                              fontSize: '10px',
+                              marginRight: '10px',
+                              textTransform: 'unset',
+                              backgroundColor: 'background.lightSilver',
+                              color: 'text.secondary',
+                            }}
+                            fullWidth
+                          >
+                            Moonbot
+                          </Button>
+                        </Grid>
+                        <Grid item md={6} lg={6}>
+                          <Button
+                            variant="contained"
+                            sx={{
+                              fontSize: '10px',
+                              marginRight: '10px',
+                              textTransform: 'unset',
+                              backgroundColor: 'background.lightSilver',
+                              color: 'text.secondary',
+                            }}
+                            fullWidth
+                          >
+                            Moonbot
+                          </Button>
+                        </Grid>
+                        <Grid item md={6} lg={6}>
+                          <Button
+                            variant="contained"
+                            sx={{
+                              fontSize: '10px',
+                              marginRight: '10px',
+                              textTransform: 'unset',
+                              backgroundColor: 'background.lightSilver',
+                              color: 'text.secondary',
+                            }}
+                            fullWidth
+                          >
+                            Moonbot
+                          </Button>
+                        </Grid>
+                      </Grid>
                       <Button
                         color="success"
                         variant="contained"
@@ -659,61 +663,68 @@ const Transaction: React.FC = () => {
                           USDT
                         </Typography>
                       </Stack>
-                      <Stack
-                        direction="row"
-                        alignItems="center"
-                        justifyContent="space-between"
-                        marginTop="10px"
-                      >
-                        <Button
-                          variant="contained"
-                          sx={{
-                            fontSize: '10px',
-                            marginRight: '10px',
-                            textTransform: 'unset',
-                            backgroundColor: 'background.lightSilver',
-                            color: 'text.secondary',
-                          }}
-                        >
-                          Moonbot
-                        </Button>
-                        <Button
-                          variant="contained"
-                          sx={{
-                            fontSize: '10px',
-                            marginRight: '10px',
-                            textTransform: 'unset',
-                            backgroundColor: 'background.lightSilver',
-                            color: 'text.secondary',
-                          }}
-                        >
-                          Moonbot
-                        </Button>
-                        <Button
-                          variant="contained"
-                          sx={{
-                            fontSize: '10px',
-                            marginRight: '10px',
-                            textTransform: 'unset',
-                            backgroundColor: 'background.lightSilver',
-                            color: 'text.secondary',
-                          }}
-                        >
-                          Moonbot
-                        </Button>
-                        <Button
-                          variant="contained"
-                          sx={{
-                            fontSize: '10px',
-                            marginRight: '10px',
-                            textTransform: 'unset',
-                            backgroundColor: 'background.lightSilver',
-                            color: 'text.secondary',
-                          }}
-                        >
-                          Moonbot
-                        </Button>
-                      </Stack>
+                      <Grid container spacing={2} marginTop="5px">
+                        <Grid item md={6} lg={6}>
+                          <Button
+                            variant="contained"
+                            sx={{
+                              fontSize: '10px',
+                              marginRight: '10px',
+                              textTransform: 'unset',
+                              backgroundColor: 'background.lightSilver',
+                              color: 'text.secondary',
+                            }}
+                            fullWidth
+                          >
+                            Moonbot
+                          </Button>
+                        </Grid>
+                        <Grid item md={6} lg={6}>
+                          <Button
+                            variant="contained"
+                            sx={{
+                              fontSize: '10px',
+                              marginRight: '10px',
+                              textTransform: 'unset',
+                              backgroundColor: 'background.lightSilver',
+                              color: 'text.secondary',
+                            }}
+                            fullWidth
+                          >
+                            Moonbot
+                          </Button>
+                        </Grid>
+                        <Grid item md={6} lg={6}>
+                          <Button
+                            variant="contained"
+                            sx={{
+                              fontSize: '10px',
+                              marginRight: '10px',
+                              textTransform: 'unset',
+                              backgroundColor: 'background.lightSilver',
+                              color: 'text.secondary',
+                            }}
+                            fullWidth
+                          >
+                            Moonbot
+                          </Button>
+                        </Grid>
+                        <Grid item md={6} lg={6}>
+                          <Button
+                            variant="contained"
+                            sx={{
+                              fontSize: '10px',
+                              marginRight: '10px',
+                              textTransform: 'unset',
+                              backgroundColor: 'background.lightSilver',
+                              color: 'text.secondary',
+                            }}
+                            fullWidth
+                          >
+                            Moonbot
+                          </Button>
+                        </Grid>
+                      </Grid>
                       <Button
                         color="error"
                         variant="contained"
@@ -735,8 +746,8 @@ const Transaction: React.FC = () => {
 
   const _renderRightSection = () => {
     return (
-      <Grid container>
-        <Grid item md={12}>
+      <Grid container spacing={{lg: 0, md: 2}}>
+        <Grid item md={6} lg={12}>
           <TableContainer
             component={Paper}
             sx={{ maxHeight: '100%', overflow: 'auto' }}
@@ -812,7 +823,7 @@ const Transaction: React.FC = () => {
             </Table>
           </TableContainer>
         </Grid>
-        <Grid item md={12}>
+        <Grid item md={6} lg={12}>
           <Typography
             sx={{
               fontSize: '11px',
@@ -825,7 +836,14 @@ const Transaction: React.FC = () => {
           </Typography>
           <TableContainer
             component={Paper}
-            sx={{ marginTop: '20px', maxHeight: 435, overflow: 'auto' }}
+            sx={{
+              marginTop: '20px',
+              maxHeight: {
+                md: 620,
+                lg: 490,
+              },
+              overflow: 'auto',
+            }}
           >
             <Table
               size="small"
@@ -911,26 +929,23 @@ const Transaction: React.FC = () => {
 
   const renderMain = () => {
     return (
-      <Box
+      <Container
+        maxWidth="lg"
         component="main"
         sx={{
           display: 'flex',
           flexDirection: 'column',
-          maxHeight: 'calc(100vh - 108px)',
+          // maxHeight: 'calc(100vh - 108px)',
           overflow: 'auto',
           mx: 'auto',
-          mt: 3
+          mt: 3,
         }}
       >
-        <Grid
-          container
-          flex={1}
-          display="flex"
-        >
-          <Grid item md={9}>
+        <Grid container flex={1} display="flex">
+          <Grid item md={12} lg={9}>
             {_renderLeftSection()}
           </Grid>
-          <Grid item md={3}>
+          <Grid item md={12} lg={3}>
             {_renderRightSection()}
           </Grid>
         </Grid>
@@ -1042,7 +1057,7 @@ const Transaction: React.FC = () => {
             </Grid>
           </Grid>
         </Grid>
-      </Box>
+      </Container>
     );
   };
   return <DefaultLayout content={renderMain()} screenTitle="Giao dịch" />;
