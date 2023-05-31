@@ -12,6 +12,7 @@ import {
   Paper,
   TableHead,
   Typography,
+  Box,
 } from '@mui/material';
 // Import local
 import DefaultLayout from '@/Components/DefaultLayout';
@@ -42,13 +43,11 @@ const Invoice: React.FC = () => {
   // Constructors
   const renderMain = () => {
     return (
-      <Container
+      <Box
         component="main"
-        maxWidth="lg"
         sx={{
           minHeight: 'calc(100vh - 94px)',
           padding: '1em 0',
-          mx: 'auto',
         }}
       >
         <Grid container>
@@ -204,7 +203,7 @@ const Invoice: React.FC = () => {
             </Stack>
           </Grid>
         </Grid>
-      </Container>
+      </Box>
     );
   };
   return <DefaultLayout content={renderMain()} screenTitle="Lịch sử nạp rút" />;

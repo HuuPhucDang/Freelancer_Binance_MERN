@@ -11,6 +11,7 @@ const USER_ROUTERS = {
   SUPPORT: `${USER_ROUTER_ROOT}support`,
   RECHARGE: `${USER_ROUTER_ROOT}recharge`,
   WITHDRAW_MONEY: `${USER_ROUTER_ROOT}withdraw-money`,
+  TRANSACTION: `${USER_ROUTER_ROOT}transaction`,
 };
 
 export { USER_ROUTERS };

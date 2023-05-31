@@ -40,6 +40,10 @@ const UserRouter = {
       path: ROUTERS.WITHDRAW_MONEY,
       element: <MainPages.WithdrawMoney />,
     },
+    {
+      path: ROUTERS.TRANSACTION,
+      element: <MainPages.Transaction />,
+    },
   ],
 };
 
