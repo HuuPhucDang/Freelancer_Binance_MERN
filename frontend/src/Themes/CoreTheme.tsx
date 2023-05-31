@@ -107,6 +107,7 @@ const CoreTheme = createTheme({
             burntSienna: '#FFB23F',
             lightSilver: '#D9D9D9',
             newsHeader: '#D9D9D9',
+            chip: '#F8E7AA',
           } as any,
         }
       : {
@@ -123,6 +124,7 @@ const CoreTheme = createTheme({
             burntSienna: '#FFB23F',
             lightSilver: '#D9D9D9',
             newsHeader: '#999288',
+            chip: '#000000',
           },
         }),
   },
