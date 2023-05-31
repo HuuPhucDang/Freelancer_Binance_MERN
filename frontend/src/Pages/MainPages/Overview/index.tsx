@@ -1,21 +1,15 @@
 import React from 'react';
-import {
-  Container,
-  Box,
-  Typography,
-  Grid,
-  Button,
-  Stack,
-  Link,
-} from '@mui/material';
-import PersonIcon from '@mui/icons-material/Person';
+import { Container } from '@mui/material';
+
 // Import local
 import DefaultLayout from '@/Components/DefaultLayout';
-import Assets from '@/Assets';
-import { Sidebar } from '../../../Components/LayoutParts';
+import { StocksChart } from '@/Components/LayoutParts';
 
 const Overview: React.FC = () => {
   // Constructors
+
+  // Renders
+
   const renderMain = () => {
     return (
       <Container
@@ -23,14 +17,7 @@ const Overview: React.FC = () => {
         maxWidth="lg"
         sx={{ my: { xs: '3em', md: '5em', textAlign: '-webkit-center' } }}
       >
-        <Grid container>
-          <Grid item md={3}>
-            <Sidebar />
-          </Grid>
-          <Grid item md={9}>
-            Overview
-          </Grid>
-        </Grid>
+        <StocksChart />
       </Container>
     );
   };
