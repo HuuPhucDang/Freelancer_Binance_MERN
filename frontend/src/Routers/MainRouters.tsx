@@ -8,6 +8,10 @@ const UserRouter = {
       path: ROUTERS.HOME,
       element: <MainPages.Home />,
     },
+    {
+      path: ROUTERS.OVERVIEW,
+      element: <MainPages.Overview />,
+    },
   ],
 };
 

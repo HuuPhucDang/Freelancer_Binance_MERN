@@ -6,6 +6,7 @@ import LatestPosts from './LatestPosts';
 import TopTenAssessments from './TopTenAssessment';
 import PostActions from './PostActions';
 import AuthorsCarousel from './AuthorCarousel';
+import StocksChart from './StockChart';
 
 export {
   BlogTabs,
@@ -16,4 +17,5 @@ export {
   TopTenAssessments,
   PostActions,
   AuthorsCarousel,
+  StocksChart,
 };
