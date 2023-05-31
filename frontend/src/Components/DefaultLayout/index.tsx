@@ -27,9 +27,9 @@ const DefaultLayout: React.FC<SectionProps> = (props: SectionProps) => {
   }, []);
 
   return (
-    <Box>
+    <Box sx={{background: "background.default"}}>
       <Helmet>
-        <title>{screenTitle ? screenTitle : 'heyy,'}</title>
+        <title>{screenTitle ? screenTitle : 'Binance'}</title>
       </Helmet>
       {content}
       <Widgets.Notification />

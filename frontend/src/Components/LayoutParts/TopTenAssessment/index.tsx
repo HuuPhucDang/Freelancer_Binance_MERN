@@ -12,7 +12,6 @@ const TopTenAssessments: React.FC = () => {
   const _renderItem = () => (
     <Typography
       sx={{
-        fontFamily: 'inherit',
         fontWeight: 400,
         fontSize: { xs: 14, md: 18 },
         lineHeight: '26px',
@@ -32,7 +31,6 @@ const TopTenAssessments: React.FC = () => {
     <Stack
       flexDirection="column"
       sx={{
-        fontFamily: 'Merriweather',
         background: '#F9F7F2',
         borderRadius: 2,
         marginTop: '40px',
@@ -44,7 +42,6 @@ const TopTenAssessments: React.FC = () => {
     >
       <Typography
         sx={{
-          fontFamily: 'inherit',
           fontWeight: 700,
           fontSize: { xs: 16, md: 24 },
           lineHeight: '30px',
@@ -64,7 +61,6 @@ const TopTenAssessments: React.FC = () => {
       {_renderItem()}
       <Typography
         sx={{
-          fontFamily: 'Plus Jakarta Sans',
           fontWeight: 600,
           fontSize: 14,
           lineHeight: '24px',

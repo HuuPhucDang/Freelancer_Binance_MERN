@@ -273,9 +273,8 @@ const FooterComponent: React.FC = () => {
     <Box
       sx={{
         mt: 'auto',
-        fontFamily: 'Plus Jakarta Sans',
         '& .MuiTypography-root': {
-          fontFamily: 'inherit',
+          fontFamily: 'Inter',
         },
       }}
     >

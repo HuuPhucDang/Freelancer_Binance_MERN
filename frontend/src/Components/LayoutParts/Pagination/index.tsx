@@ -71,7 +71,6 @@ const Pagination: React.FC<IProps> = ({
             sx={{
               fontSize: 'inherit',
               color: 'inherit',
-              fontFamily: 'inherit',
               fontWeight: 700
             }}
           >
@@ -83,7 +82,6 @@ const Pagination: React.FC<IProps> = ({
             sx={{
               fontSize: 'inherit',
               color: 'inherit',
-              fontFamily: 'inherit',
               marginLeft: '4px',
             }}
           >
@@ -151,7 +149,6 @@ const Pagination: React.FC<IProps> = ({
             sx={{
               fontSize: 'inherit',
               color: 'inherit',
-              fontFamily: 'inherit',
               marginRight: '4px',
             }}
           >
@@ -162,7 +159,6 @@ const Pagination: React.FC<IProps> = ({
             sx={{
               fontSize: 'inherit',
               color: 'inherit',
-              fontFamily: 'inherit',
               fontWeight: 700
             }}
           >

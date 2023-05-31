@@ -16,6 +16,7 @@
   "dependencies": {
     "@emotion/react": "^11.8.2",
     "@emotion/styled": "^11.8.1",
+    "@fontsource/inter": "^5.0.1",
     "@fontsource/merriweather": "^4.5.14",
     "@fontsource/plus-jakarta-sans": "^4.5.11",
     "@mui/icons-material": "^5.6.2",

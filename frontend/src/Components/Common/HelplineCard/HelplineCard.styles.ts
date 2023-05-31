@@ -10,7 +10,6 @@ const mainStyles: SxProps<Theme> = {
 };
 
 const nameStyles: SxProps<Theme> = {
-  fontFamily: 'Plus Jakarta Sans',
   fontWeight: 600,
   fontSize: {
     xs: '24px',
@@ -22,7 +21,6 @@ const nameStyles: SxProps<Theme> = {
 };
 
 const textStyles: SxProps<Theme> = {
-  fontFamily: 'Plus Jakarta Sans',
   fontWeight: 400,
   fontSize: {
     xs: '14px',

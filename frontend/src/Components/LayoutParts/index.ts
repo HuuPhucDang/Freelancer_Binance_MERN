@@ -7,6 +7,7 @@ import TopTenAssessments from './TopTenAssessment';
 import PostActions from './PostActions';
 import AuthorsCarousel from './AuthorCarousel';
 import StocksChart from './StockChart';
+import Sidebar from './Sidebar';
 
 export {
   BlogTabs,
@@ -18,4 +19,5 @@ export {
   PostActions,
   AuthorsCarousel,
   StocksChart,
+  Sidebar,
 };

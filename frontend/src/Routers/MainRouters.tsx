@@ -12,6 +12,34 @@ const UserRouter = {
       path: ROUTERS.OVERVIEW,
       element: <MainPages.Overview />,
     },
+    {
+      path: ROUTERS.SECURITY,
+      element: <MainPages.Security />,
+    },
+    {
+      path: ROUTERS.VERIFY,
+      element: <MainPages.Verify />,
+    },
+    {
+      path: ROUTERS.CONNECT_BANK,
+      element: <MainPages.ConnectBank />,
+    },
+    {
+      path: ROUTERS.INVOICE,
+      element: <MainPages.Invoice />,
+    },
+    {
+      path: ROUTERS.SUPPORT,
+      element: <MainPages.Support />,
+    },
+    {
+      path: ROUTERS.RECHARGE,
+      element: <MainPages.Recharge />,
+    },
+    {
+      path: ROUTERS.WITHDRAW_MONEY,
+      element: <MainPages.WithdrawMoney />,
+    },
   ],
 };
 

@@ -3,7 +3,6 @@ import { Container, Box, Typography, Grid, Grow } from '@mui/material';
 
 // Import local
 import DefaultLayout from '@/Components/DefaultLayout';
-import Assets from '@/Assets';
 import { StocksChart } from '@/Components/LayoutParts';
 
 const Overview: React.FC = () => {

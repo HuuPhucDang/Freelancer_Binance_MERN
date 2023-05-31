@@ -39,7 +39,6 @@ const Blogs: React.FC = () => {
         <Typography
           sx={{
             fontWeight: 700,
-            fontFamily: 'Merriweather',
             px: 1,
             py: 2,
             fontSize: 14,
@@ -77,7 +76,6 @@ const Blogs: React.FC = () => {
         <Typography
           sx={{
             fontWeight: 700,
-            fontFamily: 'Merriweather',
             px: 1,
             py: 3,
             fontSize: 16,
@@ -90,7 +88,6 @@ const Blogs: React.FC = () => {
         <Typography
           sx={{
             fontWeight: 700,
-            fontFamily: 'Merriweather',
             px: 1,
             py: 3,
             fontSize: 16,
@@ -103,7 +100,6 @@ const Blogs: React.FC = () => {
         <Typography
           sx={{
             fontWeight: 700,
-            fontFamily: 'Merriweather',
             px: 1,
             py: 3,
             fontSize: 16,
@@ -116,7 +112,6 @@ const Blogs: React.FC = () => {
         <Typography
           sx={{
             fontWeight: 700,
-            fontFamily: 'Merriweather',
             px: 1,
             py: 3,
             fontSize: 16,
@@ -195,7 +190,6 @@ const Blogs: React.FC = () => {
         width: 1,
         borderColor: 'divider',
         '& .MuiButtonBase-root': {
-          fontFamily: 'Plus Jakarta Sans',
           color: 'gray!important',
           fontWeight: 500,
         },
