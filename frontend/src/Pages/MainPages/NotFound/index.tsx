@@ -1,5 +1,4 @@
 import { Box, Container, Typography, Stack } from '@mui/material';
-import Assets from '@assets';
 import { Helmet } from 'react-helmet-async';
 
 const NotFound = () => {
@@ -33,7 +32,6 @@ const NotFound = () => {
         <Stack direction="row" justifyContent="center" marginTop="60px">
           <Box
             component="img"
-            src={Assets.notFoundIll}
             alt="Not found illustrator"
             width={368}
             height={366}

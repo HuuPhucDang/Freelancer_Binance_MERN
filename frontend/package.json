@@ -11,7 +11,10 @@
   "scripts": {
     "build": "tsc && vite build --mode prod",
     "preview": "vite preview",
-    "start:dev": "vite --host"
+    "start:dev": "vite --host",
+    "lint": "eslint . --cache --ext .ts,.tsx",
+    "lint-fix": "eslint ./ --fix",
+    "pretty": "prettier --write ."
   },
   "dependencies": {
     "@emotion/react": "^11.8.2",
@@ -75,6 +78,7 @@
     "@vitejs/plugin-react": "^1.0.7",
     "eslint": "^8.18.0",
     "eslint-config-airbnb-typescript": "^17.0.0",
+    "eslint-config-erb": "^4.0.0-alpha.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-compat": "^4.0.2",
     "eslint-plugin-import": "^2.26.0",

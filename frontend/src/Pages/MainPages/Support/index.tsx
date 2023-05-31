@@ -1,17 +1,7 @@
 import React from 'react';
-import {
-  Container,
-  Box,
-  Typography,
-  Grid,
-  Button,
-  Stack,
-  Link,
-} from '@mui/material';
-import PersonIcon from '@mui/icons-material/Person';
+import { Container, Grid } from '@mui/material';
 // Import local
 import DefaultLayout from '@/Components/DefaultLayout';
-import Assets from '@/Assets';
 import { Sidebar } from '../../../Components/LayoutParts';
 
 const Support: React.FC = () => {

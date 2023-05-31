@@ -8,7 +8,6 @@ import Security from './Security';
 import Support from './Support';
 import Verify from './Verify';
 import WithdrawMoney from './WithdrawMoney';
-``;
 export {
   Home,
   NotFound,

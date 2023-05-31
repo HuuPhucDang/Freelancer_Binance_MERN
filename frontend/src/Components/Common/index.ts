@@ -3,8 +3,6 @@ import RichTooltip from './RichTooltip';
 import TransitionSlide from './TransitionSlide';
 import CommonStyles from './CommonStyles';
 import Select from './Select';
-import HelplineCard from './HelplineCard';
-import ImageBoxBorder from './ImageBoxBorder';
 
 export {
   ElevationScroll,
@@ -12,6 +10,4 @@ export {
   TransitionSlide,
   CommonStyles,
   Select,
-  HelplineCard,
-  ImageBoxBorder,
 };

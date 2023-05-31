@@ -1,17 +1,10 @@
 import React from 'react';
 import {
   Container,
-  Box,
-  Typography,
   Grid,
-  Button,
-  Stack,
-  Link,
 } from '@mui/material';
-import PersonIcon from '@mui/icons-material/Person';
 // Import local
 import DefaultLayout from '@/Components/DefaultLayout';
-import Assets from '@/Assets';
 import { Sidebar } from '../../../Components/LayoutParts';
 
 const Security: React.FC = () => {
