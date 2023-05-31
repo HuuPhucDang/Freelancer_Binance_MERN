@@ -954,10 +954,10 @@ const Transaction: React.FC = () => {
         }}
       >
         <Grid container flex={1} display="flex">
-          <Grid item md={12} lg={9}>
+          <Grid item md={9} lg={9}>
             {_renderLeftSection()}
           </Grid>
-          <Grid item md={12} lg={3}>
+          <Grid item md={3} lg={3}>
             {_renderRightSection()}
           </Grid>
         </Grid>
