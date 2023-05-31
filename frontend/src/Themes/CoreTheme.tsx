@@ -98,13 +98,13 @@ const CoreTheme = createTheme({
           text: {
             primary: '#000000',
             secondary: '#000000',
-            burntSienna: '#E87844',
+            burntSienna: '#FFB23F',
           } as any,
           background: {
             default: '#FFFFFF',
             primary: '#FFB23F',
             secondary: '#F5F5F5',
-            burntSienna: '#E87844',
+            burntSienna: '#FFB23F',
             lightSilver: '#D9D9D9',
           },
         }
@@ -113,13 +113,13 @@ const CoreTheme = createTheme({
           text: {
             primary: '#D9D9D9',
             secondary: '#000000',
-            burntSienna: '#E87844',
+            burntSienna: '#FFB23F',
           },
           background: {
             default: '#191A1F',
             primary: '#FFB23F',
             secondary: '#0A0E11',
-            burntSienna: '#E87844',
+            burntSienna: '#FFB23F',
             lightSilver: '#D9D9D9',
           },
         }),
