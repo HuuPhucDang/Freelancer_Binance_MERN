@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-  Container,
   Typography,
   Grid,
   Stack,
@@ -18,12 +17,13 @@ import {
   Chip,
 } from '@mui/material';
 import VerticalSplitIcon from '@mui/icons-material/VerticalSplit';
-// Import local
 import DefaultLayout from '@/Components/DefaultLayout';
 import StarIcon from '@mui/icons-material/Star';
 import TapAndPlayIcon from '@mui/icons-material/TapAndPlay';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import MarkChatUnreadIcon from '@mui/icons-material/MarkChatUnread';
+
+import { StocksChart } from '@/Components/LayoutParts';
 function createData(
   price: number,
   quantity: number,
@@ -158,7 +158,7 @@ const Transaction: React.FC = () => {
 
   const _renderLeftSection = () => {
     return (
-      <Grid container spacing={1} height="100%">
+      <Grid container spacing={1}>
         <Grid item md={12}>
           <Grid container borderBottom="1px solid #ccc">
             <Grid item md={4}>
@@ -203,7 +203,7 @@ const Transaction: React.FC = () => {
                 direction="row"
                 justifyContent="space-evenly"
                 alignItems="center"
-                height="100%"
+                //
               >
                 <Stack direction="column">
                   <Typography sx={{ fontSize: '12px' }}>1.11435</Typography>
@@ -241,8 +241,8 @@ const Transaction: React.FC = () => {
             </Grid>
           </Grid>
         </Grid>
-        <Grid item md={12} height="100%">
-          <Grid container height="100%">
+        <Grid item md={12}>
+          <Grid container>
             <Grid item md={4}>
               <Stack flexDirection="row" marginBottom="16px">
                 <IconButton>
@@ -257,15 +257,16 @@ const Transaction: React.FC = () => {
               </Stack>
               <TableContainer
                 component={Paper}
-                sx={{ maxHeight: '100%', overflow: 'auto' }}
+                sx={{ maxHeight: 1000, overflow: 'auto' }}
               >
                 <Table
                   size="small"
                   sx={{
-                    minWidth: '100%',
+                    minWidth: 1,
                     backgroundColor: 'background.secondary',
                   }}
                   aria-label="simple table"
+                  stickyHeader
                 >
                   <TableHead>
                     <TableRow>
@@ -338,9 +339,9 @@ const Transaction: React.FC = () => {
               </TableContainer>
             </Grid>
             <Grid item md={8}>
-              <Stack direction="column" height="100%">
+              <Stack direction="column">
                 <Stack flex={1} sx={{ background: '#000' }}>
-                  <Typography sx={{ color: '#fff' }}>Chart</Typography>
+                  <StocksChart />
                 </Stack>
                 <Stack flex={1} padding="20px">
                   <Grid container columnSpacing={3}>
@@ -734,7 +735,7 @@ const Transaction: React.FC = () => {
 
   const _renderRightSection = () => {
     return (
-      <Grid container height="100%">
+      <Grid container>
         <Grid item md={12}>
           <TableContainer
             component={Paper}
@@ -747,6 +748,7 @@ const Transaction: React.FC = () => {
                 backgroundColor: 'background.secondary',
               }}
               aria-label="simple table"
+              stickyHeader
             >
               <TableHead>
                 <TableRow>
@@ -823,15 +825,16 @@ const Transaction: React.FC = () => {
           </Typography>
           <TableContainer
             component={Paper}
-            sx={{ marginTop: '20px', maxHeight: '100%', overflow: 'auto' }}
+            sx={{ marginTop: '20px', maxHeight: 435, overflow: 'auto' }}
           >
             <Table
               size="small"
               sx={{
-                minWidth: '100%',
+                minWidth: 1,
                 backgroundColor: 'background.secondary',
               }}
               aria-label="simple table"
+              stickyHeader
             >
               <TableHead>
                 <TableRow>
@@ -916,14 +919,13 @@ const Transaction: React.FC = () => {
           maxHeight: 'calc(100vh - 108px)',
           overflow: 'auto',
           mx: 'auto',
+          mt: 3
         }}
       >
         <Grid
           container
           flex={1}
           display="flex"
-          height="100%"
-          maxHeight="calc(100vh - 108px)"
         >
           <Grid item md={9}>
             {_renderLeftSection()}

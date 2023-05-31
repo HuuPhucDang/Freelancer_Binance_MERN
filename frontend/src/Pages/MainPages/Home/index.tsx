@@ -7,8 +7,10 @@ import {
   Button,
   Stack,
   Link,
+  Grow,
 } from '@mui/material';
 import PersonIcon from '@mui/icons-material/Person';
+import { Fade } from 'react-reveal';
 // Import local
 import DefaultLayout from '@/Components/DefaultLayout';
 import Assets from '@/Assets';
@@ -924,13 +926,19 @@ const Home: React.FC = () => {
         maxWidth="lg"
         sx={{ my: { xs: '3em', md: '5em', textAlign: '-webkit-center' } }}
       >
-        {_renderHero()}
-        {_renderNumber()}
-        {_renderChance()}
-        {_renderAbout()}
-        {_renderReason()}
-        {_renderFeedback()}
-        {_renderInvite()}
+        <Grow in timeout={500}>
+          {_renderHero()}
+        </Grow>
+        <Grow in timeout={800}>
+          {_renderNumber()}
+        </Grow>
+        <Grow in timeout={800}>
+          {_renderChance()}
+        </Grow>
+        <Fade>{_renderAbout()}</Fade>
+        <Fade>{_renderReason()}</Fade>
+        <Fade>{_renderFeedback()}</Fade>
+        <Fade>{_renderInvite()}</Fade>
       </Container>
     );
   };

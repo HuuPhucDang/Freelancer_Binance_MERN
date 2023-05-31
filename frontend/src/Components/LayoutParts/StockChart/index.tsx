@@ -46,6 +46,7 @@ const Dashboard: React.FC = () => {
         locale: 'vi_VN',
         style: '1',
         symbol: 'BINANCE:BTCUSDT',
+        // height: '100%'
       }}
     />
   );
