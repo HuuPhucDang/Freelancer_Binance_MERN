@@ -23,11 +23,11 @@ import { CommonStyles } from '../Common';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import PersonIcon from '@mui/icons-material/Person';
-import { RootState, useTypedSelector } from '../../Reducers/store';
+import { useTypedSelector } from '../../Reducers/store';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 const AppBarComponent: React.FC = () => {
-  const isLogged: boolean = useTypedSelector(
-    (state: RootState) => state.AUTH?.isLogged
+  const isLogged: any = useTypedSelector((state: any) =>
+    _.get(state.AUTH, 'isLogged')
   );
   // Constructors
   const pathname = useLocation().pathname;

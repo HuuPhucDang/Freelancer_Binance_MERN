@@ -1,12 +1,13 @@
 import { Button, Stack, TextField, Typography } from '@mui/material';
-import { RootState, useTypedSelector } from '@/Reducers/store';
+import _ from 'lodash';
+import { useTypedSelector } from '@/Reducers/store';
 import React from 'react';
 import { Utils } from '@/Libs';
 import { ROUTERS } from '@/Constants';
 
 const SignUp = () => {
-  const isLogged: boolean = useTypedSelector(
-    (state: RootState) => state.AUTH?.isLogged
+  const isLogged: any = useTypedSelector((state: any) =>
+    _.get(state.AUTH, 'isLogged')
   );
 
   React.useEffect(() => {
