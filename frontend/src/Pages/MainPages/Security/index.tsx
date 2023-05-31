@@ -1,25 +1,24 @@
 import React from 'react';
 import {
   Container,
-  Box,
-  Typography,
   Grid,
   Button,
   Stack,
-  Link,
   Table,
   TableBody,
   TableCell,
   TableContainer,
   TableRow,
   Paper,
+  Typography,
+  Box,
 } from '@mui/material';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CancelIcon from '@mui/icons-material/Cancel';
 // Import local
 import DefaultLayout from '@/Components/DefaultLayout';
+import { Sidebar } from '@/Components/LayoutParts';
 import Assets from '@/Assets';
-import { Sidebar } from '../../../Components/LayoutParts';
 
 function createData(
   icon: string,

@@ -1,5 +1,4 @@
-import { Box, Container, Typography, Stack } from '@mui/material';
-import Assets from '@assets';
+import { Box, Container, Typography } from '@mui/material';
 import { Helmet } from 'react-helmet-async';
 
 const NotFound = () => {

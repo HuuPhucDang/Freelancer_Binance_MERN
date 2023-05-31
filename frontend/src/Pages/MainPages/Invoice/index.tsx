@@ -1,12 +1,9 @@
 import React from 'react';
 import {
   Container,
-  Box,
-  Typography,
   Grid,
   Button,
   Stack,
-  Link,
   Table,
   TableBody,
   TableCell,
@@ -14,13 +11,12 @@ import {
   TableRow,
   Paper,
   TableHead,
+  Typography,
 } from '@mui/material';
-import PersonIcon from '@mui/icons-material/Person';
 // Import local
 import DefaultLayout from '@/Components/DefaultLayout';
-import Assets from '@/Assets';
-import { Sidebar } from '../../../Components/LayoutParts';
-import { Select } from '../../../Components/Common';
+import { Sidebar } from '@/Components/LayoutParts';
+import { Select } from '@/Components/Common';
 
 function createData(
   date: string,

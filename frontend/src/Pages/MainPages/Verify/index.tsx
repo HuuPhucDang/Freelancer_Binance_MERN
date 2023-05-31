@@ -10,7 +10,7 @@ import {
 } from '@mui/material';
 // Import local
 import DefaultLayout from '@/Components/DefaultLayout';
-import { Sidebar } from '../../../Components/LayoutParts';
+import { Sidebar } from '@/Components/LayoutParts';
 
 const Verify: React.FC = () => {
   // Constructors

@@ -1,17 +1,6 @@
 import { SxProps, Theme } from '@mui/system';
 import { CommonColors } from '@themes';
-import Assets from '@/Assets';
 
-const _borderEffect: SxProps<Theme> = {
-  content: '""',
-  position: 'absolute',
-  height: '5px',
-  backgroundImage: `url(${Assets.underlineImage})`,
-  backgroundSize: 'cover',
-  backgroundRepeat: 'round',
-  transition: 'all 0.5s',
-  bottom: -8,
-};
 
 const iconHoverStyle = (
   url: string,
@@ -33,7 +22,6 @@ const hoverBorderEffect: SxProps<Theme> = {
   position: 'relative',
   cursor: 'pointer',
   '&:after': {
-    ..._borderEffect,
     left: '50%',
     width: 0,
   },
@@ -49,7 +37,6 @@ const activeBorderEffect: SxProps<Theme> = {
   position: 'relative',
   cursor: 'pointer',
   '&:after': {
-    ..._borderEffect,
     transitionDelay: '1s',
     left: 0,
     width: 1,

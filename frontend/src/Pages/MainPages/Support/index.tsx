@@ -6,14 +6,11 @@ import {
   Grid,
   Button,
   Stack,
-  Link,
   TextField,
   Divider,
 } from '@mui/material';
-import PersonIcon from '@mui/icons-material/Person';
 // Import local
 import DefaultLayout from '@/Components/DefaultLayout';
-import Assets from '@/Assets';
 import { Sidebar } from '../../../Components/LayoutParts';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
 

@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useState } from 'react';
+import { useLayoutEffect, useState } from 'react';
 import { Provider } from 'react-redux';
 import { Router, useRoutes } from 'react-router-dom';
 import { hot } from 'react-hot-loader/root';
@@ -12,7 +12,6 @@ import { store, history } from '@store';
 import { CoreTheme } from '@themes';
 
 import AppBarComponent from '@/Components/AppBar';
-import FooterComponent from '@/Components/Footer';
 // Potals
 import MainRouters, { NotFoundRouter } from './MainRouters';
 import { HelmetProvider } from 'react-helmet-async';
@@ -56,7 +55,6 @@ const Root = () => {
                 <Box display="flex" flexDirection="column" minHeight="100vh">
                   <AppBarComponent />
                   <App />
-                  {/* <FooterComponent /> */}
                 </Box>
               </ThemeProvider>
             </StyledEngineProvider>

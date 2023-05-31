@@ -1,23 +1,18 @@
 import React from 'react';
 import {
   Container,
-  Box,
-  Typography,
   Grid,
   Button,
   Stack,
-  Link,
   TextField,
   FormControl,
   InputLabel,
   Select,
-  MenuItem,
+  Typography,
 } from '@mui/material';
-import PersonIcon from '@mui/icons-material/Person';
 // Import local
 import DefaultLayout from '@/Components/DefaultLayout';
-import Assets from '@/Assets';
-import { Sidebar } from '../../../Components/LayoutParts';
+import { Sidebar } from '@/Components/LayoutParts';
 
 const WithdrawMoney: React.FC = () => {
   // Constructors
