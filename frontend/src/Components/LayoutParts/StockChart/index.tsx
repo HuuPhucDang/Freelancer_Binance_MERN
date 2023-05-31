@@ -1,177 +1,53 @@
-import React, { useEffect, useRef } from 'react';
-import { useState } from 'react';
-import useWindowDimensions from './useWindowDimensions';
-import Chart, { DataObject } from './Chart';
+import { Utils } from '@/Libs';
+import React, { useEffect } from 'react';
+import { AdvancedChart } from 'react-tradingview-embed';
 
+const CRYPTO_COMPARE =
+  '54c69a67adfc783963d3589c5a08a40a5d619b0f22b94b1c79df9acc9129c5ff';
+// const GLASSNODE = '1pzEImQbuhq9Qj0LynC5b4oqQog';
 
+const Dashboard: React.FC = () => {
+  const theme = Utils.getThemeMode();
 
-const StockChart: React.FC = () => {
-  const { windowHeight, windowWidth } = useWindowDimensions();
-  const [symbol, setSymbol] = useState('');
-  const [ranges, setRanges] = useState<Array<string>>([
-    '1d',
-    '5d',
-    '1mo',
-    '3mo',
-    '6mo',
-    '1y',
-    '2y',
-    '5y',
-    'max',
-  ]);
-  const [range, setRange] = useState<string>('1mo');
-  const [interval, setInterval] = useState<string>('5m');
-  const [activeRangeNum, setActiveRangeNum] = useState<number>(2);
-
-  const [timestamp, setTimestamp] = useState<Array<number> | undefined>([]);
-  const [close, setClose] = useState<Array<number> | undefined>([]);
-  const [open, setOpen] = useState<Array<number> | undefined>([]);
-  const [high, setHigh] = useState<Array<number> | undefined>([]);
-  const [low, setLow] = useState<Array<number> | undefined>([]);
-  const [volume, setVolume] = useState<Array<number> | undefined>([]);
-  const [items, setItems] = useState<Array<DataObject>>([]);
-
-  // useEffect(() => {
-  //   setSymbol(symbolData?.quotes[0].symbol as string);
-  // }, [symbolData]);
-
-  useEffect(() => {
-    // if (data) {
-    //   setTimestamp(data?.chart?.result[0]?.timestamp);
-    //   setClose(data?.chart?.result[0]?.indicators?.quote[0]?.close);
-    //   setLow(data?.chart?.result[0]?.indicators?.quote[0]?.low);
-    //   setOpen(data?.chart?.result[0]?.indicators?.quote[0]?.open);
-    //   setHigh(data?.chart?.result[0]?.indicators?.quote[0]?.high);
-    //   setVolume(data?.chart?.result[0]?.indicators?.quote[0]?.volume);
-    // }
-  }, []);
-
-  useEffect(() => {
-    const dataItems = timestamp?.map((timestamp, index) => {
-      if (close && open && high && low && volume) {
-        return {
-          timestamp: timestamp,
-          close: close[index],
-          open: open[index],
-          high: open[index],
-          low: low[index],
-          volume: volume[index],
-        };
-      }
-    });
-    setItems(dataItems as Array<DataObject>);
-  }, [timestamp, close, high, open, low, volume]);
-
-  const rangeIntervalOnClick = (
-    currRange: string,
-    interval: string,
-    num: number
-  ) => {
-    if (currRange !== range) {
-      setActiveRangeNum(num);
-      setRange(currRange);
-      setInterval(interval);
-      setTimestamp([0]);
-      setClose([0]);
-      setLow([0]);
-      setOpen([0]);
-      setHigh([0]);
-      setVolume([0]);
-    }
+  const loadChartData = async () => {
+    const response = await fetch(
+      `https://min-api.cryptocompare.com/data/blockchain/histo/day?fsym=&api_key=${CRYPTO_COMPARE}&limit=30`
+    );
+    const data = await response.json();
+    const bulkData = data.Data.Data;
+    const dataArray:
+      | ((prevState: never[]) => never[])
+      | { x: number; y: number }[] = [];
+    bulkData.map(
+      (y: {
+        time: number;
+        transaction_count: number;
+        average_transaction_value: number;
+      }) =>
+        dataArray.push({
+          x: y.time * 1000,
+          y: y.transaction_count * y.average_transaction_value,
+        })
+    );
   };
 
+  useEffect(() => {
+    loadChartData();
+  }, []);
+
   return (
-    <div className="stockChart-wrapp">
-      <div>
-        <div className="chart-nav">
-          <ul>
-            <li>
-              <div
-                className={activeRangeNum === 0 ? 'active' : ''}
-                onClick={() => rangeIntervalOnClick('1d', '5m', 0)}
-              >
-                <p>1d</p>
-              </div>
-            </li>
-            <li>
-              <div
-                className={activeRangeNum === 1 ? 'active' : ''}
-                onClick={() => rangeIntervalOnClick('5d', '5m', 1)}
-              >
-                <p>5d</p>
-              </div>
-            </li>
-            <li>
-              <div
-                className={activeRangeNum === 2 ? 'active' : ''}
-                onClick={() => rangeIntervalOnClick('1mo', '5m', 2)}
-              >
-                <p>1mo</p>
-              </div>
-            </li>
-            <li>
-              <div
-                className={activeRangeNum === 3 ? 'active' : ''}
-                onClick={() => rangeIntervalOnClick('3mo', '60m', 3)}
-              >
-                <p>3mo</p>
-              </div>
-            </li>
-            <li>
-              <div
-                className={activeRangeNum === 4 ? 'active' : ''}
-                onClick={() => rangeIntervalOnClick('6mo', '60m', 4)}
-              >
-                <p>6mo</p>
-              </div>
-            </li>
-            <li>
-              <div
-                className={activeRangeNum === 5 ? 'active' : ''}
-                onClick={() => rangeIntervalOnClick('1y', '60m', 5)}
-              >
-                <p>1y</p>
-              </div>
-            </li>
-            <li>
-              <div
-                className={activeRangeNum === 6 ? 'active' : ''}
-                onClick={() => rangeIntervalOnClick('2y', '60m', 6)}
-              >
-                <p>2y</p>
-              </div>
-            </li>
-            <li>
-              <div
-                className={activeRangeNum === 7 ? 'active' : ''}
-                onClick={() => rangeIntervalOnClick('5y', '1d', 7)}
-              >
-                <p>5y</p>
-              </div>
-            </li>
-            <li>
-              <div
-                className={activeRangeNum === 8 ? 'active' : ''}
-                onClick={() => rangeIntervalOnClick('max', '1d', 8)}
-              >
-                <p>max</p>
-              </div>
-            </li>
-          </ul>
-        </div>
-        <div className="chart-wrapp">
-          {items && (
-            <Chart
-              height={windowHeight / 1.4}
-              ratio={5}
-              width={windowWidth / 1.8}
-              data={items}
-            />
-          )}
-        </div>
-      </div>
-    </div>
+    <AdvancedChart
+      widgetProps={{
+        theme,
+        // hide_top_toolbar: true,
+        hide_side_toolbar: true,
+        enable_publishing: false,
+        locale: 'vi_VN',
+        style: '1',
+        symbol: 'BINANCE:BTCUSDT',
+      }}
+    />
   );
 };
 
-export default StockChart;
+export default Dashboard;
