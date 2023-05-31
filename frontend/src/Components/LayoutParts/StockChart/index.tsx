@@ -47,6 +47,7 @@ const Dashboard: React.FC = () => {
         style: '1',
         symbol: 'BINANCE:BTCUSDT',
         // height: '100%'
+        height: '252px'
       }}
     />
   );

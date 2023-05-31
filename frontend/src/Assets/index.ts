@@ -44,6 +44,8 @@ import passwordIcon from './password.png';
 import otpIcon from './otp.png';
 import qrImage from './qr.png';
 import transactionIcon from './transaction.jpg';
+import filterTypeImage from './filter_type.png';
+import excelIcon from './excel.png';
 
 export default {
   darkIconDarkTheme,
@@ -86,4 +88,6 @@ export default {
   otpIcon,
   qrImage,
   transactionIcon,
+  filterTypeImage,
+  excelIcon,
 };
