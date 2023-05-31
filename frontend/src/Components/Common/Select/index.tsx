@@ -89,7 +89,6 @@ const Select: React.FC<IProps> = ({
             ...base,
             width: matchUpMd ? '212px' : '204px',
             boxSizing: 'border-box',
-            fontFamily: 'Plus Jakarta Sans',
             fontSize: matchUpMd ? '16px' : '14px',
             fontWeight: 500,
           }),

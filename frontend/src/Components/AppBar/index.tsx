@@ -24,7 +24,6 @@ import LightModeIcon from '@mui/icons-material/LightMode';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import LoginIcon from '@mui/icons-material/Login';
 import PersonIcon from '@mui/icons-material/Person';
-import MaterialUISwitch from '../LayoutParts/SwitchTheme';
 
 const AppBarComponent: React.FC = () => {
   // Constructors
@@ -48,7 +47,6 @@ const AppBarComponent: React.FC = () => {
           key={item.label}
           sx={{
             ...checkStyle,
-            fontFamily: 'Plus Jakarta Sans',
             fontSize: {
               xs: 24,
               sm: 16,
@@ -66,7 +64,7 @@ const AppBarComponent: React.FC = () => {
     () => (
       <Grid
         item
-        xs={7}
+        xs={9}
         display="flex"
         alignItems="center"
         justifyContent="space-between"
@@ -80,7 +78,7 @@ const AppBarComponent: React.FC = () => {
           sx={{
             flex: 1,
             background: '#D9D9D9',
-            height: '25px',
+            height: '29px',
             margin: '0 12px',
           }}
         >
@@ -94,10 +92,31 @@ const AppBarComponent: React.FC = () => {
             IUDST -2,59
           </Typography>
         </Stack>
-        <Button startIcon={<LoginIcon />} variant="outlined">
+        <Button
+          startIcon={<LoginIcon />}
+          variant="text"
+          size="small"
+          sx={{
+            fontSize: '12px',
+            marginRight: '10px',
+            textTransform: 'unset',
+            backgroundColor: 'background.lightSilver',
+            color: 'text.secondary',
+          }}
+        >
           Đăng ký
         </Button>
-        <Button startIcon={<PersonIcon />} variant="outlined">
+        <Button
+          startIcon={<PersonIcon />}
+          variant="text"
+          size="small"
+          sx={{
+            fontSize: '12px',
+            textTransform: 'unset',
+            backgroundColor: 'background.burntSienna',
+            color: 'text.secondary',
+          }}
+        >
           Đăng nhập
         </Button>
       </Grid>
@@ -118,7 +137,7 @@ const AppBarComponent: React.FC = () => {
         display="flex"
         alignItems="center"
         justifyContent="center"
-        gap={2}
+        gap={1}
       >
         <IconButton
           focusRipple
@@ -126,16 +145,18 @@ const AppBarComponent: React.FC = () => {
             Utils.saveThemeMode('light');
             window.location.reload();
           }}
+          size="small"
         >
-          <LightModeIcon />
+          <LightModeIcon sx={{ fontSize: '20px' }} />
         </IconButton>
         <IconButton
           onClick={() => {
             Utils.saveThemeMode('dark');
             window.location.reload();
           }}
+          size="small"
         >
-          <DarkModeIcon />
+          <DarkModeIcon sx={{ fontSize: '20px' }} />
         </IconButton>
       </Grid>
     </Grid>
@@ -178,12 +199,34 @@ const AppBarComponent: React.FC = () => {
     </Drawer>
   );
 
+  const _renderSubHeader = () => {
+    return (
+      <Stack
+        direction="row"
+        sx={{
+          width: '100%',
+          alignItems: 'center',
+          justifyContent: 'center',
+          height: '30px',
+          background: 'palegoldenrod',
+        }}
+      >
+        <PersonIcon sx={{ color: 'sunglow' }} />
+        <Typography sx={{ color: '#000000', fontSize: '10px' }}>
+          Đăng kí ngay - Nhận chiết khấu giao dịch lên tới 100 USD (dành cho
+          người dùng đã xác minh)
+        </Typography>
+      </Stack>
+    );
+  };
+
   return (
     <AppBar position="sticky" sx={appBarStyles}>
-      {_renderDrawer()}
       <Container maxWidth="lg">
         <Toolbar>{_renderMainBar()}</Toolbar>
+        {_renderDrawer()}
       </Container>
+      {_renderSubHeader()}
     </AppBar>
   );
 };

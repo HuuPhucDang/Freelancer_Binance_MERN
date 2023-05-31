@@ -8,7 +8,6 @@ export const mainStyles: SxProps<Theme> = {
   textTransform: 'unset',
   fontSize: '12px',
   lineHeight: '20px',
-  fontFamily: 'Plus Jakarta Sans',
   borderColor: 'transparent',
   color: '#000000',
   margin: '0 2px',
