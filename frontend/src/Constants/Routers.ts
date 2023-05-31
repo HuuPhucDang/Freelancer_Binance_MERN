@@ -1,4 +1,5 @@
 const USER_ROUTER_ROOT = '/';
+const AUTH_ROUTER_ROOT = '/auth';
 
 const USER_ROUTERS = {
   NOT_FOUND: '*',
@@ -14,8 +15,14 @@ const USER_ROUTERS = {
   TRANSACTION: `${USER_ROUTER_ROOT}transaction`,
 };
 
-export { USER_ROUTERS };
+const AUTH_ROUTERS = {
+  SIGN_IN: `${USER_ROUTER_ROOT}sign-in`,
+  SIGN_UP: `${AUTH_ROUTER_ROOT}sign-up`,
+};
+
+export { USER_ROUTERS, AUTH_ROUTERS };
 
 export default {
   ...USER_ROUTERS,
+  ...AUTH_ROUTERS,
 };

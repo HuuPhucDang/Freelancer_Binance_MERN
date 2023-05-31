@@ -44,18 +44,18 @@ const Invoice: React.FC = () => {
     return (
       <Box
         component="main"
-        maxWidth="lg"
+        maxWidth="md"
         sx={{
           minHeight: 'calc(100vh - 94px)',
           padding: '1em 0',
           mx: 'auto',
         }}
       >
-        <Grid container>
+        <Grid container columnSpacing={2}>
           <Grid item md={3}>
             <Sidebar />
           </Grid>
-          <Grid item md={9}>
+          <Grid item md={9} borderLeft="1px solid #949494">
             <Stack direction="column">
               <Typography
                 sx={{ fontSize: '24px', lineHeight: '34px', fontWeight: 600 }}
@@ -94,7 +94,7 @@ const Invoice: React.FC = () => {
                       color: 'text.secondary',
                       textTransform: 'unset',
                       height: '37px',
-                      width: '220px',
+                      width: '150px',
                       fontWeight: 700,
                       fontSize: '14px',
                     }}
@@ -103,7 +103,10 @@ const Invoice: React.FC = () => {
                   </Button>
                 </Stack>
               </Stack>
-              <TableContainer component={Paper} sx={{ marginTop: '20px' }}>
+              <TableContainer
+                component={Paper}
+                sx={{ width: '100%', marginTop: '20px' }}
+              >
                 <Table
                   size="small"
                   sx={{

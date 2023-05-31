@@ -463,6 +463,7 @@ const Home: React.FC = () => {
                 fontWeight: 400,
                 textAlign: 'left',
                 marginTop: '20px',
+                color: "text.primary"
               }}
             >
               Tìm hiểu thêm

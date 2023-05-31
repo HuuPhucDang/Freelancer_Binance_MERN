@@ -106,6 +106,7 @@ const CoreTheme = createTheme({
             secondary: '#F5F5F5',
             burntSienna: '#FFB23F',
             lightSilver: '#D9D9D9',
+            newsHeader: '#D9D9D9',
           } as any,
         }
       : {
@@ -121,6 +122,7 @@ const CoreTheme = createTheme({
             secondary: '#0A0E11',
             burntSienna: '#FFB23F',
             lightSilver: '#D9D9D9',
+            newsHeader: '#999288',
           },
         }),
   },

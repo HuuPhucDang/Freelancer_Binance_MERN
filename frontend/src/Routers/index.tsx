@@ -15,6 +15,7 @@ import AppBarComponent from '@/Components/AppBar';
 // Potals
 import MainRouters, { NotFoundRouter } from './MainRouters';
 import { HelmetProvider } from 'react-helmet-async';
+import AuthRouters from './AuthRouters';
 
 const RootRouter = ({ history, ...props }: any) => {
   const [state, setState] = useState({
@@ -35,7 +36,7 @@ const RootRouter = ({ history, ...props }: any) => {
 };
 
 const App = () => {
-  const elements = useRoutes([MainRouters, NotFoundRouter]);
+  const elements = useRoutes([MainRouters, AuthRouters, NotFoundRouter]);
   return (
     <SnackbarProvider maxSnack={5}>
       <ConfirmProvider>{elements}</ConfirmProvider>

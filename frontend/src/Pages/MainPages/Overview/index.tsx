@@ -56,7 +56,7 @@ const Overview: React.FC = () => {
     return (
       <Container
         component="main"
-        maxWidth="lg"
+        maxWidth="md"
         sx={{
           minHeight: 'calc(100vh - 94px)',
           padding: '1em 0',
@@ -67,7 +67,7 @@ const Overview: React.FC = () => {
           <Grid item md={3}>
             <Sidebar />
           </Grid>
-          <Grid item md={9}>
+          <Grid item md={9} borderLeft="1px solid #949494">
             <Grid container columnSpacing={2} rowSpacing={4}>
               <Grid item md={12}>
                 <Stack
@@ -218,7 +218,7 @@ const Overview: React.FC = () => {
                   direction="column"
                   sx={{
                     backgroundColor: 'background.secondary',
-                    padding: '20px'
+                    padding: '20px',
                   }}
                 >
                   <Stack direction="row" alignItems="center">
