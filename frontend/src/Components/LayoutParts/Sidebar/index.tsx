@@ -6,6 +6,7 @@ import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 import AccountBalanceWalletOutlinedIcon from '@mui/icons-material/AccountBalanceWalletOutlined';
 import RecordVoiceOverOutlinedIcon from '@mui/icons-material/RecordVoiceOverOutlined';
 import { ROUTERS } from '../../../Constants';
+import { useLocation } from 'react-router';
 interface IMenu {
   icon: JSX.Element;
   label: string;
@@ -46,6 +47,7 @@ const menu: IMenu[] = [
 ];
 
 const Sidebar = () => {
+  const { pathname } = useLocation();
   return (
     <Stack
       sx={{
@@ -53,23 +55,30 @@ const Sidebar = () => {
         height: '100%',
       }}
     >
-      {menu.map((item: IMenu) => (
-        <Button
-          key={item.path}
-          startIcon={item.icon}
-          variant="text"
-          href={item.path}
-          sx={{
-            color: 'text.primary',
-            justifyContent: 'flex-start',
-            fontSize: '12px',
-            height: "40px",
-            padding: "0 10px",
-          }}
-        >
-          {item.label}
-        </Button>
-      ))}
+      {menu.map((item: IMenu) => {
+        const isActive = item.path === pathname;
+        return (
+          <Button
+            key={item.path}
+            startIcon={item.icon}
+            variant="text"
+            href={item.path}
+            sx={{
+              color: 'text.primary',
+              justifyContent: 'flex-start',
+              fontSize: '12px',
+              height: '40px',
+              padding: '0 10px',
+              textTransform: "unset",
+              backgroundColor: isActive
+                ? 'background.secondary'
+                : 'transparent',
+            }}
+          >
+            {item.label}
+          </Button>
+        );
+      })}
     </Stack>
   );
 };

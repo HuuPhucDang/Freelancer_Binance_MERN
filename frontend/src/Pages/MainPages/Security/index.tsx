@@ -90,7 +90,7 @@ const Security: React.FC = () => {
               </Stack>
               <Box
                 sx={{
-                  backgroundColor: '#ED9251',
+                  backgroundColor: 'background.burntSienna',
                   padding: '10px 14px',
                   marginTop: '16px ',
                 }}
