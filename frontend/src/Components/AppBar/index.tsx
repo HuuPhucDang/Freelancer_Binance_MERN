@@ -30,6 +30,7 @@ const AppBarComponent: React.FC = () => {
   // Constructors
   const pathname = useLocation().pathname;
   const [mobileOpen, setMobileOpen] = useState<boolean>(false);
+  const isDarkMode = Utils.getThemeMode() === 'dark';
 
   // Events
   const handleDrawerToggle = () => {
@@ -90,18 +91,33 @@ const AppBarComponent: React.FC = () => {
           justifyContent="space-evenly"
           sx={{
             flex: 1,
-            backgroundColor: 'background.newsHeader',
+            backgroundColor: !isDarkMode ? 'background.newsHeader' : '#29313C',
             height: '25px',
             margin: '0 8px',
           }}
         >
-          <Typography sx={{ fontSize: '12px', color: '#000' }}>
+          <Typography
+            sx={{
+              fontSize: '12px',
+              color: !isDarkMode ? 'black!important' : 'white!important',
+            }}
+          >
             EDUUSDT -1,18
           </Typography>
-          <Typography sx={{ fontSize: '12px', color: '#000' }}>
+          <Typography
+            sx={{
+              fontSize: '12px',
+              color: !isDarkMode ? 'black!important' : 'white!important',
+            }}
+          >
             BTCUSDT -0,41
           </Typography>
-          <Typography sx={{ fontSize: '12px', color: '#000' }}>
+          <Typography
+            sx={{
+              fontSize: '12px',
+              color: !isDarkMode ? 'black!important' : 'white!important',
+            }}
+          >
             IUDST -2,59
           </Typography>
         </Stack>
@@ -195,7 +211,6 @@ const AppBarComponent: React.FC = () => {
   );
 
   const _renderMainBar = () => {
-    const isDarkMode = Utils.getThemeMode() === 'dark';
     return (
       <Grid
         container
@@ -331,12 +346,12 @@ const AppBarComponent: React.FC = () => {
           direction="row"
           sx={{
             maxWidth: '852px',
-            justifyContent: 'center',
+            justifyContent: 'start',
             alignItems: 'center',
             width: '100%',
           }}
         >
-          <PersonIcon sx={{ color: 'text.burntSienna', ml: '5em' }} />
+          <PersonIcon sx={{ color: 'text.burntSienna', ml: '4em' }} />
           <Typography sx={{ color: '#000000', fontSize: '10px' }}>
             Đăng kí ngay - Nhận chiết khấu giao dịch lên tới 100 USD (dành cho
             người dùng đã xác minh)

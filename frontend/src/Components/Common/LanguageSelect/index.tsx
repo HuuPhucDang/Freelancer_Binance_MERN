@@ -1,15 +1,6 @@
 import React from 'react';
-import {
-  Box,
-  InputLabel,
-  Stack,
-  SxProps,
-  Theme,
-  useMediaQuery,
-  useTheme,
-} from '@mui/material';
+import { Box, Stack, useMediaQuery, useTheme } from '@mui/material';
 import ReactSelect, {
-  SingleValue,
   components,
   SingleValueProps,
   PlaceholderProps,
@@ -73,13 +64,7 @@ const SingleValueComponent = ({
   </components.SingleValue>
 );
 
-const LanguageSelect: React.FC<IProps> = ({
-  selected,
-  onSelect,
-  label = '',
-  sx = {},
-  placeholder = '',
-}) => {
+const LanguageSelect: React.FC<IProps> = ({ sx = {}, placeholder = '' }) => {
   const theme = useTheme();
   const matchUpMd = useMediaQuery(theme.breakpoints.up('md'));
   const [selectedOption, setSelectedOption] = React.useState<IOption | null>(
@@ -106,7 +91,7 @@ const LanguageSelect: React.FC<IProps> = ({
         value={selectedOption}
         onChange={handleChange}
         options={languages}
-        placeholder={placeholder || 'Country'}
+        placeholder={placeholder || 'Language'}
         styles={{
           container: (base) => ({
             ...base,
@@ -165,7 +150,7 @@ const LanguageSelect: React.FC<IProps> = ({
               backgroundColor: '#E87844',
             },
           }),
-          indicatorsContainer: (base, props) => ({
+          indicatorsContainer: (base) => ({
             ...base,
             width: '24px',
           }),
