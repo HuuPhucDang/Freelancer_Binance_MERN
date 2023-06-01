@@ -278,7 +278,6 @@ const AppBarComponent: React.FC = () => {
           justifyContent: 'center',
           minHeight: '30px',
           background: 'palegoldenrod',
-          padding: '10px',
         }}
       >
         <PersonIcon sx={{ color: 'text.burntSienna' }} />
@@ -299,8 +298,8 @@ const AppBarComponent: React.FC = () => {
       <Container maxWidth="md">
         <Toolbar>{_renderMainBar()}</Toolbar>
         {_renderDrawer()}
+        {_renderSubHeader()}
       </Container>
-      {_renderSubHeader()}
     </AppBar>
   );
 };
