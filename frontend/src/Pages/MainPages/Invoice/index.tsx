@@ -52,10 +52,10 @@ const Invoice: React.FC = () => {
         }}
       >
         <Grid container columnSpacing={2}>
-          <Grid item md={3}>
+          <Grid item md={2.5}>
             <Sidebar />
           </Grid>
-          <Grid item md={9} borderLeft="1px solid #949494">
+          <Grid item md={9.5} borderLeft="1px solid #949494">
             <Stack direction="column">
               <Typography
                 sx={{ fontSize: '24px', lineHeight: '34px', fontWeight: 600 }}
@@ -79,14 +79,14 @@ const Invoice: React.FC = () => {
                     ]}
                     selected=""
                     onSelect={() => console.log('select')}
-                    sx={{ marginRight: '10px' }}
+                    sx={{ marginRight: '10px', backgroundColor: "background.lightSilver" }}
                   />
                   <Select
                     placeholder="Thời gian"
                     options={[]}
                     selected=""
                     onSelect={() => console.log('select')}
-                    sx={{ marginRight: '10px' }}
+                    sx={{ marginRight: '10px', backgroundColor: "background.lightSilver" }}
                   />
                   <Button
                     sx={{
@@ -95,8 +95,9 @@ const Invoice: React.FC = () => {
                       textTransform: 'unset',
                       height: '37px',
                       width: '150px',
-                      fontWeight: 700,
+                      fontWeight: 400,
                       fontSize: '14px',
+                      borderRadius: '0px'
                     }}
                   >
                     Gửi báo cáo
@@ -117,12 +118,24 @@ const Invoice: React.FC = () => {
                 >
                   <TableHead>
                     <TableRow>
-                      <TableCell>Ngày tháng</TableCell>
-                      <TableCell align="center">Thời gian</TableCell>
-                      <TableCell align="center">Loại</TableCell>
-                      <TableCell align="center">Trạng thái</TableCell>
-                      <TableCell align="center">Số tiền</TableCell>
-                      <TableCell align="center">Số dư</TableCell>
+                      <TableCell sx={{ fontSize: '14px' }}>
+                        Ngày tháng
+                      </TableCell>
+                      <TableCell align="center" sx={{ fontSize: '14px' }}>
+                        Thời gian
+                      </TableCell>
+                      <TableCell align="center" sx={{ fontSize: '14px' }}>
+                        Loại
+                      </TableCell>
+                      <TableCell align="center" sx={{ fontSize: '14px' }}>
+                        Trạng thái
+                      </TableCell>
+                      <TableCell align="center" sx={{ fontSize: '14px' }}>
+                        Số tiền
+                      </TableCell>
+                      <TableCell align="center" sx={{ fontSize: '14px' }}>
+                        Số dư
+                      </TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
