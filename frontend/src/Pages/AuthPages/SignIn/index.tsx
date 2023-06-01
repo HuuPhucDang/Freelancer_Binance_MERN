@@ -1,9 +1,6 @@
-import { Box, Button, Stack, TextField, Typography } from '@mui/material';
-import {
-  RootState,
-  useTypedDispatch,
-  useTypedSelector,
-} from '@/Reducers/store';
+import { Button, Stack, TextField, Typography } from '@mui/material';
+import _ from 'lodash';
+import { useTypedDispatch, useTypedSelector } from '@/Reducers/store';
 import { AuthActions } from '@/Reducers/Actions';
 import React from 'react';
 import { Utils } from '@/Libs';
@@ -12,8 +9,8 @@ import { ROUTERS } from '@/Constants';
 const { setLogged } = AuthActions;
 
 const SignIn = () => {
-  const isLogged: boolean = useTypedSelector(
-    (state: RootState) => state.AUTH?.isLogged
+  const isLogged: any = useTypedSelector((state: any) =>
+    _.get(state.AUTH, 'isLogged')
   );
   const dispatch = useTypedDispatch();
 

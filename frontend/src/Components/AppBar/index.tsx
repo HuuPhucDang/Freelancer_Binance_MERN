@@ -23,11 +23,11 @@ import { CommonStyles } from '../Common';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import PersonIcon from '@mui/icons-material/Person';
-import { RootState, useTypedSelector } from '../../Reducers/store';
+import { useTypedSelector } from '../../Reducers/store';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 const AppBarComponent: React.FC = () => {
-  const isLogged: boolean = useTypedSelector(
-    (state: RootState) => state.AUTH?.isLogged
+  const isLogged: any = useTypedSelector((state: any) =>
+    _.get(state.AUTH, 'isLogged')
   );
   // Constructors
   const pathname = useLocation().pathname;
@@ -80,7 +80,7 @@ const AppBarComponent: React.FC = () => {
           <Box
             component="img"
             src={Assets.transactionDarkIcon}
-            sx={{ width: '33px', height: 'auto', objectFit: 'contain' }}
+            sx={{ width: '33px', height: '26px' }}
           />
         </Link>
         <Stack
@@ -275,15 +275,12 @@ const AppBarComponent: React.FC = () => {
         sx={{
           width: '100%',
           alignItems: 'center',
-          justifyContent: 'center',
           minHeight: '30px',
           background: 'palegoldenrod',
         }}
       >
-        <PersonIcon sx={{ color: 'text.burntSienna' }} />
-        <Typography
-          sx={{ color: '#000000', fontSize: '10px', textAlign: 'center' }}
-        >
+        <PersonIcon sx={{ color: 'text.burntSienna', ml: '5em' }} />
+        <Typography sx={{ color: '#000000', fontSize: '10px' }}>
           Đăng kí ngay - Nhận chiết khấu giao dịch lên tới 100 USD (dành cho
           người dùng đã xác minh)
         </Typography>
@@ -295,8 +292,10 @@ const AppBarComponent: React.FC = () => {
 
   return (
     <AppBar position="sticky" sx={appBarStyles}>
-      <Container maxWidth="md">
-        <Toolbar>{_renderMainBar()}</Toolbar>
+      <Container maxWidth="md" sx={{p: '0!important'}}>
+        <Toolbar sx={{ p: '5px', minHeight: 'auto!important' }}>
+          {_renderMainBar()}
+        </Toolbar>
         {_renderDrawer()}
         {_renderSubHeader()}
       </Container>

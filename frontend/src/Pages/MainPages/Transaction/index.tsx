@@ -3,7 +3,6 @@ import {
   Typography,
   Grid,
   Stack,
-  IconButton,
   Table,
   TableBody,
   TableCell,
@@ -16,8 +15,8 @@ import {
   TextField,
   Chip,
   Container,
+  InputAdornment,
 } from '@mui/material';
-import VerticalSplitIcon from '@mui/icons-material/VerticalSplit';
 import DefaultLayout from '@/Components/DefaultLayout';
 import StarIcon from '@mui/icons-material/Star';
 import TapAndPlayIcon from '@mui/icons-material/TapAndPlay';
@@ -26,7 +25,7 @@ import MarkChatUnreadIcon from '@mui/icons-material/MarkChatUnread';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import { StocksChart } from '@/Components/LayoutParts';
 import Assets from '@/Assets';
-import UnfoldMoreIcon from '@mui/icons-material/UnfoldMore';
+import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 function createData(
   price: number,
   quantity: number,
@@ -216,20 +215,30 @@ const Transaction: React.FC = () => {
   const _renderLeftSection = () => {
     return (
       <Grid container spacing={1}>
-        <Grid item xs={12}>
-          <Grid container borderBottom="1px solid #ccc">
-            <Grid item xs={3} borderRight="1px solid #ccc">
+        <Grid
+          item
+          xs={12}
+          sx={{
+            borderLeft: '0.5px solid #BBAEAE',
+            borderBottom: '0.5px solid #BBAEAE',
+          }}
+        >
+          <Grid container>
+            <Grid item xs={3.5}>
               <Stack padding="10px 4px">
                 <Stack
                   direction="row"
                   alignItems="center"
                   justifyContent="center"
+                  borderRight="1px solid #ccc"
+                  sx={{ pr: 1 }}
                 >
                   <Typography
                     sx={{
                       fontSize: '15px',
                       fontWeight: 600,
                       marginRight: '4px',
+                      lineHeight: '18px',
                     }}
                   >
                     BTC/USDT
@@ -239,20 +248,27 @@ const Transaction: React.FC = () => {
                     src={Assets.excelIcon}
                     sx={{
                       marginRight: '4px',
+                      fontSize: '10px',
                     }}
                   />
                   <Typography sx={{ fontSize: '10px', fontWeight: 400 }}>
                     Bitcoin giá
                   </Typography>
                 </Stack>
-                <Stack direction="row" justifyContent="center" padding="4px">
+                <Stack
+                  direction="row"
+                  justifyContent="center"
+                  padding="4px"
+                  borderRight="1px solid #ccc"
+                  sx={{ pr: 1 }}
+                >
                   <Chip
                     label="POW"
                     color="warning"
                     sx={{
                       marginRight: '10px',
-                      borderRadius: '4px',
-                      fontSize: '10px',
+                      borderRadius: 0,
+                      fontSize: 9,
                       padding: '0px',
                       height: '16px',
                       backgroundColor: 'background.chip',
@@ -263,8 +279,8 @@ const Transaction: React.FC = () => {
                     label="Top khối lượng"
                     color="warning"
                     sx={{
-                      borderRadius: '4px',
-                      fontSize: '10px',
+                      borderRadius: 0,
+                      fontSize: 9,
                       padding: '0px',
                       height: '16px',
                       backgroundColor: 'background.chip',
@@ -274,7 +290,7 @@ const Transaction: React.FC = () => {
                 </Stack>
               </Stack>
             </Grid>
-            <Grid item xs={9}>
+            <Grid item xs={8.5}>
               <Stack
                 direction="row"
                 justifyContent="space-evenly"
@@ -286,40 +302,41 @@ const Transaction: React.FC = () => {
                   <Typography sx={{ fontSize: '12px' }}>$1.1111</Typography>
                 </Stack>
                 <Stack direction="column">
-                  <Typography sx={{ fontSize: '12px' }}>
+                  <Typography sx={{ fontSize: 10 }}>
                     Biến động giá 24h{' '}
                   </Typography>
-                  <Typography sx={{ fontSize: '12px', color: '#C83535' }}>
+                  <Typography sx={{ fontSize: 10, color: '#C83535' }}>
                     -0.02260 -1.99%
                   </Typography>
                 </Stack>
                 <Stack direction="column">
-                  <Typography sx={{ fontSize: '10px' }}>
+                  <Typography sx={{ fontSize: 10 }}>
                     Giá cao nhất 24h
                   </Typography>
-                  <Typography sx={{ fontSize: '10px' }}>
-                    1.1777717777
-                  </Typography>
+                  <Typography sx={{ fontSize: 10 }}>1.1777717777</Typography>
                 </Stack>
                 <Stack direction="column">
-                  <Typography sx={{ fontSize: '10px' }}>
+                  <Typography sx={{ fontSize: 10 }}>
                     Giá thấp nhất 24h{' '}
                   </Typography>
-                  <Typography sx={{ fontSize: '10px' }}>1.10659 </Typography>
+                  <Typography sx={{ fontSize: 10 }}>1.10659 </Typography>
                 </Stack>
                 <Stack direction="column">
-                  <Typography sx={{ fontSize: '10px' }}>KL 24h(EDU)</Typography>
-                  <Typography sx={{ fontSize: '10px' }}>
-                    32.754.791.0000
-                  </Typography>
+                  <Typography sx={{ fontSize: 10 }}>KL 24h(EDU)</Typography>
+                  <Typography sx={{ fontSize: 10 }}>32.754.791.0000</Typography>
                 </Stack>
               </Stack>
             </Grid>
           </Grid>
         </Grid>
-        <Grid item xs={12} padding="0 !important">
+        <Grid
+          item
+          xs={12}
+          padding="0 !important"
+          sx={{ borderLeft: '0.5px solid #BBAEAE' }}
+        >
           <Grid container>
-            <Grid item xs={3.5} borderRight="1px solid #ccc" padding="0">
+            <Grid item xs={4} borderRight="1px solid #ccc" padding="0">
               <Stack
                 flexDirection="row"
                 marginBottom="16px"
@@ -333,13 +350,18 @@ const Transaction: React.FC = () => {
               </Stack>
               <TableContainer
                 component={Paper}
-                sx={{ maxHeight: 'calc(100vh - 258px)', overflow: 'auto' }}
+                sx={{
+                  maxHeight: 'calc(100vh - 220px)',
+                  overflow: 'auto',
+                  borderRadius: 0,
+                }}
               >
                 <Table
                   size="small"
                   sx={{
                     minWidth: 1,
                     backgroundColor: 'transparent',
+                    px: 1,
                   }}
                   aria-label="simple table"
                   stickyHeader
@@ -350,28 +372,31 @@ const Transaction: React.FC = () => {
                         align="center"
                         sx={{
                           fontSize: '10px',
-                          fontWeight: 600,
+                          fontWeight: 400,
                           padding: '4px 0',
+                          color: '#7D6F6F',
                         }}
                       >
                         Giá (USDT)
                       </TableCell>
                       <TableCell
-                        align="center"
+                        align="right"
                         sx={{
                           fontSize: '10px',
-                          fontWeight: 600,
+                          fontWeight: 400,
                           padding: '4px 0',
+                          color: '#7D6F6F',
                         }}
                       >
                         Số lượng (EDU)
                       </TableCell>
                       <TableCell
-                        align="center"
+                        align="right"
                         sx={{
                           fontSize: '10px',
-                          fontWeight: 600,
+                          fontWeight: 400,
                           padding: '4px 0',
+                          color: '#7D6F6F',
                         }}
                       >
                         Tổng
@@ -383,44 +408,41 @@ const Transaction: React.FC = () => {
                       <TableRow
                         key={`row-${index}`}
                         sx={{
-                          '&:last-child td, &:last-child th': { border: 0 },
+                          '& .MuiTableCell-root': { border: 0 },
                         }}
                       >
-                        <TableCell
-                          component="th"
-                          scope="row"
-                          sx={{ padding: 0 }}
-                        >
+                        <TableCell component="th" scope="row" sx={{ p: 0 }}>
                           <Typography
                             sx={{
-                              fontSize: '10px',
-                              lineHeight: '24px',
+                              fontSize: 9,
+                              lineHeight: '11px',
                               color:
                                 row.direction === 'up' ? '#408827' : '#F21616',
-                              padding: '4px 0',
+                              p: '4px 0',
+                              textAlign: 'center',
                             }}
                           >
                             {row.price}
                           </Typography>
                         </TableCell>
-                        <TableCell align="center" sx={{ padding: 0 }}>
+                        <TableCell align="right" sx={{ p: 0 }}>
                           <Typography
                             sx={{
-                              fontSize: '10px',
-                              lineHeight: '24px',
-                              color: 'text.primary',
-                              padding: '4px 0',
+                              fontSize: 9,
+                              lineHeight: '11px',
+                              color: '#816A6A',
+                              p: '4px',
                             }}
                           >
                             {row.quantity}
                           </Typography>
                         </TableCell>
-                        <TableCell align="center" sx={{ padding: 0 }}>
+                        <TableCell align="right" sx={{ p: 0 }}>
                           <Typography
                             sx={{
-                              fontSize: '10px',
-                              lineHeight: '24px',
-                              color: 'text.primary',
+                              fontSize: 9,
+                              lineHeight: '11px',
+                              color: '#816A6A',
                               padding: '4px 0',
                             }}
                           >
@@ -433,22 +455,33 @@ const Transaction: React.FC = () => {
                 </Table>
               </TableContainer>
             </Grid>
-            <Grid item xs={8.5}>
+            <Grid item xs={8}>
               <Stack direction="column">
                 <Stack
                   sx={{
-                    width: '100%',
+                    width: 1,
                     maxWidth: '475px',
-                    height: 'calc(100vh - 460px) !important',
+                    height: 'calc(100vh - 408px) !important',
                     background: '#000',
                   }}
                 >
                   <StocksChart />
                 </Stack>
-                <Stack flex={1} padding="5px" sx={{ width: '100%' }}>
+                <Stack
+                  flex={1}
+                  padding="5px"
+                  sx={{
+                    width: 1,
+                    '& .MuiInputBase-root:before': {
+                      borderBottom: 0,
+                    },
+                  }}
+                >
                   <Grid container columnSpacing={1}>
                     <Grid item xs={6}>
-                      <Typography sx={{ fontSize: '13px' }}>Số dư</Typography>
+                      <Typography sx={{ fontSize: '13px', lineHeight: '15px' }}>
+                        Số dư
+                      </Typography>
                       <Stack
                         direction="row"
                         alignItems="center"
@@ -478,12 +511,16 @@ const Transaction: React.FC = () => {
                               borderBottom: 'none',
                             },
                           }}
+                          InputProps={{
+                            endAdornment: (
+                              <InputAdornment position="end">
+                                <Typography sx={{ fontSize: '8px' }}>
+                                  USDT
+                                </Typography>
+                              </InputAdornment>
+                            ),
+                          }}
                         />
-                        <Typography
-                          sx={{ marginLeft: '16px', fontSize: '8px' }}
-                        >
-                          USDT
-                        </Typography>
                       </Stack>
                       <Stack
                         direction="row"
@@ -514,12 +551,16 @@ const Transaction: React.FC = () => {
                               borderBottom: 'none',
                             },
                           }}
+                          InputProps={{
+                            endAdornment: (
+                              <InputAdornment position="end">
+                                <Typography sx={{ fontSize: '8px' }}>
+                                  USDT
+                                </Typography>
+                              </InputAdornment>
+                            ),
+                          }}
                         />
-                        <Typography
-                          sx={{ marginLeft: '16px', fontSize: '8px' }}
-                        >
-                          USDT
-                        </Typography>
                       </Stack>
                       <Stack
                         direction="row"
@@ -550,12 +591,16 @@ const Transaction: React.FC = () => {
                               borderBottom: 'none',
                             },
                           }}
+                          InputProps={{
+                            endAdornment: (
+                              <InputAdornment position="end">
+                                <Typography sx={{ fontSize: '8px' }}>
+                                  USDT
+                                </Typography>
+                              </InputAdornment>
+                            ),
+                          }}
                         />
-                        <Typography
-                          sx={{ marginLeft: '16px', fontSize: '8px' }}
-                        >
-                          USDT
-                        </Typography>
                       </Stack>
                       <Stack
                         direction="row"
@@ -586,19 +631,24 @@ const Transaction: React.FC = () => {
                               borderBottom: 'none',
                             },
                           }}
+                          InputProps={{
+                            endAdornment: (
+                              <InputAdornment position="end">
+                                <Typography sx={{ fontSize: '8px' }}>
+                                  USDT
+                                </Typography>
+                              </InputAdornment>
+                            ),
+                          }}
                         />
-                        <Typography
-                          sx={{ marginLeft: '16px', fontSize: '8px' }}
-                        >
-                          USDT
-                        </Typography>
                       </Stack>
                       <Grid container spacing={0.5} marginTop="5px">
                         <Grid item xs={6} md={3}>
                           <Button
                             variant="contained"
                             sx={{
-                              fontSize: '10px',
+                              fontSize: 9,
+                              lineHeight: '11px',
                               textTransform: 'unset',
                               backgroundColor: 'background.newsHeader',
                               color: 'text.secondary',
@@ -614,24 +664,8 @@ const Transaction: React.FC = () => {
                           <Button
                             variant="contained"
                             sx={{
-                              fontSize: '10px',
-                              textTransform: 'unset',
-                              backgroundColor: 'background.newsHeader',
-                              color: 'text.secondary',
-                              width: '45px',
-                              paddingX: '0',
-                              minWidth: 'unset',
-                            }}
-                            fullWidth
-                          >
-                            Moonbot
-                          </Button>
-                        </Grid>
-                        <Grid item xs={6} md={3}>
-                          <Button
-                            variant="contained"
-                            sx={{
-                              fontSize: '10px',
+                              fontSize: 9,
+                              lineHeight: '11px',
                               textTransform: 'unset',
                               backgroundColor: 'background.newsHeader',
                               color: 'text.secondary',
@@ -648,7 +682,26 @@ const Transaction: React.FC = () => {
                           <Button
                             variant="contained"
                             sx={{
-                              fontSize: '10px',
+                              fontSize: 9,
+                              lineHeight: '11px',
+                              textTransform: 'unset',
+                              backgroundColor: 'background.newsHeader',
+                              color: 'text.secondary',
+                              width: '45px',
+                              paddingX: '0',
+                              minWidth: 'unset',
+                            }}
+                            fullWidth
+                          >
+                            Moonbot
+                          </Button>
+                        </Grid>
+                        <Grid item xs={6} md={3}>
+                          <Button
+                            variant="contained"
+                            sx={{
+                              fontSize: 9,
+                              lineHeight: '11px',
                               textTransform: 'unset',
                               backgroundColor: 'background.newsHeader',
                               color: 'text.secondary',
@@ -669,16 +722,16 @@ const Transaction: React.FC = () => {
                         size="small"
                         sx={{
                           marginTop: '10px',
-                          fontSize: '13px',
-                          fontWeight: 700,
-                          background: '#408827',
+                          fontSize: 12,
+                          fontWeight: 900,
+                          background: '#2EBD85',
                         }}
                       >
                         Mua
                       </Button>
                     </Grid>
                     <Grid item xs={6}>
-                      <Typography sx={{ fontSize: '13px' }}>
+                      <Typography sx={{ fontSize: '13px', lineHeight: '15px' }}>
                         Thời gian
                       </Typography>
                       <Stack
@@ -710,12 +763,16 @@ const Transaction: React.FC = () => {
                               borderBottom: 'none',
                             },
                           }}
+                          InputProps={{
+                            endAdornment: (
+                              <InputAdornment position="end">
+                                <Typography sx={{ fontSize: '8px' }}>
+                                  USDT
+                                </Typography>
+                              </InputAdornment>
+                            ),
+                          }}
                         />
-                        <Typography
-                          sx={{ marginLeft: '16px', fontSize: '8px' }}
-                        >
-                          USDT
-                        </Typography>
                       </Stack>
                       <Stack
                         direction="row"
@@ -746,12 +803,16 @@ const Transaction: React.FC = () => {
                               borderBottom: 'none',
                             },
                           }}
+                          InputProps={{
+                            endAdornment: (
+                              <InputAdornment position="end">
+                                <Typography sx={{ fontSize: '8px' }}>
+                                  USDT
+                                </Typography>
+                              </InputAdornment>
+                            ),
+                          }}
                         />
-                        <Typography
-                          sx={{ marginLeft: '16px', fontSize: '8px' }}
-                        >
-                          USDT
-                        </Typography>
                       </Stack>
                       <Stack
                         direction="row"
@@ -782,12 +843,16 @@ const Transaction: React.FC = () => {
                               borderBottom: 'none',
                             },
                           }}
+                          InputProps={{
+                            endAdornment: (
+                              <InputAdornment position="end">
+                                <Typography sx={{ fontSize: '8px' }}>
+                                  USDT
+                                </Typography>
+                              </InputAdornment>
+                            ),
+                          }}
                         />
-                        <Typography
-                          sx={{ marginLeft: '16px', fontSize: '8px' }}
-                        >
-                          USDT
-                        </Typography>
                       </Stack>
                       <Stack
                         direction="row"
@@ -818,19 +883,24 @@ const Transaction: React.FC = () => {
                               borderBottom: 'none',
                             },
                           }}
+                          InputProps={{
+                            endAdornment: (
+                              <InputAdornment position="end">
+                                <Typography sx={{ fontSize: '8px' }}>
+                                  USDT
+                                </Typography>
+                              </InputAdornment>
+                            ),
+                          }}
                         />
-                        <Typography
-                          sx={{ marginLeft: '16px', fontSize: '8px' }}
-                        >
-                          USDT
-                        </Typography>
                       </Stack>
                       <Grid container spacing={0.5} marginTop="5px">
                         <Grid item xs={6} md={3}>
                           <Button
                             variant="contained"
                             sx={{
-                              fontSize: '10px',
+                              fontSize: 9,
+                              lineHeight: '11px',
                               marginRight: '10px',
                               textTransform: 'unset',
                               backgroundColor: 'background.newsHeader',
@@ -846,7 +916,8 @@ const Transaction: React.FC = () => {
                           <Button
                             variant="contained"
                             sx={{
-                              fontSize: '10px',
+                              fontSize: 9,
+                              lineHeight: '11px',
                               marginRight: '10px',
                               textTransform: 'unset',
                               backgroundColor: 'background.newsHeader',
@@ -862,7 +933,8 @@ const Transaction: React.FC = () => {
                           <Button
                             variant="contained"
                             sx={{
-                              fontSize: '10px',
+                              fontSize: 9,
+                              lineHeight: '11px',
                               marginRight: '10px',
                               textTransform: 'unset',
                               backgroundColor: 'background.newsHeader',
@@ -878,7 +950,8 @@ const Transaction: React.FC = () => {
                           <Button
                             variant="contained"
                             sx={{
-                              fontSize: '10px',
+                              fontSize: 9,
+                              lineHeight: '11px',
                               marginRight: '10px',
                               textTransform: 'unset',
                               backgroundColor: 'background.newsHeader',
@@ -898,8 +971,8 @@ const Transaction: React.FC = () => {
                         size="small"
                         sx={{
                           marginTop: '10px',
-                          fontSize: '13px',
-                          fontWeight: 700,
+                          fontSize: 12,
+                          fontWeight: 900,
                           background: '#F03030',
                         }}
                       >
@@ -925,7 +998,7 @@ const Transaction: React.FC = () => {
         borderLeft="1px solid #ccc"
         borderRight="1px solid #ccc"
         height="100%"
-        maxHeight="calc(100vh - 148px)"
+        maxHeight="calc(100vh - 140px)"
       >
         <Stack
           direction="column"
@@ -946,28 +1019,64 @@ const Transaction: React.FC = () => {
             >
               <TableHead>
                 <TableRow>
-                  <TableCell align="center">
+                  <TableCell align="left">
                     <Stack
                       direction="row"
                       alignItems="center"
-                      justifyContent="center"
+                      justifyContent="start"
+                      sx={{ pt: 2 }}
                     >
-                      <Typography sx={{ fontSize: '10px', fontWeight: 600 }}>
+                      <Typography sx={{ fontSize: 11, fontWeight: 400 }}>
                         Cặp
                       </Typography>
-                      <UnfoldMoreIcon sx={{ fontSize: '16px' }} />
+                      <Box position="relative" sx={{ ml: '3px' }}>
+                        <ArrowDropUpIcon
+                          sx={{
+                            fontSize: 16,
+                            position: 'absolute',
+                            bottom: -5,
+                            color: '#FFB23F',
+                          }}
+                        />
+                        <ArrowDropDownIcon
+                          sx={{
+                            fontSize: 16,
+                            position: 'absolute',
+                            top: -5,
+                            color: '#BBAEAE',
+                          }}
+                        />
+                      </Box>
                     </Stack>
                   </TableCell>
-                  <TableCell align="center">
+                  <TableCell align="right">
                     <Stack
                       direction="row"
                       alignItems="center"
-                      justifyContent="center"
+                      justifyContent="end"
+                      sx={{ pt: 2 }}
                     >
-                      <Typography sx={{ fontSize: '10px', fontWeight: 600 }}>
+                      <Typography sx={{ fontSize: 11, fontWeight: 400 }}>
                         Giá
-                      </Typography>{' '}
-                      <UnfoldMoreIcon sx={{ fontSize: '16px' }} />
+                      </Typography>
+                      <Box position="relative" sx={{ ml: '3px' }}>
+                        <ArrowDropUpIcon
+                          sx={{
+                            fontSize: 16,
+                            position: 'absolute',
+                            bottom: -5,
+                            color: '#BBAEAE',
+                          }}
+                        />
+                        <ArrowDropDownIcon
+                          sx={{
+                            fontSize: 16,
+                            position: 'absolute',
+                            top: -5,
+                            color: '#BBAEAE',
+                          }}
+                        />
+                      </Box>
                     </Stack>
                   </TableCell>
                 </TableRow>
@@ -977,41 +1086,45 @@ const Transaction: React.FC = () => {
                   <TableRow
                     key={`row-${index}`}
                     sx={{
-                      '&:last-child td, &:last-child th': { border: 0 },
+                      '& .MuiTableCell-root': { border: 0 },
                     }}
                   >
                     <TableCell
                       component="th"
                       scope="row"
-                      align="center"
-                      sx={{ padding: 0 }}
+                      align="left"
+                      sx={{ p: 1 }}
                     >
                       <Stack
                         flexDirection="row"
                         alignItems="center"
-                        justifyContent="center"
+                        justifyContent="start"
                       >
                         <StarIcon
-                          sx={{ fontSize: '16px', marginRight: '6px' }}
+                          sx={{
+                            fontSize: '16px',
+                            marginRight: '6px',
+                            color: '#816A6A',
+                          }}
                         />
 
                         <Typography
                           sx={{
-                            fontSize: '10px',
-                            lineHeight: '24px',
-                            color: 'text.primary',
+                            fontSize: 9,
+                            lineHeight: '11px',
+                            color: '#816A6A',
                           }}
                         >
                           {row.label}
                         </Typography>
                       </Stack>
                     </TableCell>
-                    <TableCell align="center" sx={{ padding: 0 }}>
+                    <TableCell align="right" sx={{ p: 1, color: '#816A6A' }}>
                       <Typography
                         sx={{
-                          fontSize: '10px',
-                          lineHeight: '24px',
-                          color: 'text.primary',
+                          fontSize: 9,
+                          lineHeight: '11px',
+                          color: '#816A6A',
                         }}
                       >
                         {row.price}
@@ -1023,13 +1136,14 @@ const Transaction: React.FC = () => {
             </Table>
           </TableContainer>
         </Stack>
-        <Stack direction="column" flex={1} maxHeight="50%">
+        <Stack direction="column" flex={1} maxHeight="54%">
           <Typography
             sx={{
               fontSize: '11px',
               fontWeight: 500,
               textAlign: 'center',
-              margin: '10px auto',
+              lineHeight: '13px',
+              my: 1,
             }}
           >
             Giao dịch của tôi
@@ -1037,7 +1151,6 @@ const Transaction: React.FC = () => {
           <TableContainer
             component={Paper}
             sx={{
-              marginTop: '20px',
               overflow: 'auto',
             }}
           >
@@ -1046,6 +1159,7 @@ const Transaction: React.FC = () => {
               sx={{
                 minWidth: 1,
                 backgroundColor: 'background.secondary',
+                px: 1,
               }}
               aria-label="simple table"
               stickyHeader
@@ -1054,19 +1168,31 @@ const Transaction: React.FC = () => {
                 <TableRow>
                   <TableCell
                     align="center"
-                    sx={{ fontSize: '10px', fontWeight: 600, padding: 0 }}
+                    sx={{
+                      fontSize: '10px',
+                      fontWeight: 400,
+                      padding: '4px 0',
+                    }}
                   >
                     Giá (USDT)
                   </TableCell>
                   <TableCell
-                    align="center"
-                    sx={{ fontSize: '10px', fontWeight: 600, padding: 0 }}
+                    align="right"
+                    sx={{
+                      fontSize: '10px',
+                      fontWeight: 400,
+                      padding: '4px 0',
+                    }}
                   >
                     Số lượng (EDU)
                   </TableCell>
                   <TableCell
-                    align="center"
-                    sx={{ fontSize: '10px', fontWeight: 600, padding: 0 }}
+                    align="right"
+                    sx={{
+                      fontSize: '10px',
+                      fontWeight: 400,
+                      padding: '4px 0',
+                    }}
                   >
                     Tổng
                   </TableCell>
@@ -1077,37 +1203,40 @@ const Transaction: React.FC = () => {
                   <TableRow
                     key={`row-${index}`}
                     sx={{
-                      '&:last-child td, &:last-child th': { border: 0 },
+                      '& .MuiTableCell-root': { border: 0 },
                     }}
                   >
-                    <TableCell component="th" scope="row" sx={{ padding: 0 }}>
+                    <TableCell align="center" scope="row" sx={{ padding: 0 }}>
                       <Typography
                         sx={{
-                          fontSize: '10px',
-                          lineHeight: '24px',
+                          fontSize: 9,
+                          lineHeight: '11px',
                           color: row.direction === 'up' ? '#408827' : '#F21616',
+                          padding: '4px 0',
                         }}
                       >
                         {row.price}
                       </Typography>
                     </TableCell>
-                    <TableCell align="center" sx={{ padding: 0 }}>
+                    <TableCell align="right" sx={{ padding: 0 }}>
                       <Typography
                         sx={{
-                          fontSize: '10px',
-                          lineHeight: '24px',
-                          color: 'text.primary',
+                          fontSize: 9,
+                          lineHeight: '11px',
+                          padding: '4px 0',
+                          color: '#816A6A',
                         }}
                       >
                         {row.quantity}
                       </Typography>
                     </TableCell>
-                    <TableCell align="center" sx={{ padding: 0 }}>
+                    <TableCell align="right" sx={{ padding: 0 }}>
                       <Typography
                         sx={{
-                          fontSize: '10px',
-                          lineHeight: '24px',
-                          color: 'text.primary',
+                          fontSize: 9,
+                          lineHeight: '11px',
+                          padding: '4px 0',
+                          color: '#816A6A',
                         }}
                       >
                         {row.time}
@@ -1131,16 +1260,15 @@ const Transaction: React.FC = () => {
         sx={{
           display: 'flex',
           flexDirection: 'column',
-          // maxHeight: 'calc(100vh - 108px)',
           overflow: 'auto',
           mx: 'auto',
         }}
       >
         <Grid container flex={1} display="flex">
-          <Grid item xs={9.5} lg={9.5}>
+          <Grid item xs={12} md={9}>
             {_renderLeftSection()}
           </Grid>
-          <Grid item xs={2.5} lg={2.5}>
+          <Grid item xs={12} md={3}>
             {_renderRightSection()}
           </Grid>
         </Grid>
@@ -1167,7 +1295,7 @@ const Transaction: React.FC = () => {
                   xs={12}
                   md={4}
                   display="flex"
-                  direction="row"
+                  flexDirection="row"
                   sx={{ fontSize: '11px', color: '#BBAEAE' }}
                 >
                   EDUUSDT{' '}
@@ -1187,7 +1315,7 @@ const Transaction: React.FC = () => {
                   md={4}
                   display="flex"
                   xs={12}
-                  direction="row"
+                  flexDirection="row"
                   sx={{ fontSize: '11px', color: '#BBAEAE' }}
                 >
                   EDUUSDT{' '}
@@ -1207,7 +1335,7 @@ const Transaction: React.FC = () => {
                   md={4}
                   display="flex"
                   xs={12}
-                  direction="row"
+                  flexDirection="row"
                   sx={{ fontSize: '11px', color: '#BBAEAE' }}
                 >
                   EDUUSDT{' '}
