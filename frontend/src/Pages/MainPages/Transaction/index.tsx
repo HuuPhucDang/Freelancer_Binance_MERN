@@ -215,9 +215,9 @@ const Transaction: React.FC = () => {
   const _renderLeftSection = () => {
     return (
       <Grid container spacing={1}>
-        <Grid item xs={12}>
+        <Grid item xs={12} borderLeft="1px solid #ccc">
           <Grid container borderBottom="1px solid #ccc">
-            <Grid item xs={2.5} borderRight="1px solid #ccc">
+            <Grid item xs={3.5}>
               <Stack padding="10px 4px">
                 <Stack
                   direction="row"
@@ -283,7 +283,7 @@ const Transaction: React.FC = () => {
                 </Stack>
               </Stack>
             </Grid>
-            <Grid item xs={9.5}>
+            <Grid item xs={8.5}>
               <Stack
                 direction="row"
                 justifyContent="space-evenly"

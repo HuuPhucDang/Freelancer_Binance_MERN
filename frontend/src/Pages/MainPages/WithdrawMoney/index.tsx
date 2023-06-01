@@ -33,7 +33,7 @@ const WithdrawMoney: React.FC = () => {
             <Sidebar />
           </Grid>
           <Grid item md={9.5} borderLeft="1px solid #949494">
-            <Stack direction="column">
+            <Stack direction="column" sx={{ p: 2 }}>
               <Typography
                 sx={{
                   fontSize: '24px',

@@ -33,7 +33,7 @@ const Recharge: React.FC = () => {
           <Grid item md={9.5} borderLeft="1px solid #949494">
             <Grid container columnSpacing={4}>
               <Grid item md={8}>
-                <Stack direction="column">
+                <Stack direction="column" sx={{ p: 2 }}>
                   <Typography
                     sx={{
                       fontSize: '24px',
