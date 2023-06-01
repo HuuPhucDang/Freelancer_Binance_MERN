@@ -47,6 +47,8 @@ import transactionIcon from './transaction.jpg';
 import transactionDarkIcon from './transaction_dark.png';
 import filterTypeImage from './filter_type.png';
 import excelIcon from './excel.png';
+import ballIcon from './ri_basketball-line.png';
+import downArrowIcon from './down_arrow.png';
 
 export default {
   darkIconDarkTheme,
@@ -92,4 +94,6 @@ export default {
   filterTypeImage,
   excelIcon,
   transactionDarkIcon,
+  ballIcon,
+  downArrowIcon,
 };

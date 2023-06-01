@@ -28,10 +28,10 @@ const Support: React.FC = () => {
         }}
       >
         <Grid container columnSpacing={2} >
-          <Grid item md={3}>
+          <Grid item md={2.5}>
             <Sidebar />
           </Grid>
-          <Grid item md={9} borderLeft="1px solid #949494">
+          <Grid item md={9.5} borderLeft="1px solid #949494">
             <Stack direction="column">
               <Typography
                 sx={{ fontSize: '24px', lineHeight: '34px', fontWeight: 600 }}

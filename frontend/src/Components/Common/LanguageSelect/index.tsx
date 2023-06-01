@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  Box,
   InputLabel,
   Stack,
   SxProps,
@@ -7,8 +8,14 @@ import {
   useMediaQuery,
   useTheme,
 } from '@mui/material';
-import ReactSelect, { SingleValue } from 'react-select';
+import ReactSelect, {
+  SingleValue,
+  components,
+  SingleValueProps,
+  PlaceholderProps,
+} from 'react-select';
 import ExpandMoreOutlinedIcon from '@mui/icons-material/ExpandMoreOutlined';
+import Assets from '../../../Assets';
 
 interface IOption {
   label: string;
@@ -18,29 +25,56 @@ interface IOption {
 interface IProps {
   label?: string;
   selected: string;
-  options: IOption[];
   onSelect(newValue: string): void;
   sx?: object;
   placeholder?: string;
 }
 
-const labelStyles: SxProps<Theme> = {
-  fontSize: '15px',
-  fontWeight: 700,
-  letterSpacing: '-1.5%',
-  color: 'rgba(0,0,0,0.8)',
-  marginRight: {
-    md: '16px',
+const languages = [
+  {
+    label: 'Vietnam',
+    value: 'vi',
   },
-  marginBottom: {
-    xs: '16px',
-    md: '0px',
+  {
+    label: 'English',
+    value: 'en',
   },
+];
+
+const Placeholder = (props: PlaceholderProps<IOption>) => {
+  console.log(props);
+  return (
+    <components.Placeholder {...props}>
+      <Stack flexDirection="row" alignItems="center" sx={{ color: '#000' }}>
+        <Box
+          component="img"
+          src={Assets.ballIcon}
+          sx={{ width: '20px', height: '20px', marginRight: '5px' }}
+        />{' '}
+        {props.children}
+      </Stack>
+    </components.Placeholder>
+  );
 };
 
-const Select: React.FC<IProps> = ({
+const SingleValueComponent = ({
+  children,
+  ...props
+}: SingleValueProps<IOption>) => (
+  <components.SingleValue {...props}>
+    <Stack flexDirection="row" alignItems="center">
+      <Box
+        component="img"
+        src={Assets.ballIcon}
+        sx={{ width: '20px', height: '20px', marginRight: '5px' }}
+      />{' '}
+      {children}
+    </Stack>
+  </components.SingleValue>
+);
+
+const LanguageSelect: React.FC<IProps> = ({
   selected,
-  options,
   onSelect,
   label = '',
   sx = {},
@@ -52,15 +86,8 @@ const Select: React.FC<IProps> = ({
     null
   );
 
-  React.useEffect(() => {
-    const findOption = options.find(
-      (option: IOption) => option.value === selected
-    );
-    if (findOption) setSelectedOption(findOption);
-  }, [selected]);
-
-  const handleChange = (newValue: SingleValue<IOption>) => {
-    if (newValue && onSelect) onSelect(newValue.value);
+  const handleChange = (newValue: any) => {
+    setSelectedOption(newValue);
   };
 
   return (
@@ -75,35 +102,37 @@ const Select: React.FC<IProps> = ({
       }}
       sx={sx}
     >
-      {label ? <InputLabel sx={labelStyles}>{label}</InputLabel> : null}
       <ReactSelect
         value={selectedOption}
         onChange={handleChange}
-        options={options}
+        options={languages}
         placeholder={placeholder || 'Country'}
         styles={{
           container: (base) => ({
             ...base,
-            width: '150px',
+            width: '119px',
             boxSizing: 'border-box',
-            fontSize: '15px',
-            fontWeight: 500,
+            fontSize: '12px',
+            fontWeight: 400,
+            background: '#FFB23F',
+            borderRadius: '5px',
           }),
           control: (base, props) => ({
             ...base,
             boxSizing: 'border-box',
             borderColor: '#2E2800',
+            color: '#000000',
             boxShadow: props.isFocused ? '0 0 0 1px #E87844' : 'none',
-            borderRadius: '0px',
-            minHeight: '37px',
+            borderRadius: '5px',
+            minHeight: '26px',
             border: 'none',
-            background: 'transparent'
+            background: '#FFB23F',
           }),
           valueContainer: (base) => ({
             ...base,
             boxSizing: 'border-box',
-            height: '37px',
-            padding: matchUpMd ? '0 16px' : '0 12px',
+            height: '26px',
+            padding: '0 6px',
           }),
           menuList: (base) => ({
             ...base,
@@ -111,6 +140,7 @@ const Select: React.FC<IProps> = ({
             width: 'auto',
             height: '100%',
             maxHeight: '400px',
+            borderRadius: '5px',
           }),
           menu: (base) => ({
             ...base,
@@ -122,6 +152,7 @@ const Select: React.FC<IProps> = ({
           option: (base, props) => ({
             ...base,
             width: '100%',
+            height: '27px',
             whiteSpace: matchUpMd ? 'nowrap' : 'unset',
             backgroundColor: props.isSelected
               ? 'rgba(255, 221, 0, 1.0)'
@@ -134,16 +165,24 @@ const Select: React.FC<IProps> = ({
               backgroundColor: '#E87844',
             },
           }),
+          indicatorsContainer: (base, props) => ({
+            ...base,
+            width: '24px',
+          }),
         }}
         components={{
           IndicatorSeparator: () => null,
           DropdownIndicator: () => (
-            <ExpandMoreOutlinedIcon sx={{ margin: '0 14px 0 8px', color: "#000000" }} />
+            <ExpandMoreOutlinedIcon
+              sx={{ fontSize: '14px', margin: '0 6px', color: '#000000' }}
+            />
           ),
+          SingleValue: SingleValueComponent,
+          Placeholder,
         }}
       />
     </Stack>
   );
 };
 
-export default Select;
+export default LanguageSelect;

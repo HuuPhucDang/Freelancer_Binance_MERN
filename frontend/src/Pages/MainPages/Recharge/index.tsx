@@ -27,10 +27,10 @@ const Recharge: React.FC = () => {
         }}
       >
         <Grid container>
-          <Grid item md={3}>
+          <Grid item md={2.5}>
             <Sidebar />
           </Grid>
-          <Grid item md={9} borderLeft="1px solid #949494">
+          <Grid item md={9.5} borderLeft="1px solid #949494">
             <Grid container columnSpacing={4}>
               <Grid item md={8}>
                 <Stack direction="column">

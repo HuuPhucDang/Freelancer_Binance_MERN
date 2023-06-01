@@ -64,11 +64,11 @@ const Overview: React.FC = () => {
         }}
       >
         <Grid container columnSpacing={2} height="100%">
-          <Grid item md={3}>
+          <Grid item md={2.5}>
             <Sidebar />
           </Grid>
-          <Grid item md={9} borderLeft="1px solid #949494">
-            <Grid container columnSpacing={2} rowSpacing={4}>
+          <Grid item md={9.5} borderLeft="1px solid #949494">
+            <Grid container columnSpacing={2} rowSpacing={3.5}>
               <Grid item md={12}>
                 <Stack
                   direction="row"
@@ -119,7 +119,7 @@ const Overview: React.FC = () => {
                   </Stack>
                 </Stack>
               </Grid>
-              <Grid item md={5}>
+              <Grid item md={6}>
                 <Box
                   sx={{
                     backgroundColor: 'background.secondary',
@@ -130,7 +130,7 @@ const Overview: React.FC = () => {
                     <Typography sx={{ fontSize: '24px', fontWeight: 600 }}>
                       Số dư ước tính
                     </Typography>
-                    <Stack direction="row" marginTop="30px">
+                    <Stack direction="row" alignItems="center" marginTop="30px">
                       <Typography
                         sx={{
                           fontSize: '16px',
@@ -140,12 +140,20 @@ const Overview: React.FC = () => {
                       >
                         0.00 USDT
                       </Typography>
+                      <Box
+                        component="img"
+                        src={Assets.downArrowIcon}
+                        sx={{
+                          width: '19px',
+                          height: '19px',
+                          margin: '0 20px 0 10px',
+                        }}
+                      />
                       <Typography
                         sx={{
                           fontSize: '16px',
                           fontWeight: 600,
                           lineHeight: '30px',
-                          marginLeft: '20px',
                         }}
                       >
                         ~~ VND
@@ -155,23 +163,27 @@ const Overview: React.FC = () => {
                   <Stack direction="row" marginTop="10px">
                     <Button
                       sx={{
-                        fontSize: '12px',
+                        fontSize: '16px',
+                        fontWeigh: 500,
                         textTransform: 'unset',
                         backgroundColor: 'background.burntSienna',
                         color: 'text.secondary',
                         width: '110px',
                         marginRight: ' 10px',
+                        borderRadius: '0px',
                       }}
                     >
                       Nạp
                     </Button>
                     <Button
                       sx={{
-                        fontSize: '12px',
+                        fontSize: '16px',
+                        fontWeigh: 500,
                         textTransform: 'unset',
                         backgroundColor: 'background.lightSilver',
                         color: 'text.secondary',
                         width: '110px',
+                        borderRadius: '0px',
                       }}
                     >
                       Rút
@@ -213,12 +225,12 @@ const Overview: React.FC = () => {
                   </Typography>
                 </Box>
               </Grid>
-              <Grid item md={7}>
+              <Grid item md={6}>
                 <Stack
                   direction="column"
                   sx={{
                     backgroundColor: 'background.secondary',
-                    padding: '20px',
+                    padding: '12px',
                   }}
                 >
                   <Stack direction="row" alignItems="center">
@@ -246,7 +258,11 @@ const Overview: React.FC = () => {
                               '&:last-child td, &:last-child th': { border: 0 },
                             }}
                           >
-                            <TableCell component="th" scope="row">
+                            <TableCell
+                              component="th"
+                              scope="row"
+                              sx={{ padding: '4px' }}
+                            >
                               <Stack direction="row" alignItems="center">
                                 <Box
                                   component="img"
@@ -280,7 +296,7 @@ const Overview: React.FC = () => {
                                 </Typography>
                               </Stack>
                             </TableCell>
-                            <TableCell align="right">
+                            <TableCell align="right" sx={{ padding: '4px' }}>
                               <Typography
                                 sx={{
                                   fontSize: '10px',
@@ -292,7 +308,7 @@ const Overview: React.FC = () => {
                                 {row.value}
                               </Typography>
                             </TableCell>
-                            <TableCell align="right">
+                            <TableCell align="right" sx={{ padding: '4px' }}>
                               {row.traffic < 0 ? (
                                 <Typography
                                   sx={{
@@ -315,10 +331,10 @@ const Overview: React.FC = () => {
                                 </Typography>
                               )}
                             </TableCell>
-                            <TableCell align="right">
+                            <TableCell align="right" sx={{ padding: '4px' }}>
                               <Link
                                 sx={{
-                                  fontSize: '11px',
+                                  fontSize: '10px',
                                   lineHeight: '14px',
                                   fontWeight: 400,
                                   color: 'text.burntSienna',
