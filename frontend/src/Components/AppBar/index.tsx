@@ -197,7 +197,12 @@ const AppBarComponent: React.FC = () => {
   const _renderMainBar = () => {
     const isDarkMode = Utils.getThemeMode() === 'dark';
     return (
-      <Grid container justifyContent="space-between" alignItems="center" columnSpacing={5}>
+      <Grid
+        container
+        justifyContent="space-between"
+        alignItems="center"
+        columnSpacing={5}
+      >
         <Grid item xs={2} md={1.25}>
           <Link
             href={ROUTERS.HOME}
@@ -315,17 +320,28 @@ const AppBarComponent: React.FC = () => {
       <Stack
         direction="row"
         sx={{
+          justifyContent: 'center',
           width: '100%',
           alignItems: 'center',
           minHeight: '30px',
           background: 'palegoldenrod',
         }}
       >
-        <PersonIcon sx={{ color: 'text.burntSienna', ml: '5em' }} />
-        <Typography sx={{ color: '#000000', fontSize: '10px' }}>
-          Đăng kí ngay - Nhận chiết khấu giao dịch lên tới 100 USD (dành cho
-          người dùng đã xác minh)
-        </Typography>
+        <Stack
+          direction="row"
+          sx={{
+            maxWidth: '852px',
+            justifyContent: 'center',
+            alignItems: 'center',
+            width: '100%',
+          }}
+        >
+          <PersonIcon sx={{ color: 'text.burntSienna', ml: '5em' }} />
+          <Typography sx={{ color: '#000000', fontSize: '10px' }}>
+            Đăng kí ngay - Nhận chiết khấu giao dịch lên tới 100 USD (dành cho
+            người dùng đã xác minh)
+          </Typography>
+        </Stack>
       </Stack>
     );
   };
