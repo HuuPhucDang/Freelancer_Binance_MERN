@@ -71,7 +71,7 @@ const Sidebar = () => {
               padding: '0 10px',
               textTransform: "unset",
               backgroundColor: isActive
-                ? 'background.secondary'
+                ? 'background.mainContent'
                 : 'transparent',
             }}
           >

@@ -12,6 +12,8 @@ import {
   TableHead,
   Typography,
   Box,
+  Divider,
+  Container,
 } from '@mui/material';
 // Import local
 import DefaultLayout from '@/Components/DefaultLayout';
@@ -42,7 +44,7 @@ const Invoice: React.FC = () => {
   // Constructors
   const renderMain = () => {
     return (
-      <Box
+      <Container
         component="main"
         maxWidth="md"
         sx={{
@@ -51,7 +53,7 @@ const Invoice: React.FC = () => {
           mx: 'auto',
         }}
       >
-        <Grid container columnSpacing={2}>
+        <Grid container columnSpacing={4}>
           <Grid item md={2.5}>
             <Sidebar />
           </Grid>
@@ -62,11 +64,8 @@ const Invoice: React.FC = () => {
               >
                 Lịch sử nạp rút
               </Typography>
-              <Stack
-                direction="row"
-                justifyContent="space-between"
-                sx={{ marginTop: '20px' }}
-              >
+              <Divider sx={{ marginTop: '4px', marginBottom: '40px', marginRight: '50px' }} />
+              <Stack direction="row" justifyContent="space-between">
                 <Typography sx={{ fontSize: '22px' }}>Giao dịch</Typography>
                 <Stack direction="row">
                   <Select
@@ -79,61 +78,98 @@ const Invoice: React.FC = () => {
                     ]}
                     selected=""
                     onSelect={() => console.log('select')}
-                    sx={{ marginRight: '10px', backgroundColor: "background.lightSilver" }}
+                    sx={{
+                      marginRight: '10px',
+                      backgroundColor: 'background.invoiceDropdown',
+                    }}
                   />
                   <Select
                     placeholder="Thời gian"
                     options={[]}
                     selected=""
                     onSelect={() => console.log('select')}
-                    sx={{ marginRight: '10px', backgroundColor: "background.lightSilver" }}
-                  />
-                  <Button
                     sx={{
-                      backgroundColor: 'background.burntSienna',
-                      color: 'text.secondary',
-                      textTransform: 'unset',
-                      height: '37px',
-                      width: '150px',
-                      fontWeight: 400,
-                      fontSize: '14px',
-                      borderRadius: '0px'
+                      backgroundColor: 'background.invoiceDropdown',
                     }}
-                  >
-                    Gửi báo cáo
-                  </Button>
+                  />
                 </Stack>
               </Stack>
               <TableContainer
                 component={Paper}
-                sx={{ width: '100%', marginTop: '20px' }}
+                sx={{
+                  width: '100%',
+                  marginTop: '20px',
+                  boxShadow: 'none',
+                  borderRadius: '0',
+                }}
               >
                 <Table
                   size="small"
                   sx={{
-                    minWidth: '100%',
-                    backgroundColor: 'background.secondary',
+                    // maxWidth: '100%',
+                    backgroundColor: 'background.mainContent',
                   }}
                   aria-label="simple table"
                 >
                   <TableHead>
                     <TableRow>
-                      <TableCell sx={{ fontSize: '14px' }}>
+                      <TableCell
+                        sx={{
+                          width: '110px',
+                          fontSize: '14px',
+                          padding: '15px',
+                        }}
+                      >
                         Ngày tháng
                       </TableCell>
-                      <TableCell align="center" sx={{ fontSize: '14px' }}>
+                      <TableCell
+                        align="center"
+                        sx={{
+                          fontSize: '14px',
+                          padding: '15px',
+                          width: '110px',
+                        }}
+                      >
                         Thời gian
                       </TableCell>
-                      <TableCell align="center" sx={{ fontSize: '14px' }}>
+                      <TableCell
+                        align="center"
+                        sx={{
+                          fontSize: '14px',
+                          padding: '15px',
+                          width: '110px',
+                        }}
+                      >
                         Loại
                       </TableCell>
-                      <TableCell align="center" sx={{ fontSize: '14px' }}>
+                      <TableCell
+                        align="center"
+                        sx={{
+                          fontSize: '14px',
+                          padding: '15px',
+                          width: '110px',
+                        }}
+                      >
                         Trạng thái
                       </TableCell>
-                      <TableCell align="center" sx={{ fontSize: '14px' }}>
+                      <TableCell
+                        align="center"
+                        sx={{
+                          fontSize: '14px',
+                          padding: '15px',
+                          width: '110px',
+                        }}
+                      >
                         Số tiền
                       </TableCell>
-                      <TableCell align="center" sx={{ fontSize: '14px' }}>
+                      <TableCell
+                        align="center"
+                        sx={{
+                          fontSize: '14px',
+                          padding: '15px',
+                          width: '110px',
+                        }}
+                      >
                         Số dư
                       </TableCell>
                     </TableRow>
@@ -146,7 +182,11 @@ const Invoice: React.FC = () => {
                           '&:last-child td, &:last-child th': { border: 0 },
                         }}
                       >
-                        <TableCell component="th" scope="row">
+                        <TableCell
+                          component="th"
+                          scope="row"
+                          sx={{ padding: '15px' }}
+                        >
                           <Typography
                             sx={{
                               fontSize: '13px',
@@ -220,7 +260,7 @@ const Invoice: React.FC = () => {
             </Stack>
           </Grid>
         </Grid>
-      </Box>
+      </Container>
     );
   };
   return <DefaultLayout content={renderMain()} screenTitle="Lịch sử nạp rút" />;

@@ -76,7 +76,6 @@ const SingleValueComponent = ({
 const LanguageSelect: React.FC<IProps> = ({
   selected,
   onSelect,
-  label = '',
   sx = {},
   placeholder = '',
 }) => {
@@ -107,6 +106,7 @@ const LanguageSelect: React.FC<IProps> = ({
         onChange={handleChange}
         options={languages}
         placeholder={placeholder || 'Country'}
+        isSearchable={false}
         styles={{
           container: (base) => ({
             ...base,
