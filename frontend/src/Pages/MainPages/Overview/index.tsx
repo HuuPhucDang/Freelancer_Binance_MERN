@@ -23,6 +23,8 @@ import DefaultLayout from '@/Components/DefaultLayout';
 import Assets from '@/Assets';
 import ArrowCircleRightOutlinedIcon from '@mui/icons-material/ArrowCircleRightOutlined';
 import { Sidebar } from '../../../Components/LayoutParts';
+import { Utils } from '@/Libs';
+import { ROUTERS } from '@/Constants';
 
 function createData(
   icon: string,
@@ -172,6 +174,7 @@ const Overview: React.FC = () => {
                         marginRight: ' 10px',
                         borderRadius: '0px',
                       }}
+                      onClick={() => Utils.redirect(ROUTERS.RECHARGE)}
                     >
                       Nạp
                     </Button>
@@ -185,6 +188,7 @@ const Overview: React.FC = () => {
                         width: '110px',
                         borderRadius: '0px',
                       }}
+                      onClick={() => Utils.redirect(ROUTERS.WITHDRAW_MONEY)}
                     >
                       Rút
                     </Button>
