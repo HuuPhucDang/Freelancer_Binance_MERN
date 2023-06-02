@@ -92,6 +92,7 @@ const LanguageSelect: React.FC<IProps> = ({ sx = {}, placeholder = '' }) => {
         onChange={handleChange}
         options={languages}
         placeholder={placeholder || 'Language'}
+        isSearchable={false}
         styles={{
           container: (base) => ({
             ...base,

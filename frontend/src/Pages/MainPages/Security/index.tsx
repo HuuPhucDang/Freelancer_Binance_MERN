@@ -74,12 +74,12 @@ const Security: React.FC = () => {
           mx: 'auto',
         }}
       >
-        <Grid container columnSpacing={2} >
+        <Grid container columnSpacing={4}>
           <Grid item md={2.5}>
             <Sidebar />
           </Grid>
           <Grid item md={9.5} borderLeft="1px solid #949494">
-            <Stack direction="column">
+            <Stack direction="column" sx={{ paddingRight: '50px' }}>
               <Stack direction="row" justifyContent="space-between">
                 <Typography
                   sx={{ fontSize: '24px', lineHeight: '34px', fontWeight: 600 }}
@@ -90,9 +90,11 @@ const Security: React.FC = () => {
               </Stack>
               <Box
                 sx={{
-                  backgroundColor: 'background.burntSienna',
+                  backgroundColor: 'background.securityNotification',
                   padding: '10px 14px',
-                  marginTop: '16px ',
+                  marginTop: '11px ',
+                  minHeight: '45px',
+                  borderRadius: '5px',
                 }}
               >
                 <Typography
@@ -100,7 +102,7 @@ const Security: React.FC = () => {
                     fontSize: '12px',
                     fontWeight: 400,
                     lineHeight: '24px',
-                    color: 'text.secondary',
+                    color: 'text.primary',
                   }}
                 >
                   Để tăng tính bảo mật cho tài khoản, bạn nên bật tính năng 2FA,
@@ -137,7 +139,11 @@ const Security: React.FC = () => {
                           '&:last-child td, &:last-child th': { border: 0 },
                         }}
                       >
-                        <TableCell component="th" scope="row">
+                        <TableCell
+                          component="th"
+                          scope="row"
+                          sx={{ paddingX: 0 }}
+                        >
                           <Stack
                             direction="row"
                             alignItems="center"
@@ -150,10 +156,13 @@ const Security: React.FC = () => {
                                 width: '40px',
                                 height: '40px',
                                 objectFit: 'contain',
-                                marginRight: '10px',
+                                marginLeft: '-10px',
                               }}
                             />
-                            <Stack direction="column">
+                            <Stack
+                              direction="column"
+                              sx={{ marginLeft: '10px' }}
+                            >
                               <Typography
                                 sx={{
                                   fontSize: '12px',
@@ -213,15 +222,16 @@ const Security: React.FC = () => {
                             )}
                           </Typography>
                         </TableCell>
-                        <TableCell align="right">
+                        <TableCell align="right" sx={{ padding: '24px 0' }}>
                           <Button
                             sx={{
-                              fontSize: '12px',
-                              marginRight: '10px',
+                              fontSize: '11px',
                               textTransform: 'unset',
                               backgroundColor: 'background.lightSilver',
                               color: 'text.secondary',
-                              width: '80px',
+                              width: '73px',
+                              minHeight: '23px',
+                              padding: '0',
                             }}
                           >
                             {row.value ? 'Thay đổi' : 'Kích hoạt'}

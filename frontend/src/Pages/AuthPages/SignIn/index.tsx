@@ -5,10 +5,12 @@ import { AuthActions } from '@/Reducers/Actions';
 import React from 'react';
 import { Utils } from '@/Libs';
 import { ROUTERS } from '@/Constants';
+import { ForgotPassword } from '../../../Components/Popup';
 
 const { setLogged } = AuthActions;
 
 const SignIn = () => {
+  const [isShowPopup, setIsShowPopup] = React.useState<boolean>(false);
   const isLogged: any = useTypedSelector((state: any) =>
     _.get(state.AUTH, 'isLogged')
   );
@@ -28,6 +30,10 @@ const SignIn = () => {
         justifyContent: 'center',
       }}
     >
+      <ForgotPassword
+        open={isShowPopup}
+        onClose={() => setIsShowPopup(false)}
+      />
       <Stack
         direction="column"
         sx={{
@@ -47,14 +53,22 @@ const SignIn = () => {
           variant="outlined"
           size="small"
           placeholder="Email"
-          sx={{ marginTop: '10px' }}
+          sx={{
+            marginTop: '10px',
+            backgroundColor: 'background.secondary',
+            color: 'text.secondary',
+          }}
         />
         <TextField
           hiddenLabel
           variant="outlined"
           size="small"
           placeholder="Mật khẩu"
-          sx={{ marginTop: '10px' }}
+          sx={{
+            marginTop: '10px',
+            backgroundColor: 'background.secondary',
+            color: 'text.secondary',
+          }}
         />
         <Button
           variant="contained"
@@ -70,6 +84,21 @@ const SignIn = () => {
         >
           Đăng nhập
         </Button>
+        <Typography
+          sx={{
+            fontSize: '14px',
+            textDecoration: 'underline',
+            textAlign: 'center',
+            marginTop: '2em',
+            color: 'text.primary',
+            ':hover': {
+              cursor: 'pointer',
+            },
+          }}
+          onClick={() => setIsShowPopup(true)}
+        >
+          Quên mật khẩu
+        </Typography>
       </Stack>
     </Stack>
   );

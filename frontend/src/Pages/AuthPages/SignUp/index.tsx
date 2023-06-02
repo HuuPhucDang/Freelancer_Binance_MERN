@@ -42,21 +42,28 @@ const SignUp = () => {
           hiddenLabel
           variant="outlined"
           size="small"
-          placeholder="Email"
+          placeholder="Email, Số ĐT *"
           sx={{ marginTop: '10px' }}
         />
         <TextField
           hiddenLabel
           variant="outlined"
           size="small"
-          placeholder="Mật khẩu"
+          placeholder="Mật khẩu *"
           sx={{ marginTop: '10px' }}
         />
         <TextField
           hiddenLabel
           variant="outlined"
           size="small"
-          placeholder="Xác nhận mật khẩu"
+          placeholder="Xác nhận mật khẩu *"
+          sx={{ marginTop: '10px' }}
+        />
+        <TextField
+          hiddenLabel
+          variant="outlined"
+          size="small"
+          placeholder="Mã mời"
           sx={{ marginTop: '10px' }}
         />
         <Button
