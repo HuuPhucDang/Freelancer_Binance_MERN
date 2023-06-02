@@ -22,9 +22,10 @@ import RemoveRedEyeOutlinedIcon from '@mui/icons-material/RemoveRedEyeOutlined';
 import DefaultLayout from '@/Components/DefaultLayout';
 import Assets from '@/Assets';
 import ArrowCircleRightOutlinedIcon from '@mui/icons-material/ArrowCircleRightOutlined';
-import { Sidebar } from '../../../Components/LayoutParts';
+import { Sidebar } from '@/Components/LayoutParts';
+import { EditAvatar, EditName } from '../../../Components/Popup';
+import { ROUTERS } from '../../../Constants';
 import { Utils } from '@/Libs';
-import { ROUTERS } from '@/Constants';
 
 function createData(
   icon: string,
@@ -51,6 +52,9 @@ const rows = [
 
 const Overview: React.FC = () => {
   // Constructors
+  const [isShowNamePopup, setIsShowNamePopup] = React.useState<boolean>(false);
+  const [isShowAvatarPopup, setIsShowAvatarPopup] =
+    React.useState<boolean>(false);
 
   // Renders
 
@@ -65,6 +69,14 @@ const Overview: React.FC = () => {
           mx: 'auto',
         }}
       >
+        <EditAvatar
+          open={isShowAvatarPopup}
+          onClose={() => setIsShowAvatarPopup(false)}
+        />
+        <EditName
+          open={isShowNamePopup}
+          onClose={() => setIsShowNamePopup(false)}
+        />
         <Grid container columnSpacing={2} height="100%">
           <Grid item md={2.5}>
             <Sidebar />
@@ -75,7 +87,7 @@ const Overview: React.FC = () => {
                 <Stack
                   direction="row"
                   sx={{
-                    backgroundColor: 'background.secondary',
+                    backgroundColor: 'background.mainContent',
                     padding: '13px',
                   }}
                 >
@@ -91,12 +103,18 @@ const Overview: React.FC = () => {
                       <Typography sx={{ marginRight: '16px' }}>
                         Anonymous-User-b5b47p
                       </Typography>
-                      <IconButton size="small">
+                      <IconButton
+                        size="small"
+                        onClick={() => setIsShowNamePopup(true)}
+                      >
                         <ModeEditOutlineOutlinedIcon
                           sx={{ fontSize: '20px' }}
                         />
                       </IconButton>
-                      <IconButton size="small">
+                      <IconButton
+                        size="small"
+                        onClick={() => setIsShowAvatarPopup(true)}
+                      >
                         <RemoveRedEyeOutlinedIcon sx={{ fontSize: '20px' }} />
                       </IconButton>
                     </Stack>
@@ -124,7 +142,7 @@ const Overview: React.FC = () => {
               <Grid item md={6}>
                 <Box
                   sx={{
-                    backgroundColor: 'background.secondary',
+                    backgroundColor: 'background.mainContent',
                     padding: '20px',
                   }}
                 >
@@ -233,7 +251,7 @@ const Overview: React.FC = () => {
                 <Stack
                   direction="column"
                   sx={{
-                    backgroundColor: 'background.secondary',
+                    backgroundColor: 'background.mainContent',
                     padding: '12px',
                   }}
                 >
@@ -245,12 +263,19 @@ const Overview: React.FC = () => {
                       <ArrowCircleRightOutlinedIcon />
                     </IconButton>
                   </Stack>
-                  <TableContainer component={Paper} sx={{ marginTop: '20px' }}>
+                  <TableContainer
+                    component={Paper}
+                    sx={{
+                      marginTop: '20px',
+                      boxShadow: 'none',
+                      borderRadius: '0px',
+                    }}
+                  >
                     <Table
                       size="small"
                       sx={{
                         minWidth: '100%',
-                        backgroundColor: 'background.secondary',
+                        backgroundColor: 'background.mainContent',
                       }}
                       aria-label="simple table"
                     >
@@ -308,7 +333,6 @@ const Overview: React.FC = () => {
                                   color: 'text.primary',
                                 }}
                               >
-                                {' '}
                                 {row.value}
                               </Typography>
                             </TableCell>
@@ -345,6 +369,7 @@ const Overview: React.FC = () => {
                                   textAlign: 'left',
                                   marginTop: '20px',
                                 }}
+                                href={ROUTERS.TRANSACTION}
                               >
                                 Giao dịch
                               </Link>

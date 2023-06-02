@@ -72,6 +72,15 @@ const LinkBehavior = React.forwardRef<
 });
 
 const CoreTheme = createTheme({
+  breakpoints: {
+    values: {
+      xs: 0,
+      sm: 600,
+      md: 933,
+      lg: 1200,
+      xl: 1536,
+    },
+  },
   palette: {
     burntSienna: createColor(CommonColor.burntSienna),
     bismark: createColor(CommonColor.bismark),
@@ -108,6 +117,11 @@ const CoreTheme = createTheme({
             lightSilver: '#D9D9D9',
             newsHeader: '#D9D9D9',
             chip: '#F8E7AA',
+            bankCardInformation: 'rgba(255, 178, 63, 0.53)',
+            chargeInput: '#ffffff',
+            securityNotification: 'rgba(237, 146, 81, 0.33)',
+            mainContent: 'rgba(219, 216, 216, 0.37)',
+            invoiceDropdown: 'rgba(187, 174, 174, 0.5)',
           } as any,
         }
       : {
@@ -125,6 +139,11 @@ const CoreTheme = createTheme({
             lightSilver: '#D9D9D9',
             newsHeader: '#999288',
             chip: '#000000',
+            bankCardInformation: '#3E3C3C',
+            chargeInput: '#29313C',
+            securityNotification: '#3E3C3C',
+            invoiceDropdown: '#545454',
+            mainContent: '#3E3C3C',
           },
         }),
   },

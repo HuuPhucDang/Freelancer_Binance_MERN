@@ -97,13 +97,13 @@ const Select: React.FC<IProps> = ({
             borderRadius: '0px',
             minHeight: '37px',
             border: 'none',
-            background: 'transparent'
+            background: 'rgba(187, 174, 174, 0.5)'
           }),
           valueContainer: (base) => ({
             ...base,
             boxSizing: 'border-box',
             height: '37px',
-            padding: matchUpMd ? '0 16px' : '0 12px',
+            padding: '0 8px',
           }),
           menuList: (base) => ({
             ...base,
@@ -134,11 +134,16 @@ const Select: React.FC<IProps> = ({
               backgroundColor: '#E87844',
             },
           }),
+          placeholder:(base, props) =>({
+            ...base,
+            color: "#000000",
+            textAlign: 'center'
+          }),
         }}
         components={{
           IndicatorSeparator: () => null,
           DropdownIndicator: () => (
-            <ExpandMoreOutlinedIcon sx={{ margin: '0 14px 0 8px', color: "#000000" }} />
+            <ExpandMoreOutlinedIcon sx={{ margin: '0 4px 0 0', color: "#000000" }} />
           ),
         }}
       />

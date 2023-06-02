@@ -27,7 +27,7 @@ const Support: React.FC = () => {
           mx: 'auto',
         }}
       >
-        <Grid container columnSpacing={2} >
+        <Grid container columnSpacing={4}>
           <Grid item md={2.5}>
             <Sidebar />
           </Grid>
@@ -38,7 +38,7 @@ const Support: React.FC = () => {
               >
                 CSKH trực tuyến
               </Typography>
-              <Stack direction="column" marginTop="20px">
+              <Stack direction="column" marginTop="30px">
                 <Stack
                   direction="row"
                   alignItems="center"
@@ -48,7 +48,7 @@ const Support: React.FC = () => {
                   }}
                 >
                   <AccountBoxIcon
-                    sx={{ color: 'text.secondary', marginRight: '10px' }}
+                    sx={{ color: '#545454', marginRight: '10px' }}
                   />
                   <Typography
                     sx={{
@@ -65,14 +65,13 @@ const Support: React.FC = () => {
                 direction="column"
                 sx={{
                   width: '100%',
-                  backgroundColor: 'background.secondary',
-                  padding: '20px',
+                  backgroundColor: 'background.mainContent',
+                  padding: '20px 60px',
                 }}
               >
                 <Box
                   sx={{
-                    padding: '16px 10px',
-                    border: '1px solid #ccc',
+                    padding: '0px 10px 16px 10px',
                     maxHeight: '260px',
                     overflow: 'auto',
                   }}
@@ -83,6 +82,7 @@ const Support: React.FC = () => {
                         You (change name)
                       </Typography>
                       <Divider sx={{ flex: 1, marginLeft: '10px' }} />
+                      <Typography sx={{ fontSize: '14px' }}>10:05</Typography>
                     </Stack>
                     <Typography
                       sx={{
@@ -98,6 +98,7 @@ const Support: React.FC = () => {
                     <Stack direction="row" alignItems="center">
                       <Typography sx={{ fontSize: '14px' }}>Linh</Typography>
                       <Divider sx={{ flex: 1, marginLeft: '10px' }} />
+                      <Typography sx={{ fontSize: '14px' }}>10:04</Typography>
                     </Stack>
                     <Typography
                       sx={{
@@ -115,6 +116,7 @@ const Support: React.FC = () => {
                         You (change name)
                       </Typography>
                       <Divider sx={{ flex: 1, marginLeft: '10px' }} />
+                      <Typography sx={{ fontSize: '14px' }}>10:03</Typography>
                     </Stack>
                     <Typography
                       sx={{
@@ -130,6 +132,7 @@ const Support: React.FC = () => {
                     <Stack direction="row" alignItems="center">
                       <Typography sx={{ fontSize: '14px' }}>Linh</Typography>
                       <Divider sx={{ flex: 1, marginLeft: '10px' }} />
+                      <Typography sx={{ fontSize: '14px' }}>10:02</Typography>
                     </Stack>
                     <Typography
                       sx={{
@@ -145,6 +148,7 @@ const Support: React.FC = () => {
                     <Stack direction="row" alignItems="center">
                       <Typography sx={{ fontSize: '14px' }}>Linh</Typography>
                       <Divider sx={{ flex: 1, marginLeft: '10px' }} />
+                      <Typography sx={{ fontSize: '14px' }}>10:01</Typography>
                     </Stack>
                     <Typography
                       sx={{
@@ -173,18 +177,17 @@ const Support: React.FC = () => {
                   </Stack>
                 </Box>
                 <TextField
-                  rows={3}
+                  rows={2}
                   multiline
                   placeholder="Điền nội dung tin nhắn"
                   sx={{
                     marginTop: '10px',
                     background: '#ffffff',
                     borderColor: '#000000',
+                    fontSize: '12px',
                     ' *': {
                       color: '#000000',
-                    },
-                    '::placeholder': {
-                      color: 'rgba(0,0,0,0.5)',
+                      fontSize: '12px',
                     },
                   }}
                 />
@@ -194,8 +197,8 @@ const Support: React.FC = () => {
                     color: 'text.secondary',
                     textTransform: 'unset',
                     height: '30px',
-                    width: '120px',
-                    fontWeight: 700,
+                    width: '144px',
+                    fontWeight: 600,
                     fontSize: '14px',
                     marginTop: '10px',
                     alignSelf: 'flex-end',

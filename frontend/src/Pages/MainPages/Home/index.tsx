@@ -14,6 +14,7 @@ import { Fade } from 'react-reveal';
 // Import local
 import DefaultLayout from '@/Components/DefaultLayout';
 import Assets from '@/Assets';
+import { ROUTERS } from '../../../Constants';
 
 const Home: React.FC = () => {
   // Constructors
@@ -80,18 +81,20 @@ const Home: React.FC = () => {
                   alignItems: 'center',
                   backgroundColor: 'background.primary',
                   height: '27px',
-                  color: 'text.secondary',
+                  // color: 'text.secondary',
                   textTransform: 'unset',
                 }}
                 startIcon={<PersonIcon />}
+                color="burntSienna"
               >
-                <Typography
+                <Link
                   sx={{
                     fontSize: '12px',
                   }}
+                  href={ROUTERS.SIGN_UP}
                 >
                   Đăng kí bằng Email hoặc Điện thoại
-                </Typography>
+                </Link>
               </Button>
               <Typography
                 sx={{ fontSize: '12px', lineHeight: '15px', margin: '10px 0' }}
@@ -463,7 +466,7 @@ const Home: React.FC = () => {
                 fontWeight: 400,
                 textAlign: 'left',
                 marginTop: '20px',
-                color: "text.primary"
+                color: 'text.primary',
               }}
             >
               Tìm hiểu thêm
@@ -927,6 +930,7 @@ const Home: React.FC = () => {
               fontWeight: 700,
               fontSize: '14px',
             }}
+            href={ROUTERS.SIGN_UP}
           >
             Mở Tài Khoản (đăng kí)
           </Button>
@@ -940,6 +944,7 @@ const Home: React.FC = () => {
               fontWeight: 700,
               fontSize: '14px',
             }}
+            href={ROUTERS.SIGN_IN}
           >
             Giao dịch ngay (đăng nhập){' '}
           </Button>

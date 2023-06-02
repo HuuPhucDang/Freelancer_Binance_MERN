@@ -7,6 +7,8 @@ import {
   Button,
   Stack,
   TextField,
+  OutlinedInput,
+  InputAdornment,
 } from '@mui/material';
 // Import local
 import DefaultLayout from '@/Components/DefaultLayout';
@@ -19,21 +21,21 @@ const Recharge: React.FC = () => {
     return (
       <Container
         component="main"
-        maxWidth="lg"
+        maxWidth="md"
         sx={{
           minHeight: 'calc(100vh - 94px)',
           padding: '1em 0',
           mx: 'auto',
         }}
       >
-        <Grid container>
+        <Grid container columnSpacing={4} height="100%">
           <Grid item md={2.5}>
             <Sidebar />
           </Grid>
           <Grid item md={9.5} borderLeft="1px solid #949494">
-            <Grid container columnSpacing={4}>
-              <Grid item md={8}>
-                <Stack direction="column" sx={{ p: 2 }}>
+            <Grid container columnSpacing={3}>
+              <Grid item md={7.5}>
+                <Stack direction="column">
                   <Typography
                     sx={{
                       fontSize: '24px',
@@ -48,6 +50,7 @@ const Recharge: React.FC = () => {
                       fontSize: '12px',
                       lineHeight: '24px',
                       fontWeight: 400,
+                      marginTop: '6px',
                     }}
                   >
                     Nạp tiền qua hệ thống banking ngân hàng
@@ -56,57 +59,74 @@ const Recharge: React.FC = () => {
                     <Box
                       sx={{
                         padding: '10px 16px',
-                        backgroundColor: 'background.secondary',
+                        backgroundColor: 'background.bankCardInformation',
+                        borderRadius: '3px',
                       }}
                     >
-                      <Typography sx={{ fontSize: '12px' }}>
+                      <Typography sx={{ fontWeight: 500, fontSize: '12px' }}>
                         Họ và tên người nhận:
                       </Typography>
-                      <Typography sx={{ fontSize: '12px' }}>
+                      <Typography
+                        sx={{
+                          fontWeight: 500,
+                          fontSize: '12px',
+                          marginTop: '2px',
+                        }}
+                      >
                         Số tài khoản:
                       </Typography>
-                      <Typography sx={{ fontSize: '12px' }}>
-                        Ngân hàng
+                      <Typography
+                        sx={{
+                          fontWeight: 500,
+                          fontSize: '12px',
+                          marginTop: '2px',
+                        }}
+                      >
+                        Ngân hàng:
                       </Typography>
-                      <Typography sx={{ fontSize: '12px' }}>
-                        Nội dung
+                      <Typography
+                        sx={{
+                          fontWeight: 500,
+                          fontSize: '12px',
+                          marginTop: '2px',
+                        }}
+                      >
+                        Nội dung:
                       </Typography>
                     </Box>
-                    <Stack
-                      direction="row"
-                      alignItems="center"
+                    <OutlinedInput
+                      type="text"
+                      placeholder="Số tiền muốn nạp"
                       sx={{
-                        height: '45',
-                        width: '100%',
-                        marginTop: '20px',
-                        backgroundColor: 'background.secondary',
-                        padding: '10px',
+                        height: '39px',
+                        fontSize: '12px',
+                        paddingLeft: '16px',
+                        marginTop: '30px',
+                        backgroundColor: 'background.chargeInput',
+                        color: 'text.primary',
                       }}
-                    >
-                      <TextField
-                        id="standard-basic"
-                        placeholder="Số tiền muốn nạp"
-                        variant="filled"
-                        sx={{
-                          flex: 1,
-                          input: {
-                            padding: '6px 12px 6px 4px',
-                            fontSize: '12px',
-                          },
-                        }}
-                      />
-                      <Typography sx={{ fontSize: '12px', marginLeft: '16px' }}>
-                        Tự quy đổi thành: USDT
-                      </Typography>
-                    </Stack>
+                      endAdornment={
+                        <InputAdornment position="start">
+                          <Typography
+                            sx={{
+                              fontSize: '12px',
+                              marginLeft: '16px',
+                              color: 'text.primary',
+                            }}
+                          >
+                            Tự quy đổi thành: USDT
+                          </Typography>
+                        </InputAdornment>
+                      }
+                    />
                     <Button
                       sx={{
                         backgroundColor: 'background.burntSienna',
                         color: 'text.secondary',
                         textTransform: 'unset',
-                        height: '30px',
+                        height: '26px',
                         width: '120px',
-                        fontWeight: 700,
+                        fontWeight: 400,
                         fontSize: '14px',
                         marginTop: '20px',
                         alignSelf: 'center',
@@ -117,7 +137,7 @@ const Recharge: React.FC = () => {
                   </Stack>
                 </Stack>
               </Grid>
-              <Grid item md={4}>
+              <Grid item md={4.5}>
                 <Box
                   component="img"
                   src={Assets.qrImage}
