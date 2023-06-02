@@ -240,7 +240,7 @@ const Transaction: React.FC = () => {
                 </Stack>
               </Stack>
             </Grid>
-            <Grid item xs={9.5}>
+            <Grid item xs={8.5}>
               <Stack
                 direction="row"
                 justifyContent="space-evenly"

@@ -42,6 +42,7 @@ const AppBarComponent: React.FC = () => {
   // Constructors
   const pathname = useLocation().pathname;
   const [mobileOpen, setMobileOpen] = useState<boolean>(false);
+  const isDarkMode = Utils.getThemeMode() === 'dark';
 
   // Events
   const handleDrawerToggle = () => {
@@ -207,7 +208,6 @@ const AppBarComponent: React.FC = () => {
   );
 
   const _renderMainBar = () => {
-    const isDarkMode = Utils.getThemeMode() === 'dark';
     return (
       <Grid
         container
@@ -344,7 +344,7 @@ const AppBarComponent: React.FC = () => {
           direction="row"
           sx={{
             maxWidth: '852px',
-            justifyContent: 'center',
+            justifyContent: 'start',
             alignItems: 'center',
             width: '100%',
           }}
