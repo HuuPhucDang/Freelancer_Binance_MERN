@@ -134,7 +134,7 @@ const Select: React.FC<IProps> = ({
               backgroundColor: '#E87844',
             },
           }),
-          placeholder:(base, props) =>({
+          placeholder:(base, _props) =>({
             ...base,
             color: "#000000",
             textAlign: 'center'
