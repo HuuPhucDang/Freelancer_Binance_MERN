@@ -17,7 +17,7 @@ interface IProps {
   speed?: number;
 }
 
-const Slider: React.FC<IProps> = ({ items, itemSx = {}, slidersPerView = 1, speed = 1000 }) => {
+const Slider: React.FC<IProps> = ({ items, itemSx = {}, slidersPerView = 1, speed = 2000 }) => {
   return (
     <>
       <Swiper

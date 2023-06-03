@@ -251,7 +251,10 @@ const AppBarComponent: React.FC = () => {
             }}
             disabled={!isDarkMode}
             size="small"
-            sx={{ padding: 0, marginRight: '10px' }}
+            sx={{
+              padding: 0,
+              marginRight: '10px',
+            }}
           >
             {isDarkMode ? (
               <Box component="img" src={Assets.lightIconDarkTheme} />
@@ -362,23 +365,26 @@ const AppBarComponent: React.FC = () => {
                 textAlign: 'center',
               }}
               slidersPerView={1}
-              speed={1500}
+              speed={4000}
             />
           ) : (
-            <>
+            <Stack
+              direction="row"
+              alignItems="center"
+              justifyContent="center"
+              width="100%"
+            >
               <PersonIcon sx={{ color: 'text.burntSienna', mr: '6px' }} />
               <Typography sx={{ color: '#000000', fontSize: '10px' }}>
                 <Link href={ROUTERS.SIGN_UP}>Đăng kí ngay</Link> - Nhận chiết
                 khấu giao dịch lên tới 100 USD (dành cho người dùng đã xác minh)
               </Typography>
-            </>
+            </Stack>
           )}
         </Stack>
       </Stack>
     );
   };
-
-  if (pathname === ROUTERS.SIGN_IN || pathname === ROUTERS.SIGN_UP) return null;
 
   return (
     <AppBar position="sticky" sx={appBarStyles}>

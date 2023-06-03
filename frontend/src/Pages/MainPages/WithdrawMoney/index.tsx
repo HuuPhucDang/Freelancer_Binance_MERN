@@ -12,7 +12,7 @@ import {
   InputAdornment,
 } from '@mui/material';
 // Import local
-import DefaultLayout from '@/Components/DefaultLayout';
+import { UserLayout } from '@/Components/DefaultLayout';
 import { Sidebar } from '@/Components/LayoutParts';
 
 const WithdrawMoney: React.FC = () => {
@@ -113,7 +113,7 @@ const WithdrawMoney: React.FC = () => {
       </Container>
     );
   };
-  return <DefaultLayout content={renderMain()} screenTitle="Rút tiền" />;
+  return <UserLayout content={renderMain()} screenTitle="Rút tiền" />;
 };
 
 export default WithdrawMoney;

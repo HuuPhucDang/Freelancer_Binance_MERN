@@ -10,7 +10,7 @@ import {
   InputAdornment,
 } from '@mui/material';
 // Import local
-import DefaultLayout from '@/Components/DefaultLayout';
+import { UserLayout } from '@/Components/DefaultLayout';
 import { Sidebar } from '@/Components/LayoutParts';
 import Assets from '@/Assets';
 
@@ -149,7 +149,7 @@ const Recharge: React.FC = () => {
       </Container>
     );
   };
-  return <DefaultLayout content={renderMain()} screenTitle="Nạp tiền" />;
+  return <UserLayout content={renderMain()} screenTitle="Nạp tiền" />;
 };
 
 export default Recharge;

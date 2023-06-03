@@ -12,7 +12,7 @@ import {
 import PersonIcon from '@mui/icons-material/Person';
 import { Fade } from 'react-reveal';
 // Import local
-import DefaultLayout from '@/Components/DefaultLayout';
+import { UserLayout } from '@/Components/DefaultLayout';
 import Assets from '@/Assets';
 import { ROUTERS } from '../../../Constants';
 
@@ -976,7 +976,7 @@ const Home: React.FC = () => {
       </Container>
     );
   };
-  return <DefaultLayout content={renderMain()} screenTitle="Binance" />;
+  return <UserLayout content={renderMain()} screenTitle="Binance" />;
 };
 
 export default Home;

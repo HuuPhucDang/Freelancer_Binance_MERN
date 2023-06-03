@@ -11,11 +11,11 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { store, history } from '@store';
 import { CoreTheme } from '@themes';
 
-import AppBarComponent from '@/Components/AppBar';
 // Potals
 import MainRouters, { NotFoundRouter } from './MainRouters';
 import { HelmetProvider } from 'react-helmet-async';
 import AuthRouters from './AuthRouters';
+import AdminRouters from './AdminRouters';
 
 const RootRouter = ({ history, ...props }: any) => {
   const [state, setState] = useState({
@@ -36,7 +36,12 @@ const RootRouter = ({ history, ...props }: any) => {
 };
 
 const App = () => {
-  const elements = useRoutes([MainRouters, AuthRouters, NotFoundRouter]);
+  const elements = useRoutes([
+    MainRouters,
+    AdminRouters,
+    AuthRouters,
+    NotFoundRouter,
+  ]);
   return (
     <SnackbarProvider maxSnack={5}>
       <ConfirmProvider>{elements}</ConfirmProvider>
@@ -54,7 +59,6 @@ const Root = () => {
               <ThemeProvider theme={CoreTheme}>
                 <CssBaseline />
                 <Box display="flex" flexDirection="column" minHeight="100vh">
-                  <AppBarComponent />
                   <App />
                 </Box>
               </ThemeProvider>

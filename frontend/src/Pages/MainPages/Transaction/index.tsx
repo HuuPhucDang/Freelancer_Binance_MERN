@@ -17,7 +17,7 @@ import {
   InputAdornment,
   Link,
 } from '@mui/material';
-import DefaultLayout from '@/Components/DefaultLayout';
+import { UserLayout } from '@/Components/DefaultLayout';
 import StarIcon from '@mui/icons-material/Star';
 import TapAndPlayIcon from '@mui/icons-material/TapAndPlay';
 import NotificationsIcon from '@mui/icons-material/Notifications';
@@ -205,7 +205,7 @@ const Transaction: React.FC = () => {
 
   const _renderLeftSection = () => {
     return (
-      <Grid container spacing={1}>
+      <Grid container>
         <Grid
           item
           xs={12}
@@ -314,7 +314,6 @@ const Transaction: React.FC = () => {
                     minWidth: 1,
                     backgroundColor: 'transparent',
                     backgroundImage: 'unset',
-                    px: 1,
                   }}
                   aria-label="simple table"
                   stickyHeader
@@ -1175,7 +1174,6 @@ const Transaction: React.FC = () => {
                 minWidth: 1,
                 backgroundColor: 'transparent',
                 backgroundImage: 'unset',
-                px: 1,
               }}
               aria-label="simple table"
               stickyHeader
@@ -1280,16 +1278,28 @@ const Transaction: React.FC = () => {
           mx: 'auto',
         }}
       >
-        <Grid container flex={1} display="flex">
+        <Grid
+          container
+          flex={1}
+          display="flex"
+          borderTop="1px solid #BBAEAE"
+          borderBottom="1px solid #BBAEAE"
+        >
           <Grid item xs={12} md={9}>
             {_renderLeftSection()}
           </Grid>
-          <Grid item xs={12} md={3} borderRight="1px solid #BBAEAE">
+          <Grid
+            item
+            xs={12}
+            md={3}
+            borderLeft="1px solid #BBAEAE"
+            borderRight="1px solid #BBAEAE"
+          >
             {_renderRightSection()}
           </Grid>
         </Grid>
-        <Grid item xs={12} borderTop="1px solid #ccc">
-          <Grid container borderBottom="1px solid #ccc">
+        <Grid item xs={12}>
+          <Grid container>
             <Grid item xs={2}>
               <Stack padding="10px 10px">
                 <Stack
@@ -1435,7 +1445,7 @@ const Transaction: React.FC = () => {
       </Container>
     );
   };
-  return <DefaultLayout content={renderMain()} screenTitle="Giao dịch" />;
+  return <UserLayout content={renderMain()} screenTitle="Giao dịch" />;
 };
 
 export default Transaction;
