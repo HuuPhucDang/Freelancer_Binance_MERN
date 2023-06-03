@@ -14,7 +14,7 @@ import {
   Container,
 } from '@mui/material';
 // Import local
-import DefaultLayout from '@/Components/DefaultLayout';
+import { UserLayout } from '@/Components/DefaultLayout';
 import { Sidebar } from '@/Components/LayoutParts';
 import { Select } from '@/Components/Common';
 
@@ -62,7 +62,13 @@ const Invoice: React.FC = () => {
               >
                 Lịch sử nạp rút
               </Typography>
-              <Divider sx={{ marginTop: '4px', marginBottom: '40px', marginRight: '50px' }} />
+              <Divider
+                sx={{
+                  marginTop: '4px',
+                  marginBottom: '40px',
+                  marginRight: '50px',
+                }}
+              />
               <Stack direction="row" justifyContent="space-between">
                 <Typography sx={{ fontSize: '22px' }}>Giao dịch</Typography>
                 <Stack direction="row">
@@ -261,7 +267,7 @@ const Invoice: React.FC = () => {
       </Container>
     );
   };
-  return <DefaultLayout content={renderMain()} screenTitle="Lịch sử nạp rút" />;
+  return <UserLayout content={renderMain()} screenTitle="Lịch sử nạp rút" />;
 };
 
 export default Invoice;

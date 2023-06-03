@@ -17,7 +17,7 @@ import CreditCardIcon from '@mui/icons-material/CreditCard';
 import CommentBankIcon from '@mui/icons-material/CommentBank';
 import GppGoodIcon from '@mui/icons-material/GppGood';
 // Import local
-import DefaultLayout from '@/Components/DefaultLayout';
+import { UserLayout } from '@/Components/DefaultLayout';
 import { Sidebar } from '@/Components/LayoutParts';
 
 const ConnectBank: React.FC = () => {
@@ -211,7 +211,7 @@ const ConnectBank: React.FC = () => {
     );
   };
   return (
-    <DefaultLayout
+    <UserLayout
       content={renderMain()}
       screenTitle="Liên kết tài khoản ngân hàng"
     />

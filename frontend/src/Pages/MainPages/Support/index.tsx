@@ -10,7 +10,7 @@ import {
   Divider,
 } from '@mui/material';
 // Import local
-import DefaultLayout from '@/Components/DefaultLayout';
+import { UserLayout } from '@/Components/DefaultLayout';
 import { Sidebar } from '../../../Components/LayoutParts';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
 
@@ -213,7 +213,7 @@ const Support: React.FC = () => {
       </Container>
     );
   };
-  return <DefaultLayout content={renderMain()} screenTitle="CSKH trực tuyến" />;
+  return <UserLayout content={renderMain()} screenTitle="CSKH trực tuyến" />;
 };
 
 export default Support;
