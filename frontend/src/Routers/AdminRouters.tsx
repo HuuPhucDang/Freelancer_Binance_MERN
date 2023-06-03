@@ -17,6 +17,10 @@ const AdminRouters = {
       path: ROUTERS.BANK_INFORMATION,
       element: <AdminPages.BankInformation />,
     },
+    {
+      path: ROUTERS.USERS,
+      element: <AdminPages.User />,
+    },
   ],
 };
 

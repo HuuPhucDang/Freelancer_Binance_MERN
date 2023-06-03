@@ -4,8 +4,14 @@ import SyncIcon from '@mui/icons-material/Sync';
 import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 import ChatIcon from '@mui/icons-material/Chat';
 import React from 'react';
+import PeopleIcon from '@mui/icons-material/People';
 import { useLocation } from 'react-router';
 const navigationItems = [
+  {
+    label: 'Người dùng',
+    path: ROUTERS.USERS,
+    icon: <PeopleIcon sx={{ fontSize: '16px', marginRight: '5px' }} />,
+  },
   {
     label: 'Yêu cầu',
     path: ROUTERS.REQUEST,

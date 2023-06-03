@@ -5,6 +5,7 @@ import UploadAvatar from './UploadAvatar';
 import UploadIDCard from './UploadIDCard';
 import RequestVerify from './RequestVerify';
 import RequestConnectBank from './RequestConnectBank';
+import UserDetails from './UserDetails';
 
 export {
   ForgotPassword,
@@ -14,4 +15,5 @@ export {
   UploadIDCard,
   RequestConnectBank,
   RequestVerify,
+  UserDetails,
 };
