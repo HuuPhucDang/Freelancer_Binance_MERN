@@ -1,12 +1,12 @@
-import Joi from 'joi';
-import { password, objectId } from '../../helper/validate/custom.validation';
-import { NewCreatedUser } from '../../interfaces/user.interfaces';
+import Joi from "joi";
+import { password, objectId } from "../../helper/validate/custom.validation";
+import { NewCreatedUser } from "../../interfaces/user.interfaces";
 
 const createUserBody: Record<keyof NewCreatedUser, any> = {
-  email: Joi.string().required().email(),
+  username: Joi.string().required(),
   password: Joi.string().required().custom(password),
-  name: Joi.string().required(),
-  role: Joi.string().required().valid('user', 'admin'),
+  role: Joi.string().required().valid("user", "admin"),
+  onwCode: Joi.string().required(),
 };
 
 export const createUser = {

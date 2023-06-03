@@ -1,18 +1,38 @@
-import httpStatus from 'http-status';
-import mongoose from 'mongoose';
-import User from '../../models/user.model';
-import ApiError from '../../helper/errors/ApiError';
-import { IOptions, QueryResult } from '../../helper/paginate/paginate';
-import { NewCreatedUser, UpdateUserBody, IUserDoc, NewRegisteredUser } from '../../interfaces/user.interfaces';
+import httpStatus from "http-status";
+import mongoose from "mongoose";
+import User from "../../models/user.model";
+import ApiError from "../../helper/errors/ApiError";
+import { IOptions, QueryResult } from "../../helper/paginate/paginate";
+import {
+  NewCreatedUser,
+  UpdateUserBody,
+  IUserDoc,
+  NewRegisteredUser,
+} from "../../interfaces/user.interfaces";
+
+const makeDefaultNickname = (length: number) => {
+  let result = "";
+  const characters =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  const charactersLength = characters.length;
+  let counter = 0;
+  while (counter < length) {
+    result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    counter += 1;
+  }
+  return result;
+};
 
 /**
  * Create a user
  * @param {NewCreatedUser} userBody
  * @returns {Promise<IUserDoc>}
  */
-export const createUser = async (userBody: NewCreatedUser): Promise<IUserDoc> => {
-  if (await User.isEmailTaken(userBody.email)) {
-    throw new ApiError(httpStatus.BAD_REQUEST, 'Email already taken');
+export const createUser = async (
+  userBody: NewCreatedUser
+): Promise<IUserDoc> => {
+  if (await User.isUsernameTaken(userBody.username)) {
+    throw new ApiError(httpStatus.BAD_REQUEST, "Username already taken");
   }
   return User.create(userBody);
 };
@@ -22,11 +42,19 @@ export const createUser = async (userBody: NewCreatedUser): Promise<IUserDoc> =>
  * @param {NewRegisteredUser} userBody
  * @returns {Promise<IUserDoc>}
  */
-export const registerUser = async (userBody: NewRegisteredUser): Promise<IUserDoc> => {
-  if (await User.isEmailTaken(userBody.email)) {
-    throw new ApiError(httpStatus.BAD_REQUEST, 'Email already taken');
+export const registerUser = async (
+  userBody: NewRegisteredUser
+): Promise<IUserDoc> => {
+  if (await User.isUsernameTaken(userBody.username)) {
+    throw new ApiError(httpStatus.BAD_REQUEST, "Username already taken");
   }
-  return User.create(userBody);
+  return User.create({
+    ...userBody,
+    nickname: `Anonymous-User-${makeDefaultNickname(6)}`,
+    security: {},
+    verifycation: {},
+    bank: {},
+  });
 };
 
 /**
@@ -35,7 +63,10 @@ export const registerUser = async (userBody: NewRegisteredUser): Promise<IUserDo
  * @param {Object} options - Query options
  * @returns {Promise<QueryResult>}
  */
-export const queryUsers = async (filter: Record<string, any>, options: IOptions): Promise<QueryResult> => {
+export const queryUsers = async (
+  filter: Record<string, any>,
+  options: IOptions
+): Promise<QueryResult> => {
   const users = await User.paginate(filter, options);
   return users;
 };
@@ -45,14 +76,17 @@ export const queryUsers = async (filter: Record<string, any>, options: IOptions)
  * @param {mongoose.Types.ObjectId} id
  * @returns {Promise<IUserDoc | null>}
  */
-export const getUserById = async (id: mongoose.Types.ObjectId): Promise<IUserDoc | null> => User.findById(id);
+export const getUserById = async (
+  id: mongoose.Types.ObjectId
+): Promise<IUserDoc | null> => User.findById(id);
 
 /**
  * Get user by email
- * @param {string} email
+ * @param {string} username
  * @returns {Promise<IUserDoc | null>}
  */
-export const getUserByEmail = async (email: string): Promise<IUserDoc | null> => User.findOne({ email });
+export const getUserByUsername = async (username: string): Promise<IUserDoc | null> =>
+  User.findOne({ username });
 
 /**
  * Update user by id
@@ -65,12 +99,13 @@ export const updateUserById = async (
   updateBody: UpdateUserBody
 ): Promise<IUserDoc | null> => {
   const user = await getUserById(userId);
-  if (!user) {
-    throw new ApiError(httpStatus.NOT_FOUND, 'User not found');
-  }
-  if (updateBody.email && (await User.isEmailTaken(updateBody.email, userId))) {
-    throw new ApiError(httpStatus.BAD_REQUEST, 'Email already taken');
-  }
+  if (!user) throw new ApiError(httpStatus.NOT_FOUND, "User not found");
+  if (
+    updateBody.username &&
+    (await User.isUsernameTaken(updateBody.username, userId))
+  )
+    throw new ApiError(httpStatus.BAD_REQUEST, "Username already taken");
+
   Object.assign(user, updateBody);
   await user.save();
   return user;
@@ -81,10 +116,12 @@ export const updateUserById = async (
  * @param {mongoose.Types.ObjectId} userId
  * @returns {Promise<IUserDoc | null>}
  */
-export const deleteUserById = async (userId: mongoose.Types.ObjectId): Promise<IUserDoc | null> => {
+export const deleteUserById = async (
+  userId: mongoose.Types.ObjectId
+): Promise<IUserDoc | null> => {
   const user = await getUserById(userId);
   if (!user) {
-    throw new ApiError(httpStatus.NOT_FOUND, 'User not found');
+    throw new ApiError(httpStatus.NOT_FOUND, "User not found");
   }
   await user.deleteOne();
   return user;

@@ -1,11 +1,15 @@
-import Joi from 'joi';
-import { password } from '../../helper/validate/custom.validation';
-import { NewRegisteredUser } from '../../interfaces/user.interfaces';
+import Joi from "joi";
+import { password } from "../../helper/validate/custom.validation";
+import { NewRegisteredUser } from "../../interfaces/user.interfaces";
 
 const registerBody: Record<keyof NewRegisteredUser, any> = {
-  email: Joi.string().required().email(),
+  username: Joi.string().required(),
   password: Joi.string().required().custom(password),
-  name: Joi.string().required(),
+  confirmPassword: Joi.string().valid(Joi.ref("password")).required().messages({
+    "any.only": "Confirm password must match with password",
+  }),
+
+  inviteCode: Joi.string().required(),
 };
 
 export const register = {
@@ -14,7 +18,7 @@ export const register = {
 
 export const login = {
   body: Joi.object().keys({
-    email: Joi.string().required(),
+    username: Joi.string().required(),
     password: Joi.string().required(),
   }),
 };
@@ -33,7 +37,8 @@ export const refreshTokens = {
 
 export const forgotPassword = {
   body: Joi.object().keys({
-    email: Joi.string().email().required(),
+    username: Joi.string().email().required(),
+    message: Joi.string().required(),
   }),
 };
 

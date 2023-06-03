@@ -1,13 +1,20 @@
-import mongoose, { Model, Document } from 'mongoose';
-import { QueryResult } from '../helper/paginate/paginate';
-import { AccessAndRefreshTokens } from './token.interfaces';
+import mongoose, { Model, Document } from "mongoose";
+import { QueryResult } from "../helper/paginate/paginate";
+import { AccessAndRefreshTokens } from "./token.interfaces";
 
+export enum EUserStatus {
+  ACTIVE = "active",
+  INACTIVE = "inactive",
+}
 export interface IUser {
-  name: string;
-  email: string;
+  username: string;
+  nickname: string;
   password: string;
+  inviteCode: string;
+  onwCode: string;
+  avatar: string;
   role: string;
-  isEmailVerified: boolean;
+  status: string;
 }
 
 export interface IUserDoc extends IUser, Document {
@@ -15,15 +22,27 @@ export interface IUserDoc extends IUser, Document {
 }
 
 export interface IUserModel extends Model<IUserDoc> {
-  isEmailTaken(email: string, excludeUserId?: mongoose.Types.ObjectId): Promise<boolean>;
-  paginate(filter: Record<string, any>, options: Record<string, any>): Promise<QueryResult>;
+  isUsernameTaken(
+    username: string,
+    excludeUserId?: mongoose.Types.ObjectId
+  ): Promise<boolean>;
+  paginate(
+    filter: Record<string, any>,
+    options: Record<string, any>
+  ): Promise<QueryResult>;
 }
 
 export type UpdateUserBody = Partial<IUser>;
 
-export type NewRegisteredUser = Omit<IUser, 'role' | 'isEmailVerified'>;
+export type NewRegisteredUser = Omit<
+  IUser,
+  "role" | "onwCode" | "avatar" | "status" | "nickname"
+> & { confirmPassword: string };
 
-export type NewCreatedUser = Omit<IUser, 'isEmailVerified'>;
+export type NewCreatedUser = Omit<
+  IUser,
+  "inviteCode" | "avatar" | "status" | "nickname"
+>;
 
 export interface IUserWithTokens {
   user: IUserDoc;
