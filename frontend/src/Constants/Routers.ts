@@ -1,5 +1,6 @@
 const USER_ROUTER_ROOT = '/';
 const AUTH_ROUTER_ROOT = '/auth';
+const ADMIN_ROUTER_ROOT = '/admin';
 
 const USER_ROUTERS = {
   NOT_FOUND: '*',
@@ -16,13 +17,20 @@ const USER_ROUTERS = {
 };
 
 const AUTH_ROUTERS = {
-  SIGN_IN: `${USER_ROUTER_ROOT}sign-in`,
-  SIGN_UP: `${AUTH_ROUTER_ROOT}sign-up`,
+  SIGN_IN: `${AUTH_ROUTER_ROOT}/sign-in`,
+  SIGN_UP: `${AUTH_ROUTER_ROOT}/sign-up`,
 };
 
-export { USER_ROUTERS, AUTH_ROUTERS };
+const ADMIN_ROUTERS = {
+  REQUEST: `${ADMIN_ROUTER_ROOT}/request`,
+  BANK_INFORMATION: `${ADMIN_ROUTER_ROOT}/bank-information`,
+  ADMIN_SUPPORT: `${ADMIN_ROUTER_ROOT}/support`,
+};
+
+export { USER_ROUTERS, AUTH_ROUTERS, ADMIN_ROUTER_ROOT };
 
 export default {
   ...USER_ROUTERS,
   ...AUTH_ROUTERS,
+  ...ADMIN_ROUTERS,
 };

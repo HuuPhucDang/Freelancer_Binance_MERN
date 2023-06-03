@@ -22,6 +22,7 @@ declare module '@mui/material/styles' {
     white: PaletteColorOptions;
     paleGoldenrod: PaletteColorOptions;
     sunglow: PaletteColorOptions;
+    yellowOrange: PaletteColorOptions;
   }
   interface Palette extends CustomPalette {}
   interface PaletteOptions extends CustomPalette {}
@@ -47,6 +48,7 @@ declare module '@mui/material/Button' {
     white: true;
     paleGoldenrod: true;
     sunglow: true;
+    yellowOrange: true;
   }
 }
 
@@ -100,6 +102,7 @@ const CoreTheme = createTheme({
     white: createColor(CommonColor.white),
     paleGoldenrod: createColor(CommonColor.paleGoldenrod),
     sunglow: createColor(CommonColor.sunglow),
+    yellowOrange: createColor(CommonColor.yellowOrange),
     mode: Utils.getThemeMode(),
     ...(Utils.getThemeMode() === 'light'
       ? {
@@ -155,15 +158,15 @@ const CoreTheme = createTheme({
           '&::-webkit-scrollbar, & *::-webkit-scrollbar': {
             height: 5,
             width: 5,
-            backgroundColor: CommonColor.loblolly,
+            backgroundColor: 'rgba(125, 111, 111, 0.37)',
             cursor: 'pointer',
           },
           '&::-webkit-scrollbar-thumb, & *::-webkit-scrollbar-thumb': {
-            backgroundColor: CommonColor.mainColor,
+            backgroundColor: '#FFB23F',
             outline: 'none',
           },
           '&::-webkit-scrollbar-track, & *::-webkit-scrollbar-track': {
-            boxShadow: 'inset 0 0 5px rgba(0, 0, 0, 0.2) !important',
+            boxShadow: 'inset 0 0 5px rgba(125, 111, 111, 0.37) !important',
           },
           //remove arrow input type number
           'input::-webkit-outer-spin-button': {

@@ -10,7 +10,7 @@ import {
   Divider,
 } from '@mui/material';
 // Import local
-import DefaultLayout from '@/Components/DefaultLayout';
+import { UserLayout } from '@/Components/DefaultLayout';
 import { Sidebar } from '@/Components/LayoutParts';
 import { UploadAvatar, UploadIDCard } from '../../../Components/Popup';
 
@@ -157,7 +157,7 @@ const Verify: React.FC = () => {
       </Container>
     );
   };
-  return <DefaultLayout content={renderMain()} screenTitle="Xác minh" />;
+  return <UserLayout content={renderMain()} screenTitle="Xác minh" />;
 };
 
 export default Verify;

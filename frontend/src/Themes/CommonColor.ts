@@ -28,5 +28,6 @@ export default {
   white: '#FFFFFF',
   paleGoldenrod: '#F3ECAE',
   sunglow: '#FCCE2E',
-  lightSilver: "#D9D9D9"
+  lightSilver: '#D9D9D9',
+  yellowOrange: '#FFB23F',
 };

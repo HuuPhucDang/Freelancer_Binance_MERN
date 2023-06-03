@@ -19,7 +19,7 @@ import {
 import ModeEditOutlineOutlinedIcon from '@mui/icons-material/ModeEditOutlineOutlined';
 import RemoveRedEyeOutlinedIcon from '@mui/icons-material/RemoveRedEyeOutlined';
 // Import local
-import DefaultLayout from '@/Components/DefaultLayout';
+import { UserLayout } from '@/Components/DefaultLayout';
 import Assets from '@/Assets';
 import ArrowCircleRightOutlinedIcon from '@mui/icons-material/ArrowCircleRightOutlined';
 import { Sidebar } from '@/Components/LayoutParts';
@@ -387,7 +387,7 @@ const Overview: React.FC = () => {
       </Container>
     );
   };
-  return <DefaultLayout content={renderMain()} screenTitle="Tổng quan" />;
+  return <UserLayout content={renderMain()} screenTitle="Tổng quan" />;
 };
 
 export default Overview;

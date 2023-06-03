@@ -16,7 +16,7 @@ import {
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CancelIcon from '@mui/icons-material/Cancel';
 // Import local
-import DefaultLayout from '@/Components/DefaultLayout';
+import { UserLayout } from '@/Components/DefaultLayout';
 import { Sidebar } from '@/Components/LayoutParts';
 import Assets from '@/Assets';
 
@@ -248,7 +248,7 @@ const Security: React.FC = () => {
       </Container>
     );
   };
-  return <DefaultLayout content={renderMain()} screenTitle="Bảo mật" />;
+  return <UserLayout content={renderMain()} screenTitle="Bảo mật" />;
 };
 
 export default Security;
