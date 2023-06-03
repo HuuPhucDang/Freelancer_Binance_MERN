@@ -8,6 +8,8 @@ import {
   UpdateUserBody,
   IUserDoc,
   NewRegisteredUser,
+  UpdateUserAvatarBody,
+  UpdateUserNicknameBody,
 } from "../../interfaces/user.interfaces";
 
 const makeDefaultNickname = (length: number) => {
@@ -85,8 +87,9 @@ export const getUserById = async (
  * @param {string} username
  * @returns {Promise<IUserDoc | null>}
  */
-export const getUserByUsername = async (username: string): Promise<IUserDoc | null> =>
-  User.findOne({ username });
+export const getUserByUsername = async (
+  username: string
+): Promise<IUserDoc | null> => User.findOne({ username });
 
 /**
  * Update user by id
@@ -112,17 +115,41 @@ export const updateUserById = async (
 };
 
 /**
- * Delete user by id
+ * Update user Avatar
  * @param {mongoose.Types.ObjectId} userId
+ * @param {UpdateUserAvatarBody} updateBody
  * @returns {Promise<IUserDoc | null>}
  */
-export const deleteUserById = async (
-  userId: mongoose.Types.ObjectId
+export const updateUserAvatar = async (
+  userId: mongoose.Types.ObjectId,
+  updateBody: UpdateUserAvatarBody
 ): Promise<IUserDoc | null> => {
   const user = await getUserById(userId);
-  if (!user) {
-    throw new ApiError(httpStatus.NOT_FOUND, "User not found");
-  }
-  await user.deleteOne();
+  if (!user) throw new ApiError(httpStatus.NOT_FOUND, "User not found");
+  Object.assign(user, updateBody);
+  await user.save();
+  return user;
+};
+
+/**
+ * Update user Nickname
+ * @param {mongoose.Types.ObjectId} userId
+ * @param {UpdateUserNicknameBody} updateBody
+ * @returns {Promise<IUserDoc | null>}
+ */
+export const updateUserNickname = async (
+  userId: mongoose.Types.ObjectId,
+  updateBody: UpdateUserNicknameBody
+): Promise<IUserDoc | null> => {
+  const user = await getUserById(userId);
+  if (!user) throw new ApiError(httpStatus.NOT_FOUND, "User not found");
+  const checkDuplicateNickname = await User.findOne({
+    nickname: updateBody.nickname,
+  });
+  if (checkDuplicateNickname)
+    throw new ApiError(httpStatus.BAD_REQUEST, "Nickname already taken!");
+
+  Object.assign(user, updateBody);
+  await user.save();
   return user;
 };

@@ -1,6 +1,10 @@
 import Joi from "joi";
 import { password, objectId } from "../../helper/validate/custom.validation";
-import { NewCreatedUser } from "../../interfaces/user.interfaces";
+import {
+  NewCreatedUser,
+  UpdateUserAvatarBody,
+  UpdateUserNicknameBody,
+} from "../../interfaces/user.interfaces";
 
 const createUserBody: Record<keyof NewCreatedUser, any> = {
   username: Joi.string().required(),
@@ -41,6 +45,14 @@ export const updateUser = {
       name: Joi.string(),
     })
     .min(1),
+};
+
+export const updateUserAvavtar: Record<keyof UpdateUserAvatarBody, any> = {
+  avatar: Joi.string().required(),
+};
+
+export const updateUserNickname: Record<keyof UpdateUserNicknameBody, any> = {
+  nickname: Joi.string().required(),
 };
 
 export const deleteUser = {

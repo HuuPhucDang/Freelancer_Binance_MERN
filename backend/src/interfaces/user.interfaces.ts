@@ -34,6 +34,14 @@ export interface IUserModel extends Model<IUserDoc> {
 
 export type UpdateUserBody = Partial<IUser>;
 
+export type UpdateUserAvatarBody = {
+  avatar: string;
+};
+
+export type UpdateUserNicknameBody = {
+  nickname: string;
+};
+
 export type NewRegisteredUser = Omit<
   IUser,
   "role" | "onwCode" | "avatar" | "status" | "nickname"
