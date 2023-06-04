@@ -18,6 +18,8 @@ import {
   ChangeUserPasswordPasswordBody,
   ChangeUserEmailBody,
   ChangeWithdrawPasswordBody,
+  ActiveBankBody,
+  UploadIDCards,
 } from "../../interfaces/user.interfaces";
 
 const makeDefaultNickname = (length: number) => {
@@ -31,6 +33,25 @@ const makeDefaultNickname = (length: number) => {
     counter += 1;
   }
   return result;
+};
+
+const assignReturnUser = (user: IUserDoc) => {
+  if (user?.bank)
+    user.bank.accountNumber = user.bank.accountNumber.replace(
+      /^\d{1,8}/,
+      "********"
+    );
+  if (user?.security) {
+    user.security.phonenumber = user.security.phonenumber.replace(
+      /^\d{1,8}/,
+      "********"
+    );
+    user.security.email = user.security.email.replace(
+      /(\w{3})[\w.-]+@([\w.]+\w)/,
+      "$1***@$2"
+    );
+  }
+  return user;
 };
 
 /**
@@ -120,7 +141,7 @@ export const updateUserAvatar = async (
   if (!user) throw new ApiError(httpStatus.NOT_FOUND, "User not found!");
   Object.assign(user, updateBody);
   await user.save();
-  return user;
+  return assignReturnUser(user);
 };
 
 /**
@@ -140,7 +161,7 @@ export const updateUserNickname = async (
 
   Object.assign(user, updateBody);
   await user.save();
-  return user;
+  return assignReturnUser(user);
 };
 
 /**
@@ -162,15 +183,7 @@ export const verifyPhonenumber = async (
     security: newSecurity,
   });
   await user.save();
-  user.security.phonenumber = user.security.phonenumber.replace(
-    /\d{4}$/,
-    "****"
-  );
-  user.security.email = user.security.email.replace(
-    /(\w{3})[\w.-]+@([\w.]+\w)/,
-    "$1***@$2"
-  );
-  return user;
+  return assignReturnUser(user);
 };
 
 /**
@@ -195,15 +208,7 @@ export const activeUserEmail = async (
     security: newSecurity,
   });
   await user.save();
-  user.security.phonenumber = user.security.phonenumber.replace(
-    /\d{4}$/,
-    "****"
-  );
-  user.security.email = user.security.email.replace(
-    /(\w{3})[\w.-]+@([\w.]+\w)/,
-    "$1***@$2"
-  );
-  return user;
+  return assignReturnUser(user);
 };
 
 /**
@@ -234,15 +239,7 @@ export const changeUserEmail = async (
     security: newSecurity,
   });
   await user.save();
-  user.security.phonenumber = user.security.phonenumber.replace(
-    /\d{4}$/,
-    "****"
-  );
-  user.security.email = user.security.email.replace(
-    /(\w{3})[\w.-]+@([\w.]+\w)/,
-    "$1***@$2"
-  );
-  return user;
+  return assignReturnUser(user);
 };
 
 /**
@@ -274,15 +271,7 @@ export const activeWithdrawPassword = async (
     security: newSecurity,
   });
   await user.save();
-  user.security.phonenumber = user.security.phonenumber.replace(
-    /\d{4}$/,
-    "****"
-  );
-  user.security.email = user.security.email.replace(
-    /(\w{3})[\w.-]+@([\w.]+\w)/,
-    "$1***@$2"
-  );
-  return user;
+  return assignReturnUser(user);
 };
 
 /**
@@ -327,15 +316,7 @@ export const changeWithdrawPassword = async (
     security: newSecurity,
   });
   await user.save();
-  user.security.phonenumber = user.security.phonenumber.replace(
-    /\d{4}$/,
-    "****"
-  );
-  user.security.email = user.security.email.replace(
-    /(\w{3})[\w.-]+@([\w.]+\w)/,
-    "$1***@$2"
-  );
-  return user;
+  return assignReturnUser(user);
 };
 
 /**
@@ -354,15 +335,58 @@ export const changeUserPassword = async (
     password: updateBody.newPassword,
   });
   await user.save();
-  if (user?.security) {
-    user.security.phonenumber = user.security.phonenumber.replace(
-      /\d{4}$/,
-      "****"
+  return assignReturnUser(user);
+};
+
+/**
+ * Active Bank
+ */
+export const activeBank = async (
+  userId: mongoose.Types.ObjectId,
+  updateBody: ActiveBankBody
+): Promise<IUserDoc | null> => {
+  const user = await getUserById(userId);
+  if (!user) throw new ApiError(httpStatus.NOT_FOUND, "User not found!");
+  if (user?.bank?.isVerified)
+    throw new ApiError(
+      httpStatus.BAD_REQUEST,
+      "You already active bank account!"
     );
-    user.security.email = user.security.email.replace(
-      /(\w{3})[\w.-]+@([\w.]+\w)/,
-      "$1***@$2"
+
+  Object.assign(user, {
+    bank: updateBody,
+  });
+
+  await user.save();
+  return assignReturnUser(user);
+};
+
+/**
+ * Upload ID Card
+ */
+export const uploadIdCards = async (
+  userId: mongoose.Types.ObjectId,
+  updateBody: UploadIDCards
+): Promise<IUserDoc | null> => {
+  const user = await getUserById(userId);
+  if (!user) throw new ApiError(httpStatus.NOT_FOUND, "User not found!");
+  if (user?.verification?.status === "pending")
+    throw new ApiError(httpStatus.BAD_REQUEST, "You already upload ID cards!");
+  if (user?.verification?.status === "approved")
+    throw new ApiError(
+      httpStatus.BAD_REQUEST,
+      "Admin has been verified your information!"
     );
-  }
-  return user;
+  if (user?.verification?.status === "denied")
+    throw new ApiError(
+      httpStatus.BAD_REQUEST,
+      "Admin has been denied your information!"
+    );
+
+  Object.assign(user, {
+    verification: { ...updateBody, status: "pending" },
+  });
+
+  await user.save();
+  return assignReturnUser(user);
 };

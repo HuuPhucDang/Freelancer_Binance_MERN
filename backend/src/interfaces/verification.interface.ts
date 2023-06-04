@@ -1,4 +1,4 @@
-import { Model, Document } from "mongoose";
+import { Model, Document, Schema } from "mongoose";
 import { QueryResult } from "../helper/paginate/paginate";
 
 export enum EVerifyType {
@@ -8,9 +8,9 @@ export enum EVerifyType {
 }
 
 export interface IVerification {
-  selfieImageUrl: string;
-  frontImageUrl: string;
-  backImageUrl: string;
+  selfieImageUrl: Schema.Types.ObjectId;
+  frontImageUrl: Schema.Types.ObjectId;
+  backImageUrl: Schema.Types.ObjectId;
   status: string;
 }
 

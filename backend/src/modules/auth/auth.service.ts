@@ -29,14 +29,20 @@ export const loginUserWithUsernameAndPassword = async (
     );
   if (user.security) {
     user.security.phonenumber = user.security.phonenumber.replace(
-      /\d{4}$/,
-      "****"
+      /^\d{1,8}/,
+      "*********"
     );
     user.security.email = user.security.email.replace(
       /(\w{3})[\w.-]+@([\w.]+\w)/,
       "$1***@$2"
     );
   }
+
+  if (user?.bank)
+    user.bank.accountNumber = user.bank.accountNumber.replace(
+      /^\d{1,8}/,
+      "*********"
+    );
 
   return user;
 };

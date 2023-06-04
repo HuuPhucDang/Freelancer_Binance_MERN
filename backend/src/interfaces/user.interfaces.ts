@@ -94,3 +94,15 @@ export interface IUserWithTokens {
   user: IUserDoc;
   tokens: AccessAndRefreshTokens;
 }
+
+export type ActiveBankBody = {
+  fullname: string;
+  accountNumber: string;
+  bankName: string;
+  bankAddress: string;
+};
+
+export type UploadIDCards = {
+  frontImageUrl: string;
+  backImageUrl: string;
+};

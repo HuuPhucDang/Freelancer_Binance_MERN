@@ -19,6 +19,8 @@ router.put(
   userController.updateUserNickname
 );
 
+router.get("/self", auth("selfUpdate"), userController.getSelf);
+
 router
   .route("/")
   .post(

@@ -13,17 +13,17 @@ const verificationSchema = new mongoose.Schema<
 >(
   {
     selfieImageUrl: {
-      type: String,
+      type: mongoose.Schema.Types.ObjectId,
       required: false,
       default: "",
     },
     frontImageUrl: {
-      type: String,
+      type: mongoose.Schema.Types.ObjectId,
       required: false,
       default: "",
     },
     backImageUrl: {
-      type: String,
+      type: mongoose.Schema.Types.ObjectId,
       required: false,
       default: "",
     },

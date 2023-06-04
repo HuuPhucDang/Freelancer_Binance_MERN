@@ -115,3 +115,18 @@ export const changeUserPassword = {
       }),
   }),
 };
+
+export const activeBank = {
+  body: Joi.object().keys({
+    fullname: Joi.string().required(),
+    accountNumber: Joi.string().required(),
+    bankName: Joi.string().required(),
+    bankAddress: Joi.string().required(),
+  }),
+};
+
+export const uploadIDCards = Joi.object().keys({
+  frontImage: Joi.binary().required(),
+  backImage: Joi.binary().required(),
+  selfieImage: Joi.binary().required(),
+});

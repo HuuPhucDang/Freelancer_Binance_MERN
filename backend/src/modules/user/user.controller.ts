@@ -35,6 +35,12 @@ export const getUser = catchAsync(async (req: Request, res: Response) => {
   }
 });
 
+export const getSelf = catchAsync(async (req: Request, res: Response) => {
+  const user = await userService.getUserById(req.user.id);
+  if (!user) throw new ApiError(httpStatus.NOT_FOUND, "User not found");
+  res.send(responsePayload(true, "Get self successfully!", user));
+});
+
 export const updateUser = catchAsync(async (req: Request, res: Response) => {
   if (typeof req.params["userId"] === "string") {
     const user = await userService.updateUserById(
@@ -128,3 +134,25 @@ export const changeUserPassword = catchAsync(
     res.send(responsePayload(true, "Change password successfully!", user));
   }
 );
+
+export const activeBank = catchAsync(async (req: Request, res: Response) => {
+  const user = await userService.activeBank(
+    new mongoose.Types.ObjectId(req.user.id),
+    req.body
+  );
+  res.send(responsePayload(true, "Active bank successfully!", user));
+});
+
+export const uploadIDCards = catchAsync(async (req: Request, res: Response) => {
+  const allFiles: any = req.files;
+  const updateBody: any = {};
+  Object.keys(allFiles).map((key: any) => {
+    updateBody[`${key}Url`] = allFiles[key][0]?.id;
+  });
+
+  const user = await userService.uploadIdCards(
+    new mongoose.Types.ObjectId(req.user.id),
+    updateBody
+  );
+  res.send(responsePayload(true, "Active bank successfully!", user));
+});

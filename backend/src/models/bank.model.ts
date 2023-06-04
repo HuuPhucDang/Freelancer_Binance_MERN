@@ -40,6 +40,14 @@ const bankSchema = new mongoose.Schema<IBankDoc, IBankModel>(
 bankSchema.plugin(toJSON);
 bankSchema.plugin(paginate);
 
+bankSchema.pre("save", async function (next) {
+  const bank = this;
+  bank.isVerified = Boolean(
+    bank.accountNumber && bank.bankAddress && bank.bankName && bank.fullname
+  );
+  next();
+});
+
 const Bank = mongoose.model<IBankDoc, IBankModel>("Bank", bankSchema);
 
 export { bankSchema };
