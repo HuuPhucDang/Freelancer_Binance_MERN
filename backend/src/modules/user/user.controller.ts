@@ -64,3 +64,45 @@ export const updateUserNickname = catchAsync(
     res.send(responsePayload(true, "Update nickname successfully!", user));
   }
 );
+
+export const verifyPhonenumber = catchAsync(
+  async (req: Request, res: Response) => {
+    const user = await userService.verifyPhonenumber(
+      new mongoose.Types.ObjectId(req.user.id),
+      req.body
+    );
+    res.send(responsePayload(true, "Active phonenumber successfully!", user));
+  }
+);
+
+export const verifyUserEmail = catchAsync(
+  async (req: Request, res: Response) => {
+    const user = await userService.verifyUserEmail(
+      new mongoose.Types.ObjectId(req.user.id),
+      req.body
+    );
+    res.send(responsePayload(true, "Active email successfully!", user));
+  }
+);
+
+export const verifyUserWithdrawPassword = catchAsync(
+  async (req: Request, res: Response) => {
+    const user = await userService.verifyUserWithdrawPassword(
+      new mongoose.Types.ObjectId(req.user.id),
+      req.body
+    );
+    res.send(
+      responsePayload(true, "Active Withdraw password successfully!", user)
+    );
+  }
+);
+
+export const changeUserPassword = catchAsync(
+  async (req: Request, res: Response) => {
+    const user = await userService.changeUserPassword(
+      new mongoose.Types.ObjectId(req.user.id),
+      req.body
+    );
+    res.send(responsePayload(true, "Change password successfully!", user));
+  }
+);

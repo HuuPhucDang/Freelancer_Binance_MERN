@@ -1,6 +1,9 @@
 import mongoose, { Model, Document } from "mongoose";
 import { QueryResult } from "../helper/paginate/paginate";
 import { AccessAndRefreshTokens } from "./token.interfaces";
+import { ISecurityDoc } from "./security.interface";
+import { IBankDoc } from "./bank.interface";
+import { IVerificationDoc } from "./verification.interface";
 
 export enum EUserStatus {
   ACTIVE = "active",
@@ -15,6 +18,9 @@ export interface IUser {
   avatar: string;
   role: string;
   status: string;
+  security: ISecurityDoc;
+  verification: IVerificationDoc;
+  bank: IBankDoc;
 }
 
 export interface IUserDoc extends IUser, Document {
@@ -40,6 +46,27 @@ export type UpdateUserAvatarBody = {
 
 export type UpdateUserNicknameBody = {
   nickname: string;
+};
+
+export type VerifyUserPhonenumberBody = {
+  phonenumber: string;
+};
+
+export type VerifyUserEmailBody = {
+  email: string;
+};
+
+export type VerifyUserWithdrawPasswordBody = {
+  password: string;
+  phonenumber: string;
+  email: string;
+  withdrawPassword: string;
+};
+
+export type ChangeUserPasswordPasswordBody = {
+  password: string;
+  newPassword: string;
+  confirmNewPassword: string;
 };
 
 export type NewRegisteredUser = Omit<

@@ -7,7 +7,9 @@ export interface ISecurity {
   isVerified: boolean;
 }
 
-export interface ISecurityDoc extends ISecurity, Document {}
+export interface ISecurityDoc extends ISecurity, Document {
+  isWithdrawPasswordMatch(password: string): Promise<boolean>;
+}
 
 export type UpdatePhoneNumberBody = {
   phonenumber: string;

@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import bcrypt from "bcryptjs";
 import toJSON from "../helper/toJSON/toJSON";
 import { ISecurityDoc } from "../interfaces/security.interface";
 
@@ -17,7 +18,6 @@ const securitySchema = new mongoose.Schema<ISecurityDoc>(
     withdrawPassword: {
       type: String,
       required: false,
-      minlength: 8,
       private: true, // used by the toJSON plugin
     },
     isVerified: {
@@ -34,8 +34,16 @@ const securitySchema = new mongoose.Schema<ISecurityDoc>(
 // add plugin that converts mongoose to json
 securitySchema.plugin(toJSON);
 
-export { securitySchema };
+// .replace(/\d{4}$/, "****")
+securitySchema.method(
+  "isWithdrawPasswordMatch",
+  async function (password: string): Promise<boolean> {
+    const security = this;
+    return bcrypt.compare(password, security.password);
+  }
+);
 
 const Security = mongoose.model<ISecurityDoc>("Security", securitySchema);
 
+export { securitySchema };
 export default Security;

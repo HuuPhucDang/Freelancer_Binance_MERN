@@ -12,12 +12,6 @@ import { securitySchema } from "./security.model";
 import { verificationSchema } from "./verification.model";
 import { bankSchema } from "./bank.model";
 
-const relationShips = {
-  security: securitySchema,
-  verifycation: verificationSchema,
-  bank: bankSchema,
-};
-
 const userSchema = new mongoose.Schema<IUserDoc, IUserModel>(
   {
     username: {
@@ -31,8 +25,6 @@ const userSchema = new mongoose.Schema<IUserDoc, IUserModel>(
       type: String,
       required: true,
       unique: true,
-      trim: true,
-      lowercase: true,
     },
     password: {
       type: String,
@@ -71,7 +63,9 @@ const userSchema = new mongoose.Schema<IUserDoc, IUserModel>(
       enum: EUserStatus,
       default: "active",
     },
-    ...relationShips,
+    security: securitySchema,
+    bank: bankSchema,
+    verification: verificationSchema,
   },
   {
     timestamps: true,

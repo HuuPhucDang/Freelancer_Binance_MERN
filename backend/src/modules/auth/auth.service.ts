@@ -27,6 +27,16 @@ export const loginUserWithUsernameAndPassword = async (
       httpStatus.UNAUTHORIZED,
       "Incorrect username or password"
     );
+  if (user.security) {
+    user.security.phonenumber = user.security.phonenumber.replace(
+      /\d{4}$/,
+      "****"
+    );
+    user.security.email = user.security.email.replace(
+      /(\w{3})[\w.-]+@([\w.]+\w)/,
+      "$1***@$2"
+    );
+  }
 
   return user;
 };

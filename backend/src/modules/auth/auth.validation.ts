@@ -1,19 +1,18 @@
 import Joi from "joi";
 import { password } from "../../helper/validate/custom.validation";
-import { NewRegisteredUser } from "../../interfaces/user.interfaces";
 
-const registerBody: Record<keyof NewRegisteredUser, any> = {
-  username: Joi.string().required(),
-  password: Joi.string().required().custom(password),
-  confirmPassword: Joi.string().valid(Joi.ref("password")).required().messages({
-    "any.only": "Confirm password must match with password",
+export const registerBody = {
+  body: Joi.object().keys({
+    username: Joi.string().required(),
+    password: Joi.string().required().custom(password),
+    confirmPassword: Joi.string()
+      .valid(Joi.ref("password"))
+      .required()
+      .messages({
+        "any.only": "Confirm password must match with password",
+      }),
+    inviteCode: Joi.string().required(),
   }),
-
-  inviteCode: Joi.string().required(),
-};
-
-export const register = {
-  body: Joi.object().keys(registerBody),
 };
 
 export const login = {

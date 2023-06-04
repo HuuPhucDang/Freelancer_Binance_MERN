@@ -1,16 +1,13 @@
 import Joi from "joi";
 import { password, objectId } from "../../helper/validate/custom.validation";
-import {
-  NewCreatedUser,
-  UpdateUserAvatarBody,
-  UpdateUserNicknameBody,
-} from "../../interfaces/user.interfaces";
 
-const createUserBody: Record<keyof NewCreatedUser, any> = {
-  username: Joi.string().required(),
-  password: Joi.string().required().custom(password),
-  role: Joi.string().required().valid("user", "admin"),
-  onwCode: Joi.string().required(),
+const createUserBody = {
+  body: Joi.object().keys({
+    username: Joi.string().required(),
+    password: Joi.string().required().custom(password),
+    role: Joi.string().required().valid("user", "admin"),
+    onwCode: Joi.string().required(),
+  }),
 };
 
 export const createUser = {
@@ -47,16 +44,56 @@ export const updateUser = {
     .min(1),
 };
 
-export const updateUserAvavtar: Record<keyof UpdateUserAvatarBody, any> = {
-  avatar: Joi.string().required(),
+export const updateUserAvavtar = {
+  body: Joi.object()
+    .keys({
+      avatar: Joi.string().required(),
+    })
+    .min(1),
 };
 
-export const updateUserNickname: Record<keyof UpdateUserNicknameBody, any> = {
-  nickname: Joi.string().required(),
+export const updateUserNickname = {
+  body: Joi.object()
+    .keys({
+      nickname: Joi.string().required(),
+    })
+    .min(1),
 };
 
-export const deleteUser = {
-  params: Joi.object().keys({
-    userId: Joi.string().custom(objectId),
+export const verifyPhonenumber = {
+  body: Joi.object()
+    .keys({
+      phonenumber: Joi.string().required(),
+    })
+    .min(1),
+};
+
+export const verifyUserEmail = {
+  body: Joi.object()
+    .keys({
+      email: Joi.string().email().required(),
+    })
+    .min(1),
+};
+
+export const verifyWithdrawPassword = {
+  body: Joi.object().keys({
+    password: Joi.string().required(),
+    phonenumber: Joi.string().required(),
+    email: Joi.string().email().required(),
+    withdrawPassword: Joi.string().min(8).required(),
+  }),
+};
+
+export const changeUserPassword = {
+  body: Joi.object().keys({
+    password: Joi.string().required(),
+    newPassword: Joi.string().required().custom(password),
+    confirmNewPassword: Joi.string()
+      .valid(Joi.ref("newPassword"))
+      .required()
+      .messages({
+        "any.only": "Confirm New Password must match with New Password",
+      }),
   }),
 };

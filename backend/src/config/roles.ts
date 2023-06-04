@@ -1,5 +1,5 @@
 const allRoles = {
-  user: ["updateAvatar", "updateNickname"],
+  user: ["selfUpdate"],
   admin: ["getUser", "manageUsers"],
 };
 
