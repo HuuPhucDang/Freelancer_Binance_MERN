@@ -12,13 +12,13 @@ import {
   NewRegisteredUser,
   UpdateUserAvatarBody,
   UpdateUserNicknameBody,
-  VerifyUserPhonenumberBody,
-  VerifyUserEmailBody,
-  VerifyUserWithdrawPasswordBody,
+  ActiveUserPhonenumberBody,
+  ActiveUserEmailBody,
+  ActiveWithdrawPasswordBody,
   ChangeUserPasswordPasswordBody,
+  ChangeUserEmailBody,
+  ChangeWithdrawPasswordBody,
 } from "../../interfaces/user.interfaces";
-import { ISecurityDoc } from "../../interfaces/security.interface";
-// import { IVerificationDoc } from "../../interfaces/verification.interface";
 
 const makeDefaultNickname = (length: number) => {
   let result = "";
@@ -35,31 +35,27 @@ const makeDefaultNickname = (length: number) => {
 
 /**
  * Create a user
- * @param {NewCreatedUser} userBody
- * @returns {Promise<IUserDoc>}
  */
 export const createUser = async (
   userBody: NewCreatedUser
 ): Promise<IUserDoc> => {
   if (await User.isUsernameTaken(userBody.username)) {
-    throw new ApiError(httpStatus.BAD_REQUEST, "Username already taken");
+    throw new ApiError(httpStatus.BAD_REQUEST, "Username already taken!");
   }
   return User.create(userBody);
 };
 
 /**
  * Register a user
- * @param {NewRegisteredUser} userBody
- * @returns {Promise<IUserDoc>}
  */
 export const registerUser = async (
   userBody: NewRegisteredUser
 ): Promise<IUserDoc> => {
   if (await User.isUsernameTaken(userBody.username))
-    throw new ApiError(httpStatus.BAD_REQUEST, "Username already taken");
+    throw new ApiError(httpStatus.BAD_REQUEST, "Username already taken!");
   const findInviter = await User.findOne({ onwCode: userBody.inviteCode });
   if (!findInviter)
-    throw new ApiError(httpStatus.BAD_REQUEST, "Invite code not valid");
+    throw new ApiError(httpStatus.BAD_REQUEST, "Invite code not valid!");
   return User.create({
     ...userBody,
     nickname: `Anonymous-User-${makeDefaultNickname(6)}`,
@@ -68,9 +64,6 @@ export const registerUser = async (
 
 /**
  * Query for users
- * @param {Object} filter - Mongo filter
- * @param {Object} options - Query options
- * @returns {Promise<QueryResult>}
  */
 export const queryUsers = async (
   filter: Record<string, any>,
@@ -82,8 +75,6 @@ export const queryUsers = async (
 
 /**
  * Get user by id
- * @param {mongoose.Types.ObjectId} id
- * @returns {Promise<IUserDoc | null>}
  */
 export const getUserById = async (
   id: mongoose.Types.ObjectId
@@ -100,21 +91,18 @@ export const getUserByUsername = async (
 
 /**
  * Update user by id
- * @param {mongoose.Types.ObjectId} userId
- * @param {UpdateUserBody} updateBody
- * @returns {Promise<IUserDoc | null>}
  */
 export const updateUserById = async (
   userId: mongoose.Types.ObjectId,
   updateBody: UpdateUserBody
 ): Promise<IUserDoc | null> => {
   const user = await getUserById(userId);
-  if (!user) throw new ApiError(httpStatus.NOT_FOUND, "User not found");
+  if (!user) throw new ApiError(httpStatus.NOT_FOUND, "User not found!");
   if (
     updateBody.username &&
     (await User.isUsernameTaken(updateBody.username, userId))
   )
-    throw new ApiError(httpStatus.BAD_REQUEST, "Username already taken");
+    throw new ApiError(httpStatus.BAD_REQUEST, "Username already taken!");
 
   Object.assign(user, updateBody);
   await user.save();
@@ -123,16 +111,13 @@ export const updateUserById = async (
 
 /**
  * Update user Avatar
- * @param {mongoose.Types.ObjectId} userId
- * @param {UpdateUserAvatarBody} updateBody
- * @returns {Promise<IUserDoc | null>}
  */
 export const updateUserAvatar = async (
   userId: mongoose.Types.ObjectId,
   updateBody: UpdateUserAvatarBody
 ): Promise<IUserDoc | null> => {
   const user = await getUserById(userId);
-  if (!user) throw new ApiError(httpStatus.NOT_FOUND, "User not found");
+  if (!user) throw new ApiError(httpStatus.NOT_FOUND, "User not found!");
   Object.assign(user, updateBody);
   await user.save();
   return user;
@@ -140,16 +125,13 @@ export const updateUserAvatar = async (
 
 /**
  * Update user Nickname
- * @param {mongoose.Types.ObjectId} userId
- * @param {UpdateUserNicknameBody} updateBody
- * @returns {Promise<IUserDoc | null>}
  */
 export const updateUserNickname = async (
   userId: mongoose.Types.ObjectId,
   updateBody: UpdateUserNicknameBody
 ): Promise<IUserDoc | null> => {
   const user = await getUserById(userId);
-  if (!user) throw new ApiError(httpStatus.NOT_FOUND, "User not found");
+  if (!user) throw new ApiError(httpStatus.NOT_FOUND, "User not found!");
   const checkDuplicateNickname = await User.findOne({
     nickname: updateBody.nickname,
   });
@@ -161,24 +143,15 @@ export const updateUserNickname = async (
   return user;
 };
 
-const checkVerifiedSecurity = (security: ISecurityDoc) => {
-  return Boolean(
-    security?.phonenumber && security?.email && security?.withdrawPassword
-  );
-};
-
 /**
  * Verify user phonenumber
- * @param {mongoose.Types.ObjectId} userId
- * @param {VerifyUserPhonenumberBody} updateBody
- * @returns {Promise<IUserDoc | null>}
  */
 export const verifyPhonenumber = async (
   userId: mongoose.Types.ObjectId,
-  updateBody: VerifyUserPhonenumberBody
+  updateBody: ActiveUserPhonenumberBody
 ): Promise<IUserDoc | null> => {
   const user = await getUserById(userId);
-  if (!user) throw new ApiError(httpStatus.NOT_FOUND, "User not found");
+  if (!user) throw new ApiError(httpStatus.NOT_FOUND, "User not found!");
 
   const newSecurity = Object.assign(
     user?.security || { phonenumber: "", email: "" },
@@ -186,10 +159,7 @@ export const verifyPhonenumber = async (
   );
 
   Object.assign(user, {
-    security: {
-      ...newSecurity,
-      isVerified: checkVerifiedSecurity(newSecurity),
-    },
+    security: newSecurity,
   });
   await user.save();
   user.security.phonenumber = user.security.phonenumber.replace(
@@ -204,28 +174,25 @@ export const verifyPhonenumber = async (
 };
 
 /**
- * Verify user email
- * @param {mongoose.Types.ObjectId} userId
- * @param {VerifyUserEmailBody} updateBody
- * @returns {Promise<IUserDoc | null>}
+ * Active user email
  */
-export const verifyUserEmail = async (
+export const activeUserEmail = async (
   userId: mongoose.Types.ObjectId,
-  updateBody: VerifyUserEmailBody
+  updateBody: ActiveUserEmailBody
 ): Promise<IUserDoc | null> => {
   const user = await getUserById(userId);
-  if (!user) throw new ApiError(httpStatus.NOT_FOUND, "User not found");
+  if (!user) throw new ApiError(httpStatus.NOT_FOUND, "User not found!");
+
+  if (user?.security.email)
+    throw new ApiError(httpStatus.BAD_REQUEST, "You already active email!");
 
   const newSecurity = Object.assign(
     user?.security || { phonenumber: "", email: "" },
-    updateBody
+    { email: updateBody.email }
   );
 
   Object.assign(user, {
-    security: {
-      ...newSecurity,
-      isVerified: checkVerifiedSecurity(newSecurity),
-    },
+    security: newSecurity,
   });
   await user.save();
   user.security.phonenumber = user.security.phonenumber.replace(
@@ -240,23 +207,60 @@ export const verifyUserEmail = async (
 };
 
 /**
- * Verify user email
- * @param {mongoose.Types.ObjectId} userId
- * @param {VerifyUserWithdrawPasswordBody} updateBody
- * @returns {Promise<IUserDoc | null>}
+ * Change user email
  */
-export const verifyUserWithdrawPassword = async (
+export const changeUserEmail = async (
   userId: mongoose.Types.ObjectId,
-  updateBody: VerifyUserWithdrawPasswordBody
+  updateBody: ChangeUserEmailBody
 ): Promise<IUserDoc | null> => {
   const user = await getUserById(userId);
-  if (!user) throw new ApiError(httpStatus.NOT_FOUND, "User not found");
+  if (!user) throw new ApiError(httpStatus.NOT_FOUND, "User not found!");
   if (!(await user.isPasswordMatch(updateBody.password)))
-    throw new ApiError(httpStatus.BAD_REQUEST, "Incorrect password");
-  if (user.security.email !== updateBody.email)
-    throw new ApiError(httpStatus.BAD_REQUEST, "Incorrect email");
-  if (user.security.phonenumber !== updateBody.phonenumber)
-    throw new ApiError(httpStatus.BAD_REQUEST, "Incorrect Phonenumber");
+    throw new ApiError(httpStatus.BAD_REQUEST, "Incorrect password!");
+  if (user?.security?.email !== updateBody.email)
+    throw new ApiError(httpStatus.BAD_REQUEST, "Incorrect email!");
+  if (user?.security?.email === updateBody.newEmail)
+    throw new ApiError(
+      httpStatus.BAD_REQUEST,
+      "The new email can not matches the old email!"
+    );
+
+  const newSecurity = Object.assign(
+    user?.security || { phonenumber: "", email: "" },
+    { email: updateBody.newEmail }
+  );
+
+  Object.assign(user, {
+    security: newSecurity,
+  });
+  await user.save();
+  user.security.phonenumber = user.security.phonenumber.replace(
+    /\d{4}$/,
+    "****"
+  );
+  user.security.email = user.security.email.replace(
+    /(\w{3})[\w.-]+@([\w.]+\w)/,
+    "$1***@$2"
+  );
+  return user;
+};
+
+/**
+ * Active Withdraw Password
+ */
+export const activeWithdrawPassword = async (
+  userId: mongoose.Types.ObjectId,
+  updateBody: ActiveWithdrawPasswordBody
+): Promise<IUserDoc | null> => {
+  const user = await getUserById(userId);
+  if (!user) throw new ApiError(httpStatus.NOT_FOUND, "User not found!");
+  if (!(await user.isPasswordMatch(updateBody.password)))
+    throw new ApiError(httpStatus.BAD_REQUEST, "Incorrect password!");
+  if (user?.security.withdrawPassword)
+    throw new ApiError(
+      httpStatus.BAD_REQUEST,
+      "You already active withdraw password!"
+    );
 
   const hashPassword = await bcrypt.hash(updateBody.withdrawPassword, 8);
 
@@ -267,10 +271,60 @@ export const verifyUserWithdrawPassword = async (
     }
   );
   Object.assign(user, {
-    security: {
-      ...newSecurity,
-      isVerified: checkVerifiedSecurity(newSecurity),
-    },
+    security: newSecurity,
+  });
+  await user.save();
+  user.security.phonenumber = user.security.phonenumber.replace(
+    /\d{4}$/,
+    "****"
+  );
+  user.security.email = user.security.email.replace(
+    /(\w{3})[\w.-]+@([\w.]+\w)/,
+    "$1***@$2"
+  );
+  return user;
+};
+
+/**
+ * CHange Withdraw Password
+ */
+export const changeWithdrawPassword = async (
+  userId: mongoose.Types.ObjectId,
+  updateBody: ChangeWithdrawPasswordBody
+): Promise<IUserDoc | null> => {
+  const user = await getUserById(userId);
+  if (!user) throw new ApiError(httpStatus.NOT_FOUND, "User not found!");
+  if (!(await user.isPasswordMatch(updateBody.password)))
+    throw new ApiError(httpStatus.BAD_REQUEST, "Incorrect password!");
+  if (user?.security.email !== updateBody.email)
+    throw new ApiError(
+      httpStatus.BAD_REQUEST,
+      "Incorrect email or email not active!"
+    );
+  if (user?.security.phonenumber !== updateBody.phonenumber)
+    throw new ApiError(
+      httpStatus.BAD_REQUEST,
+      "Incorrect phonenumber or phonenumber not active!"
+    );
+  if (
+    await user?.security.isWithdrawPasswordMatch(updateBody.newWithdrawPassword)
+  )
+    throw new ApiError(
+      httpStatus.BAD_REQUEST,
+      "The new password can not matches the old password!"
+    );
+
+  const hashPassword = await bcrypt.hash(updateBody.newWithdrawPassword, 8);
+
+  const newSecurity = Object.assign(
+    user?.security || { phonenumber: "", email: "" },
+    {
+      withdrawPassword: hashPassword,
+    }
+  );
+
+  Object.assign(user, {
+    security: newSecurity,
   });
   await user.save();
   user.security.phonenumber = user.security.phonenumber.replace(
@@ -286,18 +340,15 @@ export const verifyUserWithdrawPassword = async (
 
 /**
  * Change user password
- * @param {mongoose.Types.ObjectId} userId
- * @param {ChangeUserPasswordPasswordBody} updateBody
- * @returns {Promise<IUserDoc | null>}
  */
 export const changeUserPassword = async (
   userId: mongoose.Types.ObjectId,
   updateBody: ChangeUserPasswordPasswordBody
 ): Promise<IUserDoc | null> => {
   const user = await getUserById(userId);
-  if (!user) throw new ApiError(httpStatus.NOT_FOUND, "User not found");
+  if (!user) throw new ApiError(httpStatus.NOT_FOUND, "User not found!");
   if (!(await user.isPasswordMatch(updateBody.password)))
-    throw new ApiError(httpStatus.BAD_REQUEST, "Incorrect password");
+    throw new ApiError(httpStatus.BAD_REQUEST, "Incorrect password!");
 
   Object.assign(user, {
     password: updateBody.newPassword,

@@ -48,19 +48,30 @@ export type UpdateUserNicknameBody = {
   nickname: string;
 };
 
-export type VerifyUserPhonenumberBody = {
+export type ActiveUserPhonenumberBody = {
   phonenumber: string;
 };
 
-export type VerifyUserEmailBody = {
+export type ActiveUserEmailBody = {
   email: string;
 };
 
-export type VerifyUserWithdrawPasswordBody = {
+export type ChangeUserEmailBody = {
+  password: string;
+  email: string;
+  newEmail: string;
+};
+
+export type ActiveWithdrawPasswordBody = {
+  password: string;
+  withdrawPassword: string;
+};
+
+export type ChangeWithdrawPasswordBody = {
   password: string;
   phonenumber: string;
   email: string;
-  withdrawPassword: string;
+  newWithdrawPassword: string;
 };
 
 export type ChangeUserPasswordPasswordBody = {

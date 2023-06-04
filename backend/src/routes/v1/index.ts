@@ -1,6 +1,7 @@
-import express, { Router } from 'express';
-import authRoute from './auth.route';
-import userRoute from './user.route';
+import express, { Router } from "express";
+import authRoute from "./auth.route";
+import userRoute from "./user.route";
+import securityRoute from "./security.route";
 
 const router = express.Router();
 
@@ -11,18 +12,21 @@ interface IRoute {
 
 const defaultIRoute: IRoute[] = [
   {
-    path: '/auth',
+    path: "/auth",
     route: authRoute,
   },
   {
-    path: '/users',
+    path: "/users",
     route: userRoute,
+  },
+  {
+    path: "/security",
+    route: securityRoute,
   },
 ];
 
 defaultIRoute.forEach((route) => {
   router.use(route.path, route.route);
 });
-
 
 export default router;

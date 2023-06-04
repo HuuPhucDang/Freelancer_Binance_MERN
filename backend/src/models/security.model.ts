@@ -39,9 +39,17 @@ securitySchema.method(
   "isWithdrawPasswordMatch",
   async function (password: string): Promise<boolean> {
     const security = this;
-    return bcrypt.compare(password, security.password);
+    return bcrypt.compare(password, security.withdrawPassword);
   }
 );
+
+securitySchema.pre("save", async function (next) {
+  const security = this;
+  security.isVerified = Boolean(
+    security.withdrawPassword && security.phonenumber && security.email
+  );
+  next();
+});
 
 const Security = mongoose.model<ISecurityDoc>("Security", securitySchema);
 

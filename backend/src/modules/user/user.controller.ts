@@ -75,9 +75,9 @@ export const verifyPhonenumber = catchAsync(
   }
 );
 
-export const verifyUserEmail = catchAsync(
+export const activeUserEmail = catchAsync(
   async (req: Request, res: Response) => {
-    const user = await userService.verifyUserEmail(
+    const user = await userService.activeUserEmail(
       new mongoose.Types.ObjectId(req.user.id),
       req.body
     );
@@ -85,14 +85,36 @@ export const verifyUserEmail = catchAsync(
   }
 );
 
-export const verifyUserWithdrawPassword = catchAsync(
+export const changeUserEmail = catchAsync(
   async (req: Request, res: Response) => {
-    const user = await userService.verifyUserWithdrawPassword(
+    const user = await userService.changeUserEmail(
+      new mongoose.Types.ObjectId(req.user.id),
+      req.body
+    );
+    res.send(responsePayload(true, "Change email successfully!", user));
+  }
+);
+
+export const activeWithdrawPassword = catchAsync(
+  async (req: Request, res: Response) => {
+    const user = await userService.activeWithdrawPassword(
       new mongoose.Types.ObjectId(req.user.id),
       req.body
     );
     res.send(
       responsePayload(true, "Active Withdraw password successfully!", user)
+    );
+  }
+);
+
+export const changeWithdrawPassword = catchAsync(
+  async (req: Request, res: Response) => {
+    const user = await userService.changeWithdrawPassword(
+      new mongoose.Types.ObjectId(req.user.id),
+      req.body
+    );
+    res.send(
+      responsePayload(true, "Change Withdraw password successfully!", user)
     );
   }
 );

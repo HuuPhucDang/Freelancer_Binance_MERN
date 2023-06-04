@@ -16,7 +16,6 @@ const ADMIN_SEED = {
  */
 export const createSeedAdmin = async (): Promise<IUserDoc | null> => {
   const isExistAdmin = await User.isUsernameTaken(ADMIN_SEED.username);
-  console.log(isExistAdmin);
   if (isExistAdmin) return null;
   const savedAdmin = await User.create(ADMIN_SEED);
   return savedAdmin;

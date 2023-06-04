@@ -68,20 +68,38 @@ export const verifyPhonenumber = {
     .min(1),
 };
 
-export const verifyUserEmail = {
+export const activeUserEmail = {
   body: Joi.object()
     .keys({
+      password: Joi.string().required(),
       email: Joi.string().email().required(),
     })
     .min(1),
 };
 
-export const verifyWithdrawPassword = {
+export const changeUserEmail = {
+  body: Joi.object()
+    .keys({
+      password: Joi.string().required(),
+      email: Joi.string().email().required(),
+      newEmail: Joi.string().email().required(),
+    })
+    .min(1),
+};
+
+export const activeWithdrawPassword = {
+  body: Joi.object().keys({
+    password: Joi.string().required(),
+    withdrawPassword: Joi.string().min(8).required(),
+  }),
+};
+
+export const changeWithdrawPassword = {
   body: Joi.object().keys({
     password: Joi.string().required(),
     phonenumber: Joi.string().required(),
     email: Joi.string().email().required(),
-    withdrawPassword: Joi.string().min(8).required(),
+    newWithdrawPassword: Joi.string().min(8).required(),
   }),
 };
 

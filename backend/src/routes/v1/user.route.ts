@@ -19,34 +19,6 @@ router.put(
   userController.updateUserNickname
 );
 
-router.put(
-  "/phonenumber",
-  auth("selfUpdate"),
-  validate(userValidation.verifyPhonenumber),
-  userController.verifyPhonenumber
-);
-
-router.put(
-  "/email",
-  auth("selfUpdate"),
-  validate(userValidation.verifyUserEmail),
-  userController.verifyUserEmail
-);
-
-router.put(
-  "/withdrawPassword",
-  auth("selfUpdate"),
-  validate(userValidation.verifyWithdrawPassword),
-  userController.verifyUserWithdrawPassword
-);
-
-router.put(
-  "/changePassword",
-  auth("selfUpdate"),
-  validate(userValidation.changeUserPassword),
-  userController.changeUserPassword
-);
-
 router
   .route("/")
   .post(
