@@ -55,9 +55,11 @@ export const createUser = async (
 export const registerUser = async (
   userBody: NewRegisteredUser
 ): Promise<IUserDoc> => {
-  if (await User.isUsernameTaken(userBody.username)) {
+  if (await User.isUsernameTaken(userBody.username))
     throw new ApiError(httpStatus.BAD_REQUEST, "Username already taken");
-  }
+  const findInviter = await User.findOne({ onwCode: userBody.inviteCode });
+  if (!findInviter)
+    throw new ApiError(httpStatus.BAD_REQUEST, "Invite code not valid");
   return User.create({
     ...userBody,
     nickname: `Anonymous-User-${makeDefaultNickname(6)}`,
