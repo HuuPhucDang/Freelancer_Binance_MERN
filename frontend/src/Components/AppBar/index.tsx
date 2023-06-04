@@ -74,139 +74,6 @@ const AppBarComponent: React.FC = () => {
       );
     });
 
-  const _renderMenuNav = useMemo(
-    () => (
-      <Grid item xs={9.75} sx={CommonStyles.displayInDesktop}>
-        <Stack
-          direction="row"
-          display="flex"
-          alignItems="center"
-          justifyContent="space-between"
-        >
-          <Link
-            href={ROUTERS.TRANSACTION}
-            sx={{
-              display: 'flex',
-              alignItems: 'center',
-            }}
-          >
-            <Box
-              component="img"
-              src={Assets.transactionDarkIcon}
-              sx={{ width: '33px', height: '26px' }}
-            />
-          </Link>
-          <Stack
-            flexDirection="row"
-            alignItems="center"
-            justifyContent="space-evenly"
-            sx={{
-              flex: 1,
-              backgroundColor: 'background.newsHeader',
-              height: '25px',
-              margin: '0 6px',
-              maxWidth: '370px',
-            }}
-          >
-            <Slider
-              items={volatilityItems}
-              itemSx={{ fontSize: '12px', color: '#000', textAlign: 'center' }}
-              slidersPerView={3}
-            />
-          </Stack>
-          {isLogged ? (
-            <>
-              <Button
-                variant="text"
-                size="small"
-                href={ROUTERS.RECHARGE}
-                sx={{
-                  fontSize: '12px',
-                  paddingX: '8px',
-                  textTransform: 'unset',
-                  backgroundColor: 'background.burntSienna',
-                  color: 'text.secondary',
-                  marginRight: '10px',
-                  height: '26px',
-                  minWidth: '59px',
-                }}
-              >
-                Nạp
-              </Button>
-              <Button
-                variant="text"
-                size="small"
-                href={ROUTERS.WITHDRAW_MONEY}
-                sx={{
-                  fontSize: '12px',
-                  paddingX: '8px',
-                  textTransform: 'unset',
-                  backgroundColor: 'background.lightSilver',
-                  color: 'text.secondary',
-                  marginRight: '10px',
-                  height: '26px',
-                  minWidth: '59px',
-                }}
-              >
-                Rút
-              </Button>
-              <IconButton
-                onClick={() => {
-                  Utils.redirect(ROUTERS.OVERVIEW);
-                }}
-                size="small"
-                sx={{ padding: 0, marginRight: '10px' }}
-              >
-                <AccountCircleIcon sx={{ fontSize: '28px' }} />
-              </IconButton>
-            </>
-          ) : (
-            <>
-              <Button
-                variant="text"
-                size="small"
-                href={ROUTERS.SIGN_IN}
-                sx={{
-                  fontSize: '12px',
-                  marginRight: '10px',
-                  paddingX: '8px',
-                  textTransform: 'unset',
-                  backgroundColor: 'background.newsHeader',
-                  color: 'text.secondary',
-                  height: '26px',
-                }}
-              >
-                Đăng nhập
-              </Button>
-              <Button
-                startIcon={<PersonIcon sx={{ fontSize: '14px !important' }} />}
-                variant="text"
-                size="small"
-                href={ROUTERS.SIGN_UP}
-                sx={{
-                  fontSize: '12px',
-                  paddingX: '8px',
-                  textTransform: 'unset',
-                  backgroundColor: 'background.burntSienna',
-                  color: 'text.secondary',
-                  height: '26px',
-                  marginRight: '10px',
-                }}
-              >
-                Đăng ký
-              </Button>
-            </>
-          )}
-          <LanguageSelect
-            selected=""
-            onSelect={(newValue: string) => console.log(newValue)}
-          />
-        </Stack>
-      </Grid>
-    ),
-    [pathname, mobileOpen]
-  );
-
   const _renderMainBar = () => {
     return (
       <Grid
@@ -214,8 +81,12 @@ const AppBarComponent: React.FC = () => {
         justifyContent="space-between"
         alignItems="center"
         columnSpacing={0}
+        spacing={{
+          xs: 1,
+          md: 0,
+        }}
       >
-        <Grid item xs={2} md={1.5}>
+        <Grid item xs={3} md={1} order={{ xs: 1, md: 1 }}>
           <Link
             href={ROUTERS.HOME}
             sx={{
@@ -232,53 +103,185 @@ const AppBarComponent: React.FC = () => {
             Logo
           </Link>
         </Grid>
-        {_renderMenuNav}
-        <Grid
-          item
-          xs={6}
-          md={0.75}
-          display="flex"
-          alignItems="center"
-          justifyContent="flex-end"
-        >
-          <IconButton
-            focusRipple
-            onClick={() => {
-              if (isDarkMode) {
-                Utils.saveThemeMode('light');
-                window.location.reload();
-              }
+        <Grid item xs={12} md={6} order={{ xs: 3, md: 2 }}>
+          <Stack
+            direction="row"
+            display="flex"
+            alignItems="center"
+            justifyContent={{
+              xs: "center",
+              md: "flex-end"
             }}
-            disabled={!isDarkMode}
-            size="small"
-            sx={{
-              padding: 0,
-              marginRight: '10px',
-            }}
+            width="100%"
           >
-            {isDarkMode ? (
-              <Box component="img" src={Assets.lightIconDarkTheme} />
+            <Link
+              href={ROUTERS.TRANSACTION}
+              sx={{
+                display: 'flex',
+                alignItems: 'center',
+              }}
+            >
+              <Box
+                component="img"
+                src={Assets.transactionDarkIcon}
+                sx={{ width: '33px', height: '26px' }}
+              />
+            </Link>
+            <Stack
+              flexDirection="row"
+              alignItems="center"
+              justifyContent="space-evenly"
+              sx={{
+                flex: 1,
+                backgroundColor: 'background.newsHeader',
+                height: '25px',
+                margin: '0 6px',
+                maxWidth: '370px',
+              }}
+            >
+              <Slider
+                items={volatilityItems}
+                itemSx={{
+                  fontSize: '12px',
+                  color: '#000',
+                  textAlign: 'center',
+                }}
+                slidersPerView={3}
+              />
+            </Stack>
+          </Stack>
+        </Grid>
+        <Grid item xs={9} md={5} order={{ xs: 2, md: 3 }}>
+          <Stack direction="row" alignItems="center" justifyContent="flex-end">
+            {isLogged ? (
+              <>
+                <Button
+                  variant="text"
+                  size="small"
+                  href={ROUTERS.RECHARGE}
+                  sx={{
+                    fontSize: '12px',
+                    paddingX: '8px',
+                    textTransform: 'unset',
+                    backgroundColor: 'background.burntSienna',
+                    color: 'text.secondary',
+                    marginRight: '10px',
+                    height: '26px',
+                    minWidth: '59px',
+                  }}
+                >
+                  Nạp
+                </Button>
+                <Button
+                  variant="text"
+                  size="small"
+                  href={ROUTERS.WITHDRAW_MONEY}
+                  sx={{
+                    fontSize: '12px',
+                    paddingX: '8px',
+                    textTransform: 'unset',
+                    backgroundColor: 'background.lightSilver',
+                    color: 'text.secondary',
+                    marginRight: '10px',
+                    height: '26px',
+                    minWidth: '59px',
+                  }}
+                >
+                  Rút
+                </Button>
+                <IconButton
+                  onClick={() => {
+                    Utils.redirect(ROUTERS.OVERVIEW);
+                  }}
+                  size="small"
+                  sx={{ padding: 0, marginRight: '10px' }}
+                >
+                  <AccountCircleIcon sx={{ fontSize: '28px' }} />
+                </IconButton>
+              </>
             ) : (
-              <Box component="img" src={Assets.lightIconLightTheme} />
+              <>
+                <Button
+                  variant="text"
+                  size="small"
+                  href={ROUTERS.SIGN_IN}
+                  sx={{
+                    fontSize: '12px',
+                    marginRight: '10px',
+                    paddingX: '8px',
+                    textTransform: 'unset',
+                    backgroundColor: 'background.newsHeader',
+                    color: 'text.secondary',
+                    height: '26px',
+                  }}
+                >
+                  Đăng nhập
+                </Button>
+                <Button
+                  startIcon={
+                    <PersonIcon sx={{ fontSize: '14px !important' }} />
+                  }
+                  variant="text"
+                  size="small"
+                  href={ROUTERS.SIGN_UP}
+                  sx={{
+                    fontSize: '12px',
+                    paddingX: '8px',
+                    textTransform: 'unset',
+                    backgroundColor: 'background.burntSienna',
+                    color: 'text.secondary',
+                    height: '26px',
+                    marginRight: '10px',
+                  }}
+                >
+                  Đăng ký
+                </Button>
+              </>
             )}
-          </IconButton>
-          <IconButton
-            onClick={() => {
-              if (!isDarkMode) {
-                Utils.saveThemeMode('dark');
-                window.location.reload();
-              }
-            }}
-            disabled={isDarkMode}
-            size="small"
-            sx={{ padding: 0 }}
-          >
-            {isDarkMode ? (
-              <Box component="img" src={Assets.darkIconDarkTheme} />
-            ) : (
-              <Box component="img" src={Assets.darkIconLightTheme} />
-            )}
-          </IconButton>
+            <LanguageSelect
+              selected=""
+              onSelect={(newValue: string) => console.log(newValue)}
+            />
+            <IconButton
+              focusRipple
+              onClick={() => {
+                if (isDarkMode) {
+                  Utils.saveThemeMode('light');
+                  window.location.reload();
+                }
+              }}
+              disabled={!isDarkMode}
+              size="small"
+              sx={{
+                padding: 0,
+                marginRight: '10px',
+                marginLeft: '10px',
+              }}
+            >
+              {isDarkMode ? (
+                <Box component="img" src={Assets.lightIconDarkTheme} />
+              ) : (
+                <Box component="img" src={Assets.lightIconLightTheme} />
+              )}
+            </IconButton>
+            <IconButton
+              onClick={() => {
+                if (!isDarkMode) {
+                  Utils.saveThemeMode('dark');
+                  window.location.reload();
+                }
+              }}
+              disabled={isDarkMode}
+              size="small"
+              sx={{ padding: 0 }}
+            >
+              {isDarkMode ? (
+                <Box component="img" src={Assets.darkIconDarkTheme} />
+              ) : (
+                <Box component="img" src={Assets.darkIconLightTheme} />
+              )}
+            </IconButton>
+          </Stack>
         </Grid>
       </Grid>
     );
@@ -388,14 +391,20 @@ const AppBarComponent: React.FC = () => {
 
   return (
     <AppBar position="sticky" sx={appBarStyles}>
-      <Container maxWidth="md">
+      <Box>
         <Toolbar
-          sx={{ minHeight: '40px !important', padding: '0px !important' }}
+          sx={{
+            padding: {
+              xs: '10px !important',
+              md: '0 10px !important',
+            },
+            minHeight: '40px !important',
+          }}
         >
           {_renderMainBar()}
         </Toolbar>
         {_renderDrawer()}
-      </Container>
+      </Box>
       {_renderSubHeader()}
     </AppBar>
   );
