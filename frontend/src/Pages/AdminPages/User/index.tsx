@@ -21,11 +21,7 @@ import {
 import { AdminLayout } from '@/Components/DefaultLayout';
 import React from 'react';
 import RemoveRedEyeOutlinedIcon from '@mui/icons-material/RemoveRedEyeOutlined';
-import {
-  RequestConnectBank,
-  RequestVerify,
-  UserDetails,
-} from '@/Components/Popup';
+import { UserDetails } from '@/Components/Popup';
 function createData(
   name: string,
   email: string,

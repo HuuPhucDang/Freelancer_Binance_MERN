@@ -1,29 +1,30 @@
 import mongoose from "mongoose";
-import validator from "validator";
 import bcrypt from "bcryptjs";
 import toJSON from "../helper/toJSON/toJSON";
 import paginate from "../helper/paginate/paginate";
 import { roles } from "../config/roles";
-import { IUserDoc, IUserModel } from "../interfaces/user.interfaces";
+import {
+  IUserDoc,
+  IUserModel,
+  EUserStatus,
+} from "../interfaces/user.interfaces";
+import { securitySchema } from "./security.model";
+import { verificationSchema } from "./verification.model";
+import { bankSchema } from "./bank.model";
 
 const userSchema = new mongoose.Schema<IUserDoc, IUserModel>(
   {
-    name: {
-      type: String,
-      required: true,
-      trim: true,
-    },
-    email: {
+    username: {
       type: String,
       required: true,
       unique: true,
       trim: true,
       lowercase: true,
-      validate(value: string) {
-        if (!validator.isEmail(value)) {
-          throw new Error("Invalid email");
-        }
-      },
+    },
+    nickname: {
+      type: String,
+      required: true,
+      unique: true,
     },
     password: {
       type: String,
@@ -39,15 +40,32 @@ const userSchema = new mongoose.Schema<IUserDoc, IUserModel>(
       },
       private: true, // used by the toJSON plugin
     },
+    inviteCode: {
+      type: String,
+      required: false,
+    },
+    onwCode: {
+      type: String,
+      required: false,
+    },
+    avatar: {
+      type: String,
+      required: false,
+      default: "https://api.dicebear.com/6.x/micah/svg?seed=Lily",
+    },
     role: {
       type: String,
       enum: roles,
       default: "user",
     },
-    isEmailVerified: {
-      type: Boolean,
-      default: false,
+    status: {
+      type: String,
+      enum: EUserStatus,
+      default: "active",
     },
+    security: securitySchema,
+    bank: bankSchema,
+    verification: verificationSchema,
   },
   {
     timestamps: true,
@@ -65,12 +83,12 @@ userSchema.plugin(paginate);
  * @returns {Promise<boolean>}
  */
 userSchema.static(
-  "isEmailTaken",
+  "isUsernameTaken",
   async function (
-    email: string,
+    username: string,
     excludeUserId: mongoose.ObjectId
   ): Promise<boolean> {
-    const user = await this.findOne({ email, _id: { $ne: excludeUserId } });
+    const user = await this.findOne({ username, _id: { $ne: excludeUserId } });
     return !!user;
   }
 );
