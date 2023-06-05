@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-  Container,
   Box,
   Typography,
   Grid,
@@ -60,9 +59,8 @@ const Overview: React.FC = () => {
 
   const renderMain = () => {
     return (
-      <Container
+      <Box
         component="main"
-        maxWidth="md"
         sx={{
           minHeight: 'calc(100vh - 94px)',
           padding: '1em 0',
@@ -384,7 +382,7 @@ const Overview: React.FC = () => {
             </Grid>
           </Grid>
         </Grid>
-      </Container>
+      </Box>
     );
   };
   return <UserLayout content={renderMain()} screenTitle="Tổng quan" />;

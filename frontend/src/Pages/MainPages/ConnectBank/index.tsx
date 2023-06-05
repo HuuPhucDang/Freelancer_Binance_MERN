@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-  Container,
   Box,
   Typography,
   Grid,
@@ -24,9 +23,8 @@ const ConnectBank: React.FC = () => {
   // Constructors
   const renderMain = () => {
     return (
-      <Container
+      <Box
         component="main"
-        maxWidth="md"
         sx={{
           minHeight: 'calc(100vh - 94px)',
           padding: '1em 0',
@@ -207,7 +205,7 @@ const ConnectBank: React.FC = () => {
             </Stack>
           </Grid>
         </Grid>
-      </Container>
+      </Box>
     );
   };
   return (
