@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-  Container,
   Typography,
   Grid,
   Button,
@@ -8,6 +7,7 @@ import {
   Link,
   Avatar,
   Divider,
+  Box,
 } from '@mui/material';
 // Import local
 import { UserLayout } from '@/Components/DefaultLayout';
@@ -23,9 +23,8 @@ const Verify: React.FC = () => {
 
   const renderMain = () => {
     return (
-      <Container
+      <Box
         component="main"
-        maxWidth="md"
         sx={{
           minHeight: 'calc(100vh - 94px)',
           padding: '1em 0',
@@ -154,7 +153,7 @@ const Verify: React.FC = () => {
             </Stack>
           </Grid>
         </Grid>
-      </Container>
+      </Box>
     );
   };
   return <UserLayout content={renderMain()} screenTitle="Xác minh" />;

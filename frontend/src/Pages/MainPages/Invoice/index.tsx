@@ -11,7 +11,7 @@ import {
   TableHead,
   Typography,
   Divider,
-  Container,
+  Box,
 } from '@mui/material';
 // Import local
 import { UserLayout } from '@/Components/DefaultLayout';
@@ -42,9 +42,8 @@ const Invoice: React.FC = () => {
   // Constructors
   const renderMain = () => {
     return (
-      <Container
+      <Box
         component="main"
-        maxWidth="md"
         sx={{
           minHeight: 'calc(100vh - 94px)',
           padding: '1em 0',
@@ -264,7 +263,7 @@ const Invoice: React.FC = () => {
             </Stack>
           </Grid>
         </Grid>
-      </Container>
+      </Box>
     );
   };
   return <UserLayout content={renderMain()} screenTitle="Lịch sử nạp rút" />;

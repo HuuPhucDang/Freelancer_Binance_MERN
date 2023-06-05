@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-  Container,
   Grid,
   Button,
   Stack,
@@ -10,6 +9,7 @@ import {
   Typography,
   OutlinedInput,
   InputAdornment,
+  Box,
 } from '@mui/material';
 // Import local
 import { UserLayout } from '@/Components/DefaultLayout';
@@ -20,9 +20,8 @@ const WithdrawMoney: React.FC = () => {
 
   const renderMain = () => {
     return (
-      <Container
+      <Box
         component="main"
-        maxWidth="md"
         sx={{
           minHeight: 'calc(100vh - 94px)',
           padding: '1em 0',
@@ -110,7 +109,7 @@ const WithdrawMoney: React.FC = () => {
             </Stack>
           </Grid>
         </Grid>
-      </Container>
+      </Box>
     );
   };
   return <UserLayout content={renderMain()} screenTitle="Rút tiền" />;

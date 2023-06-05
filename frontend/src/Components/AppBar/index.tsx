@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import React from 'react';
 import _ from 'lodash';
 import {
   Toolbar,
@@ -11,17 +10,21 @@ import {
   Button,
   Typography,
   Stack,
+  List,
+  ListItem,
+  ToggleButtonGroup,
+  ToggleButton,
 } from '@mui/material';
-import CloseIcon from '@mui/icons-material/Close';
 // Import local
 import { appBarStyles, AppBar } from './AppBar.styles';
 import Assets from '@assets';
 import { Utils } from '@libs';
-import { ROUTERS, MENU_NAVIGATION } from '@/Constants';
-import { CommonStyles, LanguageSelect, Slider } from '../Common';
+import { ROUTERS } from '@/Constants';
+import { LanguageSelect, Slider } from '../Common';
 import PersonIcon from '@mui/icons-material/Person';
 import { useTypedSelector } from '../../Reducers/store';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import MenuIcon from '@mui/icons-material/Menu';
 
 const volatilityItems = [
   'EDUUSDT -1,18',
@@ -39,39 +42,24 @@ const AppBarComponent: React.FC = () => {
     _.get(state.AUTH, 'isLogged')
   );
   // Constructors
-  const pathname = useLocation().pathname;
-  const [mobileOpen, setMobileOpen] = useState<boolean>(false);
+  const [language, setLanguage] = React.useState<string>('vietnam');
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
   const isDarkMode = Utils.getThemeMode() === 'dark';
 
-  // Events
-  const handleDrawerToggle = () => {
-    setMobileOpen(!mobileOpen);
+  const onSignOut = () => {
+    console.log('sign out');
   };
 
-  // Renders
-  const _renderMenuItem = () =>
-    _.map(MENU_NAVIGATION, (item) => {
-      const isActive = item.value === pathname;
-      const checkStyle = isActive
-        ? CommonStyles.activeBorderEffect
-        : CommonStyles.hoverBorderEffect;
-      return (
-        <Box
-          key={item.label}
-          sx={{
-            ...checkStyle,
-            fontSize: {
-              xs: 24,
-              sm: 16,
-            },
-            color: 'black!important',
-          }}
-          onClick={() => Utils.redirect(item.value)}
-        >
-          {item.label}
-        </Box>
-      );
-    });
+  const handleChangeLanguage = (
+    _event: React.MouseEvent<HTMLElement>,
+    newAlignment: string
+  ) => {
+    setLanguage(newAlignment);
+  };
 
   const _renderMainBar = () => {
     return (
@@ -85,7 +73,7 @@ const AppBarComponent: React.FC = () => {
           md: 0,
         }}
       >
-        <Grid item xs={3} md={1} order={{ xs: 1, md: 1 }}>
+        <Grid item xs={3} md={1}>
           <Link
             href={ROUTERS.HOME}
             sx={{
@@ -102,14 +90,14 @@ const AppBarComponent: React.FC = () => {
             Logo
           </Link>
         </Grid>
-        <Grid item xs={12} md={6} order={{ xs: 3, md: 2 }}>
+        <Grid item xs={6} md={6}>
           <Stack
             direction="row"
             display="flex"
             alignItems="center"
             justifyContent={{
-              xs: "center",
-              md: "flex-end"
+              xs: 'center',
+              md: 'flex-end',
             }}
             width="100%"
           >
@@ -150,8 +138,13 @@ const AppBarComponent: React.FC = () => {
             </Stack>
           </Stack>
         </Grid>
-        <Grid item xs={9} md={5} order={{ xs: 2, md: 3 }}>
-          <Stack direction="row" alignItems="center" justifyContent="flex-end">
+        <Grid item xs={3} md={5}>
+          <Stack
+            direction="row"
+            alignItems="center"
+            justifyContent="flex-end"
+            display={{ xs: 'none', md: 'flex' }}
+          >
             {isLogged ? (
               <>
                 <Button
@@ -281,58 +274,27 @@ const AppBarComponent: React.FC = () => {
               )}
             </IconButton>
           </Stack>
+          <Stack
+            direction="row"
+            alignItems="center"
+            justifyContent="flex-end"
+            display={{ xs: 'flex', md: 'none' }}
+          >
+            <IconButton
+              size="small"
+              aria-controls={open ? 'basic-menu' : undefined}
+              aria-haspopup="true"
+              aria-expanded={open ? 'true' : undefined}
+              onClick={handleClick}
+              sx={{ marginLeft: '10px' }}
+            >
+              <MenuIcon />
+            </IconButton>
+          </Stack>
         </Grid>
       </Grid>
     );
   };
-
-  const _renderDrawer = () => (
-    <Drawer
-      variant="temporary"
-      open={mobileOpen}
-      onClose={handleDrawerToggle}
-      ModalProps={{
-        keepMounted: true,
-      }}
-      sx={{
-        display: { xs: 'block', sm: 'none' },
-        '& .MuiPaper-root': {
-          maxHeight: '100vh',
-        },
-      }}
-    >
-      <Box
-        display="flex"
-        alignItems="center"
-        flexDirection="column"
-        color="black"
-        rowGap={5}
-        sx={{ width: '100vw', py: 4, height: '80%' }}
-      >
-        <Link
-          href={ROUTERS.HOME}
-          sx={{
-            color: 'text.primary',
-            backgroundColor: 'background.lightSilver',
-            fontSize: '12px',
-            display: 'inline-block',
-          }}
-        >
-          Logo
-        </Link>
-        {_renderMenuItem()}
-        <Box mt="auto">
-          <IconButton
-            onClick={() => setMobileOpen(false)}
-            sx={{ border: '1px solid black', color: 'black' }}
-          >
-            <CloseIcon />
-          </IconButton>
-        </Box>
-      </Box>
-    </Drawer>
-  );
-
   const _renderSubHeader = () => {
     return (
       <Stack
@@ -402,7 +364,158 @@ const AppBarComponent: React.FC = () => {
         >
           {_renderMainBar()}
         </Toolbar>
-        {_renderDrawer()}
+        <Drawer anchor="right" open={open} onClose={() => setAnchorEl(null)}>
+          <List sx={{ minWidth: '220px' }}>
+            {isLogged ? (
+              <>
+                <ListItem>
+                  <Link
+                    href={ROUTERS.RECHARGE}
+                    sx={{ color: 'text.primary', fontSize: '12px' }}
+                  >
+                    Nạp
+                  </Link>
+                </ListItem>
+                <ListItem>
+                  <Link
+                    href={ROUTERS.WITHDRAW_MONEY}
+                    sx={{ color: 'text.primary', fontSize: '12px' }}
+                  >
+                    Rút
+                  </Link>
+                </ListItem>
+                <ListItem>
+                  <Link
+                    href={ROUTERS.OVERVIEW}
+                    sx={{ color: 'text.primary', fontSize: '12px' }}
+                  >
+                    Tổng quan
+                  </Link>
+                </ListItem>
+                <ListItem>
+                  <Link
+                    onClick={() => onSignOut()}
+                    sx={{ color: 'text.primary', fontSize: '12px' }}
+                  >
+                    Đăng xuất
+                  </Link>
+                </ListItem>
+              </>
+            ) : (
+              <>
+                <ListItem>
+                  <Link
+                    href={ROUTERS.SIGN_IN}
+                    sx={{ color: 'text.primary', fontSize: '12px' }}
+                  >
+                    Đăng nhập
+                  </Link>
+                </ListItem>
+                <ListItem>
+                  <Link
+                    href={ROUTERS.SIGN_UP}
+                    sx={{ color: 'text.primary', fontSize: '12px' }}
+                  >
+                    Đăng ký
+                  </Link>
+                </ListItem>
+              </>
+            )}
+            <ListItem>
+              <ToggleButtonGroup
+                color="primary"
+                value={language}
+                exclusive
+                onChange={handleChangeLanguage}
+                aria-label="Platform"
+                sx={{
+                  width: '100%',
+                }}
+              >
+                <ToggleButton
+                  value="english"
+                  sx={{
+                    display: 'flex',
+                    fontSize: '12px',
+                    textTransform: 'unset',
+                    padding: '6px 10px',
+                    flex: 1,
+                    color: 'text.primary',
+                    '&.Mui-selected, &.Mui-selected:hover': {
+                      color: 'text.burntSienna',
+                      borderColor: 'text.burntSienna',
+                      background: 'transparent',
+                      borderRight: '1px solid text.burntSienna',
+                    },
+                  }}
+                >
+                  English
+                </ToggleButton>
+                <ToggleButton
+                  value="vietnam"
+                  sx={{
+                    display: 'flex',
+                    fontSize: '12px',
+                    textTransform: 'unset',
+                    padding: '6px 10px',
+                    flex: 1,
+                    color: 'text.primary',
+                    '&.Mui-selected, &.Mui-selected:hover': {
+                      color: 'text.burntSienna',
+                      borderColor: 'text.burntSienna',
+                      background: 'transparent',
+                      borderLeft: '1px solid text.burntSienna',
+                    },
+                  }}
+                >
+                  Vietnam
+                </ToggleButton>
+              </ToggleButtonGroup>
+            </ListItem>
+            <ListItem>
+              <IconButton
+                focusRipple
+                onClick={() => {
+                  if (isDarkMode) {
+                    Utils.saveThemeMode('light');
+                    window.location.reload();
+                  }
+                }}
+                disabled={!isDarkMode}
+                size="small"
+                sx={{
+                  padding: 0,
+                  marginRight: '10px',
+                  marginLeft: '10px',
+                }}
+              >
+                {isDarkMode ? (
+                  <Box component="img" src={Assets.lightIconDarkTheme} />
+                ) : (
+                  <Box component="img" src={Assets.lightIconLightTheme} />
+                )}
+              </IconButton>
+
+              <IconButton
+                onClick={() => {
+                  if (!isDarkMode) {
+                    Utils.saveThemeMode('dark');
+                    window.location.reload();
+                  }
+                }}
+                disabled={isDarkMode}
+                size="small"
+                sx={{ padding: 0, marginLeft: '4px' }}
+              >
+                {isDarkMode ? (
+                  <Box component="img" src={Assets.darkIconDarkTheme} />
+                ) : (
+                  <Box component="img" src={Assets.darkIconLightTheme} />
+                )}
+              </IconButton>
+            </ListItem>
+          </List>
+        </Drawer>
       </Box>
       {_renderSubHeader()}
     </AppBar>
