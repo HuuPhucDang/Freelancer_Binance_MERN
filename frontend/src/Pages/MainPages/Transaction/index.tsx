@@ -3,202 +3,20 @@ import {
   Typography,
   Grid,
   Stack,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableRow,
-  Paper,
-  TableHead,
-  Box,
   Button,
   TextField,
-  Container,
   InputAdornment,
-  Link,
+  Box,
 } from '@mui/material';
 import { UserLayout } from '@/Components/DefaultLayout';
-import StarIcon from '@mui/icons-material/Star';
 import TapAndPlayIcon from '@mui/icons-material/TapAndPlay';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import MarkChatUnreadIcon from '@mui/icons-material/MarkChatUnread';
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import { StocksChart } from '@/Components/LayoutParts';
-import Assets from '@/Assets';
-import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import TuneIcon from '@mui/icons-material/Tune';
-function createData(
-  price: number,
-  quantity: number,
-  total: number,
-  direction: string,
-  time: string
-) {
-  return { price, quantity, total, direction, time };
-}
-
-function createTopRightData(label: string, price: number) {
-  return { label, price };
-}
-
-const rows = [
-  createData(2634.56, 0.08648, 86.8989038, 'down', '11:04:51'),
-  createData(2623.66, 0.09475, 82.5888, 'down', '11:04:51'),
-  createData(2634.56, 0.00265, 12.56879, 'down', '11:04:51'),
-  createData(2623.66, 0.00473, 86.8989038, 'down', '11:04:51'),
-  createData(2634.56, 0.05766, 55.68797, 'down', '11:04:51'),
-  createData(2623.66, 0.00975, 8.879789, 'down', '11:04:51'),
-  createData(2634.56, 0.08648, 1.136468, 'down', '11:04:51'),
-  createData(2623.66, 0.09475, 6.86906, 'down', '11:04:51'),
-  createData(2634.56, 0.00265, 82.5888, 'down', '11:04:51'),
-  createData(2634.56, 0.08648, 86.8989038, 'down', '11:04:51'),
-  createData(2623.66, 0.09475, 82.5888, 'down', '11:04:51'),
-  createData(2634.56, 0.00265, 12.56879, 'down', '11:04:51'),
-  createData(2623.66, 0.00473, 86.8989038, 'down', '11:04:51'),
-  createData(2634.56, 0.05766, 55.68797, 'down', '11:04:51'),
-  createData(2623.66, 0.00975, 8.879789, 'down', '11:04:51'),
-  createData(2634.56, 0.08648, 1.136468, 'down', '11:04:51'),
-  createData(2623.66, 0.09475, 6.86906, 'down', '11:04:51'),
-  createData(2634.56, 0.00265, 82.5888, 'down', '11:04:51'),
-  createData(2634.56, 0.08648, 86.8989038, 'down', '11:04:51'),
-  createData(2623.66, 0.09475, 82.5888, 'down', '11:04:51'),
-
-  createData(2623.66, 0.09475, 82.5888, 'more', '11:04:51'),
-
-  createData(2623.66, 0.00473, 1.136468, 'up', '11:04:50'),
-  createData(2634.56, 0.05766, 6.86906, 'up', '11:04:50'),
-  createData(2623.66, 0.00975, 86.8989038, 'up', '11:04:50'),
-  createData(2634.56, 0.08648, 82.5888, 'up', '11:04:50'),
-  createData(2623.66, 0.09475, 12.56879, 'up', '11:04:50'),
-  createData(2634.56, 0.00265, 55.68797, 'up', '11:04:50'),
-  createData(2623.66, 0.00473, 8.879789, 'up', '11:04:50'),
-  createData(2634.56, 0.05766, 1.136468, 'up', '11:04:50'),
-  createData(2623.66, 0.00975, 6.86906, 'up', '11:04:50'),
-  createData(2623.66, 0.00473, 1.136468, 'up', '11:04:50'),
-  createData(2634.56, 0.05766, 6.86906, 'up', '11:04:50'),
-  createData(2623.66, 0.00975, 86.8989038, 'up', '11:04:50'),
-  createData(2634.56, 0.08648, 82.5888, 'up', '11:04:50'),
-  createData(2623.66, 0.09475, 12.56879, 'up', '11:04:50'),
-  createData(2634.56, 0.00265, 55.68797, 'up', '11:04:50'),
-  createData(2623.66, 0.00473, 8.879789, 'up', '11:04:50'),
-  createData(2634.56, 0.05766, 1.136468, 'up', '11:04:50'),
-  createData(2623.66, 0.00975, 6.86906, 'up', '11:04:50'),
-  createData(2623.66, 0.00473, 1.136468, 'up', '11:04:50'),
-  createData(2634.56, 0.05766, 6.86906, 'up', '11:04:50'),
-  createData(2623.66, 0.00975, 86.8989038, 'up', '11:04:50'),
-];
-
-const bottomRightRows = [
-  createData(2634.56, 0.05766, 6.86906, 'up', '11:04:50'),
-  createData(2623.66, 0.09475, 82.5888, 'down', '11:04:51'),
-  createData(2623.66, 0.00975, 86.8989038, 'up', '11:04:50'),
-  createData(2623.66, 0.09475, 82.5888, 'down', '11:04:51'),
-  createData(2634.56, 0.08648, 82.5888, 'up', '11:04:50'),
-  createData(2623.66, 0.09475, 12.56879, 'up', '11:04:50'),
-  createData(2623.66, 0.00975, 8.879789, 'down', '11:04:51'),
-  createData(2634.56, 0.08648, 1.136468, 'down', '11:04:51'),
-  createData(2634.56, 0.05766, 6.86906, 'up', '11:04:50'),
-  createData(2623.66, 0.09475, 82.5888, 'down', '11:04:51'),
-  createData(2623.66, 0.00975, 86.8989038, 'up', '11:04:50'),
-  createData(2623.66, 0.09475, 82.5888, 'down', '11:04:51'),
-  createData(2634.56, 0.08648, 82.5888, 'up', '11:04:50'),
-  createData(2623.66, 0.09475, 12.56879, 'up', '11:04:50'),
-  createData(2623.66, 0.00975, 8.879789, 'down', '11:04:51'),
-  createData(2634.56, 0.08648, 1.136468, 'down', '11:04:51'),
-  createData(2634.56, 0.05766, 6.86906, 'up', '11:04:50'),
-  createData(2623.66, 0.09475, 82.5888, 'down', '11:04:51'),
-  createData(2623.66, 0.00975, 86.8989038, 'up', '11:04:50'),
-  createData(2623.66, 0.09475, 82.5888, 'down', '11:04:51'),
-  createData(2634.56, 0.08648, 82.5888, 'up', '11:04:50'),
-  createData(2623.66, 0.09475, 12.56879, 'up', '11:04:50'),
-  createData(2623.66, 0.00975, 8.879789, 'down', '11:04:51'),
-  createData(2634.56, 0.08648, 1.136468, 'down', '11:04:51'),
-  createData(2634.56, 0.05766, 6.86906, 'up', '11:04:50'),
-  createData(2623.66, 0.09475, 82.5888, 'down', '11:04:51'),
-  createData(2623.66, 0.00975, 86.8989038, 'up', '11:04:50'),
-  createData(2623.66, 0.00975, 86.8989038, 'up', '11:04:50'),
-  createData(2623.66, 0.00975, 86.8989038, 'up', '11:04:50'),
-  createData(2623.66, 0.00975, 86.8989038, 'up', '11:04:50'),
-  createData(2623.66, 0.09475, 82.5888, 'down', '11:04:51'),
-  createData(2634.56, 0.08648, 82.5888, 'up', '11:04:50'),
-  createData(2623.66, 0.09475, 12.56879, 'up', '11:04:50'),
-  createData(2623.66, 0.00975, 8.879789, 'down', '11:04:51'),
-  createData(2623.66, 0.09475, 82.5888, 'down', '11:04:51'),
-  createData(2623.66, 0.00975, 86.8989038, 'up', '11:04:50'),
-  createData(2623.66, 0.00975, 86.8989038, 'up', '11:04:50'),
-  createData(2623.66, 0.00975, 86.8989038, 'up', '11:04:50'),
-  createData(2623.66, 0.00975, 86.8989038, 'up', '11:04:50'),
-  createData(2623.66, 0.09475, 82.5888, 'down', '11:04:51'),
-  createData(2634.56, 0.08648, 82.5888, 'up', '11:04:50'),
-  createData(2623.66, 0.09475, 12.56879, 'up', '11:04:50'),
-  createData(2623.66, 0.00975, 8.879789, 'down', '11:04:51'),
-  createData(2623.66, 0.09475, 82.5888, 'down', '11:04:51'),
-  createData(2623.66, 0.00975, 86.8989038, 'up', '11:04:50'),
-  createData(2623.66, 0.00975, 86.8989038, 'up', '11:04:50'),
-  createData(2623.66, 0.00975, 86.8989038, 'up', '11:04:50'),
-  createData(2623.66, 0.00975, 86.8989038, 'up', '11:04:50'),
-  createData(2623.66, 0.09475, 82.5888, 'down', '11:04:51'),
-  createData(2634.56, 0.08648, 82.5888, 'up', '11:04:50'),
-  createData(2623.66, 0.09475, 12.56879, 'up', '11:04:50'),
-  createData(2623.66, 0.00975, 8.879789, 'down', '11:04:51'),
-  createData(2634.56, 0.08648, 1.136468, 'down', '11:04:51'),
-];
-
-const topRightRows = [
-  createTopRightData('1INCH/BTC ', 0.0000623),
-  createTopRightData('1INCH/BTC ', 0.0000623),
-  createTopRightData('1INCH/BTC ', 0.0000623),
-  createTopRightData('1INCH/BTC ', 0.0000623),
-  createTopRightData('1INCH/BTC ', 0.0000623),
-  createTopRightData('1INCH/BTC ', 0.0000623),
-  createTopRightData('1INCH/BTC ', 0.0000623),
-  createTopRightData('1INCH/BTC ', 0.0000623),
-  createTopRightData('1INCH/BTC ', 0.0000623),
-  createTopRightData('1INCH/BTC ', 0.0000623),
-  createTopRightData('1INCH/BTC ', 0.0000623),
-  createTopRightData('1INCH/BTC ', 0.0000623),
-  createTopRightData('1INCH/BTC ', 0.0000623),
-  createTopRightData('1INCH/BTC ', 0.0000623),
-  createTopRightData('1INCH/BTC ', 0.0000623),
-  createTopRightData('1INCH/BTC ', 0.0000623),
-  createTopRightData('1INCH/BTC ', 0.0000623),
-  createTopRightData('1INCH/BTC ', 0.0000623),
-  createTopRightData('1INCH/BTC ', 0.0000623),
-  createTopRightData('1INCH/BTC ', 0.0000623),
-  createTopRightData('1INCH/BTC ', 0.0000623),
-  createTopRightData('1INCH/BTC ', 0.0000623),
-  createTopRightData('1INCH/BTC ', 0.0000623),
-  createTopRightData('1INCH/BTC ', 0.0000623),
-  createTopRightData('1INCH/BTC ', 0.0000623),
-  createTopRightData('1INCH/BTC ', 0.0000623),
-  createTopRightData('1INCH/BTC ', 0.0000623),
-  createTopRightData('1INCH/BTC ', 0.0000623),
-  createTopRightData('1INCH/BTC ', 0.0000623),
-  createTopRightData('1INCH/BTC ', 0.0000623),
-  createTopRightData('1INCH/BTC ', 0.0000623),
-  createTopRightData('1INCH/BTC ', 0.0000623),
-  createTopRightData('1INCH/BTC ', 0.0000623),
-  createTopRightData('1INCH/BTC ', 0.0000623),
-  createTopRightData('1INCH/BTC ', 0.0000623),
-  createTopRightData('1INCH/BTC ', 0.0000623),
-  createTopRightData('1INCH/BTC ', 0.0000623),
-  createTopRightData('1INCH/BTC ', 0.0000623),
-  createTopRightData('1INCH/BTC ', 0.0000623),
-  createTopRightData('1INCH/BTC ', 0.0000623),
-  createTopRightData('1INCH/BTC ', 0.0000623),
-  createTopRightData('1INCH/BTC ', 0.0000623),
-  createTopRightData('1INCH/BTC ', 0.0000623),
-  createTopRightData('1INCH/BTC ', 0.0000623),
-  createTopRightData('1INCH/BTC ', 0.0000623),
-  createTopRightData('1INCH/BTC ', 0.0000623),
-  createTopRightData('1INCH/BTC ', 0.0000623),
-  createTopRightData('1INCH/BTC ', 0.0000623),
-  createTopRightData('1INCH/BTC ', 0.0000623),
-  createTopRightData('1INCH/BTC ', 0.0000623),
-  createTopRightData('1INCH/BTC ', 0.0000623),
-  createTopRightData('1INCH/BTC ', 0.0000623),
-  createTopRightData('1INCH/BTC ', 0.0000623),
-];
+import VolatilityTable from './VolatilityTable';
+import CoinValueTable from './CoinValueTable';
+import MyInvoiceTable from './MyInvoiceTable';
 
 const Transaction: React.FC = () => {
   // Constructors
@@ -239,7 +57,7 @@ const Transaction: React.FC = () => {
                 </Stack>
               </Stack>
             </Grid>
-            <Grid item xs={8.5}>
+            <Grid item xs={9.5}>
               <Stack
                 direction="row"
                 justifyContent="space-evenly"
@@ -285,182 +103,22 @@ const Transaction: React.FC = () => {
           sx={{ borderLeft: '0.5px solid #BBAEAE' }}
         >
           <Grid container>
-            <Grid item xs={4} borderRight="1px solid #ccc" padding="0">
-              <Stack
-                flexDirection="row"
-                marginBottom="16px"
-                justifyContent="space-between"
-              >
-                <Box component="img" src={Assets.filterTypeImage} />
-                <Stack direction="row" alignItems="center">
-                  <Typography sx={{ fontSize: '10px' }}>0.000011</Typography>
-                  <ArrowDropDownIcon sx={{ fontSize: '20px' }} />
-                </Stack>
-              </Stack>
-              <TableContainer
-                component={Paper}
-                sx={{
-                  maxHeight: 'calc(100vh - 220px)',
-                  overflow: 'auto',
-                  borderRadius: 0,
-                  boxShadow: 'none',
-                  backgroundColor: 'transparent',
-                  backgroundImage: 'unset',
-                }}
-              >
-                <Table
-                  size="small"
-                  sx={{
-                    minWidth: 1,
-                    backgroundColor: 'transparent',
-                    backgroundImage: 'unset',
-                  }}
-                  aria-label="simple table"
-                  stickyHeader
-                >
-                  <TableHead>
-                    <TableRow>
-                      <TableCell
-                        align="center"
-                        sx={{
-                          fontSize: '10px',
-                          fontWeight: 400,
-                          padding: '4px 0',
-                          color: '#7D6F6F',
-                        }}
-                      >
-                        Giá (USDT)
-                      </TableCell>
-                      <TableCell
-                        align="right"
-                        sx={{
-                          fontSize: '10px',
-                          fontWeight: 400,
-                          padding: '4px 0',
-                          color: '#7D6F6F',
-                        }}
-                      >
-                        Số lượng (EDU)
-                      </TableCell>
-                      <TableCell
-                        align="right"
-                        sx={{
-                          fontSize: '10px',
-                          fontWeight: 400,
-                          padding: '4px 0',
-                          color: '#7D6F6F',
-                        }}
-                      >
-                        Tổng
-                      </TableCell>
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    {rows.map((row, index) => {
-                      if (row.direction === 'more')
-                        return (
-                          <TableRow
-                            key={`row-${index}`}
-                            sx={{
-                              '& .MuiTableCell-root': { border: 0 },
-                            }}
-                          >
-                            <TableCell component="th" scope="row" sx={{ p: 0 }}>
-                              <Typography
-                                sx={{
-                                  fontSize: 13,
-                                  lineHeight: '11px',
-                                  p: '10px 0 10px 8px',
-                                  textAlign: 'left',
-                                }}
-                              >
-                                27,160.01
-                              </Typography>
-                            </TableCell>
-                            <TableCell align="right" sx={{ p: 0 }}>
-                              <Typography
-                                sx={{
-                                  fontSize: 9,
-                                  lineHeight: '11px',
-                                  p: '4px',
-                                }}
-                              >
-                                $27,160.01
-                              </Typography>
-                            </TableCell>
-                            <TableCell align="right" sx={{ p: 0 }}>
-                              <Link
-                                sx={{
-                                  fontSize: 9,
-                                  lineHeight: '11px',
-                                  padding: '4px 0',
-                                }}
-                              >
-                                Xem thêm
-                              </Link>
-                            </TableCell>
-                          </TableRow>
-                        );
-                      return (
-                        <TableRow
-                          key={`row-${index}`}
-                          sx={{
-                            '& .MuiTableCell-root': { border: 0 },
-                          }}
-                        >
-                          <TableCell component="th" scope="row" sx={{ p: 0 }}>
-                            <Typography
-                              sx={{
-                                fontSize: 9,
-                                lineHeight: '11px',
-                                color:
-                                  row.direction === 'up'
-                                    ? '#408827'
-                                    : '#F21616',
-                                p: '4px 0 4px 8px',
-                                textAlign: 'left',
-                              }}
-                            >
-                              {row.price}
-                            </Typography>
-                          </TableCell>
-                          <TableCell align="right" sx={{ p: 0 }}>
-                            <Typography
-                              sx={{
-                                fontSize: 9,
-                                lineHeight: '11px',
-                                color: '#816A6A',
-                                p: '4px',
-                              }}
-                            >
-                              {row.quantity}
-                            </Typography>
-                          </TableCell>
-                          <TableCell align="right" sx={{ p: 0 }}>
-                            <Typography
-                              sx={{
-                                fontSize: 9,
-                                lineHeight: '11px',
-                                color: '#816A6A',
-                                padding: '4px 0',
-                              }}
-                            >
-                              {row.total}
-                            </Typography>
-                          </TableCell>
-                        </TableRow>
-                      );
-                    })}
-                  </TableBody>
-                </Table>
-              </TableContainer>
+            <Grid
+              item
+              xs={12}
+              md={2.5}
+              order={{ md: 1, xs: 2 }}
+              borderRight="1px solid #ccc"
+              padding="0"
+            >
+              <VolatilityTable />
             </Grid>
-            <Grid item xs={8}>
+            <Grid item xs={12} md={9.5} order={{ md: 2, xs: 1 }}>
               <Stack direction="column">
                 <Stack
                   sx={{
                     width: 1,
-                    maxWidth: '475px',
+                    maxWidth: '100%',
                     height: 'calc(100vh - 408px) !important',
                     background: '#000',
                   }}
@@ -991,162 +649,16 @@ const Transaction: React.FC = () => {
 
   const _renderRightSection = () => {
     return (
-      <Stack
-        direction="column"
-        // container
-        // spacing={{ lg: 0, md: 2 }}
-        // borderLeft="1px solid #ccc"
-        // borderRight="1px solid #ccc"
-        height="100%"
-        maxHeight="calc(100vh - 140px)"
-      >
+      <Stack direction="column" height="100%" maxHeight="calc(100vh - 140px)">
         <Stack
           direction="column"
           flex={1}
           borderBottom="1px solid #ccc"
           sx={{ maxHeight: '50%' }}
         >
-          <TableContainer
-            sx={{
-              maxHeight: '100%',
-              overflow: 'auto',
-              borderRadius: 0,
-              boxShadow: 'none',
-              backgroundColor: 'transparent',
-              backgroundImage: 'unset',
-            }}
-          >
-            <Table
-              size="small"
-              sx={{
-                minWidth: '100%',
-                height: '100%',
-                backgroundColor: 'transparent',
-                backgroundImage: 'unset',
-              }}
-              aria-label="simple table"
-              stickyHeader
-            >
-              <TableHead>
-                <TableRow>
-                  <TableCell align="left">
-                    <Stack
-                      direction="row"
-                      alignItems="center"
-                      justifyContent="start"
-                      sx={{ pt: 2 }}
-                    >
-                      <Typography sx={{ fontSize: 11, fontWeight: 400 }}>
-                        Cặp
-                      </Typography>
-                      <Box position="relative" sx={{ ml: '3px' }}>
-                        <ArrowDropUpIcon
-                          sx={{
-                            fontSize: 16,
-                            position: 'absolute',
-                            bottom: -5,
-                            color: '#FFB23F',
-                          }}
-                        />
-                        <ArrowDropDownIcon
-                          sx={{
-                            fontSize: 16,
-                            position: 'absolute',
-                            top: -5,
-                            color: '#BBAEAE',
-                          }}
-                        />
-                      </Box>
-                    </Stack>
-                  </TableCell>
-                  <TableCell align="right">
-                    <Stack
-                      direction="row"
-                      alignItems="center"
-                      justifyContent="end"
-                      sx={{ pt: 2 }}
-                    >
-                      <Typography sx={{ fontSize: 11, fontWeight: 400 }}>
-                        Giá
-                      </Typography>
-                      <Box position="relative" sx={{ ml: '3px' }}>
-                        <ArrowDropUpIcon
-                          sx={{
-                            fontSize: 16,
-                            position: 'absolute',
-                            bottom: -5,
-                            color: '#BBAEAE',
-                          }}
-                        />
-                        <ArrowDropDownIcon
-                          sx={{
-                            fontSize: 16,
-                            position: 'absolute',
-                            top: -5,
-                            color: '#BBAEAE',
-                          }}
-                        />
-                      </Box>
-                    </Stack>
-                  </TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {topRightRows.map((row, index) => (
-                  <TableRow
-                    key={`row-${index}`}
-                    sx={{
-                      '& .MuiTableCell-root': { border: 0 },
-                    }}
-                  >
-                    <TableCell
-                      component="th"
-                      scope="row"
-                      align="left"
-                      sx={{ p: 1 }}
-                    >
-                      <Stack
-                        flexDirection="row"
-                        alignItems="center"
-                        justifyContent="start"
-                      >
-                        <StarIcon
-                          sx={{
-                            fontSize: '16px',
-                            marginRight: '6px',
-                            color: '#816A6A',
-                          }}
-                        />
-
-                        <Typography
-                          sx={{
-                            fontSize: 9,
-                            lineHeight: '11px',
-                            color: '#816A6A',
-                          }}
-                        >
-                          {row.label}
-                        </Typography>
-                      </Stack>
-                    </TableCell>
-                    <TableCell align="right" sx={{ p: 1, color: '#816A6A' }}>
-                      <Typography
-                        sx={{
-                          fontSize: 9,
-                          lineHeight: '11px',
-                          color: '#816A6A',
-                        }}
-                      >
-                        {row.price}
-                      </Typography>
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
+          <CoinValueTable />
         </Stack>
-        <Stack direction="column" flex={1} maxHeight="53%">
+        <Stack direction="column" flex={1} maxHeight="50%">
           <Typography
             sx={{
               fontSize: '11px',
@@ -1158,118 +670,161 @@ const Transaction: React.FC = () => {
           >
             Giao dịch của tôi
           </Typography>
-          <TableContainer
-            component={Paper}
-            sx={{
-              overflow: 'auto',
-              borderRadius: 0,
-              boxShadow: 'none',
-              backgroundColor: 'transparent',
-              backgroundImage: 'unset',
-            }}
-          >
-            <Table
-              size="small"
-              sx={{
-                minWidth: 1,
-                backgroundColor: 'transparent',
-                backgroundImage: 'unset',
-              }}
-              aria-label="simple table"
-              stickyHeader
-            >
-              <TableHead>
-                <TableRow>
-                  <TableCell
-                    align="center"
-                    sx={{
-                      fontSize: '10px',
-                      fontWeight: 400,
-                      padding: '4px 0',
-                    }}
-                  >
-                    Giá (USDT)
-                  </TableCell>
-                  <TableCell
-                    align="right"
-                    sx={{
-                      fontSize: '10px',
-                      fontWeight: 400,
-                      padding: '4px 0',
-                    }}
-                  >
-                    Số lượng (EDU)
-                  </TableCell>
-                  <TableCell
-                    align="right"
-                    sx={{
-                      fontSize: '10px',
-                      fontWeight: 400,
-                      padding: '4px 0',
-                    }}
-                  >
-                    Tổng
-                  </TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {bottomRightRows.map((row, index) => (
-                  <TableRow
-                    key={`row-${index}`}
-                    sx={{
-                      '& .MuiTableCell-root': { border: 0 },
-                    }}
-                  >
-                    <TableCell align="center" scope="row" sx={{ padding: 0 }}>
-                      <Typography
-                        sx={{
-                          fontSize: 9,
-                          lineHeight: '11px',
-                          color: row.direction === 'up' ? '#408827' : '#F21616',
-                          padding: '4px 0',
-                        }}
-                      >
-                        {row.price}
-                      </Typography>
-                    </TableCell>
-                    <TableCell align="right" sx={{ padding: 0 }}>
-                      <Typography
-                        sx={{
-                          fontSize: 9,
-                          lineHeight: '11px',
-                          padding: '4px 0',
-                          color: '#816A6A',
-                        }}
-                      >
-                        {row.quantity}
-                      </Typography>
-                    </TableCell>
-                    <TableCell align="right" sx={{ padding: 0 }}>
-                      <Typography
-                        sx={{
-                          fontSize: 9,
-                          lineHeight: '11px',
-                          padding: '4px 0',
-                          color: '#816A6A',
-                        }}
-                      >
-                        {row.time}
-                      </Typography>
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
+          <MyInvoiceTable />
         </Stack>
       </Stack>
     );
   };
 
+  const _renderBottomSection = () => {
+    return (
+      <Grid container>
+        <Grid item xs={6} md={2} order={{ xs: 2, md: 1 }}>
+          <Stack padding="10px 10px">
+            <Stack
+              direction="row"
+              alignItems="center"
+              borderRight="1px solid #ccc"
+            >
+              <TapAndPlayIcon
+                sx={{
+                  marginRight: '10px',
+                  color: '#408827',
+                  fontSize: '16px',
+                }}
+              />
+              <Typography sx={{ fontSize: '12px', color: '#408827' }}>
+                Kết nối ổn định
+              </Typography>
+            </Stack>
+          </Stack>
+        </Grid>
+        <Grid item xs={12} md={7} order={{ xs: 1, md: 2 }}>
+          <Grid container padding="10px 20px">
+            <Grid
+              item
+              xs={1}
+              display="flex"
+              flexDirection="row"
+              justifyContent="center"
+              sx={{ fontSize: '11px', color: '#BBAEAE' }}
+            >
+              <TuneIcon />
+            </Grid>
+            <Grid
+              item
+              xs={3.66}
+              display="flex"
+              flexDirection="row"
+              alignItems="center"
+              sx={{ fontSize: '11px', color: '#BBAEAE' }}
+            >
+              EDUUSDT{' '}
+              <span
+                style={{
+                  color: '#F03030',
+                  display: 'inline-block',
+                  margin: '0 2px',
+                }}
+              >
+                -1.81
+              </span>{' '}
+              1.111094
+            </Grid>
+            <Grid
+              item
+              xs={3.66}
+              display="flex"
+              alignItems="center"
+              flexDirection="row"
+              sx={{ fontSize: '11px', color: '#BBAEAE' }}
+            >
+              EDUUSDT{' '}
+              <span
+                style={{
+                  color: '#F03030',
+                  display: 'inline-block',
+                  margin: '0 2px',
+                }}
+              >
+                -1.81
+              </span>{' '}
+              1.111094
+            </Grid>
+            <Grid
+              item
+              xs={3.66}
+              display="flex"
+              alignItems="center"
+              flexDirection="row"
+              sx={{ fontSize: '11px', color: '#BBAEAE' }}
+            >
+              EDUUSDT{' '}
+              <span
+                style={{
+                  color: '#F03030',
+                  display: 'inline-block',
+                  margin: '0 2px',
+                }}
+              >
+                -1.81
+              </span>{' '}
+              1.111094
+            </Grid>
+          </Grid>
+        </Grid>
+        <Grid item xs={6} md={3} order={{ xs: 3, md: 3 }}>
+          <Stack
+            alignItems="center"
+            direction="row"
+            justifyContent="space-evenly"
+            padding="10px 0"
+          >
+            <Stack
+              flexDirection="row"
+              alignItems="center"
+              borderLeft={{
+                xs: 'none',
+                md: '1px solid #BBAEAE',
+              }}
+              paddingLeft="10px"
+            >
+              <NotificationsIcon
+                sx={{
+                  fontSize: '16px',
+                  marginRight: '6px',
+                  color: '#7D6F6F',
+                }}
+              />
+              <Typography
+                sx={{ fontSize: '11px', fontWeight: 500, color: '#7D6F6F' }}
+              >
+                Thông báo
+              </Typography>
+            </Stack>
+            <Stack flexDirection="row" alignItems="center">
+              <MarkChatUnreadIcon
+                sx={{
+                  fontSize: '16px',
+                  marginRight: '6px',
+                  color: '#7D6F6F',
+                }}
+              />
+              <Typography
+                sx={{ fontSize: '11px', fontWeight: 500, color: '#7D6F6F' }}
+              >
+                Hỗ trợ trực tuyến
+              </Typography>
+            </Stack>
+          </Stack>
+        </Grid>
+      </Grid>
+    );
+  };
+
   const renderMain = () => {
     return (
-      <Container
-        maxWidth="md"
+      <Box
         component="main"
         sx={{
           display: 'flex',
@@ -1285,13 +840,13 @@ const Transaction: React.FC = () => {
           borderTop="1px solid #BBAEAE"
           borderBottom="1px solid #BBAEAE"
         >
-          <Grid item xs={12} md={9}>
+          <Grid item xs={12} md={10}>
             {_renderLeftSection()}
           </Grid>
           <Grid
             item
             xs={12}
-            md={3}
+            md={2}
             borderLeft="1px solid #BBAEAE"
             borderRight="1px solid #BBAEAE"
           >
@@ -1299,150 +854,9 @@ const Transaction: React.FC = () => {
           </Grid>
         </Grid>
         <Grid item xs={12}>
-          <Grid container>
-            <Grid item xs={2}>
-              <Stack padding="10px 10px">
-                <Stack
-                  direction="row"
-                  alignItems="center"
-                  borderRight="1px solid #ccc"
-                >
-                  <TapAndPlayIcon
-                    sx={{
-                      marginRight: '10px',
-                      color: '#408827',
-                      fontSize: '16px',
-                    }}
-                  />
-                  <Typography sx={{ fontSize: '12px', color: '#408827' }}>
-                    Kết nối ổn định
-                  </Typography>
-                </Stack>
-              </Stack>
-            </Grid>
-            <Grid item xs={7}>
-              <Grid container padding="10px 20px">
-                <Grid
-                  item
-                  xs={12}
-                  md={1}
-                  display="flex"
-                  flexDirection="row"
-                  justifyContent="center"
-                  sx={{ fontSize: '11px', color: '#BBAEAE' }}
-                >
-                  <TuneIcon />
-                </Grid>
-                <Grid
-                  item
-                  xs={12}
-                  md={3.66}
-                  display="flex"
-                  flexDirection="row"
-                  alignItems="center"
-                  sx={{ fontSize: '11px', color: '#BBAEAE' }}
-                >
-                  EDUUSDT{' '}
-                  <span
-                    style={{
-                      color: '#F03030',
-                      display: 'inline-block',
-                      margin: '0 2px',
-                    }}
-                  >
-                    -1.81
-                  </span>{' '}
-                  1.111094
-                </Grid>
-                <Grid
-                  item
-                  md={3.66}
-                  display="flex"
-                  xs={12}
-                  alignItems="center"
-                  flexDirection="row"
-                  sx={{ fontSize: '11px', color: '#BBAEAE' }}
-                >
-                  EDUUSDT{' '}
-                  <span
-                    style={{
-                      color: '#F03030',
-                      display: 'inline-block',
-                      margin: '0 2px',
-                    }}
-                  >
-                    -1.81
-                  </span>{' '}
-                  1.111094
-                </Grid>
-                <Grid
-                  item
-                  md={3.66}
-                  display="flex"
-                  xs={12}
-                  alignItems="center"
-                  flexDirection="row"
-                  sx={{ fontSize: '11px', color: '#BBAEAE' }}
-                >
-                  EDUUSDT{' '}
-                  <span
-                    style={{
-                      color: '#F03030',
-                      display: 'inline-block',
-                      margin: '0 2px',
-                    }}
-                  >
-                    -1.81
-                  </span>{' '}
-                  1.111094
-                </Grid>
-              </Grid>
-            </Grid>
-            <Grid item xs={3}>
-              <Stack
-                alignItems="center"
-                direction="row"
-                justifyContent="space-evenly"
-                padding="10px 0"
-              >
-                <Stack
-                  flexDirection="row"
-                  alignItems="center"
-                  borderLeft="1px solid #BBAEAE"
-                  paddingLeft="10px"
-                >
-                  <NotificationsIcon
-                    sx={{
-                      fontSize: '16px',
-                      marginRight: '6px',
-                      color: '#7D6F6F',
-                    }}
-                  />
-                  <Typography
-                    sx={{ fontSize: '11px', fontWeight: 500, color: '#7D6F6F' }}
-                  >
-                    Thông báo
-                  </Typography>
-                </Stack>
-                <Stack flexDirection="row" alignItems="center">
-                  <MarkChatUnreadIcon
-                    sx={{
-                      fontSize: '16px',
-                      marginRight: '6px',
-                      color: '#7D6F6F',
-                    }}
-                  />
-                  <Typography
-                    sx={{ fontSize: '11px', fontWeight: 500, color: '#7D6F6F' }}
-                  >
-                    Hỗ trợ trực tuyến
-                  </Typography>
-                </Stack>
-              </Stack>
-            </Grid>
-          </Grid>
+          {_renderBottomSection()}
         </Grid>
-      </Container>
+      </Box>
     );
   };
   return <UserLayout content={renderMain()} screenTitle="Giao dịch" />;

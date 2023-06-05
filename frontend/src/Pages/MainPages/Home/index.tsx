@@ -914,50 +914,62 @@ const Home: React.FC = () => {
         >
           Bắt đầu giao dịch Hợp đồng tương lai tiền mã hóa ngay{' '}
         </Typography>
-        <Stack
-          direction="row"
-          marginTop="20px"
-          justifyContent="center"
-          columnGap="40px"
-        >
-          <Button
-            sx={{
-              backgroundColor: 'background.burntSienna',
-              color: 'text.secondary',
-              textTransform: 'unset',
-              height: '53px',
-              width: '220px',
-              fontWeight: 700,
-              fontSize: '14px',
-            }}
-            href={ROUTERS.SIGN_UP}
+        <Grid container marginTop="10px" columnSpacing={4} rowSpacing={2}>
+          <Grid
+            item
+            xs={12}
+            md={6}
+            display="flex"
+            justifyContent={{ xs: 'center', md: 'flex-end' }}
           >
-            Mở Tài Khoản (đăng kí)
-          </Button>
-          <Button
-            sx={{
-              backgroundColor: 'background.lightSilver',
-              color: 'text.secondary',
-              textTransform: 'unset',
-              height: '53px',
-              width: '220px',
-              fontWeight: 700,
-              fontSize: '14px',
-            }}
-            href={ROUTERS.SIGN_IN}
+            <Button
+              sx={{
+                backgroundColor: 'background.burntSienna',
+                color: 'text.secondary',
+                textTransform: 'unset',
+                height: '53px',
+                width: '220px',
+                fontWeight: 700,
+                fontSize: '14px',
+              }}
+              href={ROUTERS.SIGN_UP}
+            >
+              Mở Tài Khoản (đăng kí)
+            </Button>
+          </Grid>
+          <Grid
+            item
+            xs={12}
+            md={6}
+            display="flex"
+            justifyContent={{ xs: 'center', md: 'flex-start' }}
           >
-            Giao dịch ngay (đăng nhập){' '}
-          </Button>
-        </Stack>
+            <Button
+              sx={{
+                backgroundColor: 'background.lightSilver',
+                color: 'text.secondary',
+                textTransform: 'unset',
+                height: '53px',
+                width: '220px',
+                fontWeight: 700,
+                fontSize: '14px',
+              }}
+              href={ROUTERS.SIGN_IN}
+            >
+              Giao dịch ngay (đăng nhập){' '}
+            </Button>
+          </Grid>
+        </Grid>
       </Stack>
     );
   };
 
   const renderMain = () => {
     return (
-      <Container
+      <Box
         component="main"
-        maxWidth="md"
+        // maxWidth="md"
+        padding="0 24px"
         sx={{ my: { xs: '3em', md: '5em', textAlign: '-webkit-center' } }}
       >
         <Grow in timeout={500}>
@@ -973,7 +985,7 @@ const Home: React.FC = () => {
         <Fade>{_renderReason()}</Fade>
         <Fade>{_renderFeedback()}</Fade>
         <Fade>{_renderInvite()}</Fade>
-      </Container>
+      </Box>
     );
   };
   return <UserLayout content={renderMain()} screenTitle="Binance" />;

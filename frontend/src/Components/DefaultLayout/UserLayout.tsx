@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box } from '@mui/material';
+import { Box, Stack } from '@mui/material';
 
 import Widgets from '../Widgets';
 import { useLocation } from 'react-router';
@@ -28,9 +28,9 @@ const UserLayout: React.FC<SectionProps> = (props: SectionProps) => {
   }, []);
 
   return (
-    <>
+    <Stack direction="column" height="100vh">
       <AppBarComponent />
-      <Box sx={{ background: 'background.default' }}>
+      <Box sx={{ background: 'background.default', flex: 1 }}>
         <Helmet>
           <title>{screenTitle ? screenTitle : 'Binance'}</title>
         </Helmet>
@@ -38,7 +38,7 @@ const UserLayout: React.FC<SectionProps> = (props: SectionProps) => {
         <Widgets.Notification />
         <Widgets.Alert />
       </Box>
-    </>
+    </Stack>
   );
 };
 
