@@ -1,8 +1,19 @@
-const BASIC_ROLES = ["selfUpdate"];
+const BASIC_ROLES = [
+  "selfUpdate",
+  "requestMoney",
+  "cancelTransaction",
+  "fetchTransactions",
+];
 
 const allRoles = {
   user: [...BASIC_ROLES],
-  admin: [...BASIC_ROLES, "getUser", "manageUsers", "actionMoney"],
+  admin: [
+    ...BASIC_ROLES,
+    "getUser",
+    "manageUsers",
+    "actionMoney",
+    "denyTransaction",
+  ],
 };
 
 export const roles: string[] = Object.keys(allRoles);

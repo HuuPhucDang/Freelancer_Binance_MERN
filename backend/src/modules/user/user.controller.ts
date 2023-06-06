@@ -33,6 +33,8 @@ export const getUser = catchAsync(async (req: Request, res: Response) => {
 
     res.send(responsePayload(true, "Get user successfully!", user));
   }
+
+  res.send(responsePayload(false, "User not exist!", null));
 });
 
 export const getSelf = catchAsync(async (req: Request, res: Response) => {
@@ -49,6 +51,7 @@ export const updateUser = catchAsync(async (req: Request, res: Response) => {
     );
     res.send(responsePayload(true, "Update user successfully!", user));
   }
+  res.send(responsePayload(false, "User not exist!", null));
 });
 
 export const updateUserAvatar = catchAsync(

@@ -4,6 +4,7 @@ import { QueryResult } from "../helper/paginate/paginate";
 export enum ETransactionType {
   WITHDRAW = "withdraw",
   RECHARGE = "recharge",
+  BONUS = "bonus",
 }
 
 export enum ETransactionStatus {
@@ -35,4 +36,8 @@ export interface ITransactionModel extends Model<ITransactionDoc> {
 export type ActionMoneyBody = {
   amount: number;
   userId: Schema.Types.ObjectId;
+};
+
+export type RequestMoneyBody = {
+  amount: number;
 };

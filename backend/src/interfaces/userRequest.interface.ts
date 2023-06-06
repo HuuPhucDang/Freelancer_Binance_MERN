@@ -3,6 +3,7 @@ import { QueryResult } from "../helper/paginate/paginate";
 
 export enum ERequestType {
   RECHARGE = "recharge",
+  WITHDRAW = "withdraw",
   CHANGE_PASSWORD = "change_password",
 }
 

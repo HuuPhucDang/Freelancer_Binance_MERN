@@ -9,17 +9,52 @@ import {
 const router: Router = express.Router();
 
 router.put(
-  "/recharge",
+  "/recharge/:transactionId",
   auth("actionMoney"),
   validate(transactionValidation.actionMoney),
   transactionController.rechangeMoney
 );
 
 router.put(
-  "/withdraw",
+  "/withdraw/:transactionId",
   auth("actionMoney"),
   validate(transactionValidation.actionMoney),
   transactionController.withdrawMoney
+);
+
+router.post(
+  "/request/withdraw",
+  auth("requestMoney"),
+  validate(transactionValidation.requestMoney),
+  transactionController.requestWithdrawMoney
+);
+
+router.post(
+  "/request/recharge",
+  auth("requestMoney"),
+  validate(transactionValidation.requestMoney),
+  transactionController.requestRechangeMoney
+);
+
+router.put(
+  "/cancel/:transactionId",
+  auth("cancelTransaction"),
+  validate(transactionValidation.updateTransaction),
+  transactionController.cancelTransaction
+);
+
+router.put(
+  "/deny/:transactionId",
+  auth("denyTransaction"),
+  validate(transactionValidation.updateTransaction),
+  transactionController.denyTransaction
+);
+
+router.get(
+  "/",
+  auth("fetchTransactions"),
+  validate(transactionValidation.fetchTransactions),
+  transactionController.fetchTransactions
 );
 
 export default router;

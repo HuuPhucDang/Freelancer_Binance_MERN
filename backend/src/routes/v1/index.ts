@@ -35,7 +35,7 @@ const defaultIRoute: IRoute[] = [
     route: verificationRoute,
   },
   {
-    path: "/transaction",
+    path: "/transactions",
     route: transactionRoute,
   },
 ];

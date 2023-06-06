@@ -53,7 +53,7 @@ const transactionSchema = new mongoose.Schema<
 transactionSchema.plugin(toJSON);
 transactionSchema.plugin(paginate);
 
-const Transaction = mongoose.model<ITransactionDoc>(
+const Transaction = mongoose.model<ITransactionDoc, ITransactionModel>(
   "Transaction",
   transactionSchema
 );
