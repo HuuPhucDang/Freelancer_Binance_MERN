@@ -1,15 +1,15 @@
 import express, { Router } from "express";
 import { validate } from "../../helper/validate";
 import { auth } from "../../modules/auth";
-import { userController, userValidation } from "../../modules/user";
+import { bankController, bankValidation } from "../../modules/bank";
 
 const router: Router = express.Router();
 
 router.put(
   "/active",
   auth("selfUpdate"),
-  validate(userValidation.activeBank),
-  userController.activeBank
+  validate(bankValidation.activeBank),
+  bankController.activeBank
 );
 
 export default router;
