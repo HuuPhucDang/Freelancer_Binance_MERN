@@ -14,7 +14,7 @@ const transactionSchema = new mongoose.Schema<
   ITransactionModel
 >(
   {
-    petitioner: {
+    userId: {
       ref: "User",
       type: mongoose.Schema.Types.ObjectId,
     },

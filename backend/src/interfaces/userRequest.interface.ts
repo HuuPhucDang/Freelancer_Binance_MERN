@@ -7,7 +7,7 @@ export enum ERequestType {
 }
 
 export interface ITransaction {
-  petitioner: Schema.Types.ObjectId;
+  userId: Schema.Types.ObjectId;
   date: string;
   time: string;
   type: string;

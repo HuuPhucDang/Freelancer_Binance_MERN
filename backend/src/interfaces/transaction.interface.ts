@@ -14,7 +14,7 @@ export enum ETransactionStatus {
 }
 
 export interface ITransaction {
-  petitioner: Schema.Types.ObjectId;
+  userId: Schema.Types.ObjectId;
   date: string;
   time: string;
   type: string;
@@ -31,3 +31,8 @@ export interface ITransactionModel extends Model<ITransactionDoc> {
     options: Record<string, any>
   ): Promise<QueryResult>;
 }
+
+export type ActionMoneyBody = {
+  amount: number;
+  userId: Schema.Types.ObjectId;
+};
