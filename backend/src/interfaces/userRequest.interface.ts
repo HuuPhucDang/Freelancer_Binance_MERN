@@ -2,22 +2,21 @@ import { Model, Document, Schema } from "mongoose";
 import { QueryResult } from "../helper/paginate/paginate";
 
 export enum ERequestType {
-  RECHARGE = "recharge",
-  WITHDRAW = "withdraw",
-  CHANGE_PASSWORD = "change_password",
+  FORGOT_PASSWORD = "forgot_password",
 }
 
-export interface ITransaction {
+export interface IUserRequest {
   userId: Schema.Types.ObjectId;
   date: string;
   time: string;
   type: string;
   message: string;
+  link: string;
 }
 
-export interface ITransactionDoc extends ITransaction, Document {}
+export interface IUserRequestDoc extends IUserRequest, Document {}
 
-export interface ITransactionModel extends Model<ITransactionDoc> {
+export interface IUserRequestModel extends Model<IUserRequestDoc> {
   paginate(
     filter: Record<string, any>,
     options: Record<string, any>

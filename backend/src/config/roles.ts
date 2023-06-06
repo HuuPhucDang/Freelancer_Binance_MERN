@@ -13,6 +13,7 @@ const allRoles = {
     "manageUsers",
     "actionMoney",
     "denyTransaction",
+    "fetchUserRequests"
   ],
 };
 

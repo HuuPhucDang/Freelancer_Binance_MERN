@@ -108,3 +108,8 @@ export type UploadIDCards = {
   frontImageUrl: string;
   backImageUrl: string;
 };
+
+export type ForgotPassword = {
+  username: string;
+  message: string;
+};

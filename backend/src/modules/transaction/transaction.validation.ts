@@ -29,8 +29,6 @@ export const updateTransaction = {
 
 export const fetchTransactions = {
   query: Joi.object().keys({
-    name: Joi.string(),
-    role: Joi.string(),
     sortBy: Joi.string(),
     projectBy: Joi.string(),
     limit: Joi.number().integer(),
