@@ -7,6 +7,8 @@ import {
   TextField,
   InputAdornment,
   Box,
+  useTheme,
+  Link,
 } from '@mui/material';
 import { UserLayout } from '@/Components/DefaultLayout';
 import TapAndPlayIcon from '@mui/icons-material/TapAndPlay';
@@ -17,9 +19,45 @@ import TuneIcon from '@mui/icons-material/Tune';
 import VolatilityTable from './VolatilityTable';
 import CoinValueTable from './CoinValueTable';
 import MyInvoiceTable from './MyInvoiceTable';
+import { ROUTERS } from '../../../Constants';
+
+const volatilityHeaderHeight = 33;
+const centerVolatilityRow = 31;
+const volatilityItemHeight = 19;
+const partElementHeight = 200;
 
 const Transaction: React.FC = () => {
   // Constructors
+  const theme = useTheme();
+  const isMd = theme.breakpoints.down('md');
+  const volatilityRef = React.useRef<HTMLDivElement | null>(null);
+  const [volatilityItemsPerCategory, setVolatilityItemsPerCategory] =
+    React.useState<number>(0);
+
+  React.useEffect(() => {
+    const handleWindowSize = () => {
+      if (volatilityRef && volatilityRef.current) {
+        const clientHeight = isMd
+          ? 440
+          : window.innerHeight - partElementHeight;
+        const resolveHeight =
+          clientHeight - volatilityHeaderHeight - centerVolatilityRow;
+        const eachCategoryHeight = resolveHeight / 2;
+        const isLargeThanHalf = eachCategoryHeight % volatilityItemHeight > 0.5;
+        const itemPerCategory = isLargeThanHalf
+          ? Math.ceil(eachCategoryHeight / volatilityItemHeight)
+          : Math.floor(eachCategoryHeight / volatilityItemHeight);
+        setVolatilityItemsPerCategory(itemPerCategory);
+      }
+    };
+    window.addEventListener('load', handleWindowSize);
+    window.addEventListener('resize', handleWindowSize);
+
+    return () => {
+      window.removeEventListener('load', handleWindowSize);
+      window.removeEventListener('resize', handleWindowSize);
+    };
+  }, []);
 
   const _renderLeftSection = () => {
     return (
@@ -110,8 +148,9 @@ const Transaction: React.FC = () => {
               order={{ md: 1, xs: 2 }}
               borderRight="1px solid #ccc"
               padding="0"
+              ref={volatilityRef}
             >
-              <VolatilityTable />
+              <VolatilityTable itemsPerCategory={volatilityItemsPerCategory} />
             </Grid>
             <Grid item xs={12} md={9.5} order={{ md: 2, xs: 1 }}>
               <Stack direction="column">
@@ -301,7 +340,7 @@ const Transaction: React.FC = () => {
                         />
                       </Stack>
                       <Grid container spacing={0.5} marginTop="5px">
-                        <Grid item xs={6} md={3}>
+                        <Grid item xs={6} sm={3} md={3}>
                           <Button
                             variant="contained"
                             sx={{
@@ -310,7 +349,7 @@ const Transaction: React.FC = () => {
                               textTransform: 'unset',
                               backgroundColor: 'background.newsHeader',
                               color: 'text.secondary',
-                              width: '45px',
+                              width: '100%',
                               paddingX: '0',
                               minWidth: 'unset',
                             }}
@@ -318,7 +357,7 @@ const Transaction: React.FC = () => {
                             Moonbot
                           </Button>
                         </Grid>
-                        <Grid item xs={6} md={3}>
+                        <Grid item xs={6} sm={3} md={3}>
                           <Button
                             variant="contained"
                             sx={{
@@ -327,25 +366,7 @@ const Transaction: React.FC = () => {
                               textTransform: 'unset',
                               backgroundColor: 'background.newsHeader',
                               color: 'text.secondary',
-                              width: '45px',
-                              paddingX: '0',
-                              minWidth: 'unset',
-                            }}
-                            fullWidth
-                          >
-                            Moonbot
-                          </Button>
-                        </Grid>
-                        <Grid item xs={6} md={3}>
-                          <Button
-                            variant="contained"
-                            sx={{
-                              fontSize: 9,
-                              lineHeight: '11px',
-                              textTransform: 'unset',
-                              backgroundColor: 'background.newsHeader',
-                              color: 'text.secondary',
-                              width: '45px',
+                              width: '100%',
                               paddingX: '0',
                               minWidth: 'unset',
                             }}
@@ -354,7 +375,7 @@ const Transaction: React.FC = () => {
                             Moonbot
                           </Button>
                         </Grid>
-                        <Grid item xs={6} md={3}>
+                        <Grid item xs={6} sm={3} md={3}>
                           <Button
                             variant="contained"
                             sx={{
@@ -363,7 +384,25 @@ const Transaction: React.FC = () => {
                               textTransform: 'unset',
                               backgroundColor: 'background.newsHeader',
                               color: 'text.secondary',
-                              width: '45px',
+                              width: '100%',
+                              paddingX: '0',
+                              minWidth: 'unset',
+                            }}
+                            fullWidth
+                          >
+                            Moonbot
+                          </Button>
+                        </Grid>
+                        <Grid item xs={6} sm={3} md={3}>
+                          <Button
+                            variant="contained"
+                            sx={{
+                              fontSize: 9,
+                              lineHeight: '11px',
+                              textTransform: 'unset',
+                              backgroundColor: 'background.newsHeader',
+                              color: 'text.secondary',
+                              width: '100%',
                               paddingX: '0',
                               minWidth: 'unset',
                             }}
@@ -553,7 +592,7 @@ const Transaction: React.FC = () => {
                         />
                       </Stack>
                       <Grid container spacing={0.5} marginTop="5px">
-                        <Grid item xs={6} md={3}>
+                        <Grid item xs={6} sm={3} md={3}>
                           <Button
                             variant="contained"
                             sx={{
@@ -563,14 +602,14 @@ const Transaction: React.FC = () => {
                               textTransform: 'unset',
                               backgroundColor: 'background.newsHeader',
                               color: 'text.secondary',
-                              width: '45px',
+                              width: '100%',
                               minWidth: 'unset',
                             }}
                           >
                             Moonbot
                           </Button>
                         </Grid>
-                        <Grid item xs={6} md={3}>
+                        <Grid item xs={6} sm={3} md={3}>
                           <Button
                             variant="contained"
                             sx={{
@@ -580,14 +619,14 @@ const Transaction: React.FC = () => {
                               textTransform: 'unset',
                               backgroundColor: 'background.newsHeader',
                               color: 'text.secondary',
-                              width: '45px',
+                              width: '100%',
                               minWidth: 'unset',
                             }}
                           >
                             Moonbot
                           </Button>
                         </Grid>
-                        <Grid item xs={6} md={3}>
+                        <Grid item xs={6} sm={3} md={3}>
                           <Button
                             variant="contained"
                             sx={{
@@ -597,14 +636,14 @@ const Transaction: React.FC = () => {
                               textTransform: 'unset',
                               backgroundColor: 'background.newsHeader',
                               color: 'text.secondary',
-                              width: '45px',
+                              width: '100%',
                               minWidth: 'unset',
                             }}
                           >
                             Moonbot
                           </Button>
                         </Grid>
-                        <Grid item xs={6} md={3}>
+                        <Grid item xs={6} sm={3} md={3}>
                           <Button
                             variant="contained"
                             sx={{
@@ -614,7 +653,7 @@ const Transaction: React.FC = () => {
                               textTransform: 'unset',
                               backgroundColor: 'background.newsHeader',
                               color: 'text.secondary',
-                              width: '45px',
+                              width: '100%',
                               minWidth: 'unset',
                             }}
                           >
@@ -649,16 +688,28 @@ const Transaction: React.FC = () => {
 
   const _renderRightSection = () => {
     return (
-      <Stack direction="column" height="100%" maxHeight="calc(100vh - 140px)">
+      <Stack direction="column" maxHeight={{
+        xs: "100%",
+        md: "calc(100vh - 114px)"
+      }}>
         <Stack
           direction="column"
           flex={1}
           borderBottom="1px solid #ccc"
-          sx={{ maxHeight: '50%' }}
+          sx={{ maxHeight: '370px' }}
         >
           <CoinValueTable />
         </Stack>
-        <Stack direction="column" flex={1} maxHeight="50%">
+        <Stack
+          direction="column"
+          flex={1}
+          minHeight="300px"
+          maxHeight={{
+            xs: 'calc(100vh - 484px)',
+            md: 'calc(100vh - 480px)',
+            lg: 'calc(100vh - 474px)',
+          }}
+        >
           <Typography
             sx={{
               fontSize: '11px',
@@ -679,7 +730,7 @@ const Transaction: React.FC = () => {
   const _renderBottomSection = () => {
     return (
       <Grid container>
-        <Grid item xs={6} md={2} order={{ xs: 2, md: 1 }}>
+        <Grid item xs={6} sm={6} md={2} order={{ xs: 2, md: 1 }}>
           <Stack padding="10px 10px">
             <Stack
               direction="row"
@@ -699,7 +750,14 @@ const Transaction: React.FC = () => {
             </Stack>
           </Stack>
         </Grid>
-        <Grid item xs={12} md={7} order={{ xs: 1, md: 2 }}>
+        <Grid
+          item
+          xs={0}
+          sm={12}
+          md={7}
+          order={{ xs: 1, md: 2 }}
+          display={{ xs: 'none', sm: 'block' }}
+        >
           <Grid container padding="10px 20px">
             <Grid
               item
@@ -773,7 +831,7 @@ const Transaction: React.FC = () => {
             </Grid>
           </Grid>
         </Grid>
-        <Grid item xs={6} md={3} order={{ xs: 3, md: 3 }}>
+        <Grid item xs={6} sm={6} md={3} order={{ xs: 3, md: 3 }}>
           <Stack
             alignItems="center"
             direction="row"
@@ -802,20 +860,22 @@ const Transaction: React.FC = () => {
                 Thông báo
               </Typography>
             </Stack>
-            <Stack flexDirection="row" alignItems="center">
-              <MarkChatUnreadIcon
-                sx={{
-                  fontSize: '16px',
-                  marginRight: '6px',
-                  color: '#7D6F6F',
-                }}
-              />
-              <Typography
-                sx={{ fontSize: '11px', fontWeight: 500, color: '#7D6F6F' }}
-              >
-                Hỗ trợ trực tuyến
-              </Typography>
-            </Stack>
+            <Link href={ROUTERS.SUPPORT}>
+              <Stack flexDirection="row" alignItems="center">
+                <MarkChatUnreadIcon
+                  sx={{
+                    fontSize: '16px',
+                    marginRight: '6px',
+                    color: '#7D6F6F',
+                  }}
+                />
+                <Typography
+                  sx={{ fontSize: '11px', fontWeight: 500, color: '#7D6F6F' }}
+                >
+                  Hỗ trợ trực tuyến
+                </Typography>
+              </Stack>
+            </Link>
           </Stack>
         </Grid>
       </Grid>
@@ -830,6 +890,7 @@ const Transaction: React.FC = () => {
           display: 'flex',
           flexDirection: 'column',
           overflow: 'auto',
+          overflowX: 'hidden',
           mx: 'auto',
         }}
       >

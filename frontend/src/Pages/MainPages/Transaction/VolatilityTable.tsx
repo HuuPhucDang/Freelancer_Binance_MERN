@@ -9,6 +9,7 @@ import {
   TableHead,
   Link,
 } from '@mui/material';
+import React from 'react';
 
 function createData(
   price: number,
@@ -20,59 +21,37 @@ function createData(
   return { price, quantity, total, direction, time };
 }
 
-const rows = [
-  createData(2634.56, 0.08648, 86.8989038, 'down', '11:04:51'),
-  createData(2623.66, 0.09475, 82.5888, 'down', '11:04:51'),
-  createData(2634.56, 0.00265, 12.56879, 'down', '11:04:51'),
-  createData(2623.66, 0.00473, 86.8989038, 'down', '11:04:51'),
-  createData(2634.56, 0.05766, 55.68797, 'down', '11:04:51'),
-  createData(2623.66, 0.00975, 8.879789, 'down', '11:04:51'),
-  createData(2634.56, 0.08648, 1.136468, 'down', '11:04:51'),
-  createData(2623.66, 0.09475, 6.86906, 'down', '11:04:51'),
-  createData(2634.56, 0.00265, 82.5888, 'down', '11:04:51'),
-  createData(2634.56, 0.08648, 86.8989038, 'down', '11:04:51'),
-  createData(2623.66, 0.09475, 82.5888, 'down', '11:04:51'),
-  createData(2634.56, 0.00265, 12.56879, 'down', '11:04:51'),
-  createData(2623.66, 0.00473, 86.8989038, 'down', '11:04:51'),
-  createData(2634.56, 0.05766, 55.68797, 'down', '11:04:51'),
-  createData(2623.66, 0.00975, 8.879789, 'down', '11:04:51'),
-  createData(2634.56, 0.08648, 1.136468, 'down', '11:04:51'),
-  createData(2623.66, 0.09475, 6.86906, 'down', '11:04:51'),
-  createData(2634.56, 0.00265, 82.5888, 'down', '11:04:51'),
-  createData(2634.56, 0.08648, 86.8989038, 'down', '11:04:51'),
-  createData(2623.66, 0.09475, 82.5888, 'down', '11:04:51'),
+const downItem = createData(2634.56, 0.08648, 86.8989038, 'down', '11:04:51');
 
-  createData(2623.66, 0.09475, 82.5888, 'more', '11:04:51'),
+const upItem = createData(2623.66, 0.00473, 1.136468, 'up', '11:04:50');
 
-  createData(2623.66, 0.00473, 1.136468, 'up', '11:04:50'),
-  createData(2634.56, 0.05766, 6.86906, 'up', '11:04:50'),
-  createData(2623.66, 0.00975, 86.8989038, 'up', '11:04:50'),
-  createData(2634.56, 0.08648, 82.5888, 'up', '11:04:50'),
-  createData(2623.66, 0.09475, 12.56879, 'up', '11:04:50'),
-  createData(2634.56, 0.00265, 55.68797, 'up', '11:04:50'),
-  createData(2623.66, 0.00473, 8.879789, 'up', '11:04:50'),
-  createData(2634.56, 0.05766, 1.136468, 'up', '11:04:50'),
-  createData(2623.66, 0.00975, 6.86906, 'up', '11:04:50'),
-  createData(2623.66, 0.00473, 1.136468, 'up', '11:04:50'),
-  createData(2634.56, 0.05766, 6.86906, 'up', '11:04:50'),
-  createData(2623.66, 0.00975, 86.8989038, 'up', '11:04:50'),
-  createData(2634.56, 0.08648, 82.5888, 'up', '11:04:50'),
-  createData(2623.66, 0.09475, 12.56879, 'up', '11:04:50'),
-  createData(2634.56, 0.00265, 55.68797, 'up', '11:04:50'),
-  createData(2623.66, 0.00473, 8.879789, 'up', '11:04:50'),
-  createData(2634.56, 0.05766, 1.136468, 'up', '11:04:50'),
-  createData(2623.66, 0.00975, 6.86906, 'up', '11:04:50'),
-  createData(2623.66, 0.00473, 1.136468, 'up', '11:04:50'),
-  createData(2634.56, 0.05766, 6.86906, 'up', '11:04:50'),
-  createData(2623.66, 0.00975, 86.8989038, 'up', '11:04:50'),
-];
+const centerRow = createData(2623.66, 0.09475, 82.5888, 'more', '11:04:51');
 
-const VolatilityTable = () => {
+interface IProps {
+  itemsPerCategory: number;
+}
+
+const VolatilityTable: React.FC<IProps> = ({ itemsPerCategory }) => {
+  const [resolveRows, setResolveRows] = React.useState<any[]>([]);
+
+  React.useEffect(() => {
+    if (itemsPerCategory) {
+      const resolveDownItems = [];
+      const resolveUpItems = [];
+      for (let i = 0; i < itemsPerCategory; i++) {
+        resolveDownItems.push(downItem);
+        resolveUpItems.push(upItem);
+      }
+      const result = [...resolveDownItems, centerRow, ...resolveUpItems];
+      setResolveRows(result);
+    }
+  }, [itemsPerCategory]);
+
   return (
     <TableContainer
       component={Paper}
       sx={{
-        maxHeight: 'calc(100vh - 220px)',
+        maxHeight: '100%',
         overflow: 'auto',
         borderRadius: 0,
         boxShadow: 'none',
@@ -128,7 +107,7 @@ const VolatilityTable = () => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row, index) => {
+          {resolveRows.map((row, index) => {
             if (row.direction === 'more')
               return (
                 <TableRow

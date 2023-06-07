@@ -28,7 +28,7 @@ const UserLayout: React.FC<SectionProps> = (props: SectionProps) => {
   }, []);
 
   return (
-    <Stack direction="column" height="100vh">
+    <Stack direction="column">
       <AppBarComponent />
       <Box sx={{ background: 'background.default', flex: 1 }}>
         <Helmet>

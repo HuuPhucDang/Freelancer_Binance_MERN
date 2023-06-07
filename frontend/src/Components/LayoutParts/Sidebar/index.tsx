@@ -49,36 +49,48 @@ const menu: IMenu[] = [
 const Sidebar = () => {
   const { pathname } = useLocation();
   return (
-    <Stack
-      sx={{
-        borderRight: '1px solid background.lightSilver',
-        height: '100%',
-      }}
-    >
-      {menu.map((item: IMenu) => {
-        const isActive = item.path === pathname;
-        return (
-          <Button
-            key={item.path}
-            startIcon={item.icon}
-            variant="text"
-            href={item.path}
-            sx={{
-              color: 'text.primary',
-              justifyContent: 'flex-start',
-              fontSize: '12px',
-              height: '40px',
-              padding: '0 10px',
-              textTransform: "unset",
-              backgroundColor: isActive
-                ? 'background.mainContent'
-                : 'transparent',
-            }}
-          >
-            {item.label}
-          </Button>
-        );
-      })}
+    <Stack sx={{ maxWidth: '100%', overflow: 'auto' }}>
+      <Stack
+        sx={{
+          borderRight: '1px solid background.lightSilver',
+          height: '100%',
+          flexDirection: {
+            xs: 'row',
+            md: 'column',
+          },
+        }}
+      >
+        {menu.map((item: IMenu) => {
+          const isActive = item.path === pathname;
+          return (
+            <Button
+              key={item.path}
+              startIcon={item.icon}
+              variant="text"
+              href={item.path}
+              sx={{
+                display: 'flex',
+                color: 'text.primary',
+                justifyContent: 'flex-start',
+                fontSize: '12px',
+                height: '40px',
+                padding: '0 10px',
+                textTransform: 'unset',
+                whiteSpace: 'nowrap',
+                minWidth: {
+                  xs: 'max-content',
+                  md: '100%',
+                },
+                backgroundColor: isActive
+                  ? 'background.mainContent'
+                  : 'transparent',
+              }}
+            >
+              {item.label}
+            </Button>
+          );
+        })}
+      </Stack>
     </Stack>
   );
 };

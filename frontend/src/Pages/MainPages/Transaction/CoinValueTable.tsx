@@ -28,22 +28,13 @@ const topRightRows = [
   createTopRightData('1INCH/BTC ', 0.0000623),
   createTopRightData('1INCH/BTC ', 0.0000623),
   createTopRightData('1INCH/BTC ', 0.0000623),
-  createTopRightData('1INCH/BTC ', 0.0000623),
-  createTopRightData('1INCH/BTC ', 0.0000623),
-  createTopRightData('1INCH/BTC ', 0.0000623),
-  createTopRightData('1INCH/BTC ', 0.0000623),
-  createTopRightData('1INCH/BTC ', 0.0000623),
-  createTopRightData('1INCH/BTC ', 0.0000623),
-  createTopRightData('1INCH/BTC ', 0.0000623),
-  createTopRightData('1INCH/BTC ', 0.0000623),
-  createTopRightData('1INCH/BTC ', 0.0000623),
 ];
 
 const CoinValueTable = () => {
   return (
     <TableContainer
       sx={{
-        maxHeight: '100%',
+        maxHeight: '370px',
         overflow: 'auto',
         borderRadius: 0,
         boxShadow: 'none',
