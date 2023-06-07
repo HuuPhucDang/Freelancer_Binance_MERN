@@ -46,16 +46,39 @@ const Invoice: React.FC = () => {
         component="main"
         sx={{
           minHeight: 'calc(100vh - 94px)',
-          padding: '1em 0',
+          padding: {
+            xs: 0,
+            md: '1em 0',
+          },
           mx: 'auto',
         }}
       >
         <Grid container columnSpacing={4}>
-          <Grid item md={2.5}>
+          <Grid
+            item
+            xs={12}
+            md={2.5}
+            width="100%"
+            sx={{
+              position: {
+                xs: 'sticky',
+                md: 'unset',
+              },
+              top: '70px',
+              backgroundColor: 'background.default',
+              zIndex: 1,
+            }}
+          >
             <Sidebar />
           </Grid>
-          <Grid item md={9.5} borderLeft="1px solid #949494">
-            <Stack direction="column">
+          <Grid item xs={12} md={9.5} borderLeft="1px solid #949494">
+            <Stack
+              direction="column"
+              padding={{
+                xs: '10px',
+                md: '0',
+              }}
+            >
               <Typography
                 sx={{ fontSize: '24px', lineHeight: '34px', fontWeight: 600 }}
               >
@@ -120,7 +143,10 @@ const Invoice: React.FC = () => {
                         sx={{
                           width: '110px',
                           fontSize: '14px',
-                          padding: '15px',
+                          padding: {
+                            xs: '15px 5px',
+                            md: '15px',
+                          },
                         }}
                       >
                         Ngày tháng
@@ -129,7 +155,10 @@ const Invoice: React.FC = () => {
                         align="center"
                         sx={{
                           fontSize: '14px',
-                          padding: '15px',
+                          padding: {
+                            xs: '15px 5px',
+                            md: '15px',
+                          },
                           width: '110px',
                         }}
                       >
@@ -139,7 +168,10 @@ const Invoice: React.FC = () => {
                         align="center"
                         sx={{
                           fontSize: '14px',
-                          padding: '15px',
+                          padding: {
+                            xs: '15px 5px',
+                            md: '15px',
+                          },
                           width: '110px',
                         }}
                       >
@@ -149,7 +181,10 @@ const Invoice: React.FC = () => {
                         align="center"
                         sx={{
                           fontSize: '14px',
-                          padding: '15px',
+                          padding: {
+                            xs: '15px 5px',
+                            md: '15px',
+                          },
                           width: '110px',
                         }}
                       >
@@ -159,7 +194,10 @@ const Invoice: React.FC = () => {
                         align="center"
                         sx={{
                           fontSize: '14px',
-                          padding: '15px',
+                          padding: {
+                            xs: '15px 5px',
+                            md: '15px',
+                          },
                           width: '110px',
                         }}
                       >
@@ -169,7 +207,10 @@ const Invoice: React.FC = () => {
                         align="center"
                         sx={{
                           fontSize: '14px',
-                          padding: '15px',
+                          padding: {
+                            xs: '15px 5px',
+                            md: '15px',
+                          },
                           width: '110px',
                         }}
                       >

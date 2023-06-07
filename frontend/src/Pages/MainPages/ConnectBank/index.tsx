@@ -27,16 +27,49 @@ const ConnectBank: React.FC = () => {
         component="main"
         sx={{
           minHeight: 'calc(100vh - 94px)',
-          padding: '1em 0',
+          padding: {
+            xs: 0,
+            md: '1em 0',
+          },
           mx: 'auto',
         }}
       >
         <Grid container columnSpacing={2} height="100%">
-          <Grid item md={2.5}>
+          <Grid
+            item
+            xs={12}
+            md={2.5}
+            width="100%"
+            sx={{
+              position: {
+                xs: 'sticky',
+                md: 'unset',
+              },
+              top: '70px',
+              backgroundColor: 'background.default',
+              zIndex: 1,
+            }}
+          >
             <Sidebar />
           </Grid>
-          <Grid item md={9.5} borderLeft="1px solid #949494">
-            <Stack direction="column" sx={{ paddingRight: '30px' }}>
+          <Grid item xs={12} md={9.5} borderLeft="1px solid #949494">
+            <Stack
+              direction="column"
+              sx={{
+                paddingRight: {
+                  xs: 0,
+                  md: '30px',
+                },
+                margin: {
+                  xs: '10px',
+                  md: 0,
+                },
+                width: {
+                  xs: 'calc(100% - 20px)',
+                  md: '100%',
+                },
+              }}
+            >
               <Typography
                 sx={{ fontSize: '24px', lineHeight: '34px', fontWeight: 600 }}
               >

@@ -6,27 +6,27 @@ import { IBankDoc, IBankModel } from "../interfaces/bank.interface";
 const bankSchema = new mongoose.Schema<IBankDoc, IBankModel>(
   {
     fullname: {
-      type: String,
+      type: mongoose.Schema.Types.String,
       required: false,
       default: "",
     },
     bankName: {
-      type: String,
+      type: mongoose.Schema.Types.String,
       required: false,
       default: "",
     },
     bankAddress: {
-      type: String,
+      type: mongoose.Schema.Types.String,
       required: false,
       default: "",
     },
     accountNumber: {
-      type: String,
+      type: mongoose.Schema.Types.String,
       required: false,
       default: "",
     },
     isVerified: {
-      type: Boolean,
+      type: mongoose.Schema.Types.Boolean,
       required: false,
       default: false,
     },

@@ -24,15 +24,32 @@ const WithdrawMoney: React.FC = () => {
         component="main"
         sx={{
           minHeight: 'calc(100vh - 94px)',
-          padding: '1em 0',
+          padding: {
+            xs: '0',
+            md: '1em 0',
+          },
           mx: 'auto',
         }}
       >
         <Grid container columnSpacing={4}>
-          <Grid item md={2.5}>
+          <Grid
+            item
+            xs={12}
+            md={2.5}
+            width="100%"
+            sx={{
+              position: {
+                xs: 'sticky',
+                md: 'unset',
+              },
+              top: '70px',
+              backgroundColor: 'background.default',
+              zIndex: 1,
+            }}
+          >
             <Sidebar />
           </Grid>
-          <Grid item md={9.5} borderLeft="1px solid #949494">
+          <Grid item xs={12} md={9.5} borderLeft="1px solid #949494">
             <Stack direction="column" sx={{ p: 2 }}>
               <Typography
                 sx={{

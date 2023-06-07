@@ -21,17 +21,41 @@ const Recharge: React.FC = () => {
         component="main"
         sx={{
           minHeight: 'calc(100vh - 94px)',
-          padding: '1em 0',
+          padding: {
+            xs: 0,
+            md: '1em 0',
+          },
           mx: 'auto',
         }}
       >
         <Grid container columnSpacing={4} height="100%">
-          <Grid item md={2.5}>
+          <Grid
+            item
+            xs={12}
+            md={2.5}
+            width="100%"
+            sx={{
+              position: {
+                xs: 'sticky',
+                md: 'unset',
+              },
+              top: '70px',
+              backgroundColor: 'background.default',
+              zIndex: 1,
+            }}
+          >
             <Sidebar />
           </Grid>
-          <Grid item md={9.5} borderLeft="1px solid #949494">
-            <Grid container columnSpacing={3}>
-              <Grid item md={7.5}>
+          <Grid item xs={12} md={9.5} borderLeft="1px solid #949494">
+            <Grid
+              container
+              columnSpacing={3}
+              padding={{
+                xs: '10px',
+                md: 0,
+              }}
+            >
+              <Grid item xs={12} md={7.5}>
                 <Stack direction="column">
                   <Typography
                     sx={{
@@ -52,6 +76,16 @@ const Recharge: React.FC = () => {
                   >
                     Nạp tiền qua hệ thống banking ngân hàng
                   </Typography>
+                  <Box
+                    component="img"
+                    src={Assets.qrImage}
+                    sx={{
+                      display: { xs: 'block', md: 'none' },
+                      width: '250px',
+                      height: 'auto',
+                      objectFit: 'contain',
+                    }}
+                  />
                   <Stack direction="column" marginTop="24px">
                     <Box
                       sx={{
@@ -134,7 +168,7 @@ const Recharge: React.FC = () => {
                   </Stack>
                 </Stack>
               </Grid>
-              <Grid item md={4.5}>
+              <Grid item md={4.5} display={{ xs: 'none', md: 'flex' }}>
                 <Box
                   component="img"
                   src={Assets.qrImage}

@@ -11,23 +11,24 @@ import {
 import { securitySchema } from "./security.model";
 import { verificationSchema } from "./verification.model";
 import { bankSchema } from "./bank.model";
+import { walletSchema } from "./wallet.model";
 
 const userSchema = new mongoose.Schema<IUserDoc, IUserModel>(
   {
     username: {
-      type: String,
+      type: mongoose.Schema.Types.String,
       required: true,
       unique: true,
       trim: true,
       lowercase: true,
     },
     nickname: {
-      type: String,
+      type: mongoose.Schema.Types.String,
       required: true,
       unique: true,
     },
     password: {
-      type: String,
+      type: mongoose.Schema.Types.String,
       required: true,
       trim: true,
       minlength: 8,
@@ -41,31 +42,32 @@ const userSchema = new mongoose.Schema<IUserDoc, IUserModel>(
       private: true, // used by the toJSON plugin
     },
     inviteCode: {
-      type: String,
+      type: mongoose.Schema.Types.String,
       required: false,
     },
     onwCode: {
-      type: String,
+      type: mongoose.Schema.Types.String,
       required: false,
     },
     avatar: {
-      type: String,
+      type: mongoose.Schema.Types.String,
       required: false,
       default: "https://api.dicebear.com/6.x/micah/svg?seed=Lily",
     },
     role: {
-      type: String,
+      type: mongoose.Schema.Types.String,
       enum: roles,
       default: "user",
     },
     status: {
-      type: String,
+      type: mongoose.Schema.Types.String,
       enum: EUserStatus,
       default: "active",
     },
     security: securitySchema,
     bank: bankSchema,
     verification: verificationSchema,
+    wallet: walletSchema,
   },
   {
     timestamps: true,

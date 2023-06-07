@@ -33,6 +33,8 @@ export const getUser = catchAsync(async (req: Request, res: Response) => {
 
     res.send(responsePayload(true, "Get user successfully!", user));
   }
+
+  res.send(responsePayload(false, "User not exist!", null));
 });
 
 export const getSelf = catchAsync(async (req: Request, res: Response) => {
@@ -49,6 +51,7 @@ export const updateUser = catchAsync(async (req: Request, res: Response) => {
     );
     res.send(responsePayload(true, "Update user successfully!", user));
   }
+  res.send(responsePayload(false, "User not exist!", null));
 });
 
 export const updateUserAvatar = catchAsync(
@@ -70,89 +73,3 @@ export const updateUserNickname = catchAsync(
     res.send(responsePayload(true, "Update nickname successfully!", user));
   }
 );
-
-export const verifyPhonenumber = catchAsync(
-  async (req: Request, res: Response) => {
-    const user = await userService.verifyPhonenumber(
-      new mongoose.Types.ObjectId(req.user.id),
-      req.body
-    );
-    res.send(responsePayload(true, "Active phonenumber successfully!", user));
-  }
-);
-
-export const activeUserEmail = catchAsync(
-  async (req: Request, res: Response) => {
-    const user = await userService.activeUserEmail(
-      new mongoose.Types.ObjectId(req.user.id),
-      req.body
-    );
-    res.send(responsePayload(true, "Active email successfully!", user));
-  }
-);
-
-export const changeUserEmail = catchAsync(
-  async (req: Request, res: Response) => {
-    const user = await userService.changeUserEmail(
-      new mongoose.Types.ObjectId(req.user.id),
-      req.body
-    );
-    res.send(responsePayload(true, "Change email successfully!", user));
-  }
-);
-
-export const activeWithdrawPassword = catchAsync(
-  async (req: Request, res: Response) => {
-    const user = await userService.activeWithdrawPassword(
-      new mongoose.Types.ObjectId(req.user.id),
-      req.body
-    );
-    res.send(
-      responsePayload(true, "Active Withdraw password successfully!", user)
-    );
-  }
-);
-
-export const changeWithdrawPassword = catchAsync(
-  async (req: Request, res: Response) => {
-    const user = await userService.changeWithdrawPassword(
-      new mongoose.Types.ObjectId(req.user.id),
-      req.body
-    );
-    res.send(
-      responsePayload(true, "Change Withdraw password successfully!", user)
-    );
-  }
-);
-
-export const changeUserPassword = catchAsync(
-  async (req: Request, res: Response) => {
-    const user = await userService.changeUserPassword(
-      new mongoose.Types.ObjectId(req.user.id),
-      req.body
-    );
-    res.send(responsePayload(true, "Change password successfully!", user));
-  }
-);
-
-export const activeBank = catchAsync(async (req: Request, res: Response) => {
-  const user = await userService.activeBank(
-    new mongoose.Types.ObjectId(req.user.id),
-    req.body
-  );
-  res.send(responsePayload(true, "Active bank successfully!", user));
-});
-
-export const uploadIDCards = catchAsync(async (req: Request, res: Response) => {
-  const allFiles: any = req.files;
-  const updateBody: any = {};
-  Object.keys(allFiles).map((key: any) => {
-    updateBody[`${key}Url`] = allFiles[key][0]?.id;
-  });
-
-  const user = await userService.uploadIdCards(
-    new mongoose.Types.ObjectId(req.user.id),
-    updateBody
-  );
-  res.send(responsePayload(true, "Active bank successfully!", user));
-});

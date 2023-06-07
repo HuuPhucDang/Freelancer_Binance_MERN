@@ -4,6 +4,11 @@ import userRoute from "./user.route";
 import securityRoute from "./security.route";
 import bankRoute from "./bank.route";
 import verificationRoute from "./verification.route";
+import transactionRoute from "./transaction.route";
+import requestRoute from "./request.route";
+import systemInforRoute from "./systemInfor.route";
+
+
 
 const router = express.Router();
 
@@ -32,6 +37,18 @@ const defaultIRoute: IRoute[] = [
   {
     path: "/verification",
     route: verificationRoute,
+  },
+  {
+    path: "/transactions",
+    route: transactionRoute,
+  },
+  {
+    path: "/requests",
+    route: requestRoute,
+  },
+  {
+    path: "/system",
+    route: systemInforRoute,
   },
 ];
 

@@ -17,7 +17,12 @@ interface IProps {
   speed?: number;
 }
 
-const Slider: React.FC<IProps> = ({ items, itemSx = {}, slidersPerView = 1, speed = 2000 }) => {
+const Slider: React.FC<IProps> = ({
+  items,
+  itemSx = {},
+  slidersPerView = 1,
+  speed = 2000,
+}) => {
   return (
     <>
       <Swiper
@@ -31,6 +36,19 @@ const Slider: React.FC<IProps> = ({ items, itemSx = {}, slidersPerView = 1, spee
         autoplay={{
           delay: 2000,
           disableOnInteraction: false,
+        }}
+        breakpoints={{
+          // when window width is >= 640px
+          320: {
+            slidesPerView: 1,
+          },
+          480: {
+            slidesPerView: 2,
+          },
+          // when window width is >= 768px
+          768: {
+            slidesPerView: slidersPerView,
+          },
         }}
       >
         {items.map((item: string, index: number) => (

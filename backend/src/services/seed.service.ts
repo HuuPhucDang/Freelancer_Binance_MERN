@@ -8,6 +8,10 @@ const ADMIN_SEED = {
   password: "M123456789",
   onwCode: "admin001",
   role: "admin",
+  wallet: {
+    balance: 0,
+    benefit: 0.1,
+  },
 };
 
 /**

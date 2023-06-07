@@ -28,7 +28,7 @@ const verificationSchema = new mongoose.Schema<
       default: "",
     },
     status: {
-      type: String,
+      type: mongoose.Schema.Types.String,
       enum: EVerifyType,
       default: "pending",
     },

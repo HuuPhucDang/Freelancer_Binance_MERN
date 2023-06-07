@@ -36,6 +36,10 @@ const volatilityItems = [
   'EDUUSDT -1,18',
   'BTCUSDT -0,41',
   'IUDST -2,59',
+  'IUDST -2,59',
+  'EDUUSDT -1,18',
+  'BTCUSDT -0,41',
+  'IUDST -2,59',
 ];
 const AppBarComponent: React.FC = () => {
   const isLogged: any = useTypedSelector((state: any) =>
@@ -73,24 +77,40 @@ const AppBarComponent: React.FC = () => {
           md: 0,
         }}
       >
-        <Grid item xs={3} md={1}>
-          <Link
-            href={ROUTERS.HOME}
-            sx={{
-              color: 'text.secondary',
-              backgroundColor: 'background.lightSilver',
-              fontSize: '12px',
-              display: 'inline-flex',
-              height: '28px',
-              width: '58px',
-              alignItems: 'center',
-              padding: '0 6px',
-            }}
-          >
-            Logo
-          </Link>
+        <Grid item xs={2} sm={2.5} md={1} lg={2}>
+          <Stack direction="row" alignItems="center">
+            <Link
+              href={ROUTERS.HOME}
+              sx={{
+                color: 'text.secondary',
+                backgroundColor: 'background.lightSilver',
+                fontSize: '12px',
+                display: 'inline-flex',
+                height: '28px',
+                width: '58px',
+                alignItems: 'center',
+                padding: '0 6px',
+              }}
+            >
+              Logo
+            </Link>
+            <Link
+              href={ROUTERS.TRANSACTION}
+              sx={{
+                display: { xs: 'none', lg: 'flex' },
+                alignItems: 'center',
+                marginLeft: '10px',
+              }}
+            >
+              <Box
+                component="img"
+                src={Assets.transactionDarkIcon}
+                sx={{ width: '33px', height: '26px' }}
+              />
+            </Link>
+          </Stack>
         </Grid>
-        <Grid item xs={6} md={6}>
+        <Grid item xs={8} sm={7} md={6} lg={6}>
           <Stack
             direction="row"
             display="flex"
@@ -104,7 +124,10 @@ const AppBarComponent: React.FC = () => {
             <Link
               href={ROUTERS.TRANSACTION}
               sx={{
-                display: 'flex',
+                display: {
+                  xs: 'flex',
+                  lg: 'none',
+                },
                 alignItems: 'center',
               }}
             >
@@ -117,13 +140,13 @@ const AppBarComponent: React.FC = () => {
             <Stack
               flexDirection="row"
               alignItems="center"
-              justifyContent="space-evenly"
+              justifyContent="flex-end"
               sx={{
                 flex: 1,
                 backgroundColor: 'background.newsHeader',
                 height: '25px',
                 margin: '0 6px',
-                maxWidth: '370px',
+                maxWidth: "80%",
               }}
             >
               <Slider
@@ -138,7 +161,7 @@ const AppBarComponent: React.FC = () => {
             </Stack>
           </Stack>
         </Grid>
-        <Grid item xs={3} md={5}>
+        <Grid item xs={2} sm={2.5} md={5} lg={4}>
           <Stack
             direction="row"
             alignItems="center"
@@ -319,9 +342,9 @@ const AppBarComponent: React.FC = () => {
           {isLogged ? (
             <Slider
               items={[
-                'Nhận chiết khấu giao dịch lên tới 100 USD (dành cho người dùng đã xác minh)',
-                'Nhận chiết khấu giao dịch lên tới 100 USD (dành cho người dùng đã xác minh)',
-                'Nhận chiết khấu giao dịch lên tới 100 USD (dành cho người dùng đã xác minh)',
+                'Nhận chiết khấu giao dịch lên tới 100 USD khi đăng ký thành công với mã mời (dành cho người dùng đã xác minh)',
+                'Nhận chiết khấu giao dịch lên tới 100 USD khi đăng ký thành công với mã mời (dành cho người dùng đã xác minh)',
+                'Nhận chiết khấu giao dịch lên tới 100 USD khi đăng ký thành công với mã mời (dành cho người dùng đã xác minh)',
               ]}
               itemSx={{
                 fontSize: '10px',
@@ -339,9 +362,9 @@ const AppBarComponent: React.FC = () => {
               width="100%"
             >
               <PersonIcon sx={{ color: 'text.burntSienna', mr: '6px' }} />
-              <Typography sx={{ color: '#000000', fontSize: '10px' }}>
+              <Typography sx={{ color: '#000000', fontSize: '10px', textAlign: 'center' }}>
                 <Link href={ROUTERS.SIGN_UP}>Đăng kí ngay</Link> - Nhận chiết
-                khấu giao dịch lên tới 100 USD (dành cho người dùng đã xác minh)
+                khấu giao dịch lên tới 100 USD khi đăng ký thành công với mã mời (dành cho người dùng đã xác minh)
               </Typography>
             </Stack>
           )}
@@ -355,10 +378,7 @@ const AppBarComponent: React.FC = () => {
       <Box>
         <Toolbar
           sx={{
-            padding: {
-              xs: '10px !important',
-              md: '0 10px !important',
-            },
+            padding: '0 10px !important',
             minHeight: '40px !important',
           }}
         >

@@ -8,7 +8,10 @@ import {
   getUserById,
   updateUserById,
 } from "../user/user.service";
-import { IUserDoc, IUserWithTokens } from "../../interfaces/user.interfaces";
+import {
+  IUserDoc,
+  IUserWithTokens,
+} from "../../interfaces/user.interfaces";
 import { generateAuthTokens, verifyToken } from "../token/token.service";
 
 /**
@@ -135,3 +138,4 @@ export const resetPassword = async (
 //     throw new ApiError(httpStatus.UNAUTHORIZED, 'Email verification failed');
 //   }
 // };
+

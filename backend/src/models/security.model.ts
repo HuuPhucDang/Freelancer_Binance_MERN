@@ -6,22 +6,22 @@ import { ISecurityDoc } from "../interfaces/security.interface";
 const securitySchema = new mongoose.Schema<ISecurityDoc>(
   {
     phonenumber: {
-      type: String,
+      type: mongoose.Schema.Types.String,
       required: false,
       default: "",
     },
     email: {
-      type: String,
+      type: mongoose.Schema.Types.String,
       required: false,
       default: "",
     },
     withdrawPassword: {
-      type: String,
+      type: mongoose.Schema.Types.String,
       required: false,
       private: true, // used by the toJSON plugin
     },
     isVerified: {
-      type: Boolean,
+      type: mongoose.Schema.Types.Boolean,
       required: false,
       default: false,
     },

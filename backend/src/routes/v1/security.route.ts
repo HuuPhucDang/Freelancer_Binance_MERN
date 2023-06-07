@@ -1,50 +1,50 @@
 import express, { Router } from "express";
 import { validate } from "../../helper/validate";
 import { auth } from "../../modules/auth";
-import { userController, userValidation } from "../../modules/user";
+import { securityController, securityValidation } from "../../modules/secutiry";
 
 const router: Router = express.Router();
 
 router.put(
   "/phonenumber",
   auth("selfUpdate"),
-  validate(userValidation.verifyPhonenumber),
-  userController.verifyPhonenumber
+  validate(securityValidation.verifyPhonenumber),
+  securityController.verifyPhonenumber
 );
 
 router.put(
   "/activeEmail",
   auth("selfUpdate"),
-  validate(userValidation.activeUserEmail),
-  userController.activeUserEmail
+  validate(securityValidation.activeUserEmail),
+  securityController.activeUserEmail
 );
 
 router.put(
   "/changeEmail",
   auth("selfUpdate"),
-  validate(userValidation.changeUserEmail),
-  userController.changeUserEmail
+  validate(securityValidation.changeUserEmail),
+  securityController.changeUserEmail
 );
 
 router.put(
   "/activeWithdrawPassword",
   auth("selfUpdate"),
-  validate(userValidation.activeWithdrawPassword),
-  userController.activeWithdrawPassword
+  validate(securityValidation.activeWithdrawPassword),
+  securityController.activeWithdrawPassword
 );
 
 router.put(
   "/changeWithdrawPassword",
   auth("selfUpdate"),
-  validate(userValidation.changeWithdrawPassword),
-  userController.changeWithdrawPassword
+  validate(securityValidation.changeWithdrawPassword),
+  securityController.changeWithdrawPassword
 );
 
 router.put(
   "/changePassword",
   auth("selfUpdate"),
-  validate(userValidation.changeUserPassword),
-  userController.changeUserPassword
+  validate(securityValidation.changeUserPassword),
+  securityController.changeUserPassword
 );
 
 export default router;

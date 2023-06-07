@@ -18,4 +18,3 @@ export interface IBankModel extends Model<IBankDoc> {
   ): Promise<QueryResult>;
 }
 
-export type UpdateUserBankBody = Omit<IBank, "isVerified">;

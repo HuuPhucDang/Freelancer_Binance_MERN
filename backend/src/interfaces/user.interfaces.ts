@@ -4,6 +4,7 @@ import { AccessAndRefreshTokens } from "./token.interfaces";
 import { ISecurityDoc } from "./security.interface";
 import { IBankDoc } from "./bank.interface";
 import { IVerificationDoc } from "./verification.interface";
+import { IWalletDoc } from "./waller.interface";
 
 export enum EUserStatus {
   ACTIVE = "active",
@@ -21,6 +22,7 @@ export interface IUser {
   security: ISecurityDoc;
   verification: IVerificationDoc;
   bank: IBankDoc;
+  wallet: IWalletDoc;
 }
 
 export interface IUserDoc extends IUser, Document {
@@ -105,4 +107,9 @@ export type ActiveBankBody = {
 export type UploadIDCards = {
   frontImageUrl: string;
   backImageUrl: string;
+};
+
+export type ForgotPassword = {
+  username: string;
+  message: string;
 };
