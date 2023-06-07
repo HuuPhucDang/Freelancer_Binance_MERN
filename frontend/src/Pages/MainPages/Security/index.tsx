@@ -68,16 +68,40 @@ const Security: React.FC = () => {
         component="main"
         sx={{
           minHeight: 'calc(100vh - 94px)',
-          padding: '1em 0',
+          padding: {
+            xs: 0,
+            md: '1em 0',
+          },
           mx: 'auto',
         }}
       >
         <Grid container columnSpacing={4}>
-          <Grid item md={2.5}>
+          <Grid
+            item
+            xs={12}
+            md={2.5}
+            sx={{
+              position: {
+                xs: 'sticky',
+                md: 'unset',
+              },
+              top: '70px',
+              backgroundColor: 'background.default',
+              zIndex: 1,
+            }}
+          >
             <Sidebar />
           </Grid>
-          <Grid item md={9.5} borderLeft="1px solid #949494">
-            <Stack direction="column" sx={{ paddingRight: '50px' }}>
+          <Grid item xs={12} md={9.5} borderLeft="1px solid #949494">
+            <Stack
+              direction="column"
+              sx={{
+                padding: {
+                  xs: '10px',
+                  md: '0 50px 0 0 ',
+                },
+              }}
+            >
               <Stack direction="row" justifyContent="space-between">
                 <Typography
                   sx={{ fontSize: '24px', lineHeight: '34px', fontWeight: 600 }}
@@ -147,19 +171,21 @@ const Security: React.FC = () => {
                             alignItems="center"
                             padding="6px 0"
                           >
-                            <Box
-                              component="img"
-                              src={row.icon}
-                              sx={{
-                                width: '40px',
-                                height: '40px',
-                                objectFit: 'contain',
-                                marginLeft: '-10px',
-                              }}
-                            />
+                            <Box sx={{ width: '40px' }}>
+                              <Box
+                                component="img"
+                                src={row.icon}
+                                sx={{
+                                  width: '40px',
+                                  height: '40px',
+                                  objectFit: 'contain',
+                                  marginLeft: '-10px',
+                                }}
+                              />
+                            </Box>
                             <Stack
                               direction="column"
-                              sx={{ marginLeft: '10px' }}
+                              sx={{ marginLeft: '10px', flex: 1 }}
                             >
                               <Typography
                                 sx={{

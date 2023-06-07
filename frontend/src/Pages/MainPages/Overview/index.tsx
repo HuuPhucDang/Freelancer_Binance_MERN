@@ -63,7 +63,10 @@ const Overview: React.FC = () => {
         component="main"
         sx={{
           minHeight: 'calc(100vh - 94px)',
-          padding: '1em 0',
+          padding: {
+            xs: '0',
+            md: '1em 0',
+          },
           mx: 'auto',
         }}
       >
@@ -76,12 +79,37 @@ const Overview: React.FC = () => {
           onClose={() => setIsShowNamePopup(false)}
         />
         <Grid container columnSpacing={2} height="100%">
-          <Grid item md={2.5}>
+          <Grid
+            item
+            xs={12}
+            md={2.5}
+            width="100%"
+            sx={{
+              position: {
+                xs: 'sticky',
+                md: 'unset',
+              },
+              top: '70px',
+              backgroundColor: 'background.default',
+              zIndex: 1,
+            }}
+          >
             <Sidebar />
           </Grid>
-          <Grid item md={9.5} borderLeft="1px solid #949494">
-            <Grid container columnSpacing={2} rowSpacing={3.5}>
-              <Grid item md={12}>
+          <Grid
+            item
+            xs={12}
+            md={9.5}
+            borderLeft="1px solid #949494"
+            padding={{ xs: '10px 0', md: '0' }}
+          >
+            <Grid
+              container
+              columnSpacing={2}
+              rowSpacing={3.5}
+              padding={{ xs: '10px', md: 0 }}
+            >
+              <Grid item xs={12}>
                 <Stack
                   direction="row"
                   sx={{
@@ -137,7 +165,7 @@ const Overview: React.FC = () => {
                   </Stack>
                 </Stack>
               </Grid>
-              <Grid item md={6}>
+              <Grid item xs={12} md={6}>
                 <Box
                   sx={{
                     backgroundColor: 'background.mainContent',

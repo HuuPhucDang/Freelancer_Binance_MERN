@@ -24,7 +24,12 @@ const Home: React.FC = () => {
       <Grid container>
         <Grid item md={5.5}>
           <Stack direction="column" height="100%">
-            <Stack flex={1}>
+            <Stack
+              flex={{
+                xs: 1,
+                lg: 'unset',
+              }}
+            >
               <Typography
                 sx={{
                   fontSize: '34px',
@@ -48,6 +53,7 @@ const Home: React.FC = () => {
               marginY={{
                 xs: '30px',
                 md: 'unset',
+                lg: '40px',
               }}
             >
               <Link
@@ -163,7 +169,17 @@ const Home: React.FC = () => {
           <Box
             component="img"
             src={Assets.deviceImage}
-            sx={{ width: '100%', height: 'auto', objectFit: 'contain' }}
+            sx={{
+              width: {
+                xs: '100%',
+                lg: 'auto',
+              },
+              height: {
+                xs: 'auto',
+                lg: '300px',
+              },
+              objectFit: 'contain',
+            }}
           />
           <Typography
             sx={{
@@ -969,7 +985,7 @@ const Home: React.FC = () => {
         component="main"
         // maxWidth="md"
         padding="0 24px"
-        sx={{ my: { xs: '3em', md: '5em', textAlign: '-webkit-center' } }}
+        sx={{ my: { xs: '3em', textAlign: '-webkit-center' } }}
       >
         <Grow in timeout={500}>
           {_renderHero()}

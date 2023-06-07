@@ -27,7 +27,10 @@ const Verify: React.FC = () => {
         component="main"
         sx={{
           minHeight: 'calc(100vh - 94px)',
-          padding: '1em 0',
+          padding: {
+            xs: 0,
+            md: '1em 0',
+          },
           mx: 'auto',
         }}
       >
@@ -40,11 +43,24 @@ const Verify: React.FC = () => {
           onClose={() => setIsShowUploadIDCardPopup(false)}
         />
         <Grid container columnSpacing={4}>
-          <Grid item md={2.5}>
+          <Grid
+            item
+            xs={12}
+            md={2.5}
+            sx={{
+              position: {
+                xs: 'sticky',
+                md: 'unset',
+              },
+              top: '70px',
+              backgroundColor: 'background.default',
+              zIndex: 1,
+            }}
+          >
             <Sidebar />
           </Grid>
-          <Grid item md={9.5} borderLeft="1px solid #949494">
-            <Stack direction="column">
+          <Grid item xs={12} md={9.5} borderLeft="1px solid #949494">
+            <Stack direction="column" padding={{ xs: '10px', md: 0 }}>
               <Typography
                 sx={{ fontSize: '24px', lineHeight: '34px', fontWeight: 600 }}
               >
@@ -122,7 +138,14 @@ const Verify: React.FC = () => {
                         </Stack>
                       </Stack>
                     </Grid>
-                    <Grid item md={2}>
+                    <Grid
+                      item
+                      md={2}
+                      marginTop={{
+                        xs: '20px',
+                        md: 0,
+                      }}
+                    >
                       <Stack>
                         <Typography
                           sx={{
