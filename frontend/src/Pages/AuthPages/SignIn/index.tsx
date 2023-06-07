@@ -1,13 +1,25 @@
-import { Button, Stack, TextField, Typography } from '@mui/material';
+import React from 'react';
 import _ from 'lodash';
+import { Button, Stack, TextField, Typography } from '@mui/material';
+import { useForm, Controller } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
+
 import { useTypedDispatch, useTypedSelector } from '@/Reducers/store';
 import { AuthActions } from '@/Reducers/Actions';
-import React from 'react';
 import { Utils } from '@/Libs';
 import { ROUTERS } from '@/Constants';
-import { ForgotPassword } from '../../../Components/Popup';
+import { ForgotPassword } from '@/Components/Popup';
 
-const { setLogged } = AuthActions;
+const { login } = AuthActions;
+
+const schema = yup
+  .object({
+    username: yup.string().trim().required('Username is a required field'),
+    password: yup.string().trim().required('Password is a required field'),
+  })
+  .required();
+type FormData = yup.InferType<typeof schema>;
 
 const SignIn = () => {
   const [isShowPopup, setIsShowPopup] = React.useState<boolean>(false);
@@ -16,9 +28,19 @@ const SignIn = () => {
   );
   const dispatch = useTypedDispatch();
 
+  const {
+    handleSubmit,
+    formState: { errors },
+    control,
+  } = useForm<FormData>({
+    resolver: yupResolver(schema),
+  });
+
   React.useEffect(() => {
     if (isLogged) Utils.redirect(ROUTERS.TRANSACTION);
   }, [isLogged]);
+
+  const onSubmit = (data: FormData) => dispatch(login(data))
 
   return (
     <Stack
@@ -35,6 +57,7 @@ const SignIn = () => {
         onClose={() => setIsShowPopup(false)}
       />
       <Stack
+        component="form"
         direction="column"
         sx={{
           border: '1px solid #ccc',
@@ -48,28 +71,51 @@ const SignIn = () => {
         >
           Đăng nhập
         </Typography>
-        <TextField
-          hiddenLabel
-          variant="outlined"
-          size="small"
-          placeholder="Email"
-          sx={{
-            marginTop: '10px',
-            backgroundColor: 'background.secondary',
-            color: 'text.secondary',
-          }}
+        <Controller
+          name="username"
+          control={control}
+          render={({ field }) => (
+            <TextField
+              hiddenLabel
+              variant="outlined"
+              size="small"
+              placeholder="Email"
+              sx={{
+                marginTop: '10px',
+                color: 'text.secondary',
+                ' .MuiInputBase-root': {
+                  backgroundColor: 'background.secondary',
+                },
+              }}
+              error={Boolean(errors?.username?.message)}
+              helperText={errors?.username?.message}
+              {...field}
+            />
+          )}
         />
-        <TextField
-          hiddenLabel
-          variant="outlined"
-          size="small"
-          placeholder="Mật khẩu"
-          sx={{
-            marginTop: '10px',
-            backgroundColor: 'background.secondary',
-            color: 'text.secondary',
-          }}
+        <Controller
+          name="password"
+          control={control}
+          render={({ field }) => (
+            <TextField
+              hiddenLabel
+              variant="outlined"
+              size="small"
+              placeholder="Mật khẩu"
+              sx={{
+                marginTop: '10px',
+                color: 'text.secondary',
+                ' .MuiInputBase-root': {
+                  backgroundColor: 'background.secondary',
+                },
+              }}
+              error={Boolean(errors?.password?.message)}
+              helperText={errors?.password?.message}
+              {...field}
+            />
+          )}
         />
+
         <Button
           variant="contained"
           sx={{
@@ -80,7 +126,7 @@ const SignIn = () => {
               filter: 'brightness(0.95)',
             },
           }}
-          onClick={() => dispatch(setLogged())}
+          onClick={handleSubmit(onSubmit)}
         >
           Đăng nhập
         </Button>
