@@ -9,6 +9,7 @@ import {
   Box,
   useTheme,
   Link,
+  useMediaQuery,
 } from '@mui/material';
 import { UserLayout } from '@/Components/DefaultLayout';
 import TapAndPlayIcon from '@mui/icons-material/TapAndPlay';
@@ -29,7 +30,7 @@ const partElementHeight = 200;
 const Transaction: React.FC = () => {
   // Constructors
   const theme = useTheme();
-  const isMd = theme.breakpoints.down('md');
+  const isMd = useMediaQuery(theme.breakpoints.down('md'));
   const volatilityRef = React.useRef<HTMLDivElement | null>(null);
   const [volatilityItemsPerCategory, setVolatilityItemsPerCategory] =
     React.useState<number>(0);
@@ -50,6 +51,7 @@ const Transaction: React.FC = () => {
         setVolatilityItemsPerCategory(itemPerCategory);
       }
     };
+    handleWindowSize();
     window.addEventListener('load', handleWindowSize);
     window.addEventListener('resize', handleWindowSize);
 
