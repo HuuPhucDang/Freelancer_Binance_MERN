@@ -6,6 +6,7 @@ import { assignReturnUser } from "../../utils";
 import Notification from "../../models/notification.model";
 import ApiError from "../../helper/errors/ApiError";
 import { IUserDoc, UploadIDCards } from "../../interfaces/user.interfaces";
+import { EVerifyType } from "../../interfaces/verification.interface";
 import { IOptions, QueryResult } from "../../helper/paginate/paginate";
 import Verification from "../../models/verification.model";
 import { getUserById } from "../user/user.service";
@@ -29,14 +30,14 @@ export const uploadIdCards = async (
     (await user.save()).populate("verification");
     return assignReturnUser(user);
   }
-  if (findVerification.status === "pending")
+  if (findVerification.status === EVerifyType.PENDING)
     throw new ApiError(httpStatus.BAD_REQUEST, "You already upload ID cards!");
-  if (findVerification.status === "approved")
+  if (findVerification.status === EVerifyType.APPROVED)
     throw new ApiError(
       httpStatus.BAD_REQUEST,
       "Admin has been verified your information!"
     );
-  if (findVerification.status === "denied")
+  if (findVerification.status === EVerifyType.DENY)
     throw new ApiError(
       httpStatus.BAD_REQUEST,
       "Admin has been denied your information!"
@@ -44,7 +45,7 @@ export const uploadIdCards = async (
 
   Object.assign(findVerification, {
     updateBody,
-    status: "pending",
+    status: EVerifyType.PENDING,
   });
   await findVerification.save();
   const savedUser = await getUserById(userId);
@@ -54,7 +55,7 @@ export const uploadIdCards = async (
 
 export const changeIDCardStatus = async (
   userId: mongoose.Types.ObjectId,
-  status: "denined" | "approved"
+  status: EVerifyType
 ): Promise<IUserDoc | null> => {
   const user = await getUserById(userId);
   if (!user) throw new ApiError(httpStatus.NOT_FOUND, "User not found!");
@@ -64,12 +65,12 @@ export const changeIDCardStatus = async (
       httpStatus.BAD_REQUEST,
       "Can not find any verification!"
     );
-  if (findVerification?.status === "approved")
+  if (findVerification?.status === EVerifyType.APPROVED)
     throw new ApiError(
       httpStatus.BAD_REQUEST,
       "This ID card has been verified!"
     );
-  if (findVerification?.status === "denied")
+  if (findVerification?.status === EVerifyType.DENY)
     throw new ApiError(httpStatus.BAD_REQUEST, "This ID card has been deined!");
 
   await Notification.create({

@@ -12,6 +12,8 @@ import {
   ActionMoneyBody,
   RequestMoneyBody,
   ITransactionDoc,
+  ETransactionType,
+  ETransactionStatus,
 } from "../../interfaces/transaction.interface";
 import { IWalletDoc } from "../../interfaces/waller.interface";
 import Wallet from "../../models/wallet.model";
@@ -55,11 +57,11 @@ export const rechangeMoney = async (
   });
   if (!rechargeTransaction)
     throw new ApiError(httpStatus.BAD_REQUEST, "Transaction not found!");
-  if (rechargeTransaction.status === "resolved")
+  if (rechargeTransaction.status === ETransactionStatus.RESOLVED)
     throw new ApiError(httpStatus.BAD_REQUEST, "Transaction already resolved!");
-  if (rechargeTransaction.status === "canceled")
+  if (rechargeTransaction.status === ETransactionStatus.CANCELED)
     throw new ApiError(httpStatus.BAD_REQUEST, "Transaction already canceled!");
-  if (rechargeTransaction.status === "denied")
+  if (rechargeTransaction.status === ETransactionStatus.DENIED)
     throw new ApiError(httpStatus.BAD_REQUEST, "Transaction already denied!");
 
   const userWallet = await getWallet(user.id);
@@ -81,11 +83,11 @@ export const rechangeMoney = async (
     time: moment().format("hh:mm:ss"),
     balance: inviterWallet.balance,
     amount: benefit,
-    type: "bonus",
-    status: "resolved",
+    type: ETransactionType.BONUS,
+    status: ETransactionStatus.RESOLVED,
   });
 
-  rechargeTransaction.status = "resolved";
+  rechargeTransaction.status = ETransactionStatus.RESOLVED;
   rechargeTransaction.save();
   const savedUser = await getUserById(user.id);
   if (savedUser) return assignReturnUser(savedUser);
@@ -114,16 +116,16 @@ export const withdrawMoney = async (
   });
   if (!withdrawTransaction)
     throw new ApiError(httpStatus.BAD_REQUEST, "Transaction not found!");
-  if (withdrawTransaction.status === "resolved")
+  if (withdrawTransaction.status === ETransactionStatus.RESOLVED)
     throw new ApiError(httpStatus.BAD_REQUEST, "Transaction already resolved!");
-  if (withdrawTransaction.status === "canceled")
+  if (withdrawTransaction.status === ETransactionStatus.CANCELED)
     throw new ApiError(httpStatus.BAD_REQUEST, "Transaction already canceled!");
-  if (withdrawTransaction.status === "denied")
+  if (withdrawTransaction.status === ETransactionStatus.DENIED)
     throw new ApiError(httpStatus.BAD_REQUEST, "Transaction already denied!");
 
   userWallet.balance = userWallet.balance - updateBody.amount;
   await userWallet.save();
-  withdrawTransaction.status = "resolved";
+  withdrawTransaction.status = ETransactionStatus.RESOLVED;
   withdrawTransaction.save();
 
   const savedUser = await getUserById(user.id);
@@ -148,8 +150,8 @@ export const requestRechargeMoney = async (
     time: moment().format("hh:mm:ss"),
     balance: userWallet.balance,
     amount: updateBody.amount,
-    type: "recharge",
-    status: "pending",
+    type: ETransactionType.RECHARGE,
+    status: ETransactionStatus.PENDING,
   });
   await user.save();
   return transaction;
@@ -171,8 +173,8 @@ export const requestWithdrawMoney = async (
     time: moment().format("hh:mm:ss"),
     balance: userWallet.balance,
     amount: updateBody.amount,
-    type: "withdraw",
-    status: "pending",
+    type: ETransactionType.WITHDRAW,
+    status: ETransactionStatus.PENDING,
   });
   await user.save();
   return transaction;
@@ -193,13 +195,13 @@ export const cancelTransaction = async (
   });
   if (!transaction)
     throw new ApiError(httpStatus.BAD_REQUEST, "Transaction not found!");
-  if (transaction.status === "resolved")
+  if (transaction.status === ETransactionStatus.RESOLVED)
     throw new ApiError(httpStatus.BAD_REQUEST, "Transaction already resolved!");
-  if (transaction.status === "denied")
+  if (transaction.status === ETransactionStatus.DENIED)
     throw new ApiError(httpStatus.BAD_REQUEST, "Transaction already denied!");
-  if (transaction.status === "canceled")
+  if (transaction.status === ETransactionStatus.CANCELED)
     throw new ApiError(httpStatus.BAD_REQUEST, "Transaction already canceled!");
-  transaction.status = "canceled";
+  transaction.status = ETransactionStatus.CANCELED;
   await transaction.save();
   return transaction;
 };
@@ -219,13 +221,13 @@ export const denyTransaction = async (
   });
   if (!transaction)
     throw new ApiError(httpStatus.BAD_REQUEST, "Transaction not found!");
-  if (transaction.status === "resolved")
+  if (transaction.status === ETransactionStatus.RESOLVED)
     throw new ApiError(httpStatus.BAD_REQUEST, "Transaction already resolved!");
-  if (transaction.status === "canceled")
+  if (transaction.status === ETransactionStatus.CANCELED)
     throw new ApiError(httpStatus.BAD_REQUEST, "Transaction already canceled!");
-  if (transaction.status === "denied")
+  if (transaction.status === ETransactionStatus.DENIED)
     throw new ApiError(httpStatus.BAD_REQUEST, "Transaction already denied!");
-  transaction.status = "denied";
+  transaction.status = ETransactionStatus.DENIED;
   await transaction.save();
   return transaction;
 };

@@ -4,6 +4,7 @@ import catchAsync from "../../utils/catchAsync";
 import { pick, responsePayload } from "../../utils";
 import * as verificationService from "./verification.service";
 import { IOptions } from "../../helper/paginate/paginate";
+import { EVerifyType } from "../../interfaces/verification.interface";
 
 export const uploadIDCards = catchAsync(async (req: Request, res: Response) => {
   const allFiles: any = req.files;
@@ -24,7 +25,7 @@ export const approvedIDCards = catchAsync(
     if (typeof req.params["userId"] === "string") {
       const user = await verificationService.changeIDCardStatus(
         new mongoose.Types.ObjectId(req.params["userId"]),
-        "approved"
+        EVerifyType.APPROVED
       );
       res.send(responsePayload(true, "Approved ID Card successfully!", user));
     }
@@ -36,7 +37,7 @@ export const deniedIDCards = catchAsync(async (req: Request, res: Response) => {
   if (typeof req.params["userId"] === "string") {
     const user = await verificationService.changeIDCardStatus(
       new mongoose.Types.ObjectId(req.params["userId"]),
-      "denined"
+      EVerifyType.DENY
     );
     res.send(responsePayload(true, "Denied ID Card successfully!", user));
   }

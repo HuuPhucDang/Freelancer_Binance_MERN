@@ -5,7 +5,10 @@ import Transaction from "../../models/transaction.model";
 import ApiError from "../../helper/errors/ApiError";
 import { IOptions, QueryResult } from "../../helper/paginate/paginate";
 import { ForgotPassword } from "../../interfaces/user.interfaces";
-import { IUserRequestDoc } from "../../interfaces/userRequest.interface";
+import {
+  IUserRequestDoc,
+  ERequestType,
+} from "../../interfaces/userRequest.interface";
 import { getUserByUsername } from "../user/user.service";
 
 /**
@@ -19,7 +22,7 @@ export const requestForgotPassword = async (
   const userRequest = await UserRequest.create({
     message: postBody.message,
     userId: user.id,
-    type: "forgot_password",
+    type: ERequestType.FORGOT_PASSWORD,
   });
   return userRequest;
 };
