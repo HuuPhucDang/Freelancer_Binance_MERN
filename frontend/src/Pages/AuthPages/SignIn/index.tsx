@@ -39,10 +39,7 @@ const SignIn = () => {
   });
 
   React.useEffect(() => {
-    if (isLogged) Utils.redirect(ROUTERS.TRANSACTION);
-    else if (!isLogged && token && userData) {
-      dispatch(setLogged());
-    }
+    if (isLogged && token && userData) Utils.redirect(ROUTERS.TRANSACTION);
   }, [isLogged]);
 
   const onSubmit = (data: FormData) => dispatch(login(data));
@@ -107,6 +104,7 @@ const SignIn = () => {
               variant="outlined"
               size="small"
               placeholder="Mật khẩu"
+                type="password"
               sx={{
                 marginTop: '10px',
                 color: 'text.secondary',

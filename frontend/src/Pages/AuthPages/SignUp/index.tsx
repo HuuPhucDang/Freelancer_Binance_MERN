@@ -112,6 +112,7 @@ const SignUp = () => {
               variant="outlined"
               size="small"
               placeholder="Mật khẩu *"
+              type="password"
               sx={{
                 marginTop: '10px',
                 color: 'text.secondary',
@@ -134,6 +135,7 @@ const SignUp = () => {
               variant="outlined"
               size="small"
               placeholder="Xác nhận mật khẩu *"
+              type="password"
               sx={{
                 marginTop: '10px',
                 color: 'text.secondary',

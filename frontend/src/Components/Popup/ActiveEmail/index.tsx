@@ -98,6 +98,7 @@ const ActiveEmail: React.FC<IProps> = ({ open = false, onClose }) => {
                     backgroundColor: 'background.secondary',
                   },
                 }}
+                type="password"
                 error={Boolean(errors?.password?.message)}
                 helperText={errors?.password?.message}
                 {...field}

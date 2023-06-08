@@ -23,8 +23,8 @@ const getAPIConfig = () => {
     headers: {
       Accept: 'application/json, text/plain, */*',
       'Content-Type': 'application/json',
-      Authorization:
-        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDdlMTM0OGY0YjE0M2M3NDQxYzgwYzUiLCJpYXQiOjE2ODYyMTY5NDcsImV4cCI6MTY4NjIyNDE0NywidHlwZSI6ImFjY2VzcyJ9.ZsNaYd_7Q23eSIFQdBuX5GKDvedfg6oDj6pMs_CGqTU',
+      // Authorization:
+      //   'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDdlMTM0OGY0YjE0M2M3NDQxYzgwYzUiLCJpYXQiOjE2ODYyMTY5NDcsImV4cCI6MTY4NjIyNDE0NywidHlwZSI6ImFjY2VzcyJ9.ZsNaYd_7Q23eSIFQdBuX5GKDvedfg6oDj6pMs_CGqTU',
     },
   });
 

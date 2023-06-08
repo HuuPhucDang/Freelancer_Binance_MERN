@@ -80,6 +80,7 @@ const EditName: React.FC<IProps> = ({ open = false, onClose }) => {
                 variant="outlined"
                 size="small"
                 placeholder="Mật khẩu cũ *"
+                type="password"
                 sx={{
                   marginTop: '10px',
                   color: 'text.secondary',
@@ -102,6 +103,7 @@ const EditName: React.FC<IProps> = ({ open = false, onClose }) => {
                 variant="outlined"
                 size="small"
                 placeholder="Mật khẩu mới *"
+                type="password"
                 sx={{
                   marginTop: '10px',
                   color: 'text.secondary',
@@ -124,6 +126,7 @@ const EditName: React.FC<IProps> = ({ open = false, onClose }) => {
                 variant="outlined"
                 size="small"
                 placeholder="Xác nhận mật khẩu mới *"
+                type="password"
                 sx={{
                   marginTop: '10px',
                   color: 'text.secondary',

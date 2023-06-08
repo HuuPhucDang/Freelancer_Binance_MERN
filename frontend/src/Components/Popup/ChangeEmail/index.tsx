@@ -118,6 +118,7 @@ const ChangeEmail: React.FC<IProps> = ({ open = false, onClose }) => {
                 variant="outlined"
                 size="small"
                 placeholder="Mật khẩu *"
+                type="password"
                 sx={{
                   marginTop: '10px',
                   color: 'text.secondary',

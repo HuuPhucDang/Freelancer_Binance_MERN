@@ -130,6 +130,7 @@ const ChangeWithdrawPassword: React.FC<IProps> = ({
                 variant="outlined"
                 size="small"
                 placeholder="Mật khẩu đăng nhập *"
+                type="password"
                 sx={{
                   marginTop: '10px',
                   color: 'text.secondary',

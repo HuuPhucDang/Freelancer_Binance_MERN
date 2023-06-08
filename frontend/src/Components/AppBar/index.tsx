@@ -75,7 +75,7 @@ const AppBarComponent: React.FC = () => {
   const isDarkMode = Utils.getThemeMode() === 'dark';
 
   React.useEffect(() => {
-    if (userData && token) dispatch(setLogged());
+    if (!isLogged && userData && token) dispatch(setLogged());
   }, []);
 
   React.useEffect(() => {
