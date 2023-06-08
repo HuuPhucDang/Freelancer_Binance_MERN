@@ -12,7 +12,7 @@ import {
 // Import local
 import { UserLayout } from '@/Components/DefaultLayout';
 import { Sidebar } from '@/Components/LayoutParts';
-import { UploadAvatar, UploadIDCard } from '../../../Components/Popup';
+import { UploadIDCard } from '../../../Components/Popup';
 import { Utils } from '../../../Libs';
 import { ROUTERS } from '../../../Constants';
 

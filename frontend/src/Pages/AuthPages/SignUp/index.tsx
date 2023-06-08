@@ -1,9 +1,6 @@
 import { Button, Stack, TextField, Typography } from '@mui/material';
 import _ from 'lodash';
 import { useTypedDispatch, useTypedSelector } from '@/Reducers/store';
-import React from 'react';
-import { Utils } from '@/Libs';
-import { ROUTERS } from '@/Constants';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
@@ -40,9 +37,6 @@ const { register } = AuthActions;
 
 const SignUp = () => {
   const dispatch = useTypedDispatch();
-  const isLogged: any = useTypedSelector((state: any) =>
-    _.get(state.AUTH, 'isLogged')
-  );
   const {
     handleSubmit,
     formState: { errors },

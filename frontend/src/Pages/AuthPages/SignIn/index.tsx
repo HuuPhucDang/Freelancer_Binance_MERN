@@ -11,7 +11,7 @@ import { Utils } from '@/Libs';
 import { ROUTERS } from '@/Constants';
 import { ForgotPassword } from '@/Components/Popup';
 
-const { login, setLogged } = AuthActions;
+const { login } = AuthActions;
 
 const schema = yup
   .object({

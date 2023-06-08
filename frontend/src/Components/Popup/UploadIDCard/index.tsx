@@ -9,7 +9,7 @@ import { Box, Grid, Typography } from '@mui/material';
 import Assets from '../../../Assets';
 import { RootState, useTypedDispatch } from '../../../Reducers/store';
 import { VerificationActions } from '../../../Reducers/Actions';
-import { useForm, Controller } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { useSelector } from 'react-redux';
