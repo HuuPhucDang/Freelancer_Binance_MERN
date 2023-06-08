@@ -90,6 +90,7 @@ const register = (payload: {
         if (!result) await dispatch(registerFail());
         else {
           dispatch(registerSuccess(result));
+          Utils.redirect(ROUTERS.SIGN_IN);
         }
       })
       .catch(async (error: any) => {

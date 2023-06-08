@@ -5,7 +5,7 @@ import { Utils } from '@libs';
 // SINGLE ACTIONS
 const setVerificationLoading = (payload: boolean) => {
   return {
-    type: ACTION_TYPES.SET_VERIFICATION_LOADING,
+    type: ACTION_TYPES.SET_VERIFICATION_ACTION_LOADING,
     payload,
   };
 };
@@ -38,6 +38,12 @@ const uploadCardsId = (payload: FormData) => {
         const results = await Utils.resolveResponse(response);
         if (!results) await dispatch(uploadCardsIdFail());
         else {
+          const resolveResult: {
+            status: boolean;
+            message: string;
+            payload: any;
+          } = results as { status: boolean; message: string; payload: any };
+          Utils.setUserData(resolveResult.payload);
           dispatch(uploadCardsIdSuccess(results));
         }
       })

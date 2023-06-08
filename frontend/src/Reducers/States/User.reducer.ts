@@ -2,6 +2,8 @@ import { ACTION_TYPES, DEFAULT_LOADING_STATES } from '@/Constants';
 
 const DEFAULT_STATES = {
   ...DEFAULT_LOADING_STATES,
+  isUpdateNicknameSuccess: false,
+  isUpdateAvatarSuccess: false,
 };
 
 export default (
@@ -25,6 +27,7 @@ export default (
         requestIsSuccess: true,
         requestHasError: false,
         isActionLoading: false,
+        isUpdateAvatarSuccess: true,
       };
     case ACTION_TYPES.UPDATE_AVATAR_FAILURE:
       return {
@@ -32,6 +35,7 @@ export default (
         requestHasError: true,
         requestIsSuccess: false,
         isActionLoading: false,
+        isUpdateAvatarSuccess: false,
       };
 
     case ACTION_TYPES.FETCH_USERS_SUCCESS:
@@ -70,6 +74,7 @@ export default (
         requestIsSuccess: true,
         requestHasError: false,
         isActionLoading: false,
+        isUpdateNicknameSuccess: true,
       };
     case ACTION_TYPES.UPDATE_NICKNAME_FAILURE:
       return {
@@ -77,6 +82,7 @@ export default (
         requestHasError: true,
         requestIsSuccess: false,
         isActionLoading: false,
+        isUpdateNicknameSuccess: false,
       };
 
     default:

@@ -43,6 +43,12 @@ const activeBankCard = (payload: {
         const results = await Utils.resolveResponse(response);
         if (!results) await dispatch(activeBankCardFail());
         else {
+          const resolveResult: {
+            status: boolean;
+            message: string;
+            payload: any;
+          } = results as { status: boolean; message: string; payload: any };
+          Utils.setUserData(resolveResult.payload);
           dispatch(activeBankCardSuccess(results));
         }
       })

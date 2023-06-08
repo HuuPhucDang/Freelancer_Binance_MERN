@@ -2,6 +2,7 @@ import { ACTION_TYPES, DEFAULT_LOADING_STATES } from '@/Constants';
 
 const DEFAULT_STATES = {
   ...DEFAULT_LOADING_STATES,
+  isUploadSuccess: false,
 };
 
 export default (
@@ -25,6 +26,7 @@ export default (
         requestIsSuccess: true,
         requestHasError: false,
         isActionLoading: false,
+        isUploadSuccess: true,
       };
     case ACTION_TYPES.UPLOAD_CARDS_ID_FAILURE:
       return {
@@ -32,6 +34,7 @@ export default (
         requestHasError: true,
         requestIsSuccess: false,
         isActionLoading: false,
+        isUploadSuccess: false,
       };
 
     default:

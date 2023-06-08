@@ -5,7 +5,7 @@ import { Utils } from '@libs';
 // SINGLE ACTIONS
 const setUserLoading = (payload: boolean) => {
   return {
-    type: ACTION_TYPES.SET_USER_LOADING,
+    type: ACTION_TYPES.SET_USER_ACTION_LOADING,
     payload,
   };
 };
@@ -38,6 +38,12 @@ const updateAvatar = (payload: { avatar: string }) => {
         const results = await Utils.resolveResponse(response);
         if (!results) await dispatch(updateAvatarFail());
         else {
+          const resolveResult: {
+            status: boolean;
+            message: string;
+            payload: any;
+          } = results as { status: boolean; message: string; payload: any };
+          Utils.setUserData(resolveResult.payload);
           dispatch(updateAvatarSuccess(results));
         }
       })
@@ -131,6 +137,12 @@ const updateNickname = (payload: { nickname: string }) => {
         const result = await Utils.resolveResponse(response);
         if (!result) await dispatch(updateNicknameFail());
         else {
+          const resolveResult: {
+            status: boolean;
+            message: string;
+            payload: any;
+          } = result as { status: boolean; message: string; payload: any };
+          Utils.setUserData(resolveResult.payload);
           dispatch(updateNicknameSuccess(result));
         }
       })

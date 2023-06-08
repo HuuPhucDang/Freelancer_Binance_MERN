@@ -27,7 +27,7 @@ export const activeEmail = async (payload: {
 export const changeEmail = async (payload: {
   password: string;
   email: string;
-  newEmail: string;
+  newEmail?: string;
 }) => {
   return sendRequest(SECURITY.CHANGE_EMAIL, 'PUT', payload);
 };

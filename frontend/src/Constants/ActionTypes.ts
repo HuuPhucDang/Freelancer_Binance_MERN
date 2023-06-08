@@ -42,6 +42,7 @@ const _asyncActions: ActionTypes = generateSyncActions([
   'GET_BLOG_BY_ID',
   'LOGIN',
   'REGISTER',
+  'UPDATE_NICKNAME',
   'ACTIVE_BANK_CARD',
   'CHANGE_PASSWORD',
   'VERIFY_PHONE_NUMBER',

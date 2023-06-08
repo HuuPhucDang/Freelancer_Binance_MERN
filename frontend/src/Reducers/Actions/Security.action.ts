@@ -73,6 +73,12 @@ const verifyPhoneNumber = (payload: { phonenumber: string }) => {
         const results = await Utils.resolveResponse(response);
         if (!results) await dispatch(verifyPhoneNumberFail());
         else {
+          const resolveResult: {
+            status: boolean;
+            message: string;
+            payload: any;
+          } = results as { status: boolean; message: string; payload: any };
+          Utils.setUserData(resolveResult.payload);
           dispatch(verifyPhoneNumberSuccess(results));
         }
       })
@@ -104,6 +110,12 @@ const activeEmail = (payload: { email: string; password: string }) => {
         const results = await Utils.resolveResponse(response);
         if (!results) await dispatch(activeEmailFail());
         else {
+          const resolveResult: {
+            status: boolean;
+            message: string;
+            payload: any;
+          } = results as { status: boolean; message: string; payload: any };
+          Utils.setUserData(resolveResult.payload);
           dispatch(activeEmailSuccess(results));
         }
       })
@@ -129,7 +141,7 @@ const changeEmailSuccess = (payload: any) => {
 const changeEmail = (payload: {
   email: string;
   password: string;
-  newEmail: string;
+  newEmail?: string;
 }) => {
   return async (dispatch: any) => {
     dispatch(setSecurityLoading(true));
@@ -138,6 +150,12 @@ const changeEmail = (payload: {
         const results = await Utils.resolveResponse(response);
         if (!results) await dispatch(changeEmailFail());
         else {
+          const resolveResult: {
+            status: boolean;
+            message: string;
+            payload: any;
+          } = results as { status: boolean; message: string; payload: any };
+          Utils.setUserData(resolveResult.payload);
           dispatch(changeEmailSuccess(results));
         }
       })
@@ -172,6 +190,12 @@ const activeWithdrawPassword = (payload: {
         const results = await Utils.resolveResponse(response);
         if (!results) await dispatch(activeWithdrawPasswordFail());
         else {
+          const resolveResult: {
+            status: boolean;
+            message: string;
+            payload: any;
+          } = results as { status: boolean; message: string; payload: any };
+          Utils.setUserData(resolveResult.payload);
           dispatch(activeWithdrawPasswordSuccess(results));
         }
       })
@@ -208,6 +232,12 @@ const changeWithdrawPassword = (payload: {
         const results = await Utils.resolveResponse(response);
         if (!results) await dispatch(changeWithdrawPasswordFail());
         else {
+          const resolveResult: {
+            status: boolean;
+            message: string;
+            payload: any;
+          } = results as { status: boolean; message: string; payload: any };
+          Utils.setUserData(resolveResult.payload);
           dispatch(changeWithdrawPasswordSuccess(results));
         }
       })
