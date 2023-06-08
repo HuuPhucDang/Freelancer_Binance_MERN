@@ -7,8 +7,7 @@ import verificationRoute from "./verification.route";
 import transactionRoute from "./transaction.route";
 import requestRoute from "./request.route";
 import systemInforRoute from "./systemInfor.route";
-
-
+import chatBoxRoute from "./chatBox.route";
 
 const router = express.Router();
 
@@ -49,6 +48,10 @@ const defaultIRoute: IRoute[] = [
   {
     path: "/system",
     route: systemInforRoute,
+  },
+  {
+    path: "/chatBox",
+    route: chatBoxRoute,
   },
 ];
 

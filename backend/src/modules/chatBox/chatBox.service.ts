@@ -46,10 +46,10 @@ export const getChatBoxById = async (
 };
 
 export const createMessage = async (
-  userId: mongoose.Types.ObjectId,
+  userId: string,
   updateBody: CreateMessageBody
 ): Promise<IChatBoxDoc | null> => {
-  const sender = await User.findById(userId);
+  const sender = await User.findById(new mongoose.Types.ObjectId(userId));
   if (!sender) return null;
   const receiver = await User.findById(
     new mongoose.Types.ObjectId(updateBody.receiverId)
