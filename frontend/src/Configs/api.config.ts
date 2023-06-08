@@ -17,7 +17,8 @@ const BAD_REQUEST_ERROR = [400, 422];
 const WRONG_URL_ERROR = [404];
 
 const getAPIConfig = () => {
-  const BASE_URL = import.meta.env.VITE_BE_URL;
+  const BASE_URL =
+    import.meta.env.VITE_BE_URL || 'http://222.255.117.249:3215/v1';
   const api = create({
     baseURL: `${BASE_URL}`,
     headers: {
