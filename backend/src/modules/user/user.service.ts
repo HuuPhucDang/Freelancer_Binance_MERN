@@ -2,6 +2,7 @@ import httpStatus from "http-status";
 import mongoose from "mongoose";
 import _ from "lodash";
 import User from "../../models/user.model";
+import UserType from "../../models/userType.model";
 import ApiError from "../../helper/errors/ApiError";
 import { IOptions, QueryResult } from "../../helper/paginate/paginate";
 import {
@@ -50,10 +51,18 @@ export const registerUser = async (
   const findInviter = await User.findOne({ onwCode: userBody.inviteCode });
   if (!findInviter)
     throw new ApiError(httpStatus.BAD_REQUEST, "Invite code not valid!");
-  return User.create({
+  const user = await User.create({
     ...userBody,
     nickname: `Anonymous-User-${makeDefaultNickname(6)}`,
   });
+  const userType = await UserType.create({
+    name: "Beginner",
+    userId: user.id,
+    probability: 0.3,
+  });
+  user.userType = userType.id;
+  await user.save();
+  return user;
 };
 
 /**
@@ -77,7 +86,8 @@ export const getUserById = async (
     .populate("verification")
     .populate("wallet")
     .populate("security")
-    .populate("bank");
+    .populate("bank")
+    .populate("userType");
   if (!user) return null;
   return assignReturnUser(user);
 };
@@ -92,7 +102,8 @@ export const getUserByOwnerCode = async (
     .populate("verification")
     .populate("wallet")
     .populate("security")
-    .populate("bank");
+    .populate("bank")
+    .populate("userType");
   if (!user) return null;
   return assignReturnUser(user);
 };
@@ -109,7 +120,8 @@ export const getUserByUsername = async (
     .populate("verification")
     .populate("wallet")
     .populate("security")
-    .populate("bank");
+    .populate("bank")
+    .populate("userType");
   if (!user) return null;
   return assignReturnUser(user);
 };
