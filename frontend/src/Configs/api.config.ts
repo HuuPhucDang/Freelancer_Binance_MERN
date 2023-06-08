@@ -17,15 +17,17 @@ const BAD_REQUEST_ERROR = [400, 422];
 const WRONG_URL_ERROR = [404];
 
 const getAPIConfig = () => {
-  const BASE_URL =
-    import.meta.env.VITE_BE_URL || 'https://uiblox-public-api.apps-api.online';
+  const BASE_URL = import.meta.env.VITE_BE_URL;
   const api = create({
     baseURL: `${BASE_URL}`,
     headers: {
       Accept: 'application/json, text/plain, */*',
       'Content-Type': 'application/json',
+      // Authorization:
+      //   'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDdlMTM0OGY0YjE0M2M3NDQxYzgwYzUiLCJpYXQiOjE2ODYyMTY5NDcsImV4cCI6MTY4NjIyNDE0NywidHlwZSI6ImFjY2VzcyJ9.ZsNaYd_7Q23eSIFQdBuX5GKDvedfg6oDj6pMs_CGqTU',
     },
   });
+
   return api;
 };
 
@@ -122,7 +124,12 @@ const del = async (api: ApisauceInstance, url: string, data?: any) => {
 };
 
 const sendRequest = async (url: string, method: API_METHOD, params?: any) => {
+  const token = Utils.getAccessToken();
+
   const api = getAPIConfig();
+  api.setHeaders({
+    Authorization: `Bearer ${token}`,
+  });
   if (!api) return;
   if (method === 'POST') return await post(api, url, params);
   if (method === 'GET') return await get(api, url, params);
