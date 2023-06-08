@@ -11,6 +11,7 @@ import {
   Link,
   useMediaQuery,
 } from '@mui/material';
+import io from 'socket.io-client';
 import { UserLayout } from '@/Components/DefaultLayout';
 import TapAndPlayIcon from '@mui/icons-material/TapAndPlay';
 import NotificationsIcon from '@mui/icons-material/Notifications';
@@ -26,6 +27,7 @@ const volatilityHeaderHeight = 33;
 const centerVolatilityRow = 31;
 const volatilityItemHeight = 19;
 const partElementHeight = 200;
+const socket = io('http://222.255.117.249:3215/', { transports : ['websocket'] });
 
 const Transaction: React.FC = () => {
   // Constructors
@@ -54,7 +56,10 @@ const Transaction: React.FC = () => {
     handleWindowSize();
     window.addEventListener('load', handleWindowSize);
     window.addEventListener('resize', handleWindowSize);
-
+    socket.on('getPriceEvery5Min', (data) => {
+      console.table('=====GET PRICE EVERY 5 MIN=====');
+      console.table(data);
+    });
     return () => {
       window.removeEventListener('load', handleWindowSize);
       window.removeEventListener('resize', handleWindowSize);
@@ -690,10 +695,13 @@ const Transaction: React.FC = () => {
 
   const _renderRightSection = () => {
     return (
-      <Stack direction="column" maxHeight={{
-        xs: "100%",
-        md: "calc(100vh - 114px)"
-      }}>
+      <Stack
+        direction="column"
+        maxHeight={{
+          xs: '100%',
+          md: 'calc(100vh - 114px)',
+        }}
+      >
         <Stack
           direction="column"
           flex={1}

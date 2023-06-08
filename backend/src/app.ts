@@ -7,7 +7,6 @@ import cors from "cors";
 import passport from "passport";
 import httpStatus from "http-status";
 import config from "./config/config";
-import { Seender } from "./services";
 import { morgan } from "./logger";
 import { jwtStrategy } from "./modules/auth";
 import { authLimiter } from "./utils";
@@ -25,7 +24,7 @@ if (config.env !== "test") {
 app.use(helmet());
 
 // enable cors
-app.use(cors());
+app.use(cors({ origin: ["http://localhost:5000", "http://127.0.0.1:5000"] }));
 app.options("*", cors());
 
 // parse json request body
@@ -65,6 +64,5 @@ app.use(errorConverter);
 app.use(errorHandler);
 
 // run seed
-Seender.createSeedAdmin();
 
 export default app;
