@@ -58,7 +58,7 @@ export const registerUser = async (
   const userType = await UserType.create({
     name: "Beginner",
     userId: user.id,
-    probability: 0.3,
+    probability: 0.1,
   });
   user.userType = userType.id;
   await user.save();

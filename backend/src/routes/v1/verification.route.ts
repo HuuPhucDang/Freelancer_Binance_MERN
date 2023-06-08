@@ -24,14 +24,14 @@ router.post(
 );
 
 router.put(
-  "/approved/:userId",
+  "/approve/:userId",
   [auth("manageIDCards")],
   [validate(verificationValidation.actionIDCard)],
   verificationController.approvedIDCards
 );
 
 router.put(
-  "/denied/:userId",
+  "/deny/:userId",
   [auth("manageIDCards")],
   [validate(verificationValidation.actionIDCard)],
   verificationController.deniedIDCards
