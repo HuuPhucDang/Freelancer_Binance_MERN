@@ -37,8 +37,8 @@ const { verifyPhoneNumber } = SecurityActions;
 const VerifyPhoneNumber: React.FC<IProps> = ({ open = false, onClose }) => {
   const dispatch = useTypedDispatch();
   const userData = Utils.getUserData();
-  const isUpdateNicknameSuccess: boolean = useSelector((state: RootState) =>
-    _.get(state.USER, 'isUpdateNicknameSuccess')
+  const isSubmitPhoneNumberSuccess: boolean = useSelector((state: RootState) =>
+    _.get(state.SECURITY, 'isSubmitPhoneNumberSuccess')
   );
 
   const {
@@ -51,11 +51,11 @@ const VerifyPhoneNumber: React.FC<IProps> = ({ open = false, onClose }) => {
   });
 
   React.useEffect(() => {
-    if (isUpdateNicknameSuccess) {
+    if (isSubmitPhoneNumberSuccess) {
       reset();
       onClose();
     }
-  }, [isUpdateNicknameSuccess]);
+  }, [isSubmitPhoneNumberSuccess]);
 
   const onSubmit = (data: FormData) => {
     dispatch(verifyPhoneNumber(data));

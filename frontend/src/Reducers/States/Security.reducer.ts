@@ -2,6 +2,10 @@ import { ACTION_TYPES, DEFAULT_LOADING_STATES } from '@/Constants';
 
 const DEFAULT_STATES = {
   ...DEFAULT_LOADING_STATES,
+  isSubmitPasswordSuccess: false,
+  isSubmitPhoneNumberSuccess: false,
+  isSubmitEmailSuccess: false,
+  isSubmitWithdrawPasswordSuccess: false,
 };
 
 export default (
@@ -25,6 +29,7 @@ export default (
         requestIsSuccess: true,
         requestHasError: false,
         isActionLoading: false,
+        isSubmitPasswordSuccess: true,
       };
     case ACTION_TYPES.CHANGE_PASSWORD_FAILURE:
       return {
@@ -32,6 +37,7 @@ export default (
         requestHasError: true,
         requestIsSuccess: false,
         isActionLoading: false,
+        isSubmitPasswordSuccess: false,
       };
 
     case ACTION_TYPES.VERIFY_PHONE_NUMBER_SUCCESS:
@@ -40,6 +46,7 @@ export default (
         requestIsSuccess: true,
         requestHasError: false,
         isActionLoading: false,
+        isSubmitPhoneNumberSuccess: true,
       };
     case ACTION_TYPES.VERIFY_PHONE_NUMBER_FAILURE:
       return {
@@ -47,6 +54,7 @@ export default (
         requestHasError: true,
         requestIsSuccess: false,
         isActionLoading: false,
+        isSubmitPhoneNumberSuccess: false,
       };
 
     case ACTION_TYPES.ACTIVE_EMAIL_SUCCESS:
@@ -55,6 +63,7 @@ export default (
         requestIsSuccess: true,
         requestHasError: false,
         isActionLoading: false,
+        isSubmitEmailSuccess: true,
       };
     case ACTION_TYPES.ACTIVE_EMAIL_FAILURE:
       return {
@@ -62,21 +71,24 @@ export default (
         requestHasError: true,
         requestIsSuccess: false,
         isActionLoading: false,
+        isSubmitEmailSuccess: false,
       };
 
-    case ACTION_TYPES.CHANGE_PASSWORD_SUCCESS:
+    case ACTION_TYPES.CHANGE_EMAIL_SUCCESS:
       return {
         ...state,
         requestIsSuccess: true,
         requestHasError: false,
         isActionLoading: false,
+        isSubmitEmailSuccess: true,
       };
-    case ACTION_TYPES.CHANGE_PASSWORD_FAILURE:
+    case ACTION_TYPES.CHANGE_EMAIL_FAILURE:
       return {
         ...state,
         requestHasError: true,
         requestIsSuccess: false,
         isActionLoading: false,
+        isSubmitEmailSuccess: false,
       };
 
     case ACTION_TYPES.ACTIVE_WITHDRAW_PASSWORD_SUCCESS:
@@ -85,6 +97,7 @@ export default (
         requestIsSuccess: true,
         requestHasError: false,
         isActionLoading: false,
+        isSubmitWithdrawPasswordSuccess: true,
       };
     case ACTION_TYPES.ACTIVE_WITHDRAW_PASSWORD_FAILURE:
       return {
@@ -92,6 +105,7 @@ export default (
         requestHasError: true,
         requestIsSuccess: false,
         isActionLoading: false,
+        isSubmitWithdrawPasswordSuccess: false,
       };
 
     case ACTION_TYPES.CHANGE_WITHDRAW_PASSWORD_SUCCESS:
@@ -100,6 +114,7 @@ export default (
         requestIsSuccess: true,
         requestHasError: false,
         isActionLoading: false,
+        isSubmitWithdrawPasswordSuccess: true,
       };
     case ACTION_TYPES.CHANGE_WITHDRAW_PASSWORD_FAILURE:
       return {
@@ -107,6 +122,7 @@ export default (
         requestHasError: true,
         requestIsSuccess: false,
         isActionLoading: false,
+        isSubmitWithdrawPasswordSuccess: false,
       };
 
     default:

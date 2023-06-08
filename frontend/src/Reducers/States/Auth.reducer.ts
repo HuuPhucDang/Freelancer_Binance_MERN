@@ -16,6 +16,11 @@ export default (
         ...state,
         isLogged: true,
       };
+    case ACTION_TYPES.LOG_OUT:
+      return {
+        ...state,
+        isLogged: false,
+      };
     case ACTION_TYPES.SET_AUTH_ACTION_LOADING: {
       return {
         ...state,

@@ -13,7 +13,6 @@ import _ from 'lodash';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import utils from '../../../Libs/utils';
 interface IProps {
   open: boolean;
   onClose(): void;
@@ -23,22 +22,17 @@ const schema = yup
   .object({
     email: yup.string().email().trim().required('Email is a required field'),
     password: yup.string().trim().required('Password is a required field'),
-    newEmail: yup
-      .string()
-      .email()
-      .trim()
-      .required('New email is a required field'),
   })
   .required();
 
 type FormData = yup.InferType<typeof schema>;
 
-const { changeEmail } = SecurityActions;
+const { activeEmail } = SecurityActions;
 
-const ChangeEmail: React.FC<IProps> = ({ open = false, onClose }) => {
+const ActiveEmail: React.FC<IProps> = ({ open = false, onClose }) => {
   const dispatch = useTypedDispatch();
-  const isUpdateNicknameSuccess: boolean = useSelector((state: RootState) =>
-    _.get(state.USER, 'isUpdateNicknameSuccess')
+  const isSubmitEmailSuccess: boolean = useSelector((state: RootState) =>
+    _.get(state.SECURITY, 'isSubmitEmailSuccess')
   );
 
   const {
@@ -51,19 +45,19 @@ const ChangeEmail: React.FC<IProps> = ({ open = false, onClose }) => {
   });
 
   React.useEffect(() => {
-    if (isUpdateNicknameSuccess) {
+    if (isSubmitEmailSuccess) {
       reset();
       onClose();
     }
-  }, [isUpdateNicknameSuccess]);
+  }, [isSubmitEmailSuccess]);
 
   const onSubmit = (data: FormData) => {
-    dispatch(changeEmail(data));
+    dispatch(activeEmail(data));
   };
 
   return (
     <Dialog open={open} onClose={onClose} maxWidth="xs" fullWidth>
-      <DialogTitle sx={{ color: 'text.primary' }}>Chỉnh sửa email</DialogTitle>
+      <DialogTitle sx={{ color: 'text.primary' }}>Kích hoạt email</DialogTitle>
       <DialogContent>
         <Stack direction="column">
           <Controller
@@ -84,28 +78,6 @@ const ChangeEmail: React.FC<IProps> = ({ open = false, onClose }) => {
                 }}
                 error={Boolean(errors?.email?.message)}
                 helperText={errors?.email?.message}
-                {...field}
-              />
-            )}
-          />
-          <Controller
-            name="newEmail"
-            control={control}
-            render={({ field }) => (
-              <TextField
-                hiddenLabel
-                variant="outlined"
-                size="small"
-                placeholder="Email mới *"
-                sx={{
-                  marginTop: '10px',
-                  color: 'text.secondary',
-                  ' .MuiInputBase-root': {
-                    backgroundColor: 'background.secondary',
-                  },
-                }}
-                error={Boolean(errors?.newEmail?.message)}
-                helperText={errors?.newEmail?.message}
                 {...field}
               />
             )}
@@ -153,4 +125,4 @@ const ChangeEmail: React.FC<IProps> = ({ open = false, onClose }) => {
   );
 };
 
-export default ChangeEmail;
+export default ActiveEmail;

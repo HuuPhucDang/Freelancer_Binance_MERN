@@ -7,9 +7,11 @@ import RequestVerify from './RequestVerify';
 import RequestConnectBank from './RequestConnectBank';
 import UserDetails from './UserDetails';
 import ChangePassword from './ChangePassword';
+import ActiveEmail from './ActiveEmail';
 import ChangeEmail from './ChangeEmail';
 import ChangePhoneNumber from './ChangePhoneNumber';
-import WithdrawPassword from './WithdrawPassword';
+import ActiveWithdrawPassword from './ActiveWithdrawPassword';
+import ChangeWithdrawPassword from './ChangeWithdrawPassword';
 
 export {
   ForgotPassword,
@@ -21,7 +23,8 @@ export {
   RequestVerify,
   UserDetails,
   ChangePassword,
+  ActiveEmail,
   ChangeEmail,
   ChangePhoneNumber,
-  WithdrawPassword,
+  ActiveWithdrawPassword, ChangeWithdrawPassword
 };

@@ -41,6 +41,12 @@ const getThemeMode = () => {
   return mode;
 };
 
+const clearCookies = () => {
+  cookies.remove(COOKIE_KEYS.ACCESS_TOKEN);
+  cookies.remove(COOKIE_KEYS.REFRESH_TOKEN);
+  cookies.remove(COOKIE_KEYS.USER_DATA);
+};
+
 export {
   saveThemeMode,
   getThemeMode,
@@ -50,4 +56,5 @@ export {
   getRefreshToken,
   setUserData,
   getUserData,
+  clearCookies,
 };

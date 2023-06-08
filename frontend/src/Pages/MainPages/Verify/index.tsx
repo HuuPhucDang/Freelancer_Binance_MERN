@@ -72,9 +72,24 @@ const Verify: React.FC = () => {
       </Stack>
     );
   };
-  console.log(userData);
 
   const _renderVerifiedField = () => {
+    if (userData?.verification?.status === 'pending')
+      return (
+        <Stack direction="column">
+          <Typography
+            sx={{
+              fontSize: '14px',
+              lineHeight: '28px',
+              fontWeight: 400,
+            }}
+          >
+            Danh tính của bạn đang được xác minh. Vui lòng chờ đến khi có kết
+            quả!
+          </Typography>
+        </Stack>
+      );
+
     return (
       <Stack direction="column">
         <Typography

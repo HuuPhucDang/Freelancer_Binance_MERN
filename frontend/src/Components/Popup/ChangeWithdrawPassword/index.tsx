@@ -6,14 +6,13 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import { Stack } from '@mui/material';
-import { RootState, useTypedDispatch } from '../../../Reducers/store';
-import { SecurityActions } from '../../../Reducers/Actions';
+import { RootState, useTypedDispatch } from '@/Reducers/store';
+import { SecurityActions } from '@/Reducers/Actions';
 import { useSelector } from 'react-redux';
 import _ from 'lodash';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import utils from '../../../Libs/utils';
 interface IProps {
   open: boolean;
   onClose(): void;
@@ -21,19 +20,36 @@ interface IProps {
 
 const schema = yup
   .object({
-    email: yup.string().email().trim().required('Email is a required field'),
     password: yup.string().trim().required('Password is a required field'),
+    email: yup
+      .string()
+      .email()
+      .required('Withdraw password is a required field'),
+    phonenumber: yup
+      .string()
+      .trim()
+      .matches(/^([0-9]{10})$/)
+      .required('Phone number is a required field'),
+    newWithdrawPassword: yup
+      .string()
+      .min(8, 'Withdraw password must be least at 8 characters')
+      .matches(/\d+/, 'Withdraw password must be contain 1 number')
+      .trim()
+      .required('Withdraw password is a required field'),
   })
   .required();
-
 type FormData = yup.InferType<typeof schema>;
 
-const { activeEmail } = SecurityActions;
+const { changeWithdrawPassword } = SecurityActions;
 
-const ActiveEmail: React.FC<IProps> = ({ open = false, onClose }) => {
+const ChangeWithdrawPassword: React.FC<IProps> = ({
+  open = false,
+  onClose,
+}) => {
   const dispatch = useTypedDispatch();
-  const isUpdateNicknameSuccess: boolean = useSelector((state: RootState) =>
-    _.get(state.USER, 'isUpdateNicknameSuccess')
+  const isSubmitWithdrawPasswordSuccess: boolean = useSelector(
+    (state: RootState) =>
+      _.get(state.SECURITY, 'isSubmitWithdrawPasswordSuccess')
   );
 
   const {
@@ -46,19 +62,19 @@ const ActiveEmail: React.FC<IProps> = ({ open = false, onClose }) => {
   });
 
   React.useEffect(() => {
-    if (isUpdateNicknameSuccess) {
+    if (isSubmitWithdrawPasswordSuccess) {
       reset();
       onClose();
     }
-  }, [isUpdateNicknameSuccess]);
+  }, [isSubmitWithdrawPasswordSuccess]);
 
-  const onSubmit = (data: FormData) => {
-    dispatch(activeEmail(data));
-  };
+  const onSubmit = (data: FormData) => dispatch(changeWithdrawPassword(data));
 
   return (
     <Dialog open={open} onClose={onClose} maxWidth="xs" fullWidth>
-      <DialogTitle sx={{ color: 'text.primary' }}>Kích hoạt email</DialogTitle>
+      <DialogTitle sx={{ color: 'text.primary' }}>
+        Thay đổi mật khẩu rút tiền
+      </DialogTitle>
       <DialogContent>
         <Stack direction="column">
           <Controller
@@ -69,7 +85,7 @@ const ActiveEmail: React.FC<IProps> = ({ open = false, onClose }) => {
                 hiddenLabel
                 variant="outlined"
                 size="small"
-                placeholder="Email cũ *"
+                placeholder="Email *"
                 sx={{
                   marginTop: '10px',
                   color: 'text.secondary',
@@ -84,6 +100,28 @@ const ActiveEmail: React.FC<IProps> = ({ open = false, onClose }) => {
             )}
           />
           <Controller
+            name="phonenumber"
+            control={control}
+            render={({ field }) => (
+              <TextField
+                hiddenLabel
+                variant="outlined"
+                size="small"
+                placeholder="Phone number *"
+                sx={{
+                  marginTop: '10px',
+                  color: 'text.secondary',
+                  ' .MuiInputBase-root': {
+                    backgroundColor: 'background.secondary',
+                  },
+                }}
+                error={Boolean(errors?.phonenumber?.message)}
+                helperText={errors?.phonenumber?.message}
+                {...field}
+              />
+            )}
+          />
+          <Controller
             name="password"
             control={control}
             render={({ field }) => (
@@ -91,7 +129,7 @@ const ActiveEmail: React.FC<IProps> = ({ open = false, onClose }) => {
                 hiddenLabel
                 variant="outlined"
                 size="small"
-                placeholder="Mật khẩu *"
+                placeholder="Mật khẩu đăng nhập *"
                 sx={{
                   marginTop: '10px',
                   color: 'text.secondary',
@@ -101,6 +139,28 @@ const ActiveEmail: React.FC<IProps> = ({ open = false, onClose }) => {
                 }}
                 error={Boolean(errors?.password?.message)}
                 helperText={errors?.password?.message}
+                {...field}
+              />
+            )}
+          />
+          <Controller
+            name="newWithdrawPassword"
+            control={control}
+            render={({ field }) => (
+              <TextField
+                hiddenLabel
+                variant="outlined"
+                size="small"
+                placeholder="Mật khẩu rút tiền mới *"
+                sx={{
+                  marginTop: '10px',
+                  color: 'text.secondary',
+                  ' .MuiInputBase-root': {
+                    backgroundColor: 'background.secondary',
+                  },
+                }}
+                error={Boolean(errors?.newWithdrawPassword?.message)}
+                helperText={errors?.newWithdrawPassword?.message}
                 {...field}
               />
             )}
@@ -126,4 +186,4 @@ const ActiveEmail: React.FC<IProps> = ({ open = false, onClose }) => {
   );
 };
 
-export default ActiveEmail;
+export default ChangeWithdrawPassword;

@@ -59,6 +59,7 @@ const _asyncActions: ActionTypes = generateSyncActions([
 
 const _singleActions: ActionTypes = {
   // Auth actions
+  LOG_OUT: 'LOG_OUT',
   SET_LOGGED: 'SET_LOGGED',
   RESET_AUTH_REDUCER: 'RESET_AUTH_REDUCER',
   // Widget actions

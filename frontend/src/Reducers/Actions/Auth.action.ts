@@ -9,6 +9,12 @@ const setLogged = () => {
   };
 };
 
+const logout = () => {
+  return {
+    type: ACTION_TYPES.LOG_OUT,
+  };
+};
+
 const setAuthLoading = (payload: boolean) => {
   return {
     type: ACTION_TYPES.SET_AUTH_ACTION_LOADING,
@@ -100,4 +106,4 @@ const register = (payload: {
   };
 };
 
-export default { setLogged, resetAuthReducer, login, register };
+export default { setLogged, resetAuthReducer, login, register, logout };

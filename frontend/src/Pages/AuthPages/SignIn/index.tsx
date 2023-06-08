@@ -11,7 +11,7 @@ import { Utils } from '@/Libs';
 import { ROUTERS } from '@/Constants';
 import { ForgotPassword } from '@/Components/Popup';
 
-const { login } = AuthActions;
+const { login, setLogged } = AuthActions;
 
 const schema = yup
   .object({
@@ -26,6 +26,8 @@ const SignIn = () => {
   const isLogged: any = useTypedSelector((state: any) =>
     _.get(state.AUTH, 'isLogged')
   );
+  const token = Utils.getUserData();
+  const userData = Utils.getUserData();
   const dispatch = useTypedDispatch();
 
   const {
@@ -38,6 +40,9 @@ const SignIn = () => {
 
   React.useEffect(() => {
     if (isLogged) Utils.redirect(ROUTERS.TRANSACTION);
+    else {
+      if (token && userData) dispatch(setLogged());
+    }
   }, [isLogged]);
 
   const onSubmit = (data: FormData) => dispatch(login(data))

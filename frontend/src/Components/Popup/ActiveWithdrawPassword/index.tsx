@@ -21,16 +21,7 @@ interface IProps {
 const schema = yup
   .object({
     password: yup.string().trim().required('Password is a required field'),
-    email: yup
-      .string()
-      .email()
-      .required('Withdraw password is a required field'),
-    phonenumber: yup
-      .string()
-      .trim()
-      .matches(/^([0-9]{10})$/)
-      .required('Phone number is a required field'),
-    newWithdrawPassword: yup
+    withdrawPassword: yup
       .string()
       .min(8, 'Withdraw password must be least at 8 characters')
       .matches(/\d+/, 'Withdraw password must be contain 1 number')
@@ -40,15 +31,16 @@ const schema = yup
   .required();
 type FormData = yup.InferType<typeof schema>;
 
-const { changeWithdrawPassword } = SecurityActions;
+const { activeWithdrawPassword } = SecurityActions;
 
-const ChangeWithdrawPassword: React.FC<IProps> = ({
+const ActiveWithdrawPassword: React.FC<IProps> = ({
   open = false,
   onClose,
 }) => {
   const dispatch = useTypedDispatch();
-  const isUpdateNicknameSuccess: boolean = useSelector((state: RootState) =>
-    _.get(state.USER, 'isUpdateNicknameSuccess')
+  const isSubmitWithdrawPasswordSuccess: boolean = useSelector(
+    (state: RootState) =>
+      _.get(state.SECURITY, 'isSubmitWithdrawPasswordSuccess')
   );
 
   const {
@@ -61,65 +53,21 @@ const ChangeWithdrawPassword: React.FC<IProps> = ({
   });
 
   React.useEffect(() => {
-    if (isUpdateNicknameSuccess) {
+    if (isSubmitWithdrawPasswordSuccess) {
       reset();
       onClose();
     }
-  }, [isUpdateNicknameSuccess]);
+  }, [isSubmitWithdrawPasswordSuccess]);
 
-  const onSubmit = (data: FormData) => dispatch(changeWithdrawPassword(data));
+  const onSubmit = (data: FormData) => dispatch(activeWithdrawPassword(data));
 
   return (
     <Dialog open={open} onClose={onClose} maxWidth="xs" fullWidth>
       <DialogTitle sx={{ color: 'text.primary' }}>
-        Thay đổi mật khẩu rút tiền
+        Kích hoạt mật khẩu rút tiền
       </DialogTitle>
       <DialogContent>
         <Stack direction="column">
-          <Controller
-            name="email"
-            control={control}
-            render={({ field }) => (
-              <TextField
-                hiddenLabel
-                variant="outlined"
-                size="small"
-                placeholder="Email *"
-                sx={{
-                  marginTop: '10px',
-                  color: 'text.secondary',
-                  ' .MuiInputBase-root': {
-                    backgroundColor: 'background.secondary',
-                  },
-                }}
-                error={Boolean(errors?.email?.message)}
-                helperText={errors?.email?.message}
-                {...field}
-              />
-            )}
-          />
-          <Controller
-            name="phonenumber"
-            control={control}
-            render={({ field }) => (
-              <TextField
-                hiddenLabel
-                variant="outlined"
-                size="small"
-                placeholder="Phone number *"
-                sx={{
-                  marginTop: '10px',
-                  color: 'text.secondary',
-                  ' .MuiInputBase-root': {
-                    backgroundColor: 'background.secondary',
-                  },
-                }}
-                error={Boolean(errors?.phonenumber?.message)}
-                helperText={errors?.phonenumber?.message}
-                {...field}
-              />
-            )}
-          />
           <Controller
             name="password"
             control={control}
@@ -128,7 +76,7 @@ const ChangeWithdrawPassword: React.FC<IProps> = ({
                 hiddenLabel
                 variant="outlined"
                 size="small"
-                placeholder="Mật khẩu đăng nhập *"
+                placeholder="Mật khẩu *"
                 sx={{
                   marginTop: '10px',
                   color: 'text.secondary',
@@ -143,14 +91,14 @@ const ChangeWithdrawPassword: React.FC<IProps> = ({
             )}
           />
           <Controller
-            name="newWithdrawPassword"
+            name="withdrawPassword"
             control={control}
             render={({ field }) => (
               <TextField
                 hiddenLabel
                 variant="outlined"
                 size="small"
-                placeholder="Mật khẩu rút tiền mới *"
+                placeholder="Mật khẩu rút tiền *"
                 sx={{
                   marginTop: '10px',
                   color: 'text.secondary',
@@ -158,8 +106,8 @@ const ChangeWithdrawPassword: React.FC<IProps> = ({
                     backgroundColor: 'background.secondary',
                   },
                 }}
-                error={Boolean(errors?.newWithdrawPassword?.message)}
-                helperText={errors?.newWithdrawPassword?.message}
+                error={Boolean(errors?.withdrawPassword?.message)}
+                helperText={errors?.withdrawPassword?.message}
                 {...field}
               />
             )}
@@ -185,4 +133,4 @@ const ChangeWithdrawPassword: React.FC<IProps> = ({
   );
 };
 
-export default ChangeWithdrawPassword;
+export default ActiveWithdrawPassword;

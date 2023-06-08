@@ -14,6 +14,10 @@ import {
   ListItem,
   ToggleButtonGroup,
   ToggleButton,
+  Menu,
+  MenuItem,
+  useTheme,
+  useMediaQuery,
 } from '@mui/material';
 // Import local
 import { appBarStyles, AppBar } from './AppBar.styles';
@@ -22,9 +26,11 @@ import { Utils } from '@libs';
 import { ROUTERS } from '@/Constants';
 import { LanguageSelect, Slider } from '../Common';
 import PersonIcon from '@mui/icons-material/Person';
-import { useTypedSelector } from '../../Reducers/store';
+import { useTypedDispatch, useTypedSelector } from '../../Reducers/store';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import MenuIcon from '@mui/icons-material/Menu';
+import { AuthActions } from '../../Reducers/Actions';
+import utils from '../../Libs/utils';
 
 const volatilityItems = [
   'EDUUSDT -1,18',
@@ -41,10 +47,24 @@ const volatilityItems = [
   'BTCUSDT -0,41',
   'IUDST -2,59',
 ];
+
+const { setLogged, logout } = AuthActions;
+
 const AppBarComponent: React.FC = () => {
+  const dispatch = useTypedDispatch();
+  const userData = Utils.getUserData();
+  const token = Utils.getAccessToken();
   const isLogged: any = useTypedSelector((state: any) =>
     _.get(state.AUTH, 'isLogged')
   );
+  const theme = useTheme();
+  const isMd = useMediaQuery(theme.breakpoints.down("md"));
+
+  const [anchorMenu, setAnchorMenu] = React.useState<null | HTMLElement>(null);
+  const openMenu = Boolean(anchorMenu);
+  const handleClose = () => {
+    setAnchorMenu(null);
+  };
   // Constructors
   const [language, setLanguage] = React.useState<string>('vietnam');
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -53,6 +73,14 @@ const AppBarComponent: React.FC = () => {
     setAnchorEl(event.currentTarget);
   };
   const isDarkMode = Utils.getThemeMode() === 'dark';
+
+  React.useEffect(() => {
+    if (userData && token) dispatch(setLogged());
+  }, []);
+
+  React.useEffect(() => {
+    if (isMd) setAnchorMenu(null);
+  }, [isMd]);
 
   const onSignOut = () => {
     console.log('sign out');
@@ -146,7 +174,7 @@ const AppBarComponent: React.FC = () => {
                 backgroundColor: 'background.newsHeader',
                 height: '25px',
                 margin: '0 6px',
-                maxWidth: "80%",
+                maxWidth: '80%',
               }}
             >
               <Slider
@@ -205,14 +233,41 @@ const AppBarComponent: React.FC = () => {
                   Rút
                 </Button>
                 <IconButton
-                  onClick={() => {
-                    Utils.redirect(ROUTERS.OVERVIEW);
+                  onClick={(e: any) => {
+                    setAnchorMenu(e.currentTarget);
                   }}
                   size="small"
                   sx={{ padding: 0, marginRight: '10px' }}
                 >
                   <AccountCircleIcon sx={{ fontSize: '28px' }} />
                 </IconButton>
+                <Menu
+                  id="basic-menu"
+                  anchorEl={anchorMenu}
+                  open={openMenu}
+                  onClose={handleClose}
+                  MenuListProps={{
+                    'aria-labelledby': 'basic-button',
+                  }}
+                >
+                  <MenuItem onClick={() => Utils.redirect(ROUTERS.OVERVIEW)}>
+                    Tổng quan
+                  </MenuItem>
+                  {userData?.role === 'admin' ? (
+                    <MenuItem onClick={() => Utils.redirect(ROUTERS.REQUEST)}>
+                      Quản lý
+                    </MenuItem>
+                  ) : null}
+                  <MenuItem
+                    onClick={() => {
+                      dispatch(logout());
+                      utils.clearCookies();
+                      Utils.redirect(ROUTERS.TRANSACTION);
+                    }}
+                  >
+                    Đăng xuất
+                  </MenuItem>
+                </Menu>
               </>
             ) : (
               <>
@@ -362,9 +417,12 @@ const AppBarComponent: React.FC = () => {
               width="100%"
             >
               <PersonIcon sx={{ color: 'text.burntSienna', mr: '6px' }} />
-              <Typography sx={{ color: '#000000', fontSize: '10px', textAlign: 'center' }}>
+              <Typography
+                sx={{ color: '#000000', fontSize: '10px', textAlign: 'center' }}
+              >
                 <Link href={ROUTERS.SIGN_UP}>Đăng kí ngay</Link> - Nhận chiết
-                khấu giao dịch lên tới 100 USD khi đăng ký thành công với mã mời (dành cho người dùng đã xác minh)
+                khấu giao dịch lên tới 100 USD khi đăng ký thành công với mã mời
+                (dành cho người dùng đã xác minh)
               </Typography>
             </Stack>
           )}

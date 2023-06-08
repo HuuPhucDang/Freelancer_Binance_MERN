@@ -20,10 +20,7 @@ interface IProps {
 
 const schema = yup
   .object({
-    password: yup
-      .string()
-      .trim()
-      .required('Password is a required field'),
+    password: yup.string().trim().required('Password is a required field'),
     newPassword: yup
       .string()
       .min(8, 'New password must be least at 8 characters')
@@ -45,8 +42,8 @@ const { changePassword } = SecurityActions;
 
 const EditName: React.FC<IProps> = ({ open = false, onClose }) => {
   const dispatch = useTypedDispatch();
-  const isUpdateNicknameSuccess: boolean = useSelector((state: RootState) =>
-    _.get(state.USER, 'isUpdateNicknameSuccess')
+  const isSubmitPasswordSuccess: boolean = useSelector((state: RootState) =>
+    _.get(state.SECURITY, 'isSubmitPasswordSuccess')
   );
 
   const {
@@ -59,11 +56,11 @@ const EditName: React.FC<IProps> = ({ open = false, onClose }) => {
   });
 
   React.useEffect(() => {
-    if (isUpdateNicknameSuccess) {
+    if (isSubmitPasswordSuccess) {
       reset();
       onClose();
     }
-  }, [isUpdateNicknameSuccess]);
+  }, [isSubmitPasswordSuccess]);
 
   const onSubmit = (data: FormData) => dispatch(changePassword(data));
 

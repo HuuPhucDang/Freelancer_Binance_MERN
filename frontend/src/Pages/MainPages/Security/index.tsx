@@ -19,15 +19,18 @@ import { UserLayout } from '@/Components/DefaultLayout';
 import { Sidebar } from '@/Components/LayoutParts';
 import Assets from '@/Assets';
 import {
-  WithdrawPassword,
+  ActiveWithdrawPassword,
+  ChangeWithdrawPassword,
   ChangeEmail,
   ChangePassword,
   ChangePhoneNumber,
+  ActiveEmail,
 } from '@/Components/Popup';
 import { Utils } from '@/Libs';
 
 const Security: React.FC = () => {
   const userData = Utils.getUserData();
+  const security = userData?.security;
   // Constructors
   const [isShowChangePassword, setIsShowChangePassword] =
     React.useState<boolean>(false);
@@ -60,11 +63,19 @@ const Security: React.FC = () => {
           onClose={() => setIsShowChangePhoneNumber(false)}
         />
         <ChangeEmail
-          open={isShowChangeEmail}
+          open={security?.email &&  security?.email && isShowChangeEmail}
           onClose={() => setIsShowChangeEmail(false)}
         />
-        <WithdrawPassword
-          open={isShowChangeWithdrawPassword}
+        <ActiveEmail
+          open={!security?.email && isShowChangeEmail}
+          onClose={() => setIsShowChangeEmail(false)}
+        />
+        <ActiveWithdrawPassword
+          open={!security?.isVerified && isShowChangeWithdrawPassword}
+          onClose={() => setIsShowChangeWithdrawPassword(false)}
+        />
+        <ChangeWithdrawPassword
+          open={security?.isVerified && isShowChangeWithdrawPassword}
           onClose={() => setIsShowChangeWithdrawPassword(false)}
         />
         <Grid container columnSpacing={4}>
