@@ -51,6 +51,7 @@ const rows = [
 
 const Overview: React.FC = () => {
   // Constructors
+  const userData = Utils.getUserData();
   const [isShowNamePopup, setIsShowNamePopup] = React.useState<boolean>(false);
   const [isShowAvatarPopup, setIsShowAvatarPopup] =
     React.useState<boolean>(false);
@@ -118,6 +119,7 @@ const Overview: React.FC = () => {
                   }}
                 >
                   <Avatar
+                    src={userData.avatar || ''}
                     sx={{ width: '70px', height: '70px', marginRight: '20px' }}
                   />
                   <Stack direction="column">
@@ -127,7 +129,7 @@ const Overview: React.FC = () => {
                       marginBottom="16px"
                     >
                       <Typography sx={{ marginRight: '16px' }}>
-                        Anonymous-User-b5b47p
+                        {userData ? userData.nickname : 'Anonymous-User-b5b47p'}
                       </Typography>
                       <IconButton
                         size="small"
@@ -150,7 +152,7 @@ const Overview: React.FC = () => {
                           ID người dùng
                         </Typography>
                         <Typography sx={{ fontSize: '12px' }}>
-                          12648856
+                          {userData.id}
                         </Typography>
                       </Box>
                       <Box>

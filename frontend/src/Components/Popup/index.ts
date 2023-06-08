@@ -6,6 +6,12 @@ import UploadIDCard from './UploadIDCard';
 import RequestVerify from './RequestVerify';
 import RequestConnectBank from './RequestConnectBank';
 import UserDetails from './UserDetails';
+import ChangePassword from './ChangePassword';
+import ActiveEmail from './ActiveEmail';
+import ChangeEmail from './ChangeEmail';
+import ChangePhoneNumber from './ChangePhoneNumber';
+import ActiveWithdrawPassword from './ActiveWithdrawPassword';
+import ChangeWithdrawPassword from './ChangeWithdrawPassword';
 
 export {
   ForgotPassword,
@@ -16,4 +22,9 @@ export {
   RequestConnectBank,
   RequestVerify,
   UserDetails,
+  ChangePassword,
+  ActiveEmail,
+  ChangeEmail,
+  ChangePhoneNumber,
+  ActiveWithdrawPassword, ChangeWithdrawPassword
 };
