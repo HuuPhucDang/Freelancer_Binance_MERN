@@ -58,7 +58,7 @@ const AppBarComponent: React.FC = () => {
     _.get(state.AUTH, 'isLogged')
   );
   const theme = useTheme();
-  const isMd = useMediaQuery(theme.breakpoints.down("md"));
+  const isMd = useMediaQuery(theme.breakpoints.down('md'));
 
   const [anchorMenu, setAnchorMenu] = React.useState<null | HTMLElement>(null);
   const openMenu = Boolean(anchorMenu);
@@ -83,7 +83,9 @@ const AppBarComponent: React.FC = () => {
   }, [isMd]);
 
   const onSignOut = () => {
-    console.log('sign out');
+    dispatch(logout());
+    utils.clearCookies();
+    Utils.redirect(ROUTERS.TRANSACTION);
   };
 
   const handleChangeLanguage = (
@@ -258,15 +260,7 @@ const AppBarComponent: React.FC = () => {
                       Quản lý
                     </MenuItem>
                   ) : null}
-                  <MenuItem
-                    onClick={() => {
-                      dispatch(logout());
-                      utils.clearCookies();
-                      Utils.redirect(ROUTERS.TRANSACTION);
-                    }}
-                  >
-                    Đăng xuất
-                  </MenuItem>
+                  <MenuItem onClick={() => onSignOut()}>Đăng xuất</MenuItem>
                 </Menu>
               </>
             ) : (

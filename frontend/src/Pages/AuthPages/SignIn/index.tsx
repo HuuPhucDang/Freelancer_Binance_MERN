@@ -40,12 +40,12 @@ const SignIn = () => {
 
   React.useEffect(() => {
     if (isLogged) Utils.redirect(ROUTERS.TRANSACTION);
-    else {
-      if (token && userData) dispatch(setLogged());
+    else if (!isLogged && token && userData) {
+      dispatch(setLogged());
     }
   }, [isLogged]);
 
-  const onSubmit = (data: FormData) => dispatch(login(data))
+  const onSubmit = (data: FormData) => dispatch(login(data));
 
   return (
     <Stack

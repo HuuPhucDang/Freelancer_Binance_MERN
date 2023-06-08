@@ -51,9 +51,9 @@ const SignUp = () => {
     resolver: yupResolver(schema),
   });
 
-  React.useEffect(() => {
-    if (isLogged) Utils.redirect(ROUTERS.TRANSACTION);
-  }, [isLogged]);
+  // React.useEffect(() => {
+  //   if (isLogged) Utils.redirect(ROUTERS.TRANSACTION);
+  // }, [isLogged]);
 
   const onSubmit = (data: FormData) => dispatch(register(data));
 
