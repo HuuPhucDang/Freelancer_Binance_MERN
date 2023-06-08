@@ -1,8 +1,9 @@
 import { Request, Response } from "express";
 import mongoose from "mongoose";
 import catchAsync from "../../utils/catchAsync";
-import { responsePayload } from "../../utils";
+import { pick, responsePayload } from "../../utils";
 import * as verificationService from "./verification.service";
+import { IOptions } from "../../helper/paginate/paginate";
 
 export const uploadIDCards = catchAsync(async (req: Request, res: Response) => {
   const allFiles: any = req.files;
@@ -18,3 +19,43 @@ export const uploadIDCards = catchAsync(async (req: Request, res: Response) => {
   res.send(responsePayload(true, "Active bank successfully!", user));
 });
 
+export const approvedIDCards = catchAsync(
+  async (req: Request, res: Response) => {
+    if (typeof req.params["userId"] === "string") {
+      const user = await verificationService.changeIDCardStatus(
+        new mongoose.Types.ObjectId(req.params["userId"]),
+        "approved"
+      );
+      res.send(responsePayload(true, "Approved ID Card successfully!", user));
+    }
+    res.send(responsePayload(false, "Approved ID Card failure!", null));
+  }
+);
+
+export const deniedIDCards = catchAsync(async (req: Request, res: Response) => {
+  if (typeof req.params["userId"] === "string") {
+    const user = await verificationService.changeIDCardStatus(
+      new mongoose.Types.ObjectId(req.params["userId"]),
+      "denined"
+    );
+    res.send(responsePayload(true, "Denied ID Card successfully!", user));
+  }
+  res.send(responsePayload(false, "Denied ID Card failure!", null));
+});
+
+export const fetchAllVerifications = catchAsync(
+  async (req: Request, res: Response) => {
+    const filter = pick(req.query, ["name", "role"]);
+    const options: IOptions = pick(req.query, [
+      "sortBy",
+      "limit",
+      "page",
+      "projectBy",
+      "populate",
+    ]);
+    const result = await verificationService.fetchAllIDCards(filter, options);
+    res.send(
+      responsePayload(true, "Fetch all verifications successfully!", result)
+    );
+  }
+);

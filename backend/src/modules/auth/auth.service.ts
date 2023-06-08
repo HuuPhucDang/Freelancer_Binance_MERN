@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 import Token from "../../models/token.model";
 import ApiError from "../../helper/errors/ApiError";
 import tokenTypes from "../token/token.types";
+import { assignReturnUser } from "../../utils";
 import {
   getUserByUsername,
   getUserById,
@@ -30,24 +31,7 @@ export const loginUserWithUsernameAndPassword = async (
       httpStatus.UNAUTHORIZED,
       "Incorrect username or password"
     );
-  if (user.security) {
-    user.security.phonenumber = user.security.phonenumber.replace(
-      /^\d{1,8}/,
-      "*********"
-    );
-    user.security.email = user.security.email.replace(
-      /(\w{3})[\w.-]+@([\w.]+\w)/,
-      "$1***@$2"
-    );
-  }
-
-  if (user?.bank)
-    user.bank.accountNumber = user.bank.accountNumber.replace(
-      /^\d{1,8}/,
-      "*********"
-    );
-
-  return user;
+  return assignReturnUser(user);
 };
 
 /**

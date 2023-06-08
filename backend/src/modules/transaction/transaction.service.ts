@@ -39,34 +39,34 @@ export const rechangeMoney = async (
   if (rechargeTransaction.status === "denied")
     throw new ApiError(httpStatus.BAD_REQUEST, "Transaction already denied!");
 
-  const newWallet = Object.assign(user?.wallet || { balance: 0, benefit: 0 }, {
-    balance: user?.wallet
-      ? user.wallet.balance + updateBody.amount
-      : updateBody.amount,
-  });
+  // const newWallet = Object.assign(user?.wallet || { balance: 0, benefit: 0 }, {
+  //   balance: user?.wallet
+  //     ? user.wallet.balance + updateBody.amount
+  //     : updateBody.amount,
+  // });
 
-  const newInviterWallet = Object.assign(
-    findInviter?.wallet || { balance: 0, benefit: 0 },
-    {
-      balance: updateBody.amount * findInviter?.wallet?.benefit || 0,
-    }
-  );
-  await Transaction.create({
-    userId: findInviter._id,
-    date: moment().format("YYYY-MM-DD"),
-    time: moment().format("hh:mm:ss"),
-    balance: newInviterWallet.balance,
-    amount: updateBody.amount * findInviter?.wallet?.benefit || 0,
-    type: "bonus",
-    status: "resolved",
-  });
-  Object.assign(findInviter, {
-    wallet: newInviterWallet,
-  });
-  findInviter.save();
-  Object.assign(user, {
-    wallet: newWallet,
-  });
+  // const newInviterWallet = Object.assign(
+  //   findInviter?.wallet || { balance: 0, benefit: 0 },
+  //   {
+  //     balance: updateBody.amount * findInviter?.wallet?.benefit || 0,
+  //   }
+  // );
+  // await Transaction.create({
+  //   userId: findInviter._id,
+  //   date: moment().format("YYYY-MM-DD"),
+  //   time: moment().format("hh:mm:ss"),
+  //   balance: newInviterWallet.balance,
+  //   amount: updateBody.amount * findInviter?.wallet?.benefit || 0,
+  //   type: "bonus",
+  //   status: "resolved",
+  // });
+  // Object.assign(findInviter, {
+  //   wallet: newInviterWallet,
+  // });
+  // findInviter.save();
+  // Object.assign(user, {
+  //   wallet: newWallet,
+  // });
   rechargeTransaction.status = "resolved";
   rechargeTransaction.save();
   await user.save();
@@ -82,11 +82,11 @@ export const withdrawMoney = async (
 ): Promise<IUserDoc | null> => {
   const user = await User.findById(updateBody.userId);
   if (!user) throw new ApiError(httpStatus.NOT_FOUND, "User not found!");
-  if (user?.wallet?.balance || 0 < updateBody.amount)
-    throw new ApiError(
-      httpStatus.BAD_REQUEST,
-      "Can not withdraw more than balance!"
-    );
+  // if (user?.wallet?.balance || 0 < updateBody.amount)
+  //   throw new ApiError(
+  //     httpStatus.BAD_REQUEST,
+  //     "Can not withdraw more than balance!"
+  //   );
   const withdrawTransaction = await Transaction.findOne({
     _id: transactionId,
     userId: user.id,
@@ -100,16 +100,16 @@ export const withdrawMoney = async (
   if (withdrawTransaction.status === "denied")
     throw new ApiError(httpStatus.BAD_REQUEST, "Transaction already denied!");
 
-  const newWallet = Object.assign(user?.wallet || { balance: 0, benefit: 0 }, {
-    balance: user?.wallet
-      ? user.wallet.balance - updateBody.amount
-      : updateBody.amount,
-  });
+  // const newWallet = Object.assign(user?.wallet || { balance: 0, benefit: 0 }, {
+  //   balance: user?.wallet
+  //     ? user.wallet.balance - updateBody.amount
+  //     : updateBody.amount,
+  // });
   withdrawTransaction.status = "resolved";
   withdrawTransaction.save();
-  Object.assign(user, {
-    wallet: newWallet,
-  });
+  // Object.assign(user, {
+  //   wallet: newWallet,
+  // });
   await user.save();
 
   return assignReturnUser(user);
@@ -129,7 +129,7 @@ export const requestRechargeMoney = async (
     userId,
     date: moment().format("YYYY-MM-DD"),
     time: moment().format("hh:mm:ss"),
-    balance: user?.wallet?.balance || 0,
+    // balance: user?.wallet?.balance || 0,
     amount: updateBody.amount,
     type: "recharge",
     status: "pending",
@@ -151,7 +151,7 @@ export const requestWithdrawMoney = async (
     userId,
     date: moment().format("YYYY-MM-DD"),
     time: moment().format("hh:mm:ss"),
-    balance: user?.wallet?.balance || 0,
+    // balance: user?.wallet?.balance || 0,
     amount: updateBody.amount,
     type: "withdraw",
     status: "pending",

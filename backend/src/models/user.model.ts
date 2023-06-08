@@ -8,10 +8,6 @@ import {
   IUserModel,
   EUserStatus,
 } from "../interfaces/user.interfaces";
-import { securitySchema } from "./security.model";
-import { verificationSchema } from "./verification.model";
-import { bankSchema } from "./bank.model";
-import { walletSchema } from "./wallet.model";
 
 const userSchema = new mongoose.Schema<IUserDoc, IUserModel>(
   {
@@ -64,10 +60,22 @@ const userSchema = new mongoose.Schema<IUserDoc, IUserModel>(
       enum: EUserStatus,
       default: "active",
     },
-    security: securitySchema,
-    bank: bankSchema,
-    verification: verificationSchema,
-    wallet: walletSchema,
+    bank: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Bank",
+    },
+    verification: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Verification",
+    },
+    security: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Security",
+    },
+    wallet: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Wallet",
+    },
   },
   {
     timestamps: true,

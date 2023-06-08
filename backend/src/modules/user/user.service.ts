@@ -72,7 +72,15 @@ export const queryUsers = async (
  */
 export const getUserById = async (
   id: mongoose.Types.ObjectId
-): Promise<IUserDoc | null> => User.findById(id);
+): Promise<IUserDoc | null> => {
+  const user = await User.findById(id)
+    .populate("verification")
+    .populate("wallet")
+    .populate("security")
+    .populate("bank");
+  if (!user) return null;
+  return assignReturnUser(user);
+};
 
 /**
  * Get user by email
@@ -81,7 +89,15 @@ export const getUserById = async (
  */
 export const getUserByUsername = async (
   username: string
-): Promise<IUserDoc | null> => User.findOne({ username });
+): Promise<IUserDoc | null> => {
+  const user = await User.findOne({ username })
+    .populate("verification")
+    .populate("wallet")
+    .populate("security")
+    .populate("bank");
+  if (!user) return null;
+  return assignReturnUser(user);
+};
 
 /**
  * Update user by id
@@ -136,4 +152,3 @@ export const updateUserNickname = async (
   await user.save();
   return assignReturnUser(user);
 };
-

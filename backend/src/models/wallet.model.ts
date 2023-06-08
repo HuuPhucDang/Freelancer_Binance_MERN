@@ -5,6 +5,10 @@ import { IWalletDoc, IWalletModel } from "../interfaces/waller.interface";
 
 const walletSchema = new mongoose.Schema<IWalletDoc, IWalletModel>(
   {
+    userId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    },
     balance: {
       type: mongoose.Schema.Types.Number,
       default: 0,

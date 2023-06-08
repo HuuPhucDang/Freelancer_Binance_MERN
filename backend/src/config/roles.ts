@@ -15,6 +15,7 @@ const allRoles = {
     "denyTransaction",
     "fetchUserRequests",
     "updateSystemInfor",
+    "manageIDCards"
   ],
 };
 

@@ -8,6 +8,7 @@ export enum EVerifyType {
 }
 
 export interface IVerification {
+  userId: Schema.Types.ObjectId;
   selfieImageUrl: Schema.Types.ObjectId;
   frontImageUrl: Schema.Types.ObjectId;
   backImageUrl: Schema.Types.ObjectId;
