@@ -83,6 +83,21 @@ export const getUserById = async (
 };
 
 /**
+ * Get user by ownerCode
+ */
+export const getUserByOwnerCode = async (
+  ownCode: string
+): Promise<IUserDoc | null> => {
+  const user = await User.findOne({ ownCode })
+    .populate("verification")
+    .populate("wallet")
+    .populate("security")
+    .populate("bank");
+  if (!user) return null;
+  return assignReturnUser(user);
+};
+
+/**
  * Get user by email
  * @param {string} username
  * @returns {Promise<IUserDoc | null>}

@@ -13,6 +13,27 @@ import {
   RequestMoneyBody,
   ITransactionDoc,
 } from "../../interfaces/transaction.interface";
+import { IWalletDoc } from "../../interfaces/waller.interface";
+import Wallet from "../../models/wallet.model";
+import { getUserById, getUserByOwnerCode } from "../user/user.service";
+
+/**
+ * Rechage money
+ */
+export const getWallet = async (
+  userId: mongoose.Types.ObjectId
+): Promise<IWalletDoc> => {
+  let wallet = await Wallet.findOne({ userId });
+
+  if (!wallet)
+    wallet = await Wallet.create({
+      balance: 0,
+      benefit: 0,
+      userId,
+    });
+
+  return wallet;
+};
 
 /**
  * Rechage money
@@ -21,9 +42,11 @@ export const rechangeMoney = async (
   transactionId: mongoose.Types.ObjectId,
   updateBody: ActionMoneyBody
 ): Promise<IUserDoc | null> => {
-  const user = await User.findById(updateBody.userId);
+  const user = await getUserById(
+    new mongoose.Types.ObjectId(updateBody.userId)
+  );
   if (!user) throw new ApiError(httpStatus.NOT_FOUND, "User not found!");
-  const findInviter = await User.findOne({ onwCode: user.inviteCode });
+  const findInviter = await getUserByOwnerCode(user.inviteCode);
   if (!findInviter)
     throw new ApiError(httpStatus.BAD_REQUEST, "Inviter not found!");
   const rechargeTransaction = await Transaction.findOne({
@@ -39,38 +62,34 @@ export const rechangeMoney = async (
   if (rechargeTransaction.status === "denied")
     throw new ApiError(httpStatus.BAD_REQUEST, "Transaction already denied!");
 
-  // const newWallet = Object.assign(user?.wallet || { balance: 0, benefit: 0 }, {
-  //   balance: user?.wallet
-  //     ? user.wallet.balance + updateBody.amount
-  //     : updateBody.amount,
-  // });
+  const userWallet = await getWallet(user.id);
+  const inviterWallet = await getWallet(findInviter.id);
 
-  // const newInviterWallet = Object.assign(
-  //   findInviter?.wallet || { balance: 0, benefit: 0 },
-  //   {
-  //     balance: updateBody.amount * findInviter?.wallet?.benefit || 0,
-  //   }
-  // );
-  // await Transaction.create({
-  //   userId: findInviter._id,
-  //   date: moment().format("YYYY-MM-DD"),
-  //   time: moment().format("hh:mm:ss"),
-  //   balance: newInviterWallet.balance,
-  //   amount: updateBody.amount * findInviter?.wallet?.benefit || 0,
-  //   type: "bonus",
-  //   status: "resolved",
-  // });
-  // Object.assign(findInviter, {
-  //   wallet: newInviterWallet,
-  // });
-  // findInviter.save();
-  // Object.assign(user, {
-  //   wallet: newWallet,
-  // });
+  userWallet.balance = userWallet.balance + updateBody.amount;
+
+  await userWallet.save();
+
+  const benefit = inviterWallet.benefit * updateBody.amount;
+
+  inviterWallet.balance = inviterWallet.balance + benefit;
+
+  await inviterWallet.save();
+
+  await Transaction.create({
+    userId: findInviter.id,
+    date: moment().format("YYYY-MM-DD"),
+    time: moment().format("hh:mm:ss"),
+    balance: inviterWallet.balance,
+    amount: benefit,
+    type: "bonus",
+    status: "resolved",
+  });
+
   rechargeTransaction.status = "resolved";
   rechargeTransaction.save();
-  await user.save();
-  return assignReturnUser(user);
+  const savedUser = await getUserById(user.id);
+  if (savedUser) return assignReturnUser(savedUser);
+  return null;
 };
 
 /**
@@ -82,13 +101,15 @@ export const withdrawMoney = async (
 ): Promise<IUserDoc | null> => {
   const user = await User.findById(updateBody.userId);
   if (!user) throw new ApiError(httpStatus.NOT_FOUND, "User not found!");
-  // if (user?.wallet?.balance || 0 < updateBody.amount)
-  //   throw new ApiError(
-  //     httpStatus.BAD_REQUEST,
-  //     "Can not withdraw more than balance!"
-  //   );
+  const userWallet = await getWallet(user.id);
+
+  if (userWallet.balance < updateBody.amount)
+    throw new ApiError(
+      httpStatus.BAD_REQUEST,
+      "Can not withdraw more than current balance!"
+    );
   const withdrawTransaction = await Transaction.findOne({
-    _id: transactionId,
+    id: transactionId,
     userId: user.id,
   });
   if (!withdrawTransaction)
@@ -100,19 +121,14 @@ export const withdrawMoney = async (
   if (withdrawTransaction.status === "denied")
     throw new ApiError(httpStatus.BAD_REQUEST, "Transaction already denied!");
 
-  // const newWallet = Object.assign(user?.wallet || { balance: 0, benefit: 0 }, {
-  //   balance: user?.wallet
-  //     ? user.wallet.balance - updateBody.amount
-  //     : updateBody.amount,
-  // });
+  userWallet.balance = userWallet.balance - updateBody.amount;
+  await userWallet.save();
   withdrawTransaction.status = "resolved";
   withdrawTransaction.save();
-  // Object.assign(user, {
-  //   wallet: newWallet,
-  // });
-  await user.save();
 
-  return assignReturnUser(user);
+  const savedUser = await getUserById(user.id);
+  if (savedUser) return assignReturnUser(savedUser);
+  return null;
 };
 
 /**
@@ -124,12 +140,13 @@ export const requestRechargeMoney = async (
 ): Promise<ITransactionDoc | null> => {
   const user = await User.findById(userId);
   if (!user) throw new ApiError(httpStatus.NOT_FOUND, "User not found!");
+  const userWallet = await getWallet(user.id);
 
   const transaction = await Transaction.create({
     userId,
     date: moment().format("YYYY-MM-DD"),
     time: moment().format("hh:mm:ss"),
-    // balance: user?.wallet?.balance || 0,
+    balance: userWallet.balance,
     amount: updateBody.amount,
     type: "recharge",
     status: "pending",
@@ -147,11 +164,12 @@ export const requestWithdrawMoney = async (
 ): Promise<ITransactionDoc | null> => {
   const user = await User.findById(userId);
   if (!user) throw new ApiError(httpStatus.NOT_FOUND, "User not found!");
+  const userWallet = await getWallet(user.id);
   const transaction = await Transaction.create({
     userId,
     date: moment().format("YYYY-MM-DD"),
     time: moment().format("hh:mm:ss"),
-    // balance: user?.wallet?.balance || 0,
+    balance: userWallet.balance,
     amount: updateBody.amount,
     type: "withdraw",
     status: "pending",
@@ -170,7 +188,7 @@ export const cancelTransaction = async (
   const user = await User.findById(userId);
   if (!user) throw new ApiError(httpStatus.NOT_FOUND, "User not found!");
   const transaction = await Transaction.findOne({
-    _id: transactionId,
+    id: transactionId,
     userId: user.id,
   });
   if (!transaction)
@@ -196,7 +214,7 @@ export const denyTransaction = async (
   const user = await User.findById(userId);
   if (!user) throw new ApiError(httpStatus.NOT_FOUND, "User not found!");
   const transaction = await Transaction.findOne({
-    _id: transactionId,
+    id: transactionId,
     userId: user.id,
   });
   if (!transaction)

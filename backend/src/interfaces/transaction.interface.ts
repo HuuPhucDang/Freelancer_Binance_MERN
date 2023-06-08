@@ -35,7 +35,7 @@ export interface ITransactionModel extends Model<ITransactionDoc> {
 
 export type ActionMoneyBody = {
   amount: number;
-  userId: Schema.Types.ObjectId;
+  userId: string;
 };
 
 export type RequestMoneyBody = {
