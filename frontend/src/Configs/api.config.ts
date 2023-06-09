@@ -19,15 +19,16 @@ const WRONG_URL_ERROR = [404];
 const getAPIConfig = () => {
   const BASE_URL =
     import.meta.env.VITE_BE_URL || 'http://222.255.117.249:3215/v1';
+  const token = Utils.getAccessToken();
   const api = create({
     baseURL: `${BASE_URL}`,
     headers: {
       Accept: 'application/json, text/plain, */*',
       'Content-Type': 'application/json',
-      Authorization:
-        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDgyZDFiNjI4OTBkZDIyZTNkZTM5OTkiLCJpYXQiOjE2ODYyOTYyMzcsImV4cCI6MTY4ODg4ODIzNywidHlwZSI6InJlZnJlc2gifQ.GpC6A0bRXXEFMy7yQGYEGghKP1hyzqhwc8FyNjCBwxE',
+      'Authorization': `Bearer ${token}`
     },
   });
+  // api.setHeader('Authorization', `Bearer ${token}`);
 
   return api;
 };

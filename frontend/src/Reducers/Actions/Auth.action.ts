@@ -56,7 +56,7 @@ const login = (payload: { username: string; password: string }) => {
           } = results as { message: string; payload: any; status: boolean };
           const { tokens, user } = resolveResult.payload;
           Utils.setAccessToken(tokens.access);
-          Utils.setAccessToken(tokens.refresh);
+          Utils.setRefreshToken(tokens.refresh);
           Utils.setUserData(user);
           dispatch(loginSuccess());
           Utils.redirect(ROUTERS.TRANSACTION);
