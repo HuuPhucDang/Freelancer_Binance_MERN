@@ -32,7 +32,7 @@ const schema = yup
 
 type FormData = yup.InferType<typeof schema>;
 
-const { changeEmail } = SecurityActions;
+const { changeEmail, resetSecurityReducer } = SecurityActions;
 
 const ChangeEmail: React.FC<IProps> = ({ open = false, onClose }) => {
   const dispatch = useTypedDispatch();
@@ -53,6 +53,7 @@ const ChangeEmail: React.FC<IProps> = ({ open = false, onClose }) => {
     if (isSubmitEmailSuccess) {
       reset();
       onClose();
+      dispatch(resetSecurityReducer());
     }
   }, [isSubmitEmailSuccess]);
 

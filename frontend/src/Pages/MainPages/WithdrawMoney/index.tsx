@@ -14,9 +14,18 @@ import {
 // Import local
 import { UserLayout } from '@/Components/DefaultLayout';
 import { Sidebar } from '@/Components/LayoutParts';
+import { useTypedDispatch } from '../../../Reducers/store';
+import { UserActions } from '../../../Reducers/Actions';
+
+const { getSelf } = UserActions;
 
 const WithdrawMoney: React.FC = () => {
   // Constructors
+  const dispatch = useTypedDispatch();
+
+  React.useEffect(() => {
+    dispatch(getSelf());
+  }, []);
 
   const renderMain = () => {
     return (

@@ -24,8 +24,8 @@ const getAPIConfig = () => {
     headers: {
       Accept: 'application/json, text/plain, */*',
       'Content-Type': 'application/json',
-      // Authorization:
-      //   'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDdlMTM0OGY0YjE0M2M3NDQxYzgwYzUiLCJpYXQiOjE2ODYyMTY5NDcsImV4cCI6MTY4NjIyNDE0NywidHlwZSI6ImFjY2VzcyJ9.ZsNaYd_7Q23eSIFQdBuX5GKDvedfg6oDj6pMs_CGqTU',
+      Authorization:
+        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDgyZDFiNjI4OTBkZDIyZTNkZTM5OTkiLCJpYXQiOjE2ODYyOTYyMzcsImV4cCI6MTY4ODg4ODIzNywidHlwZSI6InJlZnJlc2gifQ.GpC6A0bRXXEFMy7yQGYEGghKP1hyzqhwc8FyNjCBwxE',
     },
   });
 
@@ -129,8 +129,9 @@ const sendRequest = async (url: string, method: API_METHOD, params?: any) => {
 
   const api = getAPIConfig();
   api.setHeaders({
-    Authorization: `Bearer ${token}`,
+    Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDgyZDFiNjI4OTBkZDIyZTNkZTM5OTkiLCJpYXQiOjE2ODYyOTcyMTEsImV4cCI6MTY4NjMwNDQxMSwidHlwZSI6ImFjY2VzcyJ9.4adcdHoCPfqvrj0CD-Ycqds0rxhJoU7StPOt41UcR2Q`,
   });
+  // api.setHeader('Authorization',  `Bearer ${token}`)
   if (!api) return;
   if (method === 'POST') return await post(api, url, params);
   if (method === 'GET') return await get(api, url, params);
@@ -140,4 +141,23 @@ const sendRequest = async (url: string, method: API_METHOD, params?: any) => {
   if (method === 'PUT_FORM_DATA') return await putFormData(api, url, params);
 };
 
+const outsideEndpointRequest = async (
+  url: string,
+  method: API_METHOD,
+  params?: any
+) => {
+  const BASE_URL =
+    import.meta.env.VITE_BE_URL || 'https://api.binance.com/api/v3';
+  const api = create({
+    baseURL: `${BASE_URL}`,
+    headers: {
+      Accept: 'application/json, text/plain, */*',
+      'Content-Type': 'application/json',
+    },
+  });
+  if (!api) return;
+  if (method === 'GET') return await get(api, url, params);
+};
+
+export { outsideEndpointRequest };
 export default sendRequest;

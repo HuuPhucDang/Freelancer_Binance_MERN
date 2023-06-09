@@ -32,7 +32,7 @@ const schema = yup
 
 type FormData = yup.InferType<typeof schema>;
 
-const { verifyPhoneNumber } = SecurityActions;
+const { verifyPhoneNumber, resetSecurityReducer } = SecurityActions;
 
 const VerifyPhoneNumber: React.FC<IProps> = ({ open = false, onClose }) => {
   const dispatch = useTypedDispatch();
@@ -54,6 +54,7 @@ const VerifyPhoneNumber: React.FC<IProps> = ({ open = false, onClose }) => {
     if (isSubmitPhoneNumberSuccess) {
       reset();
       onClose();
+      dispatch(resetSecurityReducer());
     }
   }, [isSubmitPhoneNumberSuccess]);
 

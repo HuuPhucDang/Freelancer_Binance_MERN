@@ -27,7 +27,7 @@ const schema = yup
 
 type FormData = yup.InferType<typeof schema>;
 
-const { activeEmail } = SecurityActions;
+const { activeEmail, resetSecurityReducer } = SecurityActions;
 
 const ActiveEmail: React.FC<IProps> = ({ open = false, onClose }) => {
   const dispatch = useTypedDispatch();
@@ -48,6 +48,7 @@ const ActiveEmail: React.FC<IProps> = ({ open = false, onClose }) => {
     if (isSubmitEmailSuccess) {
       reset();
       onClose();
+      dispatch(resetSecurityReducer());
     }
   }, [isSubmitEmailSuccess]);
 
@@ -68,7 +69,7 @@ const ActiveEmail: React.FC<IProps> = ({ open = false, onClose }) => {
                 hiddenLabel
                 variant="outlined"
                 size="small"
-                placeholder="Email cũ *"
+                placeholder="Email *"
                 sx={{
                   marginTop: '10px',
                   color: 'text.secondary',

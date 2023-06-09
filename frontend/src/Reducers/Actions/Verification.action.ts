@@ -54,7 +54,103 @@ const uploadCardsId = (payload: FormData) => {
   };
 };
 
+const fetchAllVerificationFail = () => {
+  return {
+    type: ACTION_TYPES.FETCH_ALL_VERIFICATION_FAILURE,
+  };
+};
+
+const fetchAllVerificationSuccess = (payload: any) => {
+  return {
+    type: ACTION_TYPES.FETCH_ALL_VERIFICATION_SUCCESS,
+    payload,
+  };
+};
+
+const fetchAllVerification = (payload: any) => {
+  return async (dispatch: any) => {
+    dispatch(setVerificationLoading(true));
+    await API.fetchAllVerification(payload)
+      .then(async (response: any) => {
+        const results = await Utils.resolveResponse(response);
+        if (!results) await dispatch(fetchAllVerificationFail());
+        else {
+          dispatch(fetchAllVerificationSuccess(results));
+        }
+      })
+      .catch(async (error) => {
+        await Utils.resolveFailureResponse(error);
+        await dispatch(fetchAllVerificationFail());
+      });
+  };
+};
+
+const approveVerificationFail = () => {
+  return {
+    type: ACTION_TYPES.APPROVE_VERIFICATION_FAILURE,
+  };
+};
+
+const approveVerificationSuccess = (payload: any) => {
+  return {
+    type: ACTION_TYPES.APPROVE_VERIFICATION_SUCCESS,
+    payload,
+  };
+};
+
+const approveVerification = (id: string) => {
+  return async (dispatch: any) => {
+    dispatch(setVerificationLoading(true));
+    await API.approveVerification(id)
+      .then(async (response: any) => {
+        const results = await Utils.resolveResponse(response);
+        if (!results) await dispatch(approveVerificationFail());
+        else {
+          dispatch(approveVerificationSuccess(results));
+        }
+      })
+      .catch(async (error) => {
+        await Utils.resolveFailureResponse(error);
+        await dispatch(approveVerificationFail());
+      });
+  };
+};
+
+const denyVerificationFail = () => {
+  return {
+    type: ACTION_TYPES.DENY_VERIFICATION_FAILURE,
+  };
+};
+
+const denyVerificationSuccess = (payload: any) => {
+  return {
+    type: ACTION_TYPES.DENY_VERIFICATION_SUCCESS,
+    payload,
+  };
+};
+
+const denyVerification = (id: string) => {
+  return async (dispatch: any) => {
+    dispatch(setVerificationLoading(true));
+    await API.denyVerification(id)
+      .then(async (response: any) => {
+        const results = await Utils.resolveResponse(response);
+        if (!results) await dispatch(denyVerificationFail());
+        else {
+          dispatch(denyVerificationSuccess(results));
+        }
+      })
+      .catch(async (error) => {
+        await Utils.resolveFailureResponse(error);
+        await dispatch(denyVerificationFail());
+      });
+  };
+};
+
 export default {
   resetVerificationReducer,
   uploadCardsId,
+  approveVerification,
+  denyVerification,
+  fetchAllVerification,
 };

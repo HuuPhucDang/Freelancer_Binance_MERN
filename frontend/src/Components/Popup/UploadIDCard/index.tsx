@@ -48,7 +48,7 @@ const schema = yup
   .required();
 type FormData = yup.InferType<typeof schema>;
 
-const { uploadCardsId } = VerificationActions;
+const { uploadCardsId, resetVerificationReducer } = VerificationActions;
 
 const UploadIDCard: React.FC<IProps> = ({ open = false, onClose }) => {
   const dispatch = useTypedDispatch();
@@ -78,6 +78,7 @@ const UploadIDCard: React.FC<IProps> = ({ open = false, onClose }) => {
     if (isUploadSuccess) {
       reset();
       onClose();
+      dispatch(resetVerificationReducer());
     }
   }, [isUploadSuccess]);
 

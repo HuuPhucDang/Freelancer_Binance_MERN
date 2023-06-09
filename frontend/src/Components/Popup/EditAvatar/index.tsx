@@ -36,7 +36,7 @@ interface IProps {
   onClose(): void;
 }
 
-const { updateAvatar } = UserActions;
+const { updateAvatar, resetUserReducer } = UserActions;
 
 const EditName: React.FC<IProps> = ({ open = false, onClose }) => {
   const dispatch = useTypedDispatch();
@@ -50,6 +50,7 @@ const EditName: React.FC<IProps> = ({ open = false, onClose }) => {
     if (isUpdateAvatarSuccess) {
       setAvatar(userData.nickname);
       onClose();
+      dispatch(resetUserReducer());
     }
   }, [isUpdateAvatarSuccess]);
 

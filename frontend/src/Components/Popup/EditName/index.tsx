@@ -18,7 +18,7 @@ interface IProps {
   onClose(): void;
 }
 
-const { updateNickname } = UserActions;
+const { updateNickname, resetUserReducer } = UserActions;
 
 const EditName: React.FC<IProps> = ({ open = false, onClose }) => {
   const dispatch = useTypedDispatch();
@@ -35,6 +35,7 @@ const EditName: React.FC<IProps> = ({ open = false, onClose }) => {
       setIsError(false);
       setName(userData.nickname);
       onClose();
+      dispatch(resetUserReducer());
     }
   }, [isUpdateNicknameSuccess]);
 

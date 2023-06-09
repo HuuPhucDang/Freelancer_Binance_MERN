@@ -7,7 +7,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import { Stack } from '@mui/material';
 import { RootState, useTypedDispatch } from '@/Reducers/store';
-import { SecurityActions } from '@/Reducers/Actions';
+import { SecurityActions, UserActions } from '@/Reducers/Actions';
 import { useSelector } from 'react-redux';
 import _ from 'lodash';
 import { useForm, Controller } from 'react-hook-form';
@@ -38,7 +38,7 @@ const schema = yup
   .required();
 type FormData = yup.InferType<typeof schema>;
 
-const { changePassword } = SecurityActions;
+const { changePassword, resetSecurityReducer } = SecurityActions;
 
 const EditName: React.FC<IProps> = ({ open = false, onClose }) => {
   const dispatch = useTypedDispatch();
@@ -59,6 +59,7 @@ const EditName: React.FC<IProps> = ({ open = false, onClose }) => {
     if (isSubmitPasswordSuccess) {
       reset();
       onClose();
+      dispatch(resetSecurityReducer());
     }
   }, [isSubmitPasswordSuccess]);
 

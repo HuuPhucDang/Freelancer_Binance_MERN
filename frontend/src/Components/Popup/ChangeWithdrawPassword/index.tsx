@@ -40,7 +40,7 @@ const schema = yup
   .required();
 type FormData = yup.InferType<typeof schema>;
 
-const { changeWithdrawPassword } = SecurityActions;
+const { changeWithdrawPassword, resetSecurityReducer } = SecurityActions;
 
 const ChangeWithdrawPassword: React.FC<IProps> = ({
   open = false,
@@ -65,6 +65,7 @@ const ChangeWithdrawPassword: React.FC<IProps> = ({
     if (isSubmitWithdrawPasswordSuccess) {
       reset();
       onClose();
+      dispatch(resetSecurityReducer());
     }
   }, [isSubmitWithdrawPasswordSuccess]);
 
@@ -153,6 +154,7 @@ const ChangeWithdrawPassword: React.FC<IProps> = ({
                 variant="outlined"
                 size="small"
                 placeholder="Mật khẩu rút tiền mới *"
+                type="password"
                 sx={{
                   marginTop: '10px',
                   color: 'text.secondary',

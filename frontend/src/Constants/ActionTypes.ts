@@ -34,6 +34,11 @@ const _loadingActions: ActionTypes = generateLoadingActions([
   'SECURITY',
   'USER',
   'VERIFICATION',
+  'BINANCE',
+  'CHAT_BOX',
+  'SYSTEM_INFO',
+  'TRANSACTION',
+  'USER_REQUEST',
 ]);
 
 const _asyncActions: ActionTypes = generateSyncActions([
@@ -55,6 +60,27 @@ const _asyncActions: ActionTypes = generateSyncActions([
   'GET_SELF',
   'UPDATE_NICKNAME',
   'UPLOAD_CARDS_ID',
+  'GET_SINGLE_PRICE',
+  'GET_CANDLE_STICK',
+  'GET_TOP_TEN_COUPLE_TICKERS',
+  'GET_EXCHANGE',
+  'FETCH_CHAT_BOX',
+  'FETCH_CHAT_BOX_BY_ID',
+  'GET_SYSTEM_INFO',
+  'UPDATE_SYSTEM_INFO',
+  'FETCH_TRANSACTIONS',
+  'REQUEST_WITHDRAW',
+  'REQUEST_RECHARGE',
+  'RECHARGE_MONEY',
+  'WITHDRAW_MONEY',
+  'CANCEL_TRANSACTION',
+  'DENY_TRANSACTION',
+  'UPDATE_PASSWORD',
+  'REQUEST_FORGOT_PASSWORD',
+  'FETCH_USER_REQUESTS',
+  'FETCH_ALL_VERIFICATION',
+  'APPROVE_VERIFICATION',
+  'DENY_VERIFICATION',
 ]);
 
 const _singleActions: ActionTypes = {
@@ -77,6 +103,16 @@ const _singleActions: ActionTypes = {
   RESET_USER_REDUCER: 'RESET_USER_REDUCER',
   // Verification actions
   RESET_VERIFICATION_REDUCER: 'RESET_VERIFICATION_REDUCER',
+  // Binance actions
+  RESET_BINANCE_REDUCER: 'RESET_BINANCE_REDUCER',
+  // Chat Box actions
+  RESET_CHAT_BOX_REDUCER: 'RESET_CHAT_BOX_REDUCER',
+  // System Info actions
+  RESET_SYSTEM_INFO_REDUCER: 'RESET_SYSTEM_INFO_REDUCER',
+  // Transaction actions
+  RESET_TRANSACTION_REDUCER: 'RESET_TRANSACTION_REDUCER',
+  // User Request actions
+  RESET_USER_REQUEST_REDUCER: 'RESET_USER_REQUEST_REDUCER',
 };
 
 const ACTION_TYPES = {

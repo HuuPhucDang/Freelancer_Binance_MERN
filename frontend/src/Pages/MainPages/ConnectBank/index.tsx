@@ -21,7 +21,7 @@ import * as yup from 'yup';
 // Import local
 import { UserLayout } from '@/Components/DefaultLayout';
 import { Sidebar } from '@/Components/LayoutParts';
-import { BankActions } from '@/Reducers/Actions';
+import { BankActions, UserActions } from '@/Reducers/Actions';
 import { useTypedDispatch } from '@/Reducers/store';
 import { Utils } from '../../../Libs';
 import Assets from '../../../Assets';
@@ -44,6 +44,7 @@ const schema = yup
 type FormData = yup.InferType<typeof schema>;
 
 const { activeBankCard } = BankActions;
+const { getSelf } = UserActions;
 
 const ConnectBank: React.FC = () => {
   // Constructors
@@ -56,6 +57,11 @@ const ConnectBank: React.FC = () => {
   } = useForm<FormData>({
     resolver: yupResolver(schema),
   });
+
+  React.useEffect(() => {
+    dispatch(getSelf());
+  }, []);
+
   const onSubmit = (data: FormData) => dispatch(activeBankCard(data));
 
   const _renderForm = () => {
@@ -302,7 +308,12 @@ const ConnectBank: React.FC = () => {
         />
         <Stack
           direction="column"
-          sx={{ position: 'absolute', bottom: '12%', left: '10%', userSelect: 'none' }}
+          sx={{
+            position: 'absolute',
+            bottom: '12%',
+            left: '10%',
+            userSelect: 'none',
+          }}
         >
           <Typography
             sx={{

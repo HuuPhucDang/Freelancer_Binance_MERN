@@ -37,6 +37,57 @@ export default (
         isUploadSuccess: false,
       };
 
+    case ACTION_TYPES.FETCH_ALL_VERIFICATION_SUCCESS:
+      return {
+        ...state,
+        requestIsSuccess: true,
+        requestHasError: false,
+        isActionLoading: false,
+        isUploadSuccess: true,
+      };
+    case ACTION_TYPES.FETCH_ALL_VERIFICATION_FAILURE:
+      return {
+        ...state,
+        requestHasError: true,
+        requestIsSuccess: false,
+        isActionLoading: false,
+        isUploadSuccess: false,
+      };
+
+    case ACTION_TYPES.APPROVE_VERIFICATION_SUCCESS:
+      return {
+        ...state,
+        requestIsSuccess: true,
+        requestHasError: false,
+        isActionLoading: false,
+        isUploadSuccess: true,
+      };
+    case ACTION_TYPES.APPROVE_VERIFICATION_FAILURE:
+      return {
+        ...state,
+        requestHasError: true,
+        requestIsSuccess: false,
+        isActionLoading: false,
+        isUploadSuccess: false,
+      };
+
+    case ACTION_TYPES.DENY_VERIFICATION_SUCCESS:
+      return {
+        ...state,
+        requestIsSuccess: true,
+        requestHasError: false,
+        isActionLoading: false,
+        isUploadSuccess: true,
+      };
+    case ACTION_TYPES.DENY_VERIFICATION_FAILURE:
+      return {
+        ...state,
+        requestHasError: true,
+        requestIsSuccess: false,
+        isActionLoading: false,
+        isUploadSuccess: false,
+      };
+
     default:
       return state;
   }

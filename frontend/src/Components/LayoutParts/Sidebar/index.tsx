@@ -7,6 +7,10 @@ import AccountBalanceWalletOutlinedIcon from '@mui/icons-material/AccountBalance
 import RecordVoiceOverOutlinedIcon from '@mui/icons-material/RecordVoiceOverOutlined';
 import { ROUTERS } from '../../../Constants';
 import { useLocation } from 'react-router';
+import LogoutIcon from '@mui/icons-material/Logout';
+import { useTypedDispatch } from '../../../Reducers/store';
+import { AuthActions } from '../../../Reducers/Actions';
+import { Utils } from '../../../Libs';
 interface IMenu {
   icon: JSX.Element;
   label: string;
@@ -46,8 +50,18 @@ const menu: IMenu[] = [
   },
 ];
 
+const { logout } = AuthActions;
+
 const Sidebar = () => {
+  const dispatch = useTypedDispatch();
   const { pathname } = useLocation();
+
+  const onSignOut = () => {
+    dispatch(logout());
+    Utils.clearCookies();
+    Utils.redirect(ROUTERS.SIGN_IN);
+  };
+
   return (
     <Stack sx={{ maxWidth: '100%', overflow: 'auto' }}>
       <Stack
@@ -90,6 +104,28 @@ const Sidebar = () => {
             </Button>
           );
         })}
+        <Button
+          startIcon={<LogoutIcon />}
+          variant="text"
+          sx={{
+            display: 'flex',
+            color: 'text.primary',
+            justifyContent: 'flex-start',
+            fontSize: '12px',
+            height: '40px',
+            padding: '0 10px',
+            textTransform: 'unset',
+            whiteSpace: 'nowrap',
+            minWidth: {
+              xs: 'max-content',
+              md: '100%',
+            },
+            backgroundColor: 'transparent',
+          }}
+          onClick={() => onSignOut()}
+        >
+          Đăng xuất
+        </Button>
       </Stack>
     </Stack>
   );

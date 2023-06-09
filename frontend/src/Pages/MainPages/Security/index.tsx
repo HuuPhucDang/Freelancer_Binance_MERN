@@ -27,8 +27,14 @@ import {
   ActiveEmail,
 } from '@/Components/Popup';
 import { Utils } from '@/Libs';
+import { RootState, useTypedDispatch } from '../../../Reducers/store';
+import { useSelector } from 'react-redux';
+import _ from 'lodash';
+import { UserActions } from '../../../Reducers/Actions';
+const { getSelf } = UserActions;
 
 const Security: React.FC = () => {
+  const dispatch = useTypedDispatch();
   const userData = Utils.getUserData();
   const security = userData?.security;
   // Constructors
@@ -40,6 +46,10 @@ const Security: React.FC = () => {
     React.useState<boolean>(false);
   const [isShowChangeWithdrawPassword, setIsShowChangeWithdrawPassword] =
     React.useState<boolean>(false);
+
+  React.useEffect(() => {
+    dispatch(getSelf());
+  }, []);
 
   const renderMain = () => {
     return (
@@ -63,7 +73,7 @@ const Security: React.FC = () => {
           onClose={() => setIsShowChangePhoneNumber(false)}
         />
         <ChangeEmail
-          open={security?.email &&  security?.email && isShowChangeEmail}
+          open={security?.email && security?.email && isShowChangeEmail}
           onClose={() => setIsShowChangeEmail(false)}
         />
         <ActiveEmail
@@ -518,7 +528,7 @@ const Security: React.FC = () => {
                             color: 'text.primary',
                           }}
                         >
-                          {userData.security.isVerified ? (
+                          {userData?.security?.isVerified ? (
                             <Stack flexDirection="row" alignItems="center">
                               <CheckCircleIcon
                                 color="success"

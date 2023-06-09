@@ -4,7 +4,7 @@ import { Container, Grid } from '@mui/material';
 import Widgets from '../Widgets';
 import { useLocation } from 'react-router';
 import { Helmet } from 'react-helmet-async';
-import { Utils } from '../../Libs';
+import { Utils } from '@/Libs';
 import AdminSideBar from '../AdminSideBar';
 
 interface SectionProps {

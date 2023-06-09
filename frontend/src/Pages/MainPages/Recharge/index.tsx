@@ -12,8 +12,18 @@ import {
 import { UserLayout } from '@/Components/DefaultLayout';
 import { Sidebar } from '@/Components/LayoutParts';
 import Assets from '@/Assets';
+import { UserActions } from '../../../Reducers/Actions';
+import { useTypedDispatch } from '../../../Reducers/store';
+
+const { getSelf } = UserActions;
 
 const Recharge: React.FC = () => {
+  const dispatch = useTypedDispatch();
+
+  React.useEffect(() => {
+    dispatch(getSelf());
+  }, []);
+
   // Constructors
   const renderMain = () => {
     return (

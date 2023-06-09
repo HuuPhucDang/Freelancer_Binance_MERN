@@ -22,6 +22,7 @@ import VolatilityTable from './VolatilityTable';
 import CoinValueTable from './CoinValueTable';
 import MyInvoiceTable from './MyInvoiceTable';
 import { ROUTERS } from '../../../Constants';
+import { useTypedDispatch } from '../../../Reducers/store';
 
 const volatilityHeaderHeight = 33;
 const centerVolatilityRow = 31;
@@ -31,6 +32,7 @@ const socket = io('http://222.255.117.249:3215/', { transports : ['websocket'] }
 
 const Transaction: React.FC = () => {
   // Constructors
+  const dispatch = useTypedDispatch();
   const theme = useTheme();
   const isMd = useMediaQuery(theme.breakpoints.down('md'));
   const volatilityRef = React.useRef<HTMLDivElement | null>(null);
