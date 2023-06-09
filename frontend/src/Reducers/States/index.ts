@@ -8,6 +8,11 @@ import BankReducer from './Bank.reducer';
 import SecurityReducer from './Security.reducer';
 import UserReducer from './User.reducer';
 import VerificationReducer from './Verification.reducer';
+import BinanceReducer from './Binance.reducer';
+import ChatBoxReducer from './ChatBox.reducer';
+import SystemInfoReducer from './SystemInfo.reducer';
+import TransactionReducer from './Transaction.reducer';
+import UserRequestReducer from './UserRequest.reducer';
 
 const createRootReducer = (history: History) =>
   combineReducers({
@@ -18,5 +23,10 @@ const createRootReducer = (history: History) =>
     SECURITY: SecurityReducer,
     USER: UserReducer,
     VERIFICATION: VerificationReducer,
+    BINANCE: BinanceReducer,
+    CHAT_BOX: ChatBoxReducer,
+    SYSTEM_INFO: SystemInfoReducer,
+    TRANSACTION: TransactionReducer,
+    USER_REQUEST: UserRequestReducer
   });
 export default createRootReducer;

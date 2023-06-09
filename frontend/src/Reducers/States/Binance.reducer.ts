@@ -2,9 +2,6 @@ import { ACTION_TYPES, DEFAULT_LOADING_STATES } from '@/Constants';
 
 const DEFAULT_STATES = {
   ...DEFAULT_LOADING_STATES,
-  isUpdateNicknameSuccess: false,
-  isUpdateAvatarSuccess: false,
-  details: {},
 };
 
 export default (
@@ -13,40 +10,23 @@ export default (
 ) => {
   const { type, payload } = action;
   switch (type) {
-    case ACTION_TYPES.SET_USER_ACTION_LOADING: {
+    case ACTION_TYPES.SET_BINANCE_ACTION_LOADING: {
       return {
         ...state,
         isActionLoading: payload,
       };
     }
-    case ACTION_TYPES.RESET_USER_REDUCER:
+    case ACTION_TYPES.RESET_BINANCE_REDUCER:
       return DEFAULT_STATES;
 
-    case ACTION_TYPES.UPDATE_AVATAR_SUCCESS:
-      return {
-        ...state,
-        requestIsSuccess: true,
-        requestHasError: false,
-        isActionLoading: false,
-        isUpdateAvatarSuccess: true,
-      };
-    case ACTION_TYPES.UPDATE_AVATAR_FAILURE:
-      return {
-        ...state,
-        requestHasError: true,
-        requestIsSuccess: false,
-        isActionLoading: false,
-        isUpdateAvatarSuccess: false,
-      };
-
-    case ACTION_TYPES.FETCH_USERS_SUCCESS:
+    case ACTION_TYPES.GET_SINGLE_PRICE_SUCCESS:
       return {
         ...state,
         requestIsSuccess: true,
         requestHasError: false,
         isActionLoading: false,
       };
-    case ACTION_TYPES.FETCH_USERS_FAILURE:
+    case ACTION_TYPES.GET_SINGLE_PRICE_FAILURE:
       return {
         ...state,
         requestHasError: true,
@@ -54,48 +34,44 @@ export default (
         isActionLoading: false,
       };
 
-    case ACTION_TYPES.GET_SELF_SUCCESS:
+    case ACTION_TYPES.GET_CANDLE_STICK_SUCCESS:
       return {
         ...state,
         requestIsSuccess: true,
         requestHasError: false,
         isActionLoading: false,
-        details: payload,
       };
-    case ACTION_TYPES.GET_SELF_FAILURE:
+    case ACTION_TYPES.GET_CANDLE_STICK_FAILURE:
       return {
         ...state,
         requestHasError: true,
         requestIsSuccess: false,
         isActionLoading: false,
-        details: {},
       };
 
-    case ACTION_TYPES.UPDATE_NICKNAME_SUCCESS:
+    case ACTION_TYPES.GET_TOP_TEN_COUPLE_TICKERS_SUCCESS:
       return {
         ...state,
         requestIsSuccess: true,
         requestHasError: false,
         isActionLoading: false,
-        isUpdateNicknameSuccess: true,
       };
-    case ACTION_TYPES.UPDATE_NICKNAME_FAILURE:
+    case ACTION_TYPES.GET_TOP_TEN_COUPLE_TICKERS_FAILURE:
       return {
         ...state,
         requestHasError: true,
         requestIsSuccess: false,
         isActionLoading: false,
-        isUpdateNicknameSuccess: false,
       };
 
-    case ACTION_TYPES.UPDATE_PASSWORD_SUCCESS:
+    case ACTION_TYPES.GET_EXCHANGE_SUCCESS:
       return {
         ...state,
         requestIsSuccess: true,
         requestHasError: false,
         isActionLoading: false,
       };
-    case ACTION_TYPES.UPDATE_PASSWORD_FAILURE:
+    case ACTION_TYPES.GET_EXCHANGE_FAILURE:
       return {
         ...state,
         requestHasError: true,

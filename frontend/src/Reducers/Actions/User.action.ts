@@ -106,6 +106,12 @@ const getSelf = () => {
         const results = await Utils.resolveResponse(response);
         if (!results) await dispatch(getSelfFail());
         else {
+          const resolveResult: {
+            status: boolean;
+            message: string;
+            payload: any;
+          } = results as { status: boolean; message: string; payload: any };
+          Utils.setUserData(resolveResult.payload);
           dispatch(getSelfSuccess(results));
         }
       })
@@ -153,10 +159,42 @@ const updateNickname = (payload: { nickname: string }) => {
   };
 };
 
+const updatePasswordSuccess = (payload: any) => {
+  return {
+    type: ACTION_TYPES.UPDATE_PASSWORD_SUCCESS,
+    payload,
+  };
+};
+
+const updatePasswordFail = () => {
+  return {
+    type: ACTION_TYPES.UPDATE_PASSWORD_FAILURE,
+  };
+};
+
+const updatePassword = (payload: { userId: string; password: string }) => {
+  return async (dispatch: any) => {
+    dispatch(setUserLoading(true));
+    await API.updatePassword(payload)
+      .then(async (response: any) => {
+        const result = await Utils.resolveResponse(response);
+        if (!result) await dispatch(updatePasswordFail());
+        else {
+          dispatch(updatePasswordSuccess(result));
+        }
+      })
+      .catch(async (error: any) => {
+        await Utils.resolveFailureResponse(error);
+        await dispatch(updatePasswordFail());
+      });
+  };
+};
+
 export default {
   resetUserReducer,
   updateNickname,
   updateAvatar,
   fetchUsers,
   getSelf,
+  updatePassword,
 };

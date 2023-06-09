@@ -3,6 +3,11 @@ import * as BankAPI from './Bank.api';
 import * as SecurityAPI from './Security.api';
 import * as UserAPI from './User.api';
 import * as VerificationAPI from './Verification.api';
+import * as BinanceAPI from './Binance.api';
+import * as ChatBoxAPI from './ChatBox';
+import * as SystemInfoAPI from './SystemInfo';
+import * as TransactionAPI from './Transaction.api';
+import * as UserRequestAPI from './UserRequest.api';
 
 export default {
   ...AuthAPI,
@@ -10,4 +15,9 @@ export default {
   ...SecurityAPI,
   ...UserAPI,
   ...VerificationAPI,
+  ...BinanceAPI,
+  ...ChatBoxAPI,
+  ...SystemInfoAPI,
+  ...TransactionAPI,
+  ...UserRequestAPI,
 };

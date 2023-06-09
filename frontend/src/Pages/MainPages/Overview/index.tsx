@@ -1,4 +1,6 @@
 import React from 'react';
+import _ from 'lodash';
+import { useSelector } from 'react-redux';
 import {
   Box,
   Typography,
@@ -22,9 +24,14 @@ import { UserLayout } from '@/Components/DefaultLayout';
 import Assets from '@/Assets';
 import ArrowCircleRightOutlinedIcon from '@mui/icons-material/ArrowCircleRightOutlined';
 import { Sidebar } from '@/Components/LayoutParts';
-import { EditAvatar, EditName } from '../../../Components/Popup';
-import { ROUTERS } from '../../../Constants';
+import { EditAvatar, EditName } from '@/Components/Popup';
+import { ENUMS, ROUTERS } from '@/Constants';
 import { Utils } from '@/Libs';
+import { UserActions } from '@/Reducers/Actions';
+import {
+  RootState,
+  useTypedDispatch,
+} from '@/Reducers/store';
 
 function createData(
   icon: string,
@@ -49,14 +56,52 @@ const rows = [
   createData(Assets.hookIcon, 'HOOK', 'Hooked Pr', 2.67, 2.13),
 ];
 
+const userTypes = [
+  {
+    label: 'Sơ cấp',
+    value: ENUMS.EUserType.BEGINNER,
+  },
+  {
+    label: 'Trung cấp',
+    value: ENUMS.EUserType.INTERMEDIATE,
+  },
+  {
+    label: 'Nâng cao',
+    value: ENUMS.EUserType.ADVANCE,
+  },
+  {
+    label: 'Chuyên nghiệp',
+    value: ENUMS.EUserType.PROFESSINAL,
+  },
+];
+
+const { getSelf } = UserActions;
+
 const Overview: React.FC = () => {
   // Constructors
-  const userData = Utils.getUserData();
+  const dispatch = useTypedDispatch();
+  const userDetails = useSelector((state: RootState) =>
+    _.get(state.USER, 'details')
+  );
   const [isShowNamePopup, setIsShowNamePopup] = React.useState<boolean>(false);
   const [isShowAvatarPopup, setIsShowAvatarPopup] =
     React.useState<boolean>(false);
 
+  React.useEffect(() => {
+    dispatch(getSelf());
+  }, []);
+
   // Renders
+  const userType = React.useMemo(() => {
+    let result = 'Sơ cấp';
+    const findUserType = userTypes.find(
+      (item: { label: string; value: string }) =>
+        item.value === userDetails?.userType
+    );
+
+    if (findUserType) result = findUserType.label;
+    return result;
+  }, []);
 
   const renderMain = () => {
     return (
@@ -119,7 +164,7 @@ const Overview: React.FC = () => {
                   }}
                 >
                   <Avatar
-                    src={userData.avatar || ''}
+                    src={userDetails.avatar || ''}
                     sx={{ width: '70px', height: '70px', marginRight: '20px' }}
                   />
                   <Stack direction="column">
@@ -129,7 +174,7 @@ const Overview: React.FC = () => {
                       marginBottom="16px"
                     >
                       <Typography sx={{ marginRight: '16px' }}>
-                        {userData ? userData.nickname : 'Anonymous-User-b5b47p'}
+                        {userDetails ? userDetails?.nickname : 'Anonymous-User-b5b47p'}
                       </Typography>
                       <IconButton
                         size="small"
@@ -146,21 +191,23 @@ const Overview: React.FC = () => {
                         <RemoveRedEyeOutlinedIcon sx={{ fontSize: '20px' }} />
                       </IconButton>
                     </Stack>
-                    <Stack direction="row">
-                      <Box sx={{ marginRight: '20px' }}>
+                    <Stack direction="row" flexWrap="wrap">
+                      <Box
+                        sx={{ marginRight: '20px', minWidth: 'max-content' }}
+                      >
                         <Typography sx={{ fontSize: '12px', fontWeight: 600 }}>
                           ID người dùng
                         </Typography>
                         <Typography sx={{ fontSize: '12px' }}>
-                          {userData.id}
+                          {userDetails?.id}
                         </Typography>
                       </Box>
-                      <Box>
+                      <Box sx={{ minWidth: 'max-content' }}>
                         <Typography sx={{ fontSize: '12px', fontWeight: 600 }}>
                           Loại người dùng
                         </Typography>
                         <Typography sx={{ fontSize: '12px' }}>
-                          Người dùng thông thường
+                          {userType}
                         </Typography>
                       </Box>
                     </Stack>

@@ -15,12 +15,21 @@ import { Sidebar } from '@/Components/LayoutParts';
 import { UploadIDCard } from '../../../Components/Popup';
 import { Utils } from '../../../Libs';
 import { ROUTERS } from '../../../Constants';
+import { useTypedDispatch } from '../../../Reducers/store';
+import { UserActions } from '../../../Reducers/Actions';
+
+const { getSelf } = UserActions;
 
 const Verify: React.FC = () => {
   // Constructors
+  const dispatch = useTypedDispatch();
   const userData = Utils.getUserData();
   const [isShowUploadIDCardPopup, setIsShowUploadIDCardPopup] =
     React.useState<boolean>(false);
+
+  React.useEffect(() => {
+    dispatch(getSelf());
+  }, []);
 
   const _renderUnverifyField = () => {
     return (
@@ -74,7 +83,7 @@ const Verify: React.FC = () => {
   };
 
   const _renderVerifiedField = () => {
-    if (userData?.verification?.status === 'pending')
+    if (userData?.verification?.status === 'pending' || typeof userData?.verification === 'string')
       return (
         <Stack direction="column">
           <Typography

@@ -9,6 +9,7 @@ import {
 import MENU_NAVIGATION from './MenuNavigation';
 import COUNTRY from './Country';
 import MENU_TOPIC from './MenuTopic';
+import * as ENUMS from './Enums';
 
 export {
   ROUTERS,
@@ -21,4 +22,5 @@ export {
   MENU_NAVIGATION,
   COUNTRY,
   MENU_TOPIC,
+  ENUMS,
 };

@@ -4,7 +4,9 @@ import { useTypedDispatch } from '@/Reducers/store';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import { AuthActions } from '../../../Reducers/Actions';
+
+import { AuthActions } from '@/Reducers/Actions';
+import AuthLayout from '@/Components/DefaultLayout/AuthLayout';
 
 const schema = yup
   .object({
@@ -51,16 +53,8 @@ const SignUp = () => {
 
   const onSubmit = (data: FormData) => dispatch(register(data));
 
-  return (
-    <Stack
-      sx={{
-        width: '100vw',
-        height: '100vh',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-      }}
-    >
+  const _renderMain = () => {
+    return (
       <Stack
         direction="column"
         sx={{
@@ -180,8 +174,10 @@ const SignUp = () => {
           Đăng ký
         </Button>
       </Stack>
-    </Stack>
-  );
+    );
+  };
+
+  return <AuthLayout screenTitle="Đăng ký" content={_renderMain()} />;
 };
 
 export default SignUp;

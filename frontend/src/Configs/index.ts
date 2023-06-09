@@ -1,3 +1,3 @@
-import sendRequest from './api.config';
+import sendRequest, { outsideEndpointRequest } from './api.config';
 
-export { sendRequest };
+export { sendRequest, outsideEndpointRequest };

@@ -1,15 +1,15 @@
 import React from 'react';
+import { Helmet } from 'react-helmet-async';
+import { useLocation } from 'react-router';
 import { Box, Stack } from '@mui/material';
+import _ from 'lodash';
 
 import Widgets from '../Widgets';
-import { useLocation } from 'react-router';
-import { Helmet } from 'react-helmet-async';
-import { Utils } from '../../Libs';
+import { Utils } from '@/Libs';
 import AppBarComponent from '../AppBar';
-import { ROUTERS } from '../../Constants';
-import { useTypedDispatch, useTypedSelector } from '../../Reducers/store';
-import { AuthActions } from '../../Reducers/Actions';
-import _ from 'lodash';
+import { ROUTERS } from '@/Constants';
+import { useTypedDispatch, useTypedSelector } from '@/Reducers/store';
+import { AuthActions } from '@/Reducers/Actions';
 
 interface SectionProps {
   content: JSX.Element;
@@ -44,7 +44,7 @@ const UserLayout: React.FC<SectionProps> = (props: SectionProps) => {
     const isAuthRouters = authRoutes.includes(pathname);
     if (!isLogged && isAuthRouters && token && userData) {
       dispatch(setLogged());
-    } 
+    }
     // else {
     //   utils.redirect(ROUTERS.SIGN_IN);
     //   utils.clearCookies();
@@ -60,13 +60,13 @@ const UserLayout: React.FC<SectionProps> = (props: SectionProps) => {
   return (
     <Stack direction="column">
       <AppBarComponent />
+      <Widgets.Notification />
+      <Widgets.Alert />
       <Box sx={{ background: 'background.default', flex: 1 }}>
         <Helmet>
           <title>{screenTitle ? screenTitle : 'Binance'}</title>
         </Helmet>
         {content}
-        <Widgets.Notification />
-        <Widgets.Alert />
       </Box>
     </Stack>
   );
