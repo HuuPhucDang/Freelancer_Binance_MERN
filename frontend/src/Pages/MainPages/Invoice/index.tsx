@@ -48,7 +48,7 @@ const Invoice: React.FC = () => {
   const rows = React.useMemo(() => {
     const result: any[] = [];
     if (transactions && transactions?.length > 0) {
-      transactions.forEach((item: any) =>
+      transactions.forEach((_item: any) =>
         result.push(
           createData('2023-05-20', '16:30', 'Rút tiền', 'Đã xử lý', 200, 4000)
         )

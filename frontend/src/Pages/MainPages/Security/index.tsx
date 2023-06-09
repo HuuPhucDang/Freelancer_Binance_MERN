@@ -27,8 +27,8 @@ import {
   ActiveEmail,
 } from '@/Components/Popup';
 import { Utils } from '@/Libs';
-import { RootState, useTypedDispatch } from '../../../Reducers/store';
-import { useSelector } from 'react-redux';
+import { useTypedDispatch } from '../../../Reducers/store';
+// import { useSelector } from 'react-redux';
 import _ from 'lodash';
 import { UserActions } from '../../../Reducers/Actions';
 const { getSelf } = UserActions;
