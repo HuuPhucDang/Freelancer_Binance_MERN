@@ -17,6 +17,10 @@ import {
 import { UserLayout } from '@/Components/DefaultLayout';
 import { Sidebar } from '@/Components/LayoutParts';
 import { Select } from '@/Components/Common';
+import { TransactionActions } from '../../../Reducers/Actions';
+import { RootState, useTypedDispatch } from '../../../Reducers/store';
+import { useSelector } from 'react-redux';
+import _ from 'lodash';
 
 function createData(
   date: string,
@@ -29,17 +33,30 @@ function createData(
   return { date, time, type, status, total, surplus };
 }
 
-const rows = [
-  createData('2023-05-20', '16:30', 'Rút tiền', 'Đã xử lý', 200, 4000),
-  createData('2023-05-20', '16:30', 'Rút tiền', 'Đã xử lý', 200, 4000),
-  createData('2023-05-20', '16:30', 'Rút tiền', 'Đã xử lý', 200, 4000),
-  createData('2023-05-20', '16:30', 'Rút tiền', 'Đã xử lý', 200, 4000),
-  createData('2023-05-20', '16:30', 'Rút tiền', 'Đã xử lý', 200, 4000),
-  createData('2023-05-20', '16:30', 'Rút tiền', 'Đã xử lý', 200, 4000),
-];
+const { fetchTransactions } = TransactionActions;
 
 const Invoice: React.FC = () => {
   // Constructors
+  const dispatch = useTypedDispatch();
+  const transactions: any[] = useSelector((state: RootState) =>
+    _.get(state.TRANSACTION, 'payload')
+  );
+  React.useEffect(() => {
+    dispatch(fetchTransactions({}));
+  }, []);
+
+  const rows = React.useMemo(() => {
+    const result: any[] = [];
+    if (transactions && transactions?.length > 0) {
+      transactions.forEach((item: any) =>
+        result.push(
+          createData('2023-05-20', '16:30', 'Rút tiền', 'Đã xử lý', 200, 4000)
+        )
+      );
+    }
+    return result;
+  }, [transactions]);
+
   const renderMain = () => {
     return (
       <Box

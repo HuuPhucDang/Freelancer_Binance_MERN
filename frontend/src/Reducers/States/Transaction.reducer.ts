@@ -2,6 +2,7 @@ import { ACTION_TYPES, DEFAULT_LOADING_STATES } from '@/Constants';
 
 const DEFAULT_STATES = {
   ...DEFAULT_LOADING_STATES,
+  payload: [],
 };
 
 export default (
@@ -25,6 +26,7 @@ export default (
         requestIsSuccess: true,
         requestHasError: false,
         isActionLoading: false,
+        payload,
       };
     case ACTION_TYPES.FETCH_TRANSACTIONS_FAILURE:
       return {
@@ -32,6 +34,7 @@ export default (
         requestHasError: true,
         requestIsSuccess: false,
         isActionLoading: false,
+        payload: [],
       };
 
     case ACTION_TYPES.REQUEST_WITHDRAW_SUCCESS:

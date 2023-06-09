@@ -128,8 +128,8 @@ const sendRequest = async (url: string, method: API_METHOD, params?: any) => {
   const token = Utils.getAccessToken();
 
   const api = getAPIConfig();
-  api.setHeaders({
-    Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDgyZDFiNjI4OTBkZDIyZTNkZTM5OTkiLCJpYXQiOjE2ODYyOTcyMTEsImV4cCI6MTY4NjMwNDQxMSwidHlwZSI6ImFjY2VzcyJ9.4adcdHoCPfqvrj0CD-Ycqds0rxhJoU7StPOt41UcR2Q`,
+  await api.setHeaders({
+    Authorization: `Bearer ${token}`,
   });
   // api.setHeader('Authorization',  `Bearer ${token}`)
   if (!api) return;
