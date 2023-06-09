@@ -49,6 +49,10 @@ import filterTypeImage from './filter_type.png';
 import excelIcon from './excel.png';
 import ballIcon from './ri_basketball-line.png';
 import downArrowIcon from './down_arrow.png';
+import bankCardImage from './bank_card.png';
+import frontIDCard from './front_id_card.png';
+import backIDCard from './back_id_card.png';
+import successSecurityImage from './success_security.png';
 
 export default {
   darkIconDarkTheme,
@@ -96,4 +100,8 @@ export default {
   transactionDarkIcon,
   ballIcon,
   downArrowIcon,
+  bankCardImage,
+  frontIDCard,
+  backIDCard,
+  successSecurityImage,
 };

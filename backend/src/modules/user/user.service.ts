@@ -2,6 +2,7 @@ import httpStatus from "http-status";
 import mongoose from "mongoose";
 import _ from "lodash";
 import User from "../../models/user.model";
+import UserType from "../../models/userType.model";
 import ApiError from "../../helper/errors/ApiError";
 import { IOptions, QueryResult } from "../../helper/paginate/paginate";
 import {
@@ -50,10 +51,18 @@ export const registerUser = async (
   const findInviter = await User.findOne({ onwCode: userBody.inviteCode });
   if (!findInviter)
     throw new ApiError(httpStatus.BAD_REQUEST, "Invite code not valid!");
-  return User.create({
+  const user = await User.create({
     ...userBody,
     nickname: `Anonymous-User-${makeDefaultNickname(6)}`,
   });
+  const userType = await UserType.create({
+    name: "Beginner",
+    userId: user.id,
+    probability: 0.1,
+  });
+  user.userType = userType.id;
+  await user.save();
+  return user;
 };
 
 /**
@@ -72,7 +81,32 @@ export const queryUsers = async (
  */
 export const getUserById = async (
   id: mongoose.Types.ObjectId
-): Promise<IUserDoc | null> => User.findById(id);
+): Promise<IUserDoc | null> => {
+  const user = await User.findById(id)
+    .populate("verification")
+    .populate("wallet")
+    .populate("security")
+    .populate("bank")
+    .populate("userType");
+  if (!user) return null;
+  return assignReturnUser(user);
+};
+
+/**
+ * Get user by ownerCode
+ */
+export const getUserByOwnerCode = async (
+  ownCode: string
+): Promise<IUserDoc | null> => {
+  const user = await User.findOne({ ownCode })
+    .populate("verification")
+    .populate("wallet")
+    .populate("security")
+    .populate("bank")
+    .populate("userType");
+  if (!user) return null;
+  return assignReturnUser(user);
+};
 
 /**
  * Get user by email
@@ -81,7 +115,16 @@ export const getUserById = async (
  */
 export const getUserByUsername = async (
   username: string
-): Promise<IUserDoc | null> => User.findOne({ username });
+): Promise<IUserDoc | null> => {
+  const user = await User.findOne({ username })
+    .populate("verification")
+    .populate("wallet")
+    .populate("security")
+    .populate("bank")
+    .populate("userType");
+  if (!user) return null;
+  return assignReturnUser(user);
+};
 
 /**
  * Update user by id
@@ -136,4 +179,3 @@ export const updateUserNickname = async (
   await user.save();
   return assignReturnUser(user);
 };
-

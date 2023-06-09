@@ -5,6 +5,10 @@ import { IBankDoc, IBankModel } from "../interfaces/bank.interface";
 
 const bankSchema = new mongoose.Schema<IBankDoc, IBankModel>(
   {
+    userId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    },
     fullname: {
       type: mongoose.Schema.Types.String,
       required: false,

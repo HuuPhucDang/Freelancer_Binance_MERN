@@ -33,7 +33,6 @@ const languages = [
 ];
 
 const Placeholder = (props: PlaceholderProps<IOption>) => {
-  console.log(props);
   return (
     <components.Placeholder {...props}>
       <Stack flexDirection="row" alignItems="center" sx={{ color: '#000' }}>

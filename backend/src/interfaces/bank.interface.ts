@@ -1,7 +1,8 @@
-import { Model, Document } from "mongoose";
+import { Model, Document, Schema } from "mongoose";
 import { QueryResult } from "../helper/paginate/paginate";
 
 export interface IBank {
+  userId: Schema.Types.ObjectId;
   fullname: string;
   accountNumber: string;
   bankName: string;
@@ -17,4 +18,3 @@ export interface IBankModel extends Model<IBankDoc> {
     options: Record<string, any>
   ): Promise<QueryResult>;
 }
-

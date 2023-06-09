@@ -7,14 +7,42 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { Stack } from '@mui/material';
+import { Utils } from '../../../Libs';
+import { RootState, useTypedDispatch } from '../../../Reducers/store';
+import { UserActions } from '../../../Reducers/Actions';
+import { useSelector } from 'react-redux';
+import _ from 'lodash';
 
 interface IProps {
   open: boolean;
   onClose(): void;
 }
 
+const { updateNickname } = UserActions;
+
 const EditName: React.FC<IProps> = ({ open = false, onClose }) => {
-  const [name, setName] = React.useState<string>('Anonymous-User-b5b47p');
+  const dispatch = useTypedDispatch();
+  const userData = Utils.getUserData();
+  const nicknameMsg = 'Nickname is a required field';
+  const [isError, setIsError] = React.useState<boolean>(false);
+  const [name, setName] = React.useState<string>(userData.nickname);
+  const isUpdateNicknameSuccess: boolean = useSelector((state: RootState) =>
+    _.get(state.USER, 'isUpdateNicknameSuccess')
+  );
+
+  React.useEffect(() => {
+    if (isUpdateNicknameSuccess) {
+      setIsError(false);
+      setName(userData.nickname);
+      onClose();
+    }
+  }, [isUpdateNicknameSuccess]);
+
+  const onSubmit = async () => {
+    if (!name.trim()) setIsError(true);
+    else dispatch(updateNickname({ nickname: name }));
+  };
+
   return (
     <Dialog open={open} onClose={onClose} maxWidth="xs">
       <DialogTitle sx={{ color: 'text.primary' }}>Chỉnh sửa tên</DialogTitle>
@@ -31,10 +59,17 @@ const EditName: React.FC<IProps> = ({ open = false, onClose }) => {
             type="text"
             placeholder="Tên"
             value={name}
-            onChange={(e) => setName(e.target.value)}
+            onChange={(e) => {
+              setName(e.target.value);
+              setIsError(false);
+            }}
+            error={isError}
+            helperText={isError ? nicknameMsg : ''}
             sx={{
               marginTop: '10px',
-              backgroundColor: 'background.secondary',
+              ' .MuiInputBase-root': {
+                backgroundColor: 'background.secondary',
+              },
               color: 'text.secondary',
             }}
           />
@@ -50,7 +85,7 @@ const EditName: React.FC<IProps> = ({ open = false, onClose }) => {
             backgroundColor: 'background.burntSienna',
           }}
           variant="contained"
-          onClick={onClose}
+          onClick={() => onSubmit()}
         >
           Lưu
         </Button>

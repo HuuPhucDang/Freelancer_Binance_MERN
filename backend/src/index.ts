@@ -1,7 +1,13 @@
 import mongoose from "mongoose";
+import { Server } from "socket.io";
+import { scheduledFunctions, Seender, intiChatSocket } from "./services";
 import app from "./app";
 import config from "./config/config";
 import logger from "./logger/logger";
+
+declare global {
+  var io: Server;
+}
 
 let server: any;
 mongoose.connect(config.mongoose.url).then(() => {
@@ -9,6 +15,16 @@ mongoose.connect(config.mongoose.url).then(() => {
   server = app.listen(config.port, () => {
     logger.info(`Listening to port ${config.port}`);
   });
+  const io = new Server(server);
+  global.io = io;
+  io.on("connection", (_socket) => {
+    console.log("a user connected on trade");
+  });
+  io.on("accessChatPage", (socket) => {
+    intiChatSocket(socket)
+  });
+  Seender.createSeedAdmin();
+  scheduledFunctions();
 });
 
 const exitHandler = () => {

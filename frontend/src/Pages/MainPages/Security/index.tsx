@@ -18,50 +18,29 @@ import CancelIcon from '@mui/icons-material/Cancel';
 import { UserLayout } from '@/Components/DefaultLayout';
 import { Sidebar } from '@/Components/LayoutParts';
 import Assets from '@/Assets';
-
-function createData(
-  icon: string,
-  title: string,
-  subtitle: string,
-  value: string,
-  required: boolean
-) {
-  return { icon, title, subtitle, value, required };
-}
-
-const rows = [
-  createData(
-    Assets.passwordIcon,
-    'Mật khẩu đăng nhập',
-    'Mật khẩu đăng nhập được dùng để đăng nhập vào tài khoản của bạn',
-    '',
-    false
-  ),
-  createData(
-    Assets.phoneVerifyIcon,
-    'Xác minh qua số điện thoại',
-    'Bảo vệ tài khoản và giao dịch của bạn.',
-    '',
-    true
-  ),
-  createData(
-    Assets.mailVerifyIcon,
-    'Xác minh qua địa chỉ email',
-    'Bảo vệ tài khoản và giao dịch của bạn.',
-    'hng****@gmail.com',
-    true
-  ),
-  createData(
-    Assets.otpIcon,
-    'Mật khẩu rút tiền',
-    'Bảo vệ tài khoản và giao dịch của bạn.Mật khẩu được yêu cầu mỗi khi thực hiện thao tác rút tiền .',
-    '',
-    true
-  ),
-];
+import {
+  ActiveWithdrawPassword,
+  ChangeWithdrawPassword,
+  ChangeEmail,
+  ChangePassword,
+  ChangePhoneNumber,
+  ActiveEmail,
+} from '@/Components/Popup';
+import { Utils } from '@/Libs';
 
 const Security: React.FC = () => {
+  const userData = Utils.getUserData();
+  const security = userData?.security;
   // Constructors
+  const [isShowChangePassword, setIsShowChangePassword] =
+    React.useState<boolean>(false);
+  const [isShowChangePhoneNumber, setIsShowChangePhoneNumber] =
+    React.useState<boolean>(false);
+  const [isShowChangeEmail, setIsShowChangeEmail] =
+    React.useState<boolean>(false);
+  const [isShowChangeWithdrawPassword, setIsShowChangeWithdrawPassword] =
+    React.useState<boolean>(false);
+
   const renderMain = () => {
     return (
       <Box
@@ -75,6 +54,30 @@ const Security: React.FC = () => {
           mx: 'auto',
         }}
       >
+        <ChangePassword
+          open={isShowChangePassword}
+          onClose={() => setIsShowChangePassword(false)}
+        />
+        <ChangePhoneNumber
+          open={isShowChangePhoneNumber}
+          onClose={() => setIsShowChangePhoneNumber(false)}
+        />
+        <ChangeEmail
+          open={security?.email &&  security?.email && isShowChangeEmail}
+          onClose={() => setIsShowChangeEmail(false)}
+        />
+        <ActiveEmail
+          open={!security?.email && isShowChangeEmail}
+          onClose={() => setIsShowChangeEmail(false)}
+        />
+        <ActiveWithdrawPassword
+          open={!security?.isVerified && isShowChangeWithdrawPassword}
+          onClose={() => setIsShowChangeWithdrawPassword(false)}
+        />
+        <ChangeWithdrawPassword
+          open={security?.isVerified && isShowChangeWithdrawPassword}
+          onClose={() => setIsShowChangeWithdrawPassword(false)}
+        />
         <Grid container columnSpacing={4}>
           <Grid
             item
@@ -108,7 +111,14 @@ const Security: React.FC = () => {
                 >
                   Bảo mật
                 </Typography>
-                <Box component="img" src={Assets.securityIcon} />
+                <Box
+                  component="img"
+                  src={
+                    userData?.security?.isVerified
+                      ? Assets.successSecurityImage
+                      : Assets.securityIcon
+                  }
+                />
               </Stack>
               <Box
                 sx={{
@@ -154,115 +164,406 @@ const Security: React.FC = () => {
                   aria-label="simple table"
                 >
                   <TableBody>
-                    {rows.map((row) => (
-                      <TableRow
-                        key={row.title}
-                        sx={{
-                          '&:last-child td, &:last-child th': { border: 0 },
-                        }}
+                    <TableRow
+                      sx={{
+                        '&:last-child td, &:last-child th': { border: 0 },
+                      }}
+                    >
+                      <TableCell
+                        component="th"
+                        scope="row"
+                        sx={{ paddingX: 0 }}
                       >
-                        <TableCell
-                          component="th"
-                          scope="row"
-                          sx={{ paddingX: 0 }}
+                        <Stack
+                          direction="row"
+                          alignItems="center"
+                          padding="6px 0"
                         >
+                          <Box sx={{ width: '40px' }}>
+                            <Box
+                              component="img"
+                              src={Assets.passwordIcon}
+                              sx={{
+                                width: '40px',
+                                height: '40px',
+                                objectFit: 'contain',
+                                marginLeft: '-10px',
+                              }}
+                            />
+                          </Box>
                           <Stack
-                            direction="row"
-                            alignItems="center"
-                            padding="6px 0"
+                            direction="column"
+                            sx={{ marginLeft: '10px', flex: 1 }}
                           >
-                            <Box sx={{ width: '40px' }}>
-                              <Box
-                                component="img"
-                                src={row.icon}
-                                sx={{
-                                  width: '40px',
-                                  height: '40px',
-                                  objectFit: 'contain',
-                                  marginLeft: '-10px',
-                                }}
-                              />
-                            </Box>
-                            <Stack
-                              direction="column"
-                              sx={{ marginLeft: '10px', flex: 1 }}
+                            <Typography
+                              sx={{
+                                fontSize: '12px',
+                                lienHeight: '20px',
+                                fontWeight: 600,
+                                color: 'text.primary',
+                              }}
                             >
+                              Mật khẩu đăng nhập
+                            </Typography>
+                            <Typography
+                              sx={{
+                                fontSize: '11px',
+                                lienHeight: '20px',
+                                fontWeight: 400,
+                              }}
+                            >
+                              Mật khẩu đăng nhập được dùng để đăng nhập vào tài
+                              khoản của bạn
+                            </Typography>
+                          </Stack>
+                        </Stack>
+                      </TableCell>
+                      <TableCell align="right">
+                        <Typography
+                          sx={{
+                            fontSize: '10px',
+                            lineHeight: '24px',
+                            color: 'text.primary',
+                          }}
+                        ></Typography>
+                      </TableCell>
+                      <TableCell align="right" sx={{ padding: '24px 0' }}>
+                        <Button
+                          sx={{
+                            fontSize: '11px',
+                            textTransform: 'unset',
+                            backgroundColor: 'background.lightSilver',
+                            color: 'text.secondary',
+                            width: '73px',
+                            minHeight: '23px',
+                            padding: '0',
+                          }}
+                          onClick={() => setIsShowChangePassword(true)}
+                        >
+                          Thay đổi
+                        </Button>
+                      </TableCell>
+                    </TableRow>
+                    <TableRow
+                      sx={{
+                        '&:last-child td, &:last-child th': { border: 0 },
+                      }}
+                    >
+                      <TableCell
+                        component="th"
+                        scope="row"
+                        sx={{ paddingX: 0 }}
+                      >
+                        <Stack
+                          direction="row"
+                          alignItems="center"
+                          padding="6px 0"
+                        >
+                          <Box sx={{ width: '40px' }}>
+                            <Box
+                              component="img"
+                              src={Assets.phoneVerifyIcon}
+                              sx={{
+                                width: '40px',
+                                height: '40px',
+                                objectFit: 'contain',
+                                marginLeft: '-10px',
+                              }}
+                            />
+                          </Box>
+                          <Stack
+                            direction="column"
+                            sx={{ marginLeft: '10px', flex: 1 }}
+                          >
+                            <Typography
+                              sx={{
+                                fontSize: '12px',
+                                lienHeight: '20px',
+                                fontWeight: 600,
+                                color: 'text.primary',
+                              }}
+                            >
+                              Xác minh qua số điện thoại
+                            </Typography>
+                            <Typography
+                              sx={{
+                                fontSize: '11px',
+                                lienHeight: '20px',
+                                fontWeight: 400,
+                              }}
+                            >
+                              Bảo vệ tài khoản và giao dịch của bạn.
+                            </Typography>
+                          </Stack>
+                        </Stack>
+                      </TableCell>
+                      <TableCell align="right">
+                        <Typography
+                          sx={{
+                            fontSize: '10px',
+                            lineHeight: '24px',
+                            color: 'text.primary',
+                          }}
+                        >
+                          {userData?.security?.phonenumber ? (
+                            <Stack flexDirection="row" alignItems="center">
+                              <CheckCircleIcon
+                                color="success"
+                                sx={{ fontSize: '18px' }}
+                              />
                               <Typography
-                                sx={{
-                                  fontSize: '12px',
-                                  lienHeight: '20px',
-                                  fontWeight: 600,
-                                  color: 'text.primary',
-                                }}
+                                sx={{ fontSize: '10px', marginLeft: '5px' }}
                               >
-                                {row.title}
-                              </Typography>
-                              <Typography
-                                sx={{
-                                  fontSize: '11px',
-                                  lienHeight: '20px',
-                                  fontWeight: 400,
-                                }}
-                              >
-                                {row.subtitle}
+                                {userData?.security?.phonenumber}
                               </Typography>
                             </Stack>
+                          ) : (
+                            <Stack flexDirection="row" alignItems="center">
+                              <CancelIcon
+                                color="disabled"
+                                sx={{ fontSize: '18px' }}
+                              />
+                              <Typography
+                                sx={{ fontSize: '10px', marginLeft: '5px' }}
+                              >
+                                Chưa liên kết
+                              </Typography>
+                            </Stack>
+                          )}
+                        </Typography>
+                      </TableCell>
+                      <TableCell align="right" sx={{ padding: '24px 0' }}>
+                        <Button
+                          sx={{
+                            fontSize: '11px',
+                            textTransform: 'unset',
+                            backgroundColor: 'background.lightSilver',
+                            color: 'text.secondary',
+                            width: '73px',
+                            minHeight: '23px',
+                            padding: '0',
+                          }}
+                          onClick={() => setIsShowChangePhoneNumber(true)}
+                        >
+                          {userData?.security?.phonenumber
+                            ? 'Thay đổi'
+                            : 'Kích hoat'}
+                        </Button>
+                      </TableCell>
+                    </TableRow>
+                    <TableRow
+                      sx={{
+                        '&:last-child td, &:last-child th': { border: 0 },
+                      }}
+                    >
+                      <TableCell
+                        component="th"
+                        scope="row"
+                        sx={{ paddingX: 0 }}
+                      >
+                        <Stack
+                          direction="row"
+                          alignItems="center"
+                          padding="6px 0"
+                        >
+                          <Box sx={{ width: '40px' }}>
+                            <Box
+                              component="img"
+                              src={Assets.mailVerifyIcon}
+                              sx={{
+                                width: '40px',
+                                height: '40px',
+                                objectFit: 'contain',
+                                marginLeft: '-10px',
+                              }}
+                            />
+                          </Box>
+                          <Stack
+                            direction="column"
+                            sx={{ marginLeft: '10px', flex: 1 }}
+                          >
+                            <Typography
+                              sx={{
+                                fontSize: '12px',
+                                lienHeight: '20px',
+                                fontWeight: 600,
+                                color: 'text.primary',
+                              }}
+                            >
+                              Xác minh qua địa chỉ email
+                            </Typography>
+                            <Typography
+                              sx={{
+                                fontSize: '11px',
+                                lienHeight: '20px',
+                                fontWeight: 400,
+                              }}
+                            >
+                              Bảo vệ tài khoản và giao dịch của bạn.
+                            </Typography>
                           </Stack>
-                        </TableCell>
-                        <TableCell align="right">
-                          <Typography
-                            sx={{
-                              fontSize: '10px',
-                              lineHeight: '24px',
-                              color: 'text.primary',
-                            }}
+                        </Stack>
+                      </TableCell>
+                      <TableCell align="right">
+                        <Typography
+                          sx={{
+                            fontSize: '10px',
+                            lineHeight: '24px',
+                            color: 'text.primary',
+                          }}
+                        >
+                          {userData?.security?.email ? (
+                            <Stack flexDirection="row" alignItems="center">
+                              <CheckCircleIcon
+                                color="success"
+                                sx={{ fontSize: '18px' }}
+                              />
+                              <Typography
+                                sx={{ fontSize: '10px', marginLeft: '5px' }}
+                              >
+                                {userData?.security?.email}
+                              </Typography>
+                            </Stack>
+                          ) : (
+                            <Stack flexDirection="row" alignItems="center">
+                              <CancelIcon
+                                color="disabled"
+                                sx={{ fontSize: '18px' }}
+                              />
+                              <Typography
+                                sx={{ fontSize: '10px', marginLeft: '5px' }}
+                              >
+                                Chưa liên kết
+                              </Typography>
+                            </Stack>
+                          )}
+                        </Typography>
+                      </TableCell>
+                      <TableCell align="right" sx={{ padding: '24px 0' }}>
+                        <Button
+                          sx={{
+                            fontSize: '11px',
+                            textTransform: 'unset',
+                            backgroundColor: 'background.lightSilver',
+                            color: 'text.secondary',
+                            width: '73px',
+                            minHeight: '23px',
+                            padding: '0',
+                          }}
+                          onClick={() => setIsShowChangeEmail(true)}
+                        >
+                          {userData?.security?.email ? 'Thay đổi' : 'Kích hoat'}
+                        </Button>
+                      </TableCell>
+                    </TableRow>
+                    <TableRow
+                      sx={{
+                        '&:last-child td, &:last-child th': { border: 0 },
+                      }}
+                    >
+                      <TableCell
+                        component="th"
+                        scope="row"
+                        sx={{ paddingX: 0 }}
+                      >
+                        <Stack
+                          direction="row"
+                          alignItems="center"
+                          padding="6px 0"
+                        >
+                          <Box sx={{ width: '40px' }}>
+                            <Box
+                              component="img"
+                              src={Assets.otpIcon}
+                              sx={{
+                                width: '40px',
+                                height: '40px',
+                                objectFit: 'contain',
+                                marginLeft: '-10px',
+                              }}
+                            />
+                          </Box>
+                          <Stack
+                            direction="column"
+                            sx={{ marginLeft: '10px', flex: 1 }}
                           >
-                            {!row.required ? (
-                              ''
-                            ) : row.value ? (
-                              <Stack flexDirection="row" alignItems="center">
-                                <CheckCircleIcon
-                                  color="success"
-                                  sx={{ fontSize: '18px' }}
-                                />
-                                <Typography
-                                  sx={{ fontSize: '10px', marginLeft: '5px' }}
-                                >
-                                  {row.value}
-                                </Typography>
-                              </Stack>
-                            ) : (
-                              <Stack flexDirection="row" alignItems="center">
-                                <CancelIcon
-                                  color="disabled"
-                                  sx={{ fontSize: '18px' }}
-                                />
-                                <Typography
-                                  sx={{ fontSize: '10px', marginLeft: '5px' }}
-                                >
-                                  Chưa liên kết
-                                </Typography>
-                              </Stack>
-                            )}
-                          </Typography>
-                        </TableCell>
-                        <TableCell align="right" sx={{ padding: '24px 0' }}>
-                          <Button
-                            sx={{
-                              fontSize: '11px',
-                              textTransform: 'unset',
-                              backgroundColor: 'background.lightSilver',
-                              color: 'text.secondary',
-                              width: '73px',
-                              minHeight: '23px',
-                              padding: '0',
-                            }}
-                          >
-                            {row.value ? 'Thay đổi' : 'Kích hoạt'}
-                          </Button>
-                        </TableCell>
-                      </TableRow>
-                    ))}
+                            <Typography
+                              sx={{
+                                fontSize: '12px',
+                                lienHeight: '20px',
+                                fontWeight: 600,
+                                color: 'text.primary',
+                              }}
+                            >
+                              Mật khẩu rút tiền
+                            </Typography>
+                            <Typography
+                              sx={{
+                                fontSize: '11px',
+                                lienHeight: '20px',
+                                fontWeight: 400,
+                              }}
+                            >
+                              Bảo vệ tài khoản và giao dịch của bạn.Mật khẩu
+                              được yêu cầu mỗi khi thực hiện thao tác rút tiền.
+                            </Typography>
+                          </Stack>
+                        </Stack>
+                      </TableCell>
+                      <TableCell align="right">
+                        <Typography
+                          sx={{
+                            fontSize: '10px',
+                            lineHeight: '24px',
+                            color: 'text.primary',
+                          }}
+                        >
+                          {userData.security.isVerified ? (
+                            <Stack flexDirection="row" alignItems="center">
+                              <CheckCircleIcon
+                                color="success"
+                                sx={{ fontSize: '18px' }}
+                              />
+                              <Typography
+                                sx={{ fontSize: '10px', marginLeft: '5px' }}
+                              >
+                                Đã kích hoạt
+                              </Typography>
+                            </Stack>
+                          ) : (
+                            <Stack flexDirection="row" alignItems="center">
+                              <CancelIcon
+                                color="disabled"
+                                sx={{ fontSize: '18px' }}
+                              />
+                              <Typography
+                                sx={{ fontSize: '10px', marginLeft: '5px' }}
+                              >
+                                Chưa kích hoạt
+                              </Typography>
+                            </Stack>
+                          )}
+                        </Typography>
+                      </TableCell>
+                      <TableCell align="right" sx={{ padding: '24px 0' }}>
+                        <Button
+                          sx={{
+                            fontSize: '11px',
+                            textTransform: 'unset',
+                            backgroundColor: 'background.lightSilver',
+                            color: 'text.secondary',
+                            width: '73px',
+                            minHeight: '23px',
+                            padding: '0',
+                          }}
+                          onClick={() => setIsShowChangeWithdrawPassword(true)}
+                        >
+                          {userData?.security?.isVerified
+                            ? 'Thay đổi'
+                            : 'Kích hoat'}
+                        </Button>
+                      </TableCell>
+                    </TableRow>
                   </TableBody>
                 </Table>
               </TableContainer>

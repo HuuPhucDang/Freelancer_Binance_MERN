@@ -1,10 +1,6 @@
-import mongoose, { Model, Document } from "mongoose";
+import mongoose, { Model, Document, Schema } from "mongoose";
 import { QueryResult } from "../helper/paginate/paginate";
 import { AccessAndRefreshTokens } from "./token.interfaces";
-import { ISecurityDoc } from "./security.interface";
-import { IBankDoc } from "./bank.interface";
-import { IVerificationDoc } from "./verification.interface";
-import { IWalletDoc } from "./waller.interface";
 
 export enum EUserStatus {
   ACTIVE = "active",
@@ -19,10 +15,11 @@ export interface IUser {
   avatar: string;
   role: string;
   status: string;
-  security: ISecurityDoc;
-  verification: IVerificationDoc;
-  bank: IBankDoc;
-  wallet: IWalletDoc;
+  wallet: Schema.Types.ObjectId;
+  verification: Schema.Types.ObjectId;
+  security: Schema.Types.ObjectId;
+  bank: Schema.Types.ObjectId;
+  userType: Schema.Types.ObjectId;
 }
 
 export interface IUserDoc extends IUser, Document {

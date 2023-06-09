@@ -12,6 +12,10 @@ const verificationSchema = new mongoose.Schema<
   IVerificationModel
 >(
   {
+    userId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    },
     selfieImageUrl: {
       type: mongoose.Schema.Types.ObjectId,
       required: false,
@@ -42,7 +46,7 @@ const verificationSchema = new mongoose.Schema<
 verificationSchema.plugin(toJSON);
 verificationSchema.plugin(paginate);
 
-const Verification = mongoose.model<IVerificationDoc>(
+const Verification = mongoose.model<IVerificationDoc, IVerificationModel>(
   "Verification",
   verificationSchema
 );

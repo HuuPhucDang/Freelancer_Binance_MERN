@@ -1,6 +1,6 @@
-import { Document } from "mongoose";
-
+import { Document, Schema } from "mongoose";
 export interface ISecurity {
+  userId: Schema.Types.ObjectId;
   phonenumber: string;
   email: string;
   withdrawPassword: string;

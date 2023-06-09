@@ -12,7 +12,30 @@ import {
   ActionMoneyBody,
   RequestMoneyBody,
   ITransactionDoc,
+  ETransactionType,
+  ETransactionStatus,
 } from "../../interfaces/transaction.interface";
+import { IWalletDoc } from "../../interfaces/waller.interface";
+import Wallet from "../../models/wallet.model";
+import { getUserById, getUserByOwnerCode } from "../user/user.service";
+
+/**
+ * Rechage money
+ */
+export const getWallet = async (
+  userId: mongoose.Types.ObjectId
+): Promise<IWalletDoc> => {
+  let wallet = await Wallet.findOne({ userId });
+
+  if (!wallet)
+    wallet = await Wallet.create({
+      balance: 0,
+      benefit: 0,
+      userId,
+    });
+
+  return wallet;
+};
 
 /**
  * Rechage money
@@ -21,9 +44,11 @@ export const rechangeMoney = async (
   transactionId: mongoose.Types.ObjectId,
   updateBody: ActionMoneyBody
 ): Promise<IUserDoc | null> => {
-  const user = await User.findById(updateBody.userId);
+  const user = await getUserById(
+    new mongoose.Types.ObjectId(updateBody.userId)
+  );
   if (!user) throw new ApiError(httpStatus.NOT_FOUND, "User not found!");
-  const findInviter = await User.findOne({ onwCode: user.inviteCode });
+  const findInviter = await getUserByOwnerCode(user.inviteCode);
   if (!findInviter)
     throw new ApiError(httpStatus.BAD_REQUEST, "Inviter not found!");
   const rechargeTransaction = await Transaction.findOne({
@@ -32,45 +57,41 @@ export const rechangeMoney = async (
   });
   if (!rechargeTransaction)
     throw new ApiError(httpStatus.BAD_REQUEST, "Transaction not found!");
-  if (rechargeTransaction.status === "resolved")
+  if (rechargeTransaction.status === ETransactionStatus.RESOLVED)
     throw new ApiError(httpStatus.BAD_REQUEST, "Transaction already resolved!");
-  if (rechargeTransaction.status === "canceled")
+  if (rechargeTransaction.status === ETransactionStatus.CANCELED)
     throw new ApiError(httpStatus.BAD_REQUEST, "Transaction already canceled!");
-  if (rechargeTransaction.status === "denied")
+  if (rechargeTransaction.status === ETransactionStatus.DENIED)
     throw new ApiError(httpStatus.BAD_REQUEST, "Transaction already denied!");
 
-  const newWallet = Object.assign(user?.wallet || { balance: 0, benefit: 0 }, {
-    balance: user?.wallet
-      ? user.wallet.balance + updateBody.amount
-      : updateBody.amount,
-  });
+  const userWallet = await getWallet(user.id);
+  const inviterWallet = await getWallet(findInviter.id);
 
-  const newInviterWallet = Object.assign(
-    findInviter?.wallet || { balance: 0, benefit: 0 },
-    {
-      balance: updateBody.amount * findInviter?.wallet?.benefit || 0,
-    }
-  );
+  userWallet.balance = userWallet.balance + updateBody.amount;
+
+  await userWallet.save();
+
+  const benefit = inviterWallet.benefit * updateBody.amount;
+
+  inviterWallet.balance = inviterWallet.balance + benefit;
+
+  await inviterWallet.save();
+
   await Transaction.create({
-    userId: findInviter._id,
+    userId: findInviter.id,
     date: moment().format("YYYY-MM-DD"),
     time: moment().format("hh:mm:ss"),
-    balance: newInviterWallet.balance,
-    amount: updateBody.amount * findInviter?.wallet?.benefit || 0,
-    type: "bonus",
-    status: "resolved",
+    balance: inviterWallet.balance,
+    amount: benefit,
+    type: ETransactionType.BONUS,
+    status: ETransactionStatus.RESOLVED,
   });
-  Object.assign(findInviter, {
-    wallet: newInviterWallet,
-  });
-  findInviter.save();
-  Object.assign(user, {
-    wallet: newWallet,
-  });
-  rechargeTransaction.status = "resolved";
+
+  rechargeTransaction.status = ETransactionStatus.RESOLVED;
   rechargeTransaction.save();
-  await user.save();
-  return assignReturnUser(user);
+  const savedUser = await getUserById(user.id);
+  if (savedUser) return assignReturnUser(savedUser);
+  return null;
 };
 
 /**
@@ -82,37 +103,34 @@ export const withdrawMoney = async (
 ): Promise<IUserDoc | null> => {
   const user = await User.findById(updateBody.userId);
   if (!user) throw new ApiError(httpStatus.NOT_FOUND, "User not found!");
-  if (user?.wallet?.balance || 0 < updateBody.amount)
+  const userWallet = await getWallet(user.id);
+
+  if (userWallet.balance < updateBody.amount)
     throw new ApiError(
       httpStatus.BAD_REQUEST,
-      "Can not withdraw more than balance!"
+      "Can not withdraw more than current balance!"
     );
   const withdrawTransaction = await Transaction.findOne({
-    _id: transactionId,
+    id: transactionId,
     userId: user.id,
   });
   if (!withdrawTransaction)
     throw new ApiError(httpStatus.BAD_REQUEST, "Transaction not found!");
-  if (withdrawTransaction.status === "resolved")
+  if (withdrawTransaction.status === ETransactionStatus.RESOLVED)
     throw new ApiError(httpStatus.BAD_REQUEST, "Transaction already resolved!");
-  if (withdrawTransaction.status === "canceled")
+  if (withdrawTransaction.status === ETransactionStatus.CANCELED)
     throw new ApiError(httpStatus.BAD_REQUEST, "Transaction already canceled!");
-  if (withdrawTransaction.status === "denied")
+  if (withdrawTransaction.status === ETransactionStatus.DENIED)
     throw new ApiError(httpStatus.BAD_REQUEST, "Transaction already denied!");
 
-  const newWallet = Object.assign(user?.wallet || { balance: 0, benefit: 0 }, {
-    balance: user?.wallet
-      ? user.wallet.balance - updateBody.amount
-      : updateBody.amount,
-  });
-  withdrawTransaction.status = "resolved";
+  userWallet.balance = userWallet.balance - updateBody.amount;
+  await userWallet.save();
+  withdrawTransaction.status = ETransactionStatus.RESOLVED;
   withdrawTransaction.save();
-  Object.assign(user, {
-    wallet: newWallet,
-  });
-  await user.save();
 
-  return assignReturnUser(user);
+  const savedUser = await getUserById(user.id);
+  if (savedUser) return assignReturnUser(savedUser);
+  return null;
 };
 
 /**
@@ -124,15 +142,16 @@ export const requestRechargeMoney = async (
 ): Promise<ITransactionDoc | null> => {
   const user = await User.findById(userId);
   if (!user) throw new ApiError(httpStatus.NOT_FOUND, "User not found!");
+  const userWallet = await getWallet(user.id);
 
   const transaction = await Transaction.create({
     userId,
     date: moment().format("YYYY-MM-DD"),
     time: moment().format("hh:mm:ss"),
-    balance: user?.wallet?.balance || 0,
+    balance: userWallet.balance,
     amount: updateBody.amount,
-    type: "recharge",
-    status: "pending",
+    type: ETransactionType.RECHARGE,
+    status: ETransactionStatus.PENDING,
   });
   await user.save();
   return transaction;
@@ -147,14 +166,15 @@ export const requestWithdrawMoney = async (
 ): Promise<ITransactionDoc | null> => {
   const user = await User.findById(userId);
   if (!user) throw new ApiError(httpStatus.NOT_FOUND, "User not found!");
+  const userWallet = await getWallet(user.id);
   const transaction = await Transaction.create({
     userId,
     date: moment().format("YYYY-MM-DD"),
     time: moment().format("hh:mm:ss"),
-    balance: user?.wallet?.balance || 0,
+    balance: userWallet.balance,
     amount: updateBody.amount,
-    type: "withdraw",
-    status: "pending",
+    type: ETransactionType.WITHDRAW,
+    status: ETransactionStatus.PENDING,
   });
   await user.save();
   return transaction;
@@ -170,18 +190,18 @@ export const cancelTransaction = async (
   const user = await User.findById(userId);
   if (!user) throw new ApiError(httpStatus.NOT_FOUND, "User not found!");
   const transaction = await Transaction.findOne({
-    _id: transactionId,
+    id: transactionId,
     userId: user.id,
   });
   if (!transaction)
     throw new ApiError(httpStatus.BAD_REQUEST, "Transaction not found!");
-  if (transaction.status === "resolved")
+  if (transaction.status === ETransactionStatus.RESOLVED)
     throw new ApiError(httpStatus.BAD_REQUEST, "Transaction already resolved!");
-  if (transaction.status === "denied")
+  if (transaction.status === ETransactionStatus.DENIED)
     throw new ApiError(httpStatus.BAD_REQUEST, "Transaction already denied!");
-  if (transaction.status === "canceled")
+  if (transaction.status === ETransactionStatus.CANCELED)
     throw new ApiError(httpStatus.BAD_REQUEST, "Transaction already canceled!");
-  transaction.status = "canceled";
+  transaction.status = ETransactionStatus.CANCELED;
   await transaction.save();
   return transaction;
 };
@@ -196,18 +216,18 @@ export const denyTransaction = async (
   const user = await User.findById(userId);
   if (!user) throw new ApiError(httpStatus.NOT_FOUND, "User not found!");
   const transaction = await Transaction.findOne({
-    _id: transactionId,
+    id: transactionId,
     userId: user.id,
   });
   if (!transaction)
     throw new ApiError(httpStatus.BAD_REQUEST, "Transaction not found!");
-  if (transaction.status === "resolved")
+  if (transaction.status === ETransactionStatus.RESOLVED)
     throw new ApiError(httpStatus.BAD_REQUEST, "Transaction already resolved!");
-  if (transaction.status === "canceled")
+  if (transaction.status === ETransactionStatus.CANCELED)
     throw new ApiError(httpStatus.BAD_REQUEST, "Transaction already canceled!");
-  if (transaction.status === "denied")
+  if (transaction.status === ETransactionStatus.DENIED)
     throw new ApiError(httpStatus.BAD_REQUEST, "Transaction already denied!");
-  transaction.status = "denied";
+  transaction.status = ETransactionStatus.DENIED;
   await transaction.save();
   return transaction;
 };

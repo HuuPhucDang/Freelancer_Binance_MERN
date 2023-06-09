@@ -5,6 +5,10 @@ import { ISecurityDoc } from "../interfaces/security.interface";
 
 const securitySchema = new mongoose.Schema<ISecurityDoc>(
   {
+    userId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    },
     phonenumber: {
       type: mongoose.Schema.Types.String,
       required: false,
