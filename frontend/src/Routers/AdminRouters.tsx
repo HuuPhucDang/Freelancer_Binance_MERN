@@ -21,6 +21,10 @@ const AdminRouters = {
       path: ROUTERS.USERS,
       element: <AdminPages.User />,
     },
+    {
+      path: ROUTERS.INTERVENTION,
+      element: <AdminPages.Intervention />,
+    },
   ],
 };
 

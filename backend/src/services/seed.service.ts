@@ -29,6 +29,29 @@ export const createSeedAdmin = async (): Promise<IUserDoc | null> => {
   return savedAdmin;
 };
 
+const ICON_LIST: { [key: string]: string } = {
+  [ECoinCoupleTrade.BTCUSDT]:
+    "https://s3-symbol-logo.tradingview.com/crypto/XTVCBTC.svg",
+  [ECoinCoupleTrade.BNBUSDT]:
+    "https://s3-symbol-logo.tradingview.com/crypto/XTVCBNB.svg",
+  [ECoinCoupleTrade.ADAUSDT]:
+    "https://s3-symbol-logo.tradingview.com/crypto/XTVCADA.svg",
+  [ECoinCoupleTrade.DOGEUSDT]:
+    "https://s3-symbol-logo.tradingview.com/crypto/XTVCDOGE.svg",
+  [ECoinCoupleTrade.ETHUSDT]:
+    "https://s3-symbol-logo.tradingview.com/crypto/XTVCETH.svg",
+  [ECoinCoupleTrade.LTCUSDT]:
+    "https://s3-symbol-logo.tradingview.com/crypto/XTVCLTC.svg",
+  [ECoinCoupleTrade.MATICUSDT]:
+    "https://s3-symbol-logo.tradingview.com/crypto/XTVCMATIC.svg",
+  [ECoinCoupleTrade.SOLUSDT]:
+    "https://s3-symbol-logo.tradingview.com/crypto/XTVCSOL.svg",
+  [ECoinCoupleTrade.TRXUSDT]:
+    "https://s3-symbol-logo.tradingview.com/crypto/XTVCTRX.svg",
+  [ECoinCoupleTrade.XRPUSDT]:
+    "https://s3-symbol-logo.tradingview.com/crypto/XTVCXRP.svg",
+};
+
 /**
  * Create a Coin
  * @returns {Promise<void>}
@@ -40,6 +63,6 @@ export const createSeedCoins = async (): Promise<void> => {
 
   for (const symbol of allCoins) {
     const isCoinExist = await Coin.isCoinExits(symbol);
-    if (!isCoinExist) await Coin.create({ symbol });
+    if (!isCoinExist) await Coin.create({ symbol, icon: ICON_LIST[symbol] });
   }
 };

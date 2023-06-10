@@ -18,6 +18,10 @@ const coinSchema = new mongoose.Schema<ICoinDoc, ICoinModel>(
       type: mongoose.Schema.Types.Number,
       default: 0,
     },
+    icon: {
+      type: mongoose.Schema.Types.String,
+      default: "",
+    },
   },
   {
     timestamps: true,

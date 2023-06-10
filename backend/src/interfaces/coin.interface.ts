@@ -5,6 +5,7 @@ export interface ICoin {
   symbol: ECoinCoupleTrade;
   price: number;
   intervention: number;
+  icon: string;
 }
 
 export interface ICoinDoc extends ICoin, Document {}

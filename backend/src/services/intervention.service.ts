@@ -34,12 +34,17 @@ const intiChartSocket = (socket: Socket) => {
   socket.on("interventionCoin", async (data: any) => {
     const updateCoin = await Coin.findOne({ symbol: data?.symbol });
     if (updateCoin) {
-      updateCoin.price = updateCoin.price + data?.intervention || 0;
+      const newPrice = updateCoin.price + Number(data?.intervention);
+      updateCoin.price = parseFloat(newPrice.toFixed(4));
       updateCoin.intervention = data?.intervention || 0;
       await updateCoin.save();
-      const allCoins = await Coin.find();
+      const allCoins = await Coin.find().sort({ price: -1 });
       socket.emit("updateAllCoinPriceNow", allCoins);
     }
+  });
+  socket.on("getLatestCoins", async (_data: any, callback: any) => {
+    const allCoins = await Coin.find().sort({ price: -1 });
+    callback(allCoins);
   });
   socket.on("checkTradeResult", async (data: any, callback: any) => {
     const trade = await TradeHistory.findById(data?.tradeId);

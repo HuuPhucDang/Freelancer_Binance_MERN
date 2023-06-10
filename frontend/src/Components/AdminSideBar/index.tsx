@@ -5,8 +5,14 @@ import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 import ChatIcon from '@mui/icons-material/Chat';
 import React from 'react';
 import PeopleIcon from '@mui/icons-material/People';
+import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
 import { useLocation } from 'react-router';
 const navigationItems = [
+  {
+    label: 'Can Thiệp Giá',
+    path: ROUTERS.INTERVENTION,
+    icon: <MonetizationOnIcon sx={{ fontSize: '16px', marginRight: '5px' }} />,
+  },
   {
     label: 'Người dùng',
     path: ROUTERS.USERS,
