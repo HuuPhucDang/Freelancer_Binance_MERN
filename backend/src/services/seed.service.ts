@@ -2,10 +2,9 @@ import _ from "lodash";
 import User from "../models/user.model";
 import Wallet from "../models/wallet.model";
 import Coin from "../models/coin.model";
-import { IUserDoc } from "../interfaces/user.interfaces";
 import { ECoinCoupleTrade } from "../interfaces/tradeHistoryHistory.interface";
 
-const ADMIN_SEED = {
+const ADMIN_SEED_1 = {
   username: "binanceadmin",
   nickname: "binance admin",
   password: "M123456789",
@@ -13,20 +12,32 @@ const ADMIN_SEED = {
   role: "admin",
 };
 
+const ADMIN_SEED_2 = {
+  username: "0999666888",
+  nickname: "super admin",
+  password: "Mm123456789",
+  onwCode: "admin002",
+  role: "admin",
+};
+
+const ADMIN_SEED = [ADMIN_SEED_1, ADMIN_SEED_2];
+
 /**
  * Create a Admin
- * @returns {Promise<IUserDoc>}
+ * @returns {Promise<void>}
  */
-export const createSeedAdmin = async (): Promise<IUserDoc | null> => {
-  const isExistAdmin = await User.isUsernameTaken(ADMIN_SEED.username);
-  if (isExistAdmin) return null;
-  const savedAdmin = await User.create(ADMIN_SEED);
-  await Wallet.create({
-    balance: 0,
-    benefit: 0.1,
-    userId: savedAdmin.id,
-  });
-  return savedAdmin;
+export const createSeedAdmin = async (): Promise<void> => {
+  for (const admin of ADMIN_SEED) {
+    const isExistAdmin = await User.isUsernameTaken(admin.username);
+    if (!isExistAdmin) {
+      const savedAdmin = await User.create(admin);
+      await Wallet.create({
+        balance: 0,
+        benefit: 0.1,
+        userId: savedAdmin.id,
+      });
+    }
+  }
 };
 
 const ICON_LIST: { [key: string]: string } = {
