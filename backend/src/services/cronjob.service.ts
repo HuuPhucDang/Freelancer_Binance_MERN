@@ -1,22 +1,38 @@
 import _ from "lodash";
-import CronJob from "node-cron"; // es6 syntax
+import CronJob from "node-cron";
 import fetch from "node-fetch";
+import { ECoinCoupleTrade } from "../interfaces/tradeHistoryHistory.interface";
+import Coin from "../models/coin.model";
 
-const GET_PRICE_OF_TOP_TEN_URL = `https://api.binance.com/api/v3/ticker/price?symbols=["BTCUSDT","BNBUSDT"]`;
+const GET_PRICE_OF_TOP_TEN_URL = `https://api.binance.com/api/v3/ticker/price?symbols=`;
 
 const initScheduledJobs = () => {
-  const scheduledJobFunction = CronJob.schedule("0 */5 * * * *", async () => {
-    console.log("I'm executed on a schedule!");
-    const response = await fetch(GET_PRICE_OF_TOP_TEN_URL);
-    const list: any = await response.json();
-    const resolveData = _.map(list, (item: any) => ({
-      ...item,
-      newPrice: Number(item?.price) + 200,
-      increament: 200
-    }));
-    global.io.emit("getPriceEvery5Min", resolveData);
-  });
-  scheduledJobFunction.start();
+  const scheduledUpdateCoinPrice = CronJob.schedule(
+    "*/30 * * * * *",
+    async () => {
+      console.info("===RUN CRON UPDATE PRICE OF TOP 10===");
+      const allCoins = Object.keys(
+        ECoinCoupleTrade
+      ) as (keyof typeof ECoinCoupleTrade)[];
+      const updateUrl = `${GET_PRICE_OF_TOP_TEN_URL}${JSON.stringify(
+        allCoins
+      )}`;
+      const response = await fetch(updateUrl);
+      const newCoins: any = await response.json();
+      const resolvedData = [];
+      for (const coin of newCoins) {
+        const updateCoin = await Coin.findOne({ symbol: coin?.symbol });
+        if (updateCoin) {
+          updateCoin.price =
+            parseFloat(coin?.price || "0") + updateCoin.intervention;
+          await updateCoin.save();
+          resolvedData.push(updateCoin);
+        }
+      }
+      global.io.emit("updateAllCoinPriceNow", resolvedData);
+    }
+  );
+  scheduledUpdateCoinPrice.start();
 };
 
 export default initScheduledJobs;

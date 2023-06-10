@@ -18,12 +18,13 @@ mongoose.connect(config.mongoose.url).then(() => {
   const io = new Server(server);
   global.io = io;
   io.on("connection", (_socket) => {
-    console.log("a user connected on trade");
+    console.log("a user connected");
   });
   io.on("accessChatPage", (socket) => {
-    intiChatSocket(socket)
+    intiChatSocket(socket);
   });
   Seender.createSeedAdmin();
+  Seender.createSeedCoins();
   scheduledFunctions();
 });
 
