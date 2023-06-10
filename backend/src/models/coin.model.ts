@@ -22,6 +22,10 @@ const coinSchema = new mongoose.Schema<ICoinDoc, ICoinModel>(
       type: mongoose.Schema.Types.String,
       default: "",
     },
+    growth: {
+      type: mongoose.Schema.Types.Number,
+      default: 0,
+    },
   },
   {
     timestamps: true,

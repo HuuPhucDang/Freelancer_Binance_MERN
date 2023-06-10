@@ -35,6 +35,8 @@ const intiChartSocket = (socket: Socket) => {
     const updateCoin = await Coin.findOne({ symbol: data?.symbol });
     if (updateCoin) {
       const newPrice = updateCoin.price + Number(data?.intervention);
+      const newGrowth = ((newPrice - updateCoin.price) / newPrice) * 100;
+      updateCoin.growth = parseFloat(newGrowth.toFixed(2));
       updateCoin.price = parseFloat(newPrice.toFixed(4));
       updateCoin.intervention = data?.intervention || 0;
       await updateCoin.save();

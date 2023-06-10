@@ -23,8 +23,10 @@ const initScheduledJobs = () => {
       for (const coin of newCoins) {
         const updateCoin = await Coin.findOne({ symbol: coin?.symbol });
         if (updateCoin) {
-          updateCoin.price =
-            parseFloat(coin?.price || "0") + updateCoin.intervention;
+          const newPrice = Number(coin?.price || "0") + updateCoin.intervention;
+          const newGrowth = ((newPrice - updateCoin.price) / newPrice) * 100;
+          updateCoin.growth = parseFloat(newGrowth.toFixed(2));
+          updateCoin.price = parseFloat(newPrice.toFixed(4));
           await updateCoin.save();
           resolvedData.push(updateCoin);
         }

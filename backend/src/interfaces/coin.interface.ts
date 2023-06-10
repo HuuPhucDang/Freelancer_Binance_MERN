@@ -6,6 +6,7 @@ export interface ICoin {
   price: number;
   intervention: number;
   icon: string;
+  growth: number;
 }
 
 export interface ICoinDoc extends ICoin, Document {}
