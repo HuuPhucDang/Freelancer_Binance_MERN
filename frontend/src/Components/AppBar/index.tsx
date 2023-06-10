@@ -68,7 +68,7 @@ const AppBarComponent: React.FC = () => {
       setSliderItems(_.map(data, (el) => `${el?.symbol} ${el?.growth}%`));
     });
     return () => {
-      Utils.WebSocket.disconnect();
+      // Utils.WebSocket.disconnect();
     };
   }, []);
 

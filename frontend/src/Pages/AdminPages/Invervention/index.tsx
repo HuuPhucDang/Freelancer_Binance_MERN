@@ -40,7 +40,7 @@ const Request: React.FC = () => {
       setRenderKey(Math.random());
     });
     return () => {
-      Utils.WebSocket.disconnect();
+      // Utils.WebSocket.disconnect();
     };
   }, []);
 

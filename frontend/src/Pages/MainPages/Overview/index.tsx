@@ -64,15 +64,16 @@ const Overview: React.FC = () => {
   const [tableData, setTableData] = React.useState<any>([]);
 
   React.useEffect(() => {
-    dispatch(getSelf());
     Utils.WebSocket.emit('getLatestCoins', null, (data: any) => {
+      console.table(data);
       setTableData(data);
     });
     Utils.WebSocket.on('updateAllCoinPriceNow', (data) => {
       setTableData(data);
     });
+    dispatch(getSelf());
     return () => {
-      Utils.WebSocket.disconnect();
+      // Utils.WebSocket.disconnect();
     };
   }, []);
 
