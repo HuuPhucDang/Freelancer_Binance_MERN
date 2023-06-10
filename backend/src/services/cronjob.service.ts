@@ -19,7 +19,6 @@ const initScheduledJobs = () => {
       )}`;
       const response = await fetch(updateUrl);
       const newCoins: any = await response.json();
-      const resolvedData = [];
       for (const coin of newCoins) {
         const updateCoin = await Coin.findOne({ symbol: coin?.symbol });
         if (updateCoin) {
@@ -28,10 +27,10 @@ const initScheduledJobs = () => {
           updateCoin.growth = parseFloat(newGrowth.toFixed(2));
           updateCoin.price = parseFloat(newPrice.toFixed(4));
           await updateCoin.save();
-          resolvedData.push(updateCoin);
         }
       }
-      global.io.emit("updateAllCoinPriceNow", resolvedData);
+      const allSavedCoins = await Coin.find().sort({ price: -1 });
+      global.io.emit("updateAllCoinPriceNow", allSavedCoins);
     }
   );
   scheduledUpdateCoinPrice.start();

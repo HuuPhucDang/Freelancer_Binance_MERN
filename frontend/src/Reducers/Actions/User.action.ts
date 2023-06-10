@@ -112,7 +112,7 @@ const getSelf = () => {
             payload: any;
           } = results as { status: boolean; message: string; payload: any };
           Utils.setUserData(resolveResult.payload);
-          dispatch(getSelfSuccess(results));
+          dispatch(getSelfSuccess(resolveResult.payload));
         }
       })
       .catch(async (error) => {
