@@ -1,6 +1,7 @@
 import mongoose, { Model, Document, Schema } from "mongoose";
 import { QueryResult } from "../helper/paginate/paginate";
 import { AccessAndRefreshTokens } from "./token.interfaces";
+import { EUserType } from "./userType.interface";
 
 export enum EUserStatus {
   ACTIVE = "active",
@@ -41,6 +42,10 @@ export type UpdateUserBody = Partial<IUser>;
 
 export type UpdateUserAvatarBody = {
   avatar: string;
+};
+
+export type UpdateUserTypeBody = {
+  userType: EUserType;
 };
 
 export type UpdateUserNicknameBody = {

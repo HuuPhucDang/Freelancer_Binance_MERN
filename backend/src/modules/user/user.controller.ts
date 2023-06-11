@@ -73,3 +73,13 @@ export const updateUserNickname = catchAsync(
     res.send(responsePayload(true, "Update nickname successfully!", user));
   }
 );
+
+export const updateUserType = catchAsync(
+  async (req: Request, res: Response) => {
+    const user = await userService.updateUserType(
+      new mongoose.Types.ObjectId(req.user.id),
+      req.body
+    );
+    res.send(responsePayload(true, "Update user type successfully!", user));
+  }
+);
