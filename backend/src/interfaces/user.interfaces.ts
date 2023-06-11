@@ -21,6 +21,7 @@ export interface IUser {
   security: Schema.Types.ObjectId;
   bank: Schema.Types.ObjectId;
   userType: Schema.Types.ObjectId;
+  inviter: Schema.Types.ObjectId;
 }
 
 export interface IUserDoc extends IUser, Document {

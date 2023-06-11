@@ -15,7 +15,7 @@ const walletSchema = new mongoose.Schema<IWalletDoc, IWalletModel>(
     },
     benefit: {
       type: mongoose.Schema.Types.Number,
-      default: 0,
+      default: 0.1,
     },
   },
   {

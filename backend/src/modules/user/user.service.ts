@@ -57,6 +57,7 @@ export const registerUser = async (
   const user = await User.create({
     ...userBody,
     nickname: `Anonymous-User-${makeDefaultNickname(6)}`,
+    inviter: findInviter.id,
   });
   const userType = await UserType.create({
     name: EUserType.BEGINNER,

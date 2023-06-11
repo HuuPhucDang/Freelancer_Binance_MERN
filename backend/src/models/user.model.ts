@@ -80,6 +80,10 @@ const userSchema = new mongoose.Schema<IUserDoc, IUserModel>(
       type: mongoose.Schema.Types.ObjectId,
       ref: "UserType",
     },
+    inviter: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    },
   },
   {
     timestamps: true,
