@@ -7,13 +7,54 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { Stack } from '@mui/material';
-
+import { useForm, Controller } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
+import { RootState, useTypedDispatch } from '../../../Reducers/store';
+import { UserRequestActions } from '../../../Reducers/Actions';
+import { useSelector } from 'react-redux';
+import _ from 'lodash';
 interface IProps {
   open: boolean;
   onClose(): void;
 }
 
+const schema = yup
+  .object({
+    username: yup.string().trim().required('Username is a required field'),
+    message: yup.string().trim().required('Message is a required field'),
+  })
+  .required();
+type FormData = yup.InferType<typeof schema>;
+
+const { requestForgotPassword, resetUserRequestReducer } = UserRequestActions;
+
 const ForgotPassword: React.FC<IProps> = ({ open = false, onClose }) => {
+  const dispatch = useTypedDispatch();
+  const requestForgotPasswordSuccess = useSelector((state: RootState) =>
+    _.get(state.USER_REQUEST, 'requestForgotPasswordSuccess')
+  );
+  const {
+    handleSubmit,
+    formState: { errors },
+    control,
+    reset,
+  } = useForm<FormData>({
+    resolver: yupResolver(schema),
+  });
+
+  React.useEffect(() => {
+    if (requestForgotPasswordSuccess) {
+      reset();
+      onClose();
+      dispatch(resetUserRequestReducer());
+    }
+  }, [requestForgotPasswordSuccess]);
+
+  const onSubmit = (data: any) => {
+    dispatch(requestForgotPassword(data));
+  };
+
   return (
     <Dialog open={open} onClose={onClose} maxWidth="xs">
       <DialogTitle sx={{ color: 'text.primary' }}>Quên mật khẩu</DialogTitle>
@@ -23,28 +64,50 @@ const ForgotPassword: React.FC<IProps> = ({ open = false, onClose }) => {
           (Email, Số ĐT, Viber, ...) tại đây.
         </DialogContentText>
         <Stack direction="column">
-          <TextField
-            hiddenLabel
-            variant="outlined"
-            size="small"
-            type="text"
-            placeholder="Tên đăng nhập"
-            sx={{
-              marginTop: '10px',
-              backgroundColor: 'background.secondary',
-              color: 'text.secondary',
-            }}
+          <Controller
+            name="username"
+            control={control}
+            render={({ field }) => (
+              <TextField
+                hiddenLabel
+                variant="outlined"
+                size="small"
+                type="text"
+                placeholder="Tên đăng nhập"
+                sx={{
+                  marginTop: '10px',
+                  ' .MuiInputBase-root': {
+                    backgroundColor: 'background.secondary',
+                  },
+                  color: 'text.secondary',
+                }}
+                error={Boolean(errors?.username?.message)}
+                helperText={errors?.username?.message}
+                {...field}
+              />
+            )}
           />
-          <TextField
-            hiddenLabel
-            variant="outlined"
-            size="small"
-            placeholder="Thông tin liên lạc (Email, Số ĐT, Viber,...)"
-            sx={{
-              marginTop: '10px',
-              backgroundColor: 'background.secondary',
-              color: 'text.secondary',
-            }}
+          <Controller
+            name="message"
+            control={control}
+            render={({ field }) => (
+              <TextField
+                hiddenLabel
+                variant="outlined"
+                size="small"
+                placeholder="Thông tin liên lạc (Email, Số ĐT, Viber,...)"
+                sx={{
+                  marginTop: '10px',
+                  ' .MuiInputBase-root': {
+                    backgroundColor: 'background.secondary',
+                  },
+                  color: 'text.secondary',
+                }}
+                error={Boolean(errors?.message?.message)}
+                helperText={errors?.message?.message}
+                {...field}
+              />
+            )}
           />
         </Stack>
       </DialogContent>
@@ -58,7 +121,7 @@ const ForgotPassword: React.FC<IProps> = ({ open = false, onClose }) => {
             backgroundColor: 'background.burntSienna',
           }}
           variant="contained"
-          onClick={onClose}
+          onClick={handleSubmit(onSubmit)}
         >
           Gửi
         </Button>

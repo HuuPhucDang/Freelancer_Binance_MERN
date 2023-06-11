@@ -4,7 +4,15 @@ const DEFAULT_STATES = {
   ...DEFAULT_LOADING_STATES,
   isUpdateNicknameSuccess: false,
   isUpdateAvatarSuccess: false,
+  isUpdatePasswordSuccess: false,
   details: {},
+  payload: {
+    limit: 10,
+    page: 1,
+    results: [],
+    totalPages: 1,
+    totalResults: 0,
+  },
 };
 
 export default (
@@ -45,6 +53,7 @@ export default (
         requestIsSuccess: true,
         requestHasError: false,
         isActionLoading: false,
+        payload,
       };
     case ACTION_TYPES.FETCH_USERS_FAILURE:
       return {
@@ -52,6 +61,13 @@ export default (
         requestHasError: true,
         requestIsSuccess: false,
         isActionLoading: false,
+        payload: {
+          limit: 10,
+          page: 1,
+          results: [],
+          totalPages: 1,
+          totalResults: 0,
+        },
       };
 
     case ACTION_TYPES.GET_SELF_SUCCESS:
@@ -94,6 +110,7 @@ export default (
         requestIsSuccess: true,
         requestHasError: false,
         isActionLoading: false,
+        isUpdatePasswordSuccess: true,
       };
     case ACTION_TYPES.UPDATE_PASSWORD_FAILURE:
       return {
@@ -101,6 +118,7 @@ export default (
         requestHasError: true,
         requestIsSuccess: false,
         isActionLoading: false,
+        isUpdatePasswordSuccess: false,
       };
 
     default:

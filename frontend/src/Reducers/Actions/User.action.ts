@@ -67,15 +67,16 @@ const fetchUsersFail = () => {
   };
 };
 
-const fetchUsers = () => {
+const fetchUsers = (payload: any) => {
   return async (dispatch: any) => {
     dispatch(setUserLoading(true));
-    await API.fetchUsers()
+    await API.fetchUsers(payload)
       .then(async (response: any) => {
         const result = await Utils.resolveResponse(response);
         if (!result) await dispatch(fetchUsersFail());
         else {
-          dispatch(fetchUsersSuccess(result));
+          const resolveResult: { payload: any } = result as { payload: any };
+          dispatch(fetchUsersSuccess(resolveResult.payload));
         }
       })
       .catch(async (error: any) => {

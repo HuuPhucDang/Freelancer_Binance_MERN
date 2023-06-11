@@ -1,6 +1,7 @@
 import { ACTION_TYPES } from '@/Constants';
 import API from '@/Apis';
 import { Utils } from '@libs';
+import { pushNotification } from '../../Libs/utils/Widget.utils';
 
 // SINGLE ACTIONS
 const setTransactionLoading = (payload: boolean) => {
@@ -38,7 +39,11 @@ const fetchTransactions = (payload: any) => {
         const results = await Utils.resolveResponse(response);
         if (!results) await dispatch(fetchTransactionsFail());
         else {
-          dispatch(fetchTransactionsSuccess(results));
+          const resolveResult: { message: string; payload: any } = results as {
+            message: string;
+            payload: any;
+          };
+          dispatch(fetchTransactionsSuccess(resolveResult.payload));
         }
       })
       .catch(async (error) => {
@@ -100,6 +105,13 @@ const requestRecharge = (payload: { amount: number }) => {
         const results = await Utils.resolveResponse(response);
         if (!results) await dispatch(requestRechargeFail());
         else {
+          const resolveResult: { message: string } = results as {
+            message: string;
+          };
+          pushNotification({
+            type: 'success',
+            message: resolveResult.message,
+          });
           dispatch(requestRechargeSuccess(results));
         }
       })
@@ -125,7 +137,8 @@ const rechargeMoneySuccess = (payload: any) => {
 
 const rechargeMoney = (
   id: string,
-  payload: { userId: string; amount: number }
+  payload: { userId: string; amount: number },
+  filterParams: any
 ) => {
   return async (dispatch: any) => {
     dispatch(setTransactionLoading(true));
@@ -134,6 +147,7 @@ const rechargeMoney = (
         const results = await Utils.resolveResponse(response);
         if (!results) await dispatch(rechargeMoneyFail());
         else {
+          dispatch(fetchTransactions(filterParams));
           dispatch(rechargeMoneySuccess(results));
         }
       })
@@ -159,7 +173,8 @@ const withdrawMoneySuccess = (payload: any) => {
 
 const withdrawMoney = (
   id: string,
-  payload: { userId: string; amount: number }
+  payload: { userId: string; amount: number },
+  filterParams: any
 ) => {
   return async (dispatch: any) => {
     dispatch(setTransactionLoading(true));
@@ -168,6 +183,7 @@ const withdrawMoney = (
         const results = await Utils.resolveResponse(response);
         if (!results) await dispatch(withdrawMoneyFail());
         else {
+          dispatch(fetchTransactions(filterParams));
           dispatch(withdrawMoneySuccess(results));
         }
       })
@@ -199,6 +215,7 @@ const cancelTransaction = (id: string) => {
         const results = await Utils.resolveResponse(response);
         if (!results) await dispatch(cancelTransactionFail());
         else {
+          dispatch(fetchTransactions({}));
           dispatch(cancelTransactionSuccess(results));
         }
       })
@@ -222,7 +239,7 @@ const denyTransactionSuccess = (payload: any) => {
   };
 };
 
-const denyTransaction = (id: string) => {
+const denyTransaction = (id: string, filterParams: any) => {
   return async (dispatch: any) => {
     dispatch(setTransactionLoading(true));
     await API.denyTransaction(id)
@@ -230,6 +247,7 @@ const denyTransaction = (id: string) => {
         const results = await Utils.resolveResponse(response);
         if (!results) await dispatch(denyTransactionFail());
         else {
+          dispatch(fetchTransactions(filterParams));
           dispatch(denyTransactionSuccess(results));
         }
       })

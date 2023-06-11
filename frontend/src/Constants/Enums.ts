@@ -4,10 +4,10 @@ export enum EChatBox {
 }
 
 export enum EUserType {
-  BEGINNER = "beginner",
-  INTERMEDIATE = "intermediate",
-  ADVANCE = "advance",
-  PROFESSINAL = "professional",
+  BEGINNER = 'beginner',
+  INTERMEDIATE = 'intermediate',
+  ADVANCE = 'advance',
+  PROFESSINAL = 'professional',
 }
 
 export enum EVerifyType {
@@ -17,5 +17,17 @@ export enum EVerifyType {
 }
 
 export enum ERequestType {
-  FORGOT_PASSWORD = "forgot_password",
+  FORGOT_PASSWORD = 'forgot_password',
+}
+export enum ETransactionType {
+  WITHDRAW = 'withdraw',
+  RECHARGE = 'recharge',
+  BONUS = 'bonus',
+}
+
+export enum ETransactionStatus {
+  PENDING = 'pending',
+  RESOLVED = 'resolved',
+  CANCELED = 'canceled',
+  DENIED = 'denied',
 }

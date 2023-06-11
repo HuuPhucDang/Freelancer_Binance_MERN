@@ -2,8 +2,8 @@ import { sendRequest } from '@/Configs';
 import { API } from '@/Constants';
 const { CHAT_BOX } = API;
 
-export const fetchChatBox = async (payload: any) => {
-  return sendRequest(CHAT_BOX.BASIC, 'GET', payload);
+export const fetchChatBox = async () => {
+  return sendRequest(CHAT_BOX.BASIC, 'GET');
 };
 
 export const fetchChatBoxById = async (id: string) => {

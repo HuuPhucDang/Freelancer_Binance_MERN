@@ -21,6 +21,34 @@ import { TransactionActions } from '../../../Reducers/Actions';
 import { RootState, useTypedDispatch } from '../../../Reducers/store';
 import { useSelector } from 'react-redux';
 import _ from 'lodash';
+import { ENUMS } from '../../../Constants';
+import { Utils } from '../../../Libs';
+
+interface IFilterParam {
+  type: string;
+  status: string;
+  page: number;
+  limit: number;
+  sortBy: string;
+  populate: string;
+}
+
+interface ITransaction {
+  amount: number;
+  balance: number;
+  date: string;
+  status: string;
+  time: string;
+  type: string;
+}
+
+interface IPayload {
+  limit: number;
+  page: number;
+  results: ITransaction[];
+  totalPages: number;
+  totalResults: number;
+}
 
 function createData(
   date: string,
@@ -33,29 +61,53 @@ function createData(
   return { date, time, type, status, total, surplus };
 }
 
+const initialFilterParam = {
+  type: 'all',
+  status: 'all',
+  page: 1,
+  limit: 15,
+  sortBy: 'date:DESC,time:DESC',
+  populate: "userId"
+};
+
 const { fetchTransactions } = TransactionActions;
 
 const Invoice: React.FC = () => {
   // Constructors
   const dispatch = useTypedDispatch();
-  const transactions: any[] = useSelector((state: RootState) =>
+  const payload: IPayload = useSelector((state: RootState) =>
     _.get(state.TRANSACTION, 'payload')
   );
+  const [filterParams, setFilterParams] =
+    React.useState<IFilterParam>(initialFilterParam);
+
+  const fetchPayload = async () => {
+    const resolveFilters = Utils.resolveFilter(filterParams);
+    dispatch(fetchTransactions(resolveFilters));
+  };
+
   React.useEffect(() => {
-    dispatch(fetchTransactions({}));
-  }, []);
+    fetchPayload();
+  }, [filterParams]);
 
   const rows = React.useMemo(() => {
     const result: any[] = [];
-    if (transactions && transactions?.length > 0) {
-      transactions.forEach((item: any) =>
+    if (payload.results && payload.results?.length > 0) {
+      payload.results.forEach((item: ITransaction) =>
         result.push(
-          createData('2023-05-20', '16:30', 'Rút tiền', 'Đã xử lý', 200, 4000)
+          createData(
+            item.date,
+            item.time,
+            item.type,
+            item.status,
+            item.amount,
+            item.balance
+          )
         )
       );
     }
     return result;
-  }, [transactions]);
+  }, [payload]);
 
   const renderMain = () => {
     return (
@@ -114,23 +166,51 @@ const Invoice: React.FC = () => {
                   <Select
                     placeholder="Loại"
                     options={[
-                      { label: 'Đang xử lý', value: 'processing' },
-                      { label: 'Đã xử lý', value: 'approved' },
-                      { label: 'Đã hủy', value: 'canceled' },
-                      { label: 'Đã từ chối', value: 'disagreed' },
+                      { label: 'Tất cả', value: 'all' },
+                      {
+                        label: 'Rút tiền',
+                        value: ENUMS.ETransactionType.WITHDRAW,
+                      },
+                      {
+                        label: 'Nạp tiền',
+                        value: ENUMS.ETransactionType.RECHARGE,
+                      },
+                      { label: 'Thưởng', value: ENUMS.ETransactionType.BONUS },
                     ]}
-                    selected=""
-                    onSelect={() => console.log('select')}
+                    selected={filterParams.type}
+                    onSelect={(newValue: string) =>
+                      setFilterParams({ ...filterParams, type: newValue })
+                    }
                     sx={{
                       marginRight: '10px',
                       backgroundColor: 'background.invoiceDropdown',
                     }}
                   />
                   <Select
-                    placeholder="Thời gian"
-                    options={[]}
-                    selected=""
-                    onSelect={() => console.log('select')}
+                    placeholder="Trạng thái"
+                    options={[
+                      { label: 'Tất cả', value: 'all' },
+                      {
+                        label: 'Đang xử lý',
+                        value: ENUMS.ETransactionStatus.PENDING,
+                      },
+                      {
+                        label: 'Đã xử lý',
+                        value: ENUMS.ETransactionStatus.RESOLVED,
+                      },
+                      {
+                        label: 'Đã hủy',
+                        value: ENUMS.ETransactionStatus.CANCELED,
+                      },
+                      {
+                        label: 'Đã từ chối',
+                        value: ENUMS.ETransactionStatus.DENIED,
+                      },
+                    ]}
+                    selected={filterParams.status}
+                    onSelect={(newValue: string) =>
+                      setFilterParams({ ...filterParams, status: newValue })
+                    }
                     sx={{
                       backgroundColor: 'background.invoiceDropdown',
                     }}

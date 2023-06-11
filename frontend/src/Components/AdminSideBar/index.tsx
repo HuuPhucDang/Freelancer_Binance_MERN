@@ -5,7 +5,13 @@ import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 import ChatIcon from '@mui/icons-material/Chat';
 import React from 'react';
 import PeopleIcon from '@mui/icons-material/People';
+import LogoutIcon from '@mui/icons-material/Logout';
 import { useLocation } from 'react-router';
+import { useTypedDispatch } from '../../Reducers/store';
+import { AuthActions } from '../../Reducers/Actions';
+import { Utils } from '../../Libs';
+import StackedLineChartIcon from '@mui/icons-material/StackedLineChart';
+
 const navigationItems = [
   {
     label: 'Người dùng',
@@ -16,6 +22,11 @@ const navigationItems = [
     label: 'Yêu cầu',
     path: ROUTERS.REQUEST,
     icon: <SyncIcon sx={{ fontSize: '16px', marginRight: '5px' }} />,
+  },
+  {
+    label: 'Giao dịch',
+    path: ROUTERS.ADMIN_TRANSACTION,
+    icon: <StackedLineChartIcon sx={{ fontSize: '16px', marginRight: '5px' }} />,
   },
   {
     label: 'Thông tin ngân hàng',
@@ -29,8 +40,18 @@ const navigationItems = [
   },
 ];
 
+const { logout } = AuthActions;
+
 const SideBar = () => {
   const { pathname } = useLocation();
+  const dispatch = useTypedDispatch();
+
+  const onSignOut = () => {
+    dispatch(logout());
+    Utils.redirect(ROUTERS.SIGN_IN);
+    Utils.clearCookies();
+  };
+
   const _renderNavBar = () =>
     navigationItems.map(
       (item: { label: string; path: string; icon: React.ReactNode }) => {
@@ -74,6 +95,25 @@ const SideBar = () => {
       </Typography>
       <Stack direction="column" flex={1} padding="16px 0">
         {_renderNavBar()}
+        <Typography
+          sx={{
+            color: 'text.primary',
+            backgroundColor: 'background.default',
+            fontSize: '14px',
+            height: '40px',
+            display: 'flex',
+            alignItems: 'center',
+            padding: '0 12px',
+            ':hover': {
+              backgroundColor: 'background.lightSilver',
+              color: 'text.secondary',
+            },
+          }}
+          onClick={() => onSignOut()}
+        >
+          <LogoutIcon sx={{ fontSize: '16px', marginRight: '5px' }} />
+          Đăng xuất
+        </Typography>
       </Stack>
     </Stack>
   );

@@ -8,6 +8,8 @@ import {
 } from '@mui/material';
 import { AdminLayout } from '@/Components/DefaultLayout';
 import React from 'react';
+import { useTypedDispatch } from '../../../Reducers/store';
+import { ChatBoxActions } from '../../../Reducers/Actions';
 
 const users = [
   {
@@ -169,9 +171,15 @@ const users = [
     ],
   },
 ];
+const { fetchChatBox, fetchChatBoxById, resetChatBoxReducer } = ChatBoxActions;
 
 const Support = () => {
+  const dispatch = useTypedDispatch();
   const [selectedUser, setSelectedUser] = React.useState<string>('');
+
+  React.useEffect(() => {
+    dispatch(fetchChatBox());
+  }, []);
 
   const _renderMsg = () => {
     const findUser = users.find((user: any) => user.id === selectedUser);

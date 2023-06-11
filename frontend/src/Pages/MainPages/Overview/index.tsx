@@ -32,6 +32,7 @@ import {
   RootState,
   useTypedDispatch,
 } from '@/Reducers/store';
+import utils from '../../../Libs/utils';
 
 function createData(
   icon: string,
@@ -80,9 +81,7 @@ const { getSelf } = UserActions;
 const Overview: React.FC = () => {
   // Constructors
   const dispatch = useTypedDispatch();
-  const userDetails = useSelector((state: RootState) =>
-    _.get(state.USER, 'details')
-  );
+  const userData = utils.getUserData();
   const [isShowNamePopup, setIsShowNamePopup] = React.useState<boolean>(false);
   const [isShowAvatarPopup, setIsShowAvatarPopup] =
     React.useState<boolean>(false);
@@ -96,7 +95,7 @@ const Overview: React.FC = () => {
     let result = 'Sơ cấp';
     const findUserType = userTypes.find(
       (item: { label: string; value: string }) =>
-        item.value === userDetails?.userType
+        item.value === userData?.userType
     );
 
     if (findUserType) result = findUserType.label;
@@ -164,7 +163,7 @@ const Overview: React.FC = () => {
                   }}
                 >
                   <Avatar
-                    src={userDetails.avatar || ''}
+                    src={userData.avatar || ''}
                     sx={{ width: '70px', height: '70px', marginRight: '20px' }}
                   />
                   <Stack direction="column">
@@ -174,7 +173,7 @@ const Overview: React.FC = () => {
                       marginBottom="16px"
                     >
                       <Typography sx={{ marginRight: '16px' }}>
-                        {userDetails ? userDetails?.nickname : 'Anonymous-User-b5b47p'}
+                        {userData ? userData?.nickname : 'Anonymous-User-b5b47p'}
                       </Typography>
                       <IconButton
                         size="small"
@@ -199,7 +198,7 @@ const Overview: React.FC = () => {
                           ID người dùng
                         </Typography>
                         <Typography sx={{ fontSize: '12px' }}>
-                          {userDetails?.id}
+                          {userData?.id}
                         </Typography>
                       </Box>
                       <Box sx={{ minWidth: 'max-content' }}>

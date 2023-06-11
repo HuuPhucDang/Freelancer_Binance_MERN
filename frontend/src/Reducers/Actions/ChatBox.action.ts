@@ -30,10 +30,10 @@ const fetchChatBoxSuccess = (payload: any) => {
   };
 };
 
-const fetchChatBox = (payload: any) => {
+const fetchChatBox = () => {
   return async (dispatch: any) => {
     dispatch(setChatBoxLoading(true));
-    await API.fetchChatBox(payload)
+    await API.fetchChatBox()
       .then(async (response: any) => {
         const results = await Utils.resolveResponse(response);
         if (!results) await dispatch(fetchChatBoxFail());

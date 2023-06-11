@@ -69,7 +69,12 @@ const fetchUserRequests = (payload: any) => {
         const results = await Utils.resolveResponse(response);
         if (!results) await dispatch(fetchUserRequestsFail());
         else {
-          dispatch(fetchUserRequestsSuccess(results));
+          const resolveResult: { message: string; payload: any } = results as {
+            message: string;
+            payload: any;
+          };
+
+          dispatch(fetchUserRequestsSuccess(resolveResult.payload));
         }
       })
       .catch(async (error) => {

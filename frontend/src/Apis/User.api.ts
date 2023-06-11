@@ -6,8 +6,8 @@ export const updateAvatar = async (payload: { avatar: string }) => {
   return sendRequest(USERS.UPDATE_AVATAR, 'PUT', payload);
 };
 
-export const fetchUsers = async () => {
-  return sendRequest(USERS.BASIC, 'GET');
+export const fetchUsers = async (payload: any) => {
+  return sendRequest(USERS.BASIC, 'GET', payload);
 };
 
 export const getSelf = async () => {

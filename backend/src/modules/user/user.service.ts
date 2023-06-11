@@ -96,9 +96,9 @@ export const getUserById = async (
  * Get user by ownerCode
  */
 export const getUserByOwnerCode = async (
-  ownCode: string
+  onwCode: string
 ): Promise<IUserDoc | null> => {
-  const user = await User.findOne({ ownCode })
+  const user = await User.find({ onwCode })
     .populate("verification")
     .populate("wallet")
     .populate("security")
