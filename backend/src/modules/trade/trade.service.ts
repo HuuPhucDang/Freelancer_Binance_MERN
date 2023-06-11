@@ -25,7 +25,7 @@ const LIMIT_BET = {
 export const createNewTrade = async (
   userId: mongoose.Types.ObjectId,
   createBody: CreateNewTradeBody
-): Promise<ITradeHistoryDoc> => {
+): Promise<ITradeHistoryDoc[]> => {
   const user = await getUserById(userId);
   if (!user) throw new ApiError(httpStatus.NOT_FOUND, "User not found!");
   const wallet = await Wallet.findOne({ userId });
@@ -41,12 +41,12 @@ export const createNewTrade = async (
     throw new ApiError(httpStatus.BAD_REQUEST, "Your level lower bet level!");
   wallet.balance = wallet.balance - createBody.betAmount;
   await wallet.save();
-  const savedTrade = await TradeHistory.create({
+  await TradeHistory.create({
     ...createBody,
     userId,
   });
 
-  return savedTrade;
+  return await TradeHistory.find({ userId }).sort({ updatedAt: -1 });
 };
 
 /**

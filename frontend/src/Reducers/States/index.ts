@@ -13,6 +13,7 @@ import ChatBoxReducer from './ChatBox.reducer';
 import SystemInfoReducer from './SystemInfo.reducer';
 import TransactionReducer from './Transaction.reducer';
 import UserRequestReducer from './UserRequest.reducer';
+import TradeReducer from './Trade.reducer';
 
 const createRootReducer = (history: History) =>
   combineReducers({
@@ -27,6 +28,7 @@ const createRootReducer = (history: History) =>
     CHAT_BOX: ChatBoxReducer,
     SYSTEM_INFO: SystemInfoReducer,
     TRANSACTION: TransactionReducer,
-    USER_REQUEST: UserRequestReducer
+    USER_REQUEST: UserRequestReducer,
+    TRADE: TradeReducer,
   });
 export default createRootReducer;

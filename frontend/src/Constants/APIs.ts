@@ -45,10 +45,7 @@ export default {
   CHAT_BOX: {
     BASIC: '/chatBox',
   },
-  BINANCE_API: {
-    SINGLE_PRICE: '/avgPrice',
-    CANDLE_STICK: '/klines',
-    TEN_COUPLE_TICKERS: '/ticker/price',
-    EXCHANGE: '/exchangeInfo',
+  TRADE: {
+    BASIC: '/trade',
   },
 };

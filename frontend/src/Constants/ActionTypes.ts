@@ -39,6 +39,7 @@ const _loadingActions: ActionTypes = generateLoadingActions([
   'SYSTEM_INFO',
   'TRANSACTION',
   'USER_REQUEST',
+  'TRADE',
 ]);
 
 const _asyncActions: ActionTypes = generateSyncActions([
@@ -81,6 +82,8 @@ const _asyncActions: ActionTypes = generateSyncActions([
   'FETCH_ALL_VERIFICATION',
   'APPROVE_VERIFICATION',
   'DENY_VERIFICATION',
+  'FETCH_TRADE',
+  'CREATE_TRADE',
 ]);
 
 const _singleActions: ActionTypes = {
@@ -113,6 +116,8 @@ const _singleActions: ActionTypes = {
   RESET_TRANSACTION_REDUCER: 'RESET_TRANSACTION_REDUCER',
   // User Request actions
   RESET_USER_REQUEST_REDUCER: 'RESET_USER_REQUEST_REDUCER',
+  // Trade action
+  RESET_TRADE_REDUCER: 'RESET_TRADE_REDUCER',
 };
 
 const ACTION_TYPES = {

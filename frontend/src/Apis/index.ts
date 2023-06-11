@@ -8,6 +8,7 @@ import * as ChatBoxAPI from './ChatBox';
 import * as SystemInfoAPI from './SystemInfo';
 import * as TransactionAPI from './Transaction.api';
 import * as UserRequestAPI from './UserRequest.api';
+import * as TradeAPI from './Trade.api';
 
 export default {
   ...AuthAPI,
@@ -20,4 +21,5 @@ export default {
   ...SystemInfoAPI,
   ...TransactionAPI,
   ...UserRequestAPI,
+  ...TradeAPI,
 };

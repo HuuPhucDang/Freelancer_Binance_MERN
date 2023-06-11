@@ -32,6 +32,7 @@ export interface ITradeHistory {
   betPrice: number;
   symbol: string;
   time: string;
+  probability: number;
 }
 
 export interface ITradeHistoryDoc extends ITradeHistory, Document {}
@@ -44,4 +45,5 @@ export type CreateNewTradeBody = {
   betPrice: number;
   symbol: string;
   time: string;
+  probability: number;
 };

@@ -9,7 +9,7 @@ import {
 } from "../../interfaces/systemInfo.interface";
 
 export const getSystemInfor = async (): Promise<ISystemInforDoc | null> => {
-  const findAll = await SystemInfor.find();
+  const findAll = await SystemInfor.find().populate("QRUrl");
   if (!findAll.length)
     return await SystemInfor.create({
       // QRUrl: "",

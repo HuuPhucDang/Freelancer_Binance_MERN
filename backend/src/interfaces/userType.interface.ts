@@ -18,7 +18,6 @@ export interface IUserType {
   userId: Schema.Types.ObjectId;
   name: string;
   type: EUserType;
-  probability: number;
 }
 
 export interface IUserTypeDoc extends IUserType, Document {}
