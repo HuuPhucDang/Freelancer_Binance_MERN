@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import mongoose from "mongoose";
 import catchAsync from "../../utils/catchAsync";
 import { pick, responsePayload } from "../../utils";
+import fs from "fs";
 import * as verificationService from "./verification.service";
 import { IOptions } from "../../helper/paginate/paginate";
 import { EVerifyType } from "../../interfaces/verification.interface";
@@ -10,14 +11,15 @@ export const uploadIDCards = catchAsync(async (req: Request, res: Response) => {
   const allFiles: any = req.files;
   const updateBody: any = {};
   Object.keys(allFiles).map((key: any) => {
-    updateBody[`${key}Url`] = allFiles[key][0]?.id;
+    const img = fs.readFileSync(allFiles[key][0]?.path);
+    const encode_image = img.toString("base64");
+    updateBody[`${key}Url`] = encode_image;
   });
-
   const user = await verificationService.uploadIdCards(
     new mongoose.Types.ObjectId(req.user.id),
     updateBody
   );
-  res.send(responsePayload(true, "Active bank successfully!", user));
+  res.send(responsePayload(true, "Updload ID cards successfully!", user));
 });
 
 export const approvedIDCards = catchAsync(

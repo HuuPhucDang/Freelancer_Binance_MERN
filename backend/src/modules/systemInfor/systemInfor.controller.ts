@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import mongoose from "mongoose";
 import catchAsync from "../../utils/catchAsync";
+import fs from "fs";
 import { responsePayload } from "../../utils";
 import * as systemInforService from "./systemInfor.service";
 
@@ -15,8 +16,10 @@ export const updateSystemInfor = catchAsync(
   async (req: Request, res: Response) => {
     if (typeof req.params["inforId"] === "string") {
       const allFiles: any = req.files;
+      const img = fs.readFileSync(allFiles?.QRCode[0]?.path);
+      const encode_image = img.toString("base64");
       const updateBody: any = {
-        QRUrl: allFiles?.QRCode[0]?.id,
+        QRUrl: encode_image,
       };
       const user = await systemInforService.updateSystemInfo(
         new mongoose.Types.ObjectId(req.params["inforId"]),

@@ -11,7 +11,9 @@ const systemInforSchema = new mongoose.Schema<
 >(
   {
     QRUrl: {
-      type: mongoose.Schema.Types.ObjectId,
+      type: mongoose.Schema.Types.Buffer,
+      required: false,
+      default: "",
     },
     fullname: {
       type: mongoose.Schema.Types.String,
