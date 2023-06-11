@@ -1,6 +1,8 @@
 import { ACTION_TYPES, ROUTERS } from '@/Constants';
 import API from '@/Apis';
 import { Utils } from '@libs';
+import { pushNotification } from '../../Libs/utils/Widget.utils';
+import _ from 'lodash';
 
 // SINGLE ACTIONS
 const setLogged = () => {
@@ -95,6 +97,13 @@ const register = (payload: {
         const result = await Utils.resolveResponse(response);
         if (!result) await dispatch(registerFail());
         else {
+          const resolveResult: { message: string } = result as {
+            message: string;
+          };
+          pushNotification({
+            type: 'success',
+            message: resolveResult.message,
+          });
           dispatch(registerSuccess(result));
           Utils.redirect(ROUTERS.SIGN_IN);
         }

@@ -44,6 +44,7 @@ const ChangeEmail: React.FC<IProps> = ({ open = false, onClose }) => {
     handleSubmit,
     formState: { errors },
     control,
+    setValue,
     reset,
   } = useForm<FormData>({
     resolver: yupResolver(schema),
@@ -51,6 +52,9 @@ const ChangeEmail: React.FC<IProps> = ({ open = false, onClose }) => {
 
   React.useEffect(() => {
     if (isSubmitEmailSuccess) {
+      setValue('email', '');
+      setValue('newEmail', '');
+      setValue('password', '');
       reset();
       onClose();
       dispatch(resetSecurityReducer());

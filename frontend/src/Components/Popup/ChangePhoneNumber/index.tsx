@@ -45,6 +45,7 @@ const VerifyPhoneNumber: React.FC<IProps> = ({ open = false, onClose }) => {
     handleSubmit,
     formState: { errors },
     control,
+    setValue,
     reset,
   } = useForm<FormData>({
     resolver: yupResolver(schema),
@@ -52,6 +53,7 @@ const VerifyPhoneNumber: React.FC<IProps> = ({ open = false, onClose }) => {
 
   React.useEffect(() => {
     if (isSubmitPhoneNumberSuccess) {
+      setValue('phonenumber', '');
       reset();
       onClose();
       dispatch(resetSecurityReducer());

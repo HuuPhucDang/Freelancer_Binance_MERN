@@ -191,6 +191,69 @@ const updatePassword = (payload: { userId: string; password: string }) => {
   };
 };
 
+const getUserByIdSuccess = (payload: any) => {
+  return {
+    type: ACTION_TYPES.GET_USER_BY_ID_SUCCESS,
+    payload,
+  };
+};
+
+const getUserByIdFail = () => {
+  return {
+    type: ACTION_TYPES.GET_USER_BY_ID_FAILURE,
+  };
+};
+
+const getUserById = (id: string) => {
+  return async (dispatch: any) => {
+    dispatch(setUserLoading(true));
+    await API.getUserById(id)
+      .then(async (response: any) => {
+        const result = await Utils.resolveResponse(response);
+        if (!result) await dispatch(getUserByIdFail());
+        else {
+          const { payload }: { payload: any } = result as { payload: any };
+          dispatch(getUserByIdSuccess(payload));
+        }
+      })
+      .catch(async (error: any) => {
+        await Utils.resolveFailureResponse(error);
+        await dispatch(getUserByIdFail());
+      });
+  };
+};
+
+const updateUserTypeSuccess = (payload: any) => {
+  return {
+    type: ACTION_TYPES.UPDATE_USER_TYPE_SUCCESS,
+    payload,
+  };
+};
+
+const updateUserTypeFail = () => {
+  return {
+    type: ACTION_TYPES.UPDATE_USER_TYPE_FAILURE,
+  };
+};
+
+const updateUserType = (payload: { userId: string; userType: string }) => {
+  return async (dispatch: any) => {
+    dispatch(setUserLoading(true));
+    await API.updateUserType(payload)
+      .then(async (response: any) => {
+        const result = await Utils.resolveResponse(response);
+        if (!result) await dispatch(updateUserTypeFail());
+        else {
+          dispatch(updateUserTypeSuccess(result));
+        }
+      })
+      .catch(async (error: any) => {
+        await Utils.resolveFailureResponse(error);
+        await dispatch(updateUserTypeFail());
+      });
+  };
+};
+
 export default {
   resetUserReducer,
   updateNickname,
@@ -198,4 +261,6 @@ export default {
   fetchUsers,
   getSelf,
   updatePassword,
+  getUserById,
+  updateUserType,
 };

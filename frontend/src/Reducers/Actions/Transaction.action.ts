@@ -72,8 +72,15 @@ const requestWithdraw = (payload: { amount: number }) => {
     await API.requestWithdraw(payload)
       .then(async (response: any) => {
         const results = await Utils.resolveResponse(response);
+        const resolveResult: { message: string } = results as {
+          message: string;
+        };
         if (!results) await dispatch(requestWithdrawFail());
         else {
+          pushNotification({
+            type: 'success',
+            message: resolveResult.message,
+          });
           dispatch(requestWithdrawSuccess(results));
         }
       })
@@ -103,11 +110,11 @@ const requestRecharge = (payload: { amount: number }) => {
     await API.requestRecharge(payload)
       .then(async (response: any) => {
         const results = await Utils.resolveResponse(response);
+        const resolveResult: { message: string } = results as {
+          message: string;
+        };
         if (!results) await dispatch(requestRechargeFail());
         else {
-          const resolveResult: { message: string } = results as {
-            message: string;
-          };
           pushNotification({
             type: 'success',
             message: resolveResult.message,
@@ -145,8 +152,10 @@ const rechargeMoney = (
     await API.rechargeMoney(id, payload)
       .then(async (response: any) => {
         const results = await Utils.resolveResponse(response);
+        const { message }: { message: string } = results as { message: string };
         if (!results) await dispatch(rechargeMoneyFail());
         else {
+          pushNotification({ type: 'success', message });
           dispatch(fetchTransactions(filterParams));
           dispatch(rechargeMoneySuccess(results));
         }
@@ -181,8 +190,10 @@ const withdrawMoney = (
     await API.withdrawMoney(id, payload)
       .then(async (response: any) => {
         const results = await Utils.resolveResponse(response);
+        const { message }: { message: string } = results as { message: string };
         if (!results) await dispatch(withdrawMoneyFail());
         else {
+          pushNotification({ type: 'success', message });
           dispatch(fetchTransactions(filterParams));
           dispatch(withdrawMoneySuccess(results));
         }
@@ -213,8 +224,10 @@ const cancelTransaction = (id: string, filterParams: any) => {
     await API.cancelTransaction(id)
       .then(async (response: any) => {
         const results = await Utils.resolveResponse(response);
+        const { message }: { message: string } = results as { message: string };
         if (!results) await dispatch(cancelTransactionFail());
         else {
+          pushNotification({ type: 'success', message });
           dispatch(fetchTransactions(filterParams));
           dispatch(cancelTransactionSuccess(results));
         }
@@ -245,8 +258,10 @@ const denyTransaction = (id: string, filterParams: any) => {
     await API.denyTransaction(id)
       .then(async (response: any) => {
         const results = await Utils.resolveResponse(response);
+        const { message }: { message: string } = results as { message: string };
         if (!results) await dispatch(denyTransactionFail());
         else {
+          pushNotification({ type: 'success', message });
           dispatch(fetchTransactions(filterParams));
           dispatch(denyTransactionSuccess(results));
         }

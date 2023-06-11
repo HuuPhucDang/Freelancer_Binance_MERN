@@ -26,3 +26,16 @@ export const updatePassword = async (payload: {
     password: payload.password,
   });
 };
+
+export const updateUserType = async (payload: {
+  userId: string;
+  userType: string;
+}) => {
+  return sendRequest(`${USERS.BASIC}/${payload.userId}`, 'PUT', {
+    userType: payload.userType,
+  });
+};
+
+export const getUserById = async (id: string) => {
+  return sendRequest(`${USERS.BASIC}/${id}`, 'GET');
+};

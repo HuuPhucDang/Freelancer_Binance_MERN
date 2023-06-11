@@ -230,7 +230,7 @@ const Invoice: React.FC = () => {
                       },
                       { label: 'Thưởng', value: ENUMS.ETransactionType.BONUS },
                     ]}
-                    selected={filterParams.type}
+                    selected={filterParams?.type}
                     onSelect={(newValue: string) =>
                       setFilterParams({ ...filterParams, type: newValue })
                     }
@@ -386,9 +386,8 @@ const Invoice: React.FC = () => {
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {rows.map((row: ICreateData, index: number) => (
+                    {rows.length === 0 && (
                       <TableRow
-                        key={`row-${index}`}
                         sx={{
                           '&:last-child td, &:last-child th': { border: 0 },
                         }}
@@ -397,111 +396,140 @@ const Invoice: React.FC = () => {
                           component="th"
                           scope="row"
                           sx={{ padding: '15px' }}
+                          colSpan={7}
                         >
                           <Typography
                             sx={{
                               fontSize: '13px',
                               lineHeight: '24px',
                               color: 'text.primary',
-                            }}
-                          >
-                            {row.date}
-                          </Typography>
-                        </TableCell>
-                        <TableCell align="center">
-                          <Typography
-                            sx={{
-                              fontSize: '13px',
-                              lineHeight: '24px',
-                              color: 'text.primary',
-                            }}
-                          >
-                            {row.time}
-                          </Typography>
-                        </TableCell>
-                        <TableCell align="center">
-                          <Typography
-                            sx={{
-                              fontSize: '13px',
-                              lineHeight: '24px',
-                              color: 'text.primary',
                               fontWeight: 600,
                             }}
                           >
-                            {types[row.type]}
-                          </Typography>
-                        </TableCell>
-                        <TableCell align="center">
-                          <Typography
-                            sx={{
-                              fontSize: '13px',
-                              lineHeight: '24px',
-                              color: 'text.primary',
-                              fontWeight: 600,
-                            }}
-                          >
-                            {status[row.status]}
-                          </Typography>
-                        </TableCell>
-                        <TableCell align="center">
-                          <Typography
-                            sx={{
-                              fontSize: '13px',
-                              lineHeight: '24px',
-                              color: 'text.primary',
-                            }}
-                          >
-                            ${row.total}
-                          </Typography>
-                        </TableCell>
-                        <TableCell align="center">
-                          <Typography
-                            sx={{
-                              fontSize: '13px',
-                              lineHeight: '24px',
-                              color: 'text.primary',
-                            }}
-                          >
-                            ${row.surplus}
-                          </Typography>
-                        </TableCell>
-                        <TableCell align="center">
-                          <Typography
-                            sx={{
-                              fontSize: '13px',
-                              lineHeight: '24px',
-                              color: 'text.primary',
-                              opacity: row.status === 'pending' ? 1 : 0.5,
-                              textDecoration:
-                                row.status === 'pending'
-                                  ? 'underline'
-                                  : 'unset',
-                              ':hover': {
-                                cursor:
-                                  row.status === 'pending'
-                                    ? 'pointer'
-                                    : 'not-allowed',
-                              },
-                            }}
-                            onClick={() => onCancel(row)}
-                          >
-                            Hủy
+                            Không có dữ liệu
                           </Typography>
                         </TableCell>
                       </TableRow>
-                    ))}
+                    )}
+                    {rows.length > 0 &&
+                      rows.map((row: ICreateData, index: number) => (
+                        <TableRow
+                          key={`row-${index}`}
+                          sx={{
+                            '&:last-child td, &:last-child th': { border: 0 },
+                          }}
+                        >
+                          <TableCell
+                            component="th"
+                            scope="row"
+                            sx={{ padding: '15px' }}
+                          >
+                            <Typography
+                              sx={{
+                                fontSize: '13px',
+                                lineHeight: '24px',
+                                color: 'text.primary',
+                              }}
+                            >
+                              {row.date}
+                            </Typography>
+                          </TableCell>
+                          <TableCell align="center">
+                            <Typography
+                              sx={{
+                                fontSize: '13px',
+                                lineHeight: '24px',
+                                color: 'text.primary',
+                              }}
+                            >
+                              {row.time}
+                            </Typography>
+                          </TableCell>
+                          <TableCell align="center">
+                            <Typography
+                              sx={{
+                                fontSize: '13px',
+                                lineHeight: '24px',
+                                color: 'text.primary',
+                                fontWeight: 600,
+                              }}
+                            >
+                              {types[row?.type]}
+                            </Typography>
+                          </TableCell>
+                          <TableCell align="center">
+                            <Typography
+                              sx={{
+                                fontSize: '13px',
+                                lineHeight: '24px',
+                                color: 'text.primary',
+                                fontWeight: 600,
+                              }}
+                            >
+                              {status[row.status]}
+                            </Typography>
+                          </TableCell>
+                          <TableCell align="center">
+                            <Typography
+                              sx={{
+                                fontSize: '13px',
+                                lineHeight: '24px',
+                                color: 'text.primary',
+                              }}
+                            >
+                              ${row.total}
+                            </Typography>
+                          </TableCell>
+                          <TableCell align="center">
+                            <Typography
+                              sx={{
+                                fontSize: '13px',
+                                lineHeight: '24px',
+                                color: 'text.primary',
+                              }}
+                            >
+                              ${row.surplus}
+                            </Typography>
+                          </TableCell>
+                          <TableCell align="center">
+                            <Typography
+                              sx={{
+                                fontSize: '13px',
+                                lineHeight: '24px',
+                                color: 'text.primary',
+                                opacity: row.status === 'pending' ? 1 : 0.5,
+                                textDecoration:
+                                  row.status === 'pending'
+                                    ? 'underline'
+                                    : 'unset',
+                                ':hover': {
+                                  cursor:
+                                    row.status === 'pending'
+                                      ? 'pointer'
+                                      : 'not-allowed',
+                                },
+                              }}
+                              onClick={() => onCancel(row)}
+                            >
+                              Hủy
+                            </Typography>
+                          </TableCell>
+                        </TableRow>
+                      ))}
                   </TableBody>
                 </Table>
               </TableContainer>
-              <Pagination
-                count={payload.totalPages}
-                page={payload.page}
-                onChange={(_e: any, newPage: number) =>
-                  setFilterParams({ ...filterParams, page: newPage })
-                }
-                shape="rounded"
-                sx={{marginTop: "20px", alignSelf: "end"}}
-              />
+              {payload.totalPages > 0 && (
+                <Pagination
+                  count={payload.totalPages}
+                  page={payload.page}
+                  onChange={(_e: any, newPage: number) =>
+                    setFilterParams({ ...filterParams, page: newPage })
+                  }
+                  shape="rounded"
+                  sx={{ marginTop: '20px', alignSelf: 'end' }}
+                />
+              )}
             </Stack>
           </Grid>
         </Grid>

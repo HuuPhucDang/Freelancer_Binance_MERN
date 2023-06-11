@@ -1,6 +1,7 @@
 import { ACTION_TYPES } from '@/Constants';
 import API from '@/Apis';
 import { Utils } from '@libs';
+import { pushNotification } from '../../Libs/utils/Widget.utils';
 
 // SINGLE ACTIONS
 const setSecurityLoading = (payload: boolean) => {
@@ -42,6 +43,15 @@ const changePassword = (payload: {
         const results = await Utils.resolveResponse(response);
         if (!results) await dispatch(changePasswordFail());
         else {
+          const resolveResult: {
+            status: boolean;
+            message: string;
+            payload: any;
+          } = results as { status: boolean; message: string; payload: any };
+          pushNotification({
+            type: 'success',
+            message: resolveResult.message,
+          });
           dispatch(changePasswordSuccess(results));
         }
       })
@@ -78,6 +88,10 @@ const verifyPhoneNumber = (payload: { phonenumber: string }) => {
             message: string;
             payload: any;
           } = results as { status: boolean; message: string; payload: any };
+          pushNotification({
+            type: 'success',
+            message: resolveResult.message,
+          });
           Utils.setUserData(resolveResult.payload);
           dispatch(verifyPhoneNumberSuccess(results));
         }
@@ -115,6 +129,10 @@ const activeEmail = (payload: { email: string; password: string }) => {
             message: string;
             payload: any;
           } = results as { status: boolean; message: string; payload: any };
+          pushNotification({
+            type: 'success',
+            message: resolveResult.message,
+          });
           Utils.setUserData(resolveResult.payload);
           dispatch(activeEmailSuccess(results));
         }
@@ -155,6 +173,10 @@ const changeEmail = (payload: {
             message: string;
             payload: any;
           } = results as { status: boolean; message: string; payload: any };
+          pushNotification({
+            type: 'success',
+            message: resolveResult.message,
+          });
           Utils.setUserData(resolveResult.payload);
           dispatch(changeEmailSuccess(results));
         }
@@ -195,6 +217,10 @@ const activeWithdrawPassword = (payload: {
             message: string;
             payload: any;
           } = results as { status: boolean; message: string; payload: any };
+          pushNotification({
+            type: 'success',
+            message: resolveResult.message,
+          });
           Utils.setUserData(resolveResult.payload);
           dispatch(activeWithdrawPasswordSuccess(results));
         }
@@ -237,6 +263,10 @@ const changeWithdrawPassword = (payload: {
             message: string;
             payload: any;
           } = results as { status: boolean; message: string; payload: any };
+          pushNotification({
+            type: 'success',
+            message: resolveResult.message,
+          });
           Utils.setUserData(resolveResult.payload);
           dispatch(changeWithdrawPasswordSuccess(results));
         }

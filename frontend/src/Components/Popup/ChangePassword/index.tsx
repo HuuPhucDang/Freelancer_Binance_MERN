@@ -51,6 +51,7 @@ const EditName: React.FC<IProps> = ({ open = false, onClose }) => {
     formState: { errors },
     control,
     reset,
+    setValue
   } = useForm<FormData>({
     resolver: yupResolver(schema),
   });
@@ -58,6 +59,9 @@ const EditName: React.FC<IProps> = ({ open = false, onClose }) => {
   React.useEffect(() => {
     if (isSubmitPasswordSuccess) {
       reset();
+      setValue("password", "");
+      setValue("newPassword", "");
+      setValue("confirmNewPassword", "");
       onClose();
       dispatch(resetSecurityReducer());
     }
@@ -105,6 +109,7 @@ const EditName: React.FC<IProps> = ({ open = false, onClose }) => {
                 size="small"
                 placeholder="Mật khẩu mới *"
                 type="password"
+                autoComplete='newpassword'
                 sx={{
                   marginTop: '10px',
                   color: 'text.secondary',

@@ -1,5 +1,5 @@
 import { Link, Stack, Typography } from '@mui/material';
-import { ROUTERS } from '../../Constants';
+import { ROUTERS } from '@/Constants';
 import SyncIcon from '@mui/icons-material/Sync';
 import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 import ChatIcon from '@mui/icons-material/Chat';
@@ -8,9 +8,10 @@ import PeopleIcon from '@mui/icons-material/People';
 import LogoutIcon from '@mui/icons-material/Logout';
 import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
 import { useLocation } from 'react-router';
-import { useTypedDispatch } from '../../Reducers/store';
-import { AuthActions } from '../../Reducers/Actions';
-import { Utils } from '../../Libs';
+import { useTypedDispatch } from '@/Reducers/store';
+import { AuthActions } from '@/Reducers/Actions';
+import GppGoodIcon from '@mui/icons-material/GppGood';
+import { Utils } from '@/Libs';
 import StackedLineChartIcon from '@mui/icons-material/StackedLineChart';
 
 const navigationItems = [
@@ -30,9 +31,16 @@ const navigationItems = [
     icon: <SyncIcon sx={{ fontSize: '16px', marginRight: '5px' }} />,
   },
   {
+    label: 'Xác minh',
+    path: ROUTERS.ADMIN_VERIFY,
+    icon: <GppGoodIcon sx={{ fontSize: '16px', marginRight: '5px' }} />,
+  },
+  {
     label: 'Giao dịch',
     path: ROUTERS.ADMIN_TRANSACTION,
-    icon: <StackedLineChartIcon sx={{ fontSize: '16px', marginRight: '5px' }} />,
+    icon: (
+      <StackedLineChartIcon sx={{ fontSize: '16px', marginRight: '5px' }} />
+    ),
   },
   {
     label: 'Thông tin ngân hàng',

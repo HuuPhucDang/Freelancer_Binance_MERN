@@ -157,41 +157,49 @@ const Request: React.FC = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {rows.map((row: ICreateData) => (
+              {rows.length > 0 &&
+                rows.map((row: ICreateData, index: number) => (
+                  <TableRow
+                    key={`row-${index}`}
+                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                  >
+                    <TableCell component="th" scope="row">
+                      {row.name}
+                    </TableCell>
+                    <TableCell align="center">{types[row.type]}</TableCell>
+                    <TableCell align="center">{row.message}</TableCell>
+                    <TableCell align="center">{row.createdAt}</TableCell>
+                    <TableCell align="center">{row.action}</TableCell>
+                  </TableRow>
+                ))}
+              {rows.length === 0 && (
                 <TableRow
-                  key={row.name}
                   sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                 >
                   <TableCell component="th" scope="row">
-                    {row.name}
+                    Không có dữ liệu
                   </TableCell>
-                  <TableCell align="center">
-                    {types[row.type]}
-                  </TableCell>
-                  <TableCell align="center">
-                    {row.message}
-                  </TableCell>
-                  <TableCell align="center">{row.createdAt}</TableCell>
-                  <TableCell align="center">{row.action}</TableCell>
                 </TableRow>
-              ))}
+              )}
             </TableBody>
           </Table>
         </TableContainer>
-        <Stack
-          direction="row"
-          justifyContent="flex-end"
-          sx={{ marginTop: '15px' }}
-        >
-          <Pagination
-            count={payload.totalPages}
-            page={payload.page}
-            onChange={(_e: any, newPage: number) =>
-              setFilterParams({ ...filterParams, page: newPage })
-            }
-            shape="rounded"
-          />
-        </Stack>
+        {payload.totalPages > 0 && (
+          <Stack
+            direction="row"
+            justifyContent="flex-end"
+            sx={{ marginTop: '15px' }}
+          >
+            <Pagination
+              count={payload.totalPages}
+              page={payload.page}
+              onChange={(_e: any, newPage: number) =>
+                setFilterParams({ ...filterParams, page: newPage })
+              }
+              shape="rounded"
+            />
+          </Stack>
+        )}
       </Stack>
     );
   };
