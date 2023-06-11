@@ -9,7 +9,7 @@ import _ from "lodash";
 import Coin from "../models/coin.model";
 import TradeHistory from "../models/tradeHistory.model";
 import Wallet from "../models/wallet.model";
-import UserType from "../models/userType.model";
+import Moonboot from "../models/moonbot.model";
 
 const KLINE_URL = `https://api.binance.com/api/v3/klines?`;
 const AGGREGATE_URL = `https://api.binance.com/api/v3/aggTrades?`;
@@ -55,6 +55,24 @@ const intiChartSocket = (socket: Socket) => {
     const coin = await Coin.findOne({ symbol: data?.symbol });
     callback(coin);
   });
+  socket.on("getAllMoonboot", async (_data: any, callback: any) => {
+    const moonboot = await Moonboot.find();
+    callback(moonboot);
+  });
+  socket.on("updateMoonbot", async (data: any) => {
+    const moonboot = await Moonboot.findById({
+      id: new mongoose.Types.ObjectId(data?.id),
+    });
+    if (moonboot) {
+      Object.assign(
+        moonboot,
+        _.pick(data, "time", "limitedTime", "probability")
+      );
+      await moonboot.save();
+    }
+    const moonboots = await Moonboot.find();
+    socket.emit("updateAllMoonbotNow", moonboots);
+  });
   socket.on("getCoin24h", async (data: any, callback: any) => {
     const currentCoin = await Coin.findOne({ symbol: data?.symbol });
     if (currentCoin) {
@@ -80,11 +98,8 @@ const intiChartSocket = (socket: Socket) => {
     const wallet = await Wallet.findOne({
       userId: new mongoose.Types.ObjectId(data?.userId),
     });
-    const userType = await UserType.findOne({
-      userId: new mongoose.Types.ObjectId(data?.userId),
-    });
     for (const trade of allPendingTrade) {
-      if (trade && userType) {
+      if (trade) {
         const currentCoin = await Coin.findOne({ symbol: trade.symbol });
         if (currentCoin) {
           trade.result = checkResults(
@@ -96,20 +111,14 @@ const intiChartSocket = (socket: Socket) => {
           if (wallet) {
             wallet.balance =
               trade.result === ETradeResult.LOSE
-                ? wallet.balance - trade.betAmount * userType.probability
-                : wallet.balance + trade.betAmount * userType.probability;
+                ? wallet.balance - trade.betAmount * trade.probability
+                : wallet.balance + trade.betAmount * trade.probability;
             await wallet.save();
           }
         }
       }
     }
-    const allSavedTrade = await TradeHistory.find({
-      userId: new mongoose.Types.ObjectId(data?.userId),
-    });
-    callback({
-      trades: allSavedTrade,
-      wallet,
-    });
+    callback(null);
   });
   socket.on("getAggregateTradeList", async (data: any, callback: any) => {
     const coin = await Coin.findOne({ symbol: data?.symbol });

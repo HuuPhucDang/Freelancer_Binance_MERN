@@ -9,6 +9,7 @@ import ChatBoxActions from './ChatBox.action';
 import SystemInfoActions from './SystemInfo.action';
 import TransactionActions from './Transaction.action';
 import UserRequestActions from './UserRequest.action';
+import TradeActions from './Trade.action';
 
 export {
   WidgetActions,
@@ -22,4 +23,5 @@ export {
   SystemInfoActions,
   TransactionActions,
   UserRequestActions,
+  TradeActions,
 };

@@ -15,7 +15,7 @@ import { useSelector } from 'react-redux';
 import { useTypedDispatch, RootState } from '../../../Reducers/store';
 import { Utils } from '@/Libs';
 import { ROUTERS, ENUMS } from '@/Constants';
-import { UserActions } from '@/Reducers/Actions';
+import { UserActions, TradeActions } from '@/Reducers/Actions';
 
 const styleBox = {
   height: '24px',
@@ -48,11 +48,30 @@ const LIMIT_BET: any = {
   [ENUMS.EUserType.PROFESSINAL]: ['30s', '60s', '120s', '150s'],
 };
 
-const { getSelf } = UserActions;
+const LIMIT_PROBABILITY: any = {
+  '30s': 0.1,
+  '60s': 0.2,
+  '120s': 0.3,
+  '150s': 0.5,
+};
 
-const TradeField: React.FC = () => {
+const { getSelf } = UserActions;
+const { createTrade } = TradeActions;
+
+interface ITradeFieldProps {
+  currentPrice: number;
+  symbol: string;
+}
+
+const TradeField: React.FC<ITradeFieldProps> = ({
+  currentPrice,
+  symbol,
+}: ITradeFieldProps) => {
   // Constructors
   const dispatch = useTypedDispatch();
+  const isActionLoading = useSelector((state: RootState) =>
+    _.get(state.TRADE, 'isFetchLoading')
+  );
   const isLogged = useSelector((state: RootState) =>
     _.get(state.AUTH, 'isLogged')
   );
@@ -62,10 +81,17 @@ const TradeField: React.FC = () => {
   const [userType, setUserType] = React.useState<string>(
     ENUMS.EUserType.BEGINNER
   );
-  const [probability, setProbability] = React.useState<number>(0);
-  const [betTime, setBetTime] = React.useState<number>(30);
+  const [betTime, setBetTime] = React.useState<string>('30s');
+  const [betSellTime, setBetSellTime] = React.useState<string>('30s');
+  const [probability, setProbability] = React.useState<number>(
+    LIMIT_PROBABILITY[betTime]
+  );
+  const [sellProbability, setSellProbability] = React.useState<number>(
+    LIMIT_PROBABILITY[betSellTime]
+  );
   const [ballance, setBallance] = React.useState<number>(0);
   const [betAmount, setBetAmount] = React.useState<number>(0);
+  const [betSellAmount, setBetSellAmount] = React.useState<number>(0);
 
   React.useEffect(() => {
     dispatch(getSelf());
@@ -78,15 +104,40 @@ const TradeField: React.FC = () => {
     const getUserType =
       _.get(userDetails, 'userType.type') || ENUMS.EUserType.BEGINNER;
     const getBanlance = _.get(userDetails, 'wallet.balance') || 0;
-    const getProbability = _.get(userDetails, 'userType.probability') || 0;
     setUserType(getUserType);
-    setProbability(getProbability);
     setBallance(getBanlance);
   }, [userDetails]);
 
   // Events
-  const onSetBetTime = (time: string) => {
-    if (Number(time) !== betTime) setBetTime(Number(time));
+  const onSetBetTime = (time: string, type: 'BUY' | 'SELL') => {
+    if (type === 'BUY') {
+      if (time !== betTime) {
+        setBetTime(time);
+        setProbability(LIMIT_PROBABILITY[time]);
+      }
+    } else {
+      if (time !== betSellTime) {
+        setBetSellTime(time);
+        setSellProbability(LIMIT_PROBABILITY[time]);
+      }
+    }
+  };
+
+  const createNewTrade = (betType: 'buy' | 'sell') => {
+    let validated = true;
+    if (betTime === 'buy') validated = _.includes(LIMIT_BET[userType], betTime);
+    else validated = _.includes(LIMIT_BET[userType], betSellTime);
+    if (validated) {
+      const payload = {
+        betPrice: currentPrice,
+        betAmount,
+        type: betType,
+        symbol,
+        probability,
+        time: betTime,
+      };
+      dispatch(createTrade(payload));
+    }
   };
 
   // Renders
@@ -106,7 +157,7 @@ const TradeField: React.FC = () => {
             minWidth: 'unset',
           }}
           disabled={!_.includes(LIMIT_BET[userType], item)}
-          onClick={() => onSetBetTime(item.replace('s', ''))}
+          onClick={() => onSetBetTime(item, type)}
         >
           {item}
         </Button>
@@ -125,7 +176,10 @@ const TradeField: React.FC = () => {
             inputProps={{
               step: 0.01,
             }}
-            onChange={(e) => setBetAmount(Number(e.target.value))}
+            onChange={(e) => {
+              if (type === 'BUY') setBetAmount(Number(e.target.value));
+              else setBetSellAmount(Number(e.target.value));
+            }}
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">
@@ -141,6 +195,7 @@ const TradeField: React.FC = () => {
             variant="filled"
             sx={styleInput}
             type="number"
+            value={currentPrice}
             disabled
             InputProps={{
               endAdornment: (
@@ -158,7 +213,11 @@ const TradeField: React.FC = () => {
             sx={styleInput}
             disabled
             type="number"
-            value={betAmount + betAmount * probability}
+            value={
+              type === 'BUY'
+                ? betAmount + betAmount * probability
+                : betSellAmount + betSellAmount * sellProbability
+            }
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">
@@ -175,7 +234,11 @@ const TradeField: React.FC = () => {
             sx={styleInput}
             disabled
             type="number"
-            value={betAmount - betAmount * probability}
+            value={
+              type === 'BUY'
+                ? betAmount - betAmount * probability
+                : betSellAmount - betSellAmount * sellProbability
+            }
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">
@@ -192,7 +255,7 @@ const TradeField: React.FC = () => {
   const _renderLeftSide = () => (
     <Grid item xs={6}>
       <Typography sx={{ fontSize: '13px', lineHeight: '15px' }}>
-        Số dư: {ballance - betAmount}
+        Số dư: {ballance - betAmount - betSellAmount}
       </Typography>
       {_renderInputs('BUY')}
       <Grid container spacing={0.5} marginTop="5px">
@@ -209,6 +272,7 @@ const TradeField: React.FC = () => {
           fontWeight: 900,
           background: '#2EBD85',
         }}
+        onClick={() => createNewTrade('buy')}
       >
         Mua
       </Button>
@@ -218,7 +282,7 @@ const TradeField: React.FC = () => {
   const _renderRightSide = () => (
     <Grid item xs={6}>
       <Typography sx={{ fontSize: '13px', lineHeight: '15px' }}>
-        Thời gian: {betTime}s
+        Thời gian: {betTime}
       </Typography>
       {_renderInputs('SELL')}
       <Grid container spacing={0.5} marginTop="5px">
@@ -235,6 +299,7 @@ const TradeField: React.FC = () => {
           fontWeight: 900,
           background: '#F03030',
         }}
+        onClick={() => createNewTrade('sell')}
       >
         Bán
       </Button>

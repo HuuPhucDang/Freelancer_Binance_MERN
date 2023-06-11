@@ -94,6 +94,9 @@ export const fetchAllIDCards = async (
   filter: Record<string, any>,
   options: IOptions
 ): Promise<QueryResult> => {
-  const allVerifications = Verification.paginate(filter, options);
+  const allVerifications = Verification.paginate(
+    { ...filter, populate: "selfieImageUrl, frontImageUrl, backImageUrl" },
+    options
+  );
   return allVerifications;
 };

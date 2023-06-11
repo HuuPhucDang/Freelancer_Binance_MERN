@@ -31,6 +31,7 @@ mongoose.connect(config.mongoose.url).then(() => {
   });
   Seender.createSeedAdmin();
   Seender.createSeedCoins();
+  Seender.createSeedMoonbots();
   scheduledFunctions();
 });
 

@@ -2,7 +2,12 @@ import _ from "lodash";
 import User from "../models/user.model";
 import Wallet from "../models/wallet.model";
 import Coin from "../models/coin.model";
-import { ECoinCoupleTrade } from "../interfaces/tradeHistoryHistory.interface";
+import Moonbot from "../models/moonbot.model";
+import {
+  ECoinCoupleTrade,
+  ETradeType,
+} from "../interfaces/tradeHistoryHistory.interface";
+import mongoose from "mongoose";
 
 const ADMIN_SEED_1 = {
   username: "binanceadmin",
@@ -75,5 +80,56 @@ export const createSeedCoins = async (): Promise<void> => {
   for (const symbol of allCoins) {
     const isCoinExist = await Coin.isCoinExits(symbol);
     if (!isCoinExist) await Coin.create({ symbol, icon: ICON_LIST[symbol] });
+  }
+};
+
+const MOONBOT_TYPES = [30, 60, 120, 150];
+const MOONBOT_LIMITED = [15, 15, 15, 15];
+const MOONBOT_PROBABILITY = [0.1, 0.2, 0.3, 0.5];
+
+const MOONBOT_BUY_IDS = [
+  "6485adfc9336a6c9e7b493c7",
+  "6485ae0685581563b3fc89cf",
+  "6485ae0c7eb8dcbb091cf66c",
+  "6485ae127688ef0f41c0100d",
+];
+
+const MOONBOT_SELL_IDS = [
+  "6485af2ce8dc55be36f6c2b8",
+  "6485af32adbce40072d7e78f",
+  "6485af3adb94a5696b9ac6b2",
+  "6485af42b38b507ecd7fd8b2",
+];
+
+/**
+ * Create a Coin
+ * @returns {Promise<void>}
+ */
+export const createSeedMoonbots = async (): Promise<void> => {
+  for (const id of MOONBOT_BUY_IDS) {
+    const index = MOONBOT_BUY_IDS.indexOf(id);
+    const isExistMoonbot = await Moonbot.findById(
+      new mongoose.Types.ObjectId(id)
+    );
+    if (!isExistMoonbot)
+      await Moonbot.create({
+        time: MOONBOT_TYPES[index],
+        limitedTime: MOONBOT_LIMITED[index],
+        probability: MOONBOT_PROBABILITY[index],
+        type: ETradeType.BUY,
+      });
+  }
+  for (const id of MOONBOT_SELL_IDS) {
+    const index = MOONBOT_SELL_IDS.indexOf(id);
+    const isExistMoonbot = await Moonbot.findById(
+      new mongoose.Types.ObjectId(id)
+    );
+    if (!isExistMoonbot)
+      await Moonbot.create({
+        time: MOONBOT_TYPES[index],
+        limitedTime: MOONBOT_LIMITED[index],
+        probability: MOONBOT_PROBABILITY[index],
+        type: ETradeType.SELL,
+      });
   }
 };

@@ -13,17 +13,13 @@ import MyInvoiceTable from './MyInvoiceTable';
 import StaticHeader from './StaticHeader';
 import TradeField from './TradeField';
 import { ROUTERS } from '../../../Constants';
-import { useTypedDispatch } from '../../../Reducers/store';
 import { Utils } from '@/Libs';
 
 const Transaction: React.FC = () => {
   // Constructors
   const { search } = useLocation();
   const query = React.useMemo(() => new URLSearchParams(search), [search]);
-  const dispatch = useTypedDispatch();
   const volatilityRef = React.useRef<HTMLDivElement | null>(null);
-
-  const userType = Utils.getUserData()?.userType?.type;
 
   React.useEffect(() => {
     const symbol = query.get('symbol');

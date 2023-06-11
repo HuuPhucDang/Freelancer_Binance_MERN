@@ -144,9 +144,13 @@ const CoinValueTable = () => {
                       fontSize: 9,
                       lineHeight: '11px',
                       color: '#816A6A',
-                      cursor: 'pointer'
+                      cursor: 'pointer',
                     }}
-                    onClick={() => Utils.replace(`${ROUTERS.TRANSACTION}?symbol=${row?.symbol}`)}
+                    onClick={() =>
+                      Utils.replace(
+                        `${ROUTERS.TRANSACTION}?symbol=${row?.symbol}`
+                      )
+                    }
                   >
                     {row?.symbol}
                   </Typography>

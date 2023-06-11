@@ -42,6 +42,10 @@ const tradeHistorySchema = new mongoose.Schema<
       type: mongoose.Schema.Types.String,
       enum: ETradeType,
     },
+    probability: {
+      type: mongoose.Schema.Types.Number,
+      default: 0,
+    },
   },
   {
     timestamps: true,
