@@ -47,7 +47,7 @@ export const createNewTrade = async (
     userId,
     betTime: moment().format("DD/MM/YYYY hh:mm:ss"),
   });
-  global.io.emit("updateTradeListNow");
+  global.io.emit("updateTradeListNow", { userId });
   return savedTrade;
 };
 

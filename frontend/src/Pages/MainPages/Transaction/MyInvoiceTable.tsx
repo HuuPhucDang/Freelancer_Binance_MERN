@@ -26,14 +26,19 @@ const MyInvoiceTable = () => {
   const allTrades: any = useSelector(
     (state: RootState) => _.get(state.TRADE, 'allTrades') || []
   );
+  const userDetails = useSelector((state: RootState) =>
+    _.get(state.USER, 'details')
+  );
   const isFetchLoading = useSelector((state: RootState) =>
     _.get(state.TRADE, 'isFetchLoading')
   );
 
   useEffect(() => {
-    Utils.WebSocket.on('updateTradeListNow', () => {
-      dispatch(fetchTrades());
-      dispatch(getSelf());
+    Utils.WebSocket.on('updateTradeListNow', (id) => {
+      if (id === userDetails?.id) {
+        dispatch(fetchTrades());
+        dispatch(getSelf());
+      }
     });
     dispatch(fetchTrades());
     return () => {
