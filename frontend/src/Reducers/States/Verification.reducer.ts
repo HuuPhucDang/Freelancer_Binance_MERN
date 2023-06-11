@@ -3,6 +3,13 @@ import { ACTION_TYPES, DEFAULT_LOADING_STATES } from '@/Constants';
 const DEFAULT_STATES = {
   ...DEFAULT_LOADING_STATES,
   isUploadSuccess: false,
+  payload: {
+    limit: 10,
+    page: 1,
+    results: [],
+    totalPages: 1,
+    totalResults: 0,
+  },
 };
 
 export default (
@@ -44,6 +51,7 @@ export default (
         requestHasError: false,
         isActionLoading: false,
         isUploadSuccess: true,
+        payload,
       };
     case ACTION_TYPES.FETCH_ALL_VERIFICATION_FAILURE:
       return {
@@ -52,6 +60,13 @@ export default (
         requestIsSuccess: false,
         isActionLoading: false,
         isUploadSuccess: false,
+        payload: {
+          limit: 10,
+          page: 1,
+          results: [],
+          totalPages: 1,
+          totalResults: 0,
+        },
       };
 
     case ACTION_TYPES.APPROVE_VERIFICATION_SUCCESS:

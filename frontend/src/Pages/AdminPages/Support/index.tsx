@@ -329,7 +329,7 @@ const Support = () => {
     );
   };
   return (
-    <AdminLayout content={_renderMain()} screenTitle="Thông tin ngân hàng" />
+    <AdminLayout content={_renderMain()} screenTitle="Hỗ trợ" />
   );
 };
 

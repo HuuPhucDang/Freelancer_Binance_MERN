@@ -1,6 +1,7 @@
 import { ACTION_TYPES } from '@/Constants';
 import API from '@/Apis';
 import { Utils } from '@libs';
+import { pushNotification } from '../../Libs/utils/Widget.utils';
 
 // SINGLE ACTIONS
 const setSystemInfoLoading = (payload: boolean) => {
@@ -72,8 +73,16 @@ const updateSystemInfo = (id: string, payload: FormData) => {
     await API.updateSystemInfo(id, payload)
       .then(async (response: any) => {
         const results = await Utils.resolveResponse(response);
+        const resolveResults: { message: string } = results as {
+          message: string;
+        };
+        const { message } = resolveResults;
         if (!results) await dispatch(updateSystemInfoFail());
         else {
+          pushNotification({
+            type: 'success',
+            message,
+          });
           dispatch(updateSystemInfoSuccess(results));
         }
       })

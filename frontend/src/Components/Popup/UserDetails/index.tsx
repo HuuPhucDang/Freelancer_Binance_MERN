@@ -8,17 +8,67 @@ import {
   Accordion,
   AccordionDetails,
   AccordionSummary,
+  Avatar,
   Box,
   Stack,
+  ToggleButton,
+  ToggleButtonGroup,
   Typography,
 } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { RootState, useTypedDispatch } from '../../../Reducers/store';
+import { UserActions } from '../../../Reducers/Actions';
+import { useSelector } from 'react-redux';
+import _ from 'lodash';
+import { ENUMS } from '../../../Constants';
 interface IProps {
+  currentUser: string;
   open: boolean;
   onClose(): void;
 }
 
-const RequestVerifyIDCard: React.FC<IProps> = ({ open = false, onClose }) => {
+interface IDetails {
+  avatar: string;
+  nickname: string;
+  userType: {
+    name: string;
+    type: string;
+  };
+  username: string;
+  verification?: {
+    status:
+      | ENUMS.EVerifyType.APPROVED
+      | ENUMS.EVerifyType.DENY
+      | ENUMS.EVerifyType.PENDING;
+  };
+}
+
+const status = {
+  [ENUMS.EVerifyType.APPROVED]: 'Đã xác thực',
+  [ENUMS.EVerifyType.DENY]: 'Đã từ chối',
+  [ENUMS.EVerifyType.PENDING]: 'Đang chờ',
+};
+
+const { getUserById } = UserActions;
+
+const RequestVerifyIDCard: React.FC<IProps> = ({
+  open = false,
+  currentUser = '',
+  onClose,
+}) => {
+  const dispatch = useTypedDispatch();
+  const details: IDetails = useSelector((state: RootState) =>
+    _.get(state.USER, 'details')
+  );
+
+  React.useEffect(() => {
+    if (open) dispatch(getUserById(currentUser));
+  }, [open]);
+
+  const onChangeUserType = (newValue: string) => {
+    console.log('halo')
+  }
+ 
   return (
     <Dialog open={open} onClose={onClose}>
       <DialogTitle sx={{ color: 'text.primary' }}>
@@ -27,73 +77,46 @@ const RequestVerifyIDCard: React.FC<IProps> = ({ open = false, onClose }) => {
       <DialogContent>
         <Stack direction="column">
           <Stack direction="column" spacing={1}>
+            <Avatar src={details?.avatar} sx={{ width: 70, height: 70 }} />
             <Typography>
-              <b>Người dùng</b>: Anonymous-User-b5b47p
+              <b>Người dùng</b>: {details?.nickname}
             </Typography>
             <Typography>
-              <b>Email</b>: anonymous@email.com
+              <b>Tên đăng nhập</b>: {details?.username}
             </Typography>
             <Typography>
               <b>Số điện thoại</b>: 0123487989
             </Typography>
+            <Typography>
+              <b>Xác thực</b>:{' '}
+              {!details?.verification
+                ? 'Chưa xác thực'
+                : status[details.verification.status]}
+            </Typography>
+            <Typography>
+              <b>Loại người dùng</b>:
+            </Typography>
+            <ToggleButtonGroup
+              color="primary"
+              value={details?.userType?.type}
+              exclusive
+              onChange={(_event: any, newValue: string) => onChangeUserType(newValue)}
+              aria-label="Platform"
+            >
+              <ToggleButton value={ENUMS.EUserType.BEGINNER}>
+                Sơ cấp
+              </ToggleButton>
+              <ToggleButton value={ENUMS.EUserType.INTERMEDIATE}>
+                Trung cấp
+              </ToggleButton>
+              <ToggleButton value={ENUMS.EUserType.ADVANCE}>
+                Nâng cao
+              </ToggleButton>
+              <ToggleButton value={ENUMS.EUserType.PROFESSINAL}>
+                Chuyên nghiệp
+              </ToggleButton>
+            </ToggleButtonGroup>
           </Stack>
-          <Accordion sx={{ marginTop: '10px' }}>
-            <AccordionSummary
-              expandIcon={<ExpandMoreIcon />}
-              aria-controls="panel1a-content"
-              id="panel1a-header"
-              defaultChecked
-            >
-              <Typography>Thông tin ngân hàng</Typography>
-            </AccordionSummary>
-            <AccordionDetails>
-              <Stack direction="column" spacing={2}>
-                <Typography>
-                  <b>Họ và tên</b>: ..........
-                </Typography>
-                <Typography>
-                  <b>Số tài khoản</b>: ..........
-                </Typography>
-                <Typography>
-                  <b>Ngân hàng</b>: ..........
-                </Typography>
-                <Typography>
-                  <b>Chi nhánh</b>: ..........
-                </Typography>
-              </Stack>
-            </AccordionDetails>
-          </Accordion>
-          <Accordion>
-            <AccordionSummary
-              expandIcon={<ExpandMoreIcon />}
-              aria-controls="panel2a-content"
-              id="panel2a-header"
-            >
-              <Typography>Xác thực</Typography>
-            </AccordionSummary>
-            <AccordionDetails>
-              <Typography
-                sx={{ fontWeight: 600, marginTop: '20px', marginBottom: '5px' }}
-              >
-                Ảnh CCCD/CMND
-              </Typography>
-              <Box
-                component="img"
-                src="https://binhthuan.gov.vn/SiteFolders/bandantoc/hinh%20anh%202021/03.38.cccd.jpg"
-                sx={{ width: '100%' }}
-              />
-              <Typography
-                sx={{ fontWeight: 600, marginTop: '20px', marginBottom: '5px' }}
-              >
-                Ảnh chân dung
-              </Typography>
-              <Box
-                component="img"
-                src="https://thumbs.dreamstime.com/b/default-avatar-profile-icon-vector-social-media-user-photo-183042379.jpg"
-                sx={{ width: '100%' }}
-              />
-            </AccordionDetails>
-          </Accordion>
         </Stack>
       </DialogContent>
       <DialogActions>

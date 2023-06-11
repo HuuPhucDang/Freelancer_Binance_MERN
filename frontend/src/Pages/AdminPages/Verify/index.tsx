@@ -22,13 +22,11 @@ import {
 import { AdminLayout } from '@/Components/DefaultLayout';
 import { ResetPassword } from '@/Components/Popup';
 import { RootState, useTypedDispatch } from '@/Reducers/store';
-import { TransactionActions } from '@/Reducers/Actions';
+import { VerificationActions } from '@/Reducers/Actions';
 import { ENUMS } from '@/Constants';
 import { Utils } from '@/Libs';
 
 interface IFilterParam {
-  type: string;
-  status: string;
   page: number;
   limit: number;
   sortBy: string;
@@ -40,21 +38,19 @@ interface IUser {
   nickname: string;
 }
 
-interface ITransaction {
+interface IVerify {
   id: string;
-  amount: number;
-  balance: number;
-  date: string;
+  backImageUrl: number;
+  frontImageUrl: number;
+  selfieImageUrl: string;
   status: string;
-  time: string;
-  type: string;
   userId: IUser;
 }
 
 interface IPayload {
   limit: number;
   page: number;
-  results: ITransaction[];
+  results: IVerify[];
   totalPages: number;
   totalResults: number;
 }
@@ -105,35 +101,23 @@ interface IFilterParam {
 function createData(
   id: string,
   user: IUser,
-  date: string,
-  time: string,
-  type: string,
   status: string,
-  total: number,
-  surplus: number,
   action: React.ReactNode
 ) {
-  return { id, user, date, time, type, status, total, surplus, action };
+  return { id, user, status, action };
 }
 
 const initialFilterParam = {
-  type: 'all',
-  status: 'all',
   page: 1,
   limit: 15,
   sortBy: 'date:DESC,time:DESC',
   populate: 'userId',
 };
-const types = {
-  recharge: 'Nạp',
-  withdraw: 'Rút',
-  bonus: 'Thưởng',
-};
 
-const { fetchTransactions, rechargeMoney, denyTransaction, withdrawMoney } =
-  TransactionActions;
+const { fetchAllVerification, approveVerification, denyVerification } =
+  VerificationActions;
 
-const Transaction: React.FC = () => {
+const Verify: React.FC = () => {
   const dispatch = useTypedDispatch();
   const userData = Utils.getUserData();
   const [isShowResetPassword, setIsShowResetPassword] =
@@ -141,44 +125,32 @@ const Transaction: React.FC = () => {
   const [currentUser, setCurrentUser] = React.useState<any>(null);
 
   const payload: IPayload = useSelector((state: RootState) =>
-    _.get(state.TRANSACTION, 'payload')
+    _.get(state.VERIFICATION, 'payload')
   );
 
   const [filterParams, setFilterParams] =
     React.useState<IFilterParam>(initialFilterParam);
 
   React.useEffect(() => {
-    dispatch(fetchTransactions(filterParams));
+    dispatch(fetchAllVerification(filterParams));
   }, [filterParams]);
 
-  const onRowAction = (action: 'approve' | 'deny', item: ITransaction) => {
+  const onRowAction = (action: 'approve' | 'deny', item: IVerify) => {
     if (action === 'approve') {
-      const approvePayload = {
-        userId: item.userId.id,
-        amount: item.amount,
-      };
-      if (item.type === 'recharge')
-        dispatch(rechargeMoney(item.id, approvePayload, filterParams));
-      else if (item.type === 'withdraw')
-        dispatch(withdrawMoney(item.id, approvePayload, filterParams));
+      dispatch(approveVerification(item.userId.id, filterParams));
     } else if (action === 'deny')
-      dispatch(denyTransaction(item.id, filterParams));
+      dispatch(denyVerification(item.userId.id, filterParams));
   };
 
   const rows = React.useMemo(() => {
     const result: any[] = [];
     if (payload.results && payload.results?.length > 0) {
-      payload.results.forEach((item: ITransaction) =>
+      payload.results.forEach((item: IVerify) =>
         result.push(
           createData(
             item.id,
             item.userId || userData,
-            item.date,
-            item.time,
-            item.type,
             item.status,
-            item.amount,
-            item.balance,
             <Stack direction="row" justifyContent="center">
               <Tooltip title="Chấp nhận">
                 <span>
@@ -226,7 +198,7 @@ const Transaction: React.FC = () => {
           }}
         />
         <Typography sx={{ fontSize: '17px', fontWeight: 600 }}>
-          Giao dịch
+          Xác minh
         </Typography>
         <TableContainer
           component={Paper}
@@ -239,19 +211,7 @@ const Transaction: React.FC = () => {
               <TableRow>
                 <TableCell sx={{ fontWeight: 600 }}>Người dùng</TableCell>
                 <TableCell align="center" sx={{ fontWeight: 600 }}>
-                  Thời gian
-                </TableCell>
-                <TableCell align="center" sx={{ fontWeight: 600 }}>
-                  Loại
-                </TableCell>
-                <TableCell align="center" sx={{ fontWeight: 600 }}>
                   Trạng thái
-                </TableCell>
-                <TableCell align="center" sx={{ fontWeight: 600 }}>
-                  Số tiền
-                </TableCell>
-                <TableCell align="center" sx={{ fontWeight: 600 }}>
-                  Số dư
                 </TableCell>
                 <TableCell align="center" sx={{ fontWeight: 600 }}>
                   Hành động
@@ -275,16 +235,6 @@ const Transaction: React.FC = () => {
                       {row.user?.nickname}
                     </TableCell>
                     <TableCell align="center">
-                      {row.date}, {row.time}
-                    </TableCell>
-                    <TableCell align="center">
-                      <Chip
-                        label={types[row?.type]}
-                        sx={{ textTransform: 'capitalize', width: '100px' }}
-                        color="info"
-                      />
-                    </TableCell>
-                    <TableCell align="center">
                       <Chip
                         color={statusOptions[row.status].color}
                         label={statusOptions[row.status].label}
@@ -295,18 +245,6 @@ const Transaction: React.FC = () => {
                         }}
                         variant="outlined"
                       />
-                    </TableCell>
-                    <TableCell align="center">
-                      {row.total.toLocaleString('en-US', {
-                        style: 'currency',
-                        currency: 'USD',
-                      })}
-                    </TableCell>
-                    <TableCell align="center">
-                      {row.surplus.toLocaleString('en-US', {
-                        style: 'currency',
-                        currency: 'USD',
-                      })}
                     </TableCell>
                     <TableCell align="center">{row.action}</TableCell>
                   </TableRow>
@@ -342,7 +280,7 @@ const Transaction: React.FC = () => {
       </Stack>
     );
   };
-  return <AdminLayout content={_renderMain()} screenTitle="Giao dịch" />;
+  return <AdminLayout content={_renderMain()} screenTitle="Xác minh" />;
 };
 
-export default Transaction;
+export default Verify;

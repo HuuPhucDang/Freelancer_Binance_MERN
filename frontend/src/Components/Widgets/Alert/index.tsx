@@ -53,6 +53,7 @@ const Alert = () => {
       keepMounted
       onClose={() => onClose()}
       TransitionComponent={Transition}
+      sx={{ zIndex: 99999 }}
     >
       <DialogTitle>
         {alert?.type === 'error' ? (

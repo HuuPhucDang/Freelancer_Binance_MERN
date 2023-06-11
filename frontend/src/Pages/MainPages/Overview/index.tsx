@@ -22,7 +22,6 @@ import ArrowCircleRightOutlinedIcon from '@mui/icons-material/ArrowCircleRightOu
 
 // Import local
 import { UserLayout } from '@/Components/DefaultLayout';
-import Assets from '@/Assets';
 import { Sidebar } from '@/Components/LayoutParts';
 import { EditAvatar, EditName } from '@/Components/Popup';
 import { ENUMS, ROUTERS } from '@/Constants';
@@ -115,7 +114,7 @@ const Overview: React.FC = () => {
                 scope="row"
                 sx={{ textAlign: 'center' }}
               >
-                No Coins avaiable
+                No Coins available
               </TableCell>
             </TableRow>
           )}
@@ -326,9 +325,9 @@ const Overview: React.FC = () => {
                           lineHeight: '30px',
                         }}
                       >
-                        0.00 USDT
+                        {userData?.wallet?.balance} USDT
                       </Typography>
-                      <Box
+                      {/* <Box
                         component="img"
                         src={Assets.downArrowIcon}
                         sx={{
@@ -336,15 +335,16 @@ const Overview: React.FC = () => {
                           height: '19px',
                           margin: '0 20px 0 10px',
                         }}
-                      />
+                      /> */}
                       <Typography
                         sx={{
                           fontSize: '16px',
                           fontWeight: 600,
                           lineHeight: '30px',
+                          marginLeft: "30px"
                         }}
                       >
-                        ~~ VND
+                        ~~ {userData?.wallet?.balance} VND
                       </Typography>
                     </Stack>
                   </Box>
@@ -427,7 +427,7 @@ const Overview: React.FC = () => {
                     <Typography sx={{ fontSize: '24px', fontWeight: 600 }}>
                       Thị trường
                     </Typography>
-                    <IconButton>
+                    <IconButton href={ROUTERS.TRANSACTION}>
                       <ArrowCircleRightOutlinedIcon />
                     </IconButton>
                   </Stack>
