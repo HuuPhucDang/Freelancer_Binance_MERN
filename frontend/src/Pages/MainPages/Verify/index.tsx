@@ -12,11 +12,11 @@ import {
 // Import local
 import { UserLayout } from '@/Components/DefaultLayout';
 import { Sidebar } from '@/Components/LayoutParts';
-import { UploadIDCard } from '../../../Components/Popup';
-import { Utils } from '../../../Libs';
-import { ROUTERS } from '../../../Constants';
-import { useTypedDispatch } from '../../../Reducers/store';
-import { UserActions } from '../../../Reducers/Actions';
+import { UploadIDCard } from '@/Components/Popup';
+import { Utils } from '@/Libs';
+import { ROUTERS } from '@/Constants';
+import { useTypedDispatch } from '@/Reducers/store';
+import { UserActions } from '@/Reducers/Actions';
 
 const { getSelf } = UserActions;
 

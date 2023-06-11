@@ -1,6 +1,5 @@
 import React from 'react';
 import _ from 'lodash';
-import { useSelector } from 'react-redux';
 import {
   Box,
   Typography,
@@ -19,20 +18,18 @@ import {
 } from '@mui/material';
 import ModeEditOutlineOutlinedIcon from '@mui/icons-material/ModeEditOutlineOutlined';
 import RemoveRedEyeOutlinedIcon from '@mui/icons-material/RemoveRedEyeOutlined';
+import ArrowCircleRightOutlinedIcon from '@mui/icons-material/ArrowCircleRightOutlined';
+
 // Import local
 import { UserLayout } from '@/Components/DefaultLayout';
 import Assets from '@/Assets';
-import ArrowCircleRightOutlinedIcon from '@mui/icons-material/ArrowCircleRightOutlined';
 import { Sidebar } from '@/Components/LayoutParts';
 import { EditAvatar, EditName } from '@/Components/Popup';
 import { ENUMS, ROUTERS } from '@/Constants';
 import { Utils } from '@/Libs';
 import { UserActions } from '@/Reducers/Actions';
-import {
-  RootState,
-  useTypedDispatch,
-} from '@/Reducers/store';
-import utils from '../../../Libs/utils';
+import { useTypedDispatch } from '@/Reducers/store';
+import utils from '@/Libs/utils';
 
 function createData(
   icon: string,
@@ -173,7 +170,9 @@ const Overview: React.FC = () => {
                       marginBottom="16px"
                     >
                       <Typography sx={{ marginRight: '16px' }}>
-                        {userData ? userData?.nickname : 'Anonymous-User-b5b47p'}
+                        {userData
+                          ? userData?.nickname
+                          : 'Anonymous-User-b5b47p'}
                       </Typography>
                       <IconButton
                         size="small"

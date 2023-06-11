@@ -18,13 +18,14 @@ import GppGoodIcon from '@mui/icons-material/GppGood';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
+
 // Import local
 import { UserLayout } from '@/Components/DefaultLayout';
 import { Sidebar } from '@/Components/LayoutParts';
 import { BankActions, UserActions } from '@/Reducers/Actions';
 import { useTypedDispatch } from '@/Reducers/store';
-import { Utils } from '../../../Libs';
-import Assets from '../../../Assets';
+import { Utils } from '@/Libs';
+import Assets from '@/Assets';
 
 const schema = yup
   .object({

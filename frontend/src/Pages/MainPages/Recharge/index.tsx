@@ -1,11 +1,12 @@
 import React from 'react';
+import _ from 'lodash';
+import { useSelector } from 'react-redux';
 import {
   Box,
   Typography,
   Grid,
   Button,
   Stack,
-  OutlinedInput,
   InputAdornment,
   TextField,
 } from '@mui/material';
@@ -17,10 +18,8 @@ import {
   SystemInfoActions,
   TransactionActions,
   UserActions,
-} from '../../../Reducers/Actions';
-import { RootState, useTypedDispatch } from '../../../Reducers/store';
-import { useSelector } from 'react-redux';
-import _ from 'lodash';
+} from '@/Reducers/Actions';
+import { RootState, useTypedDispatch } from '@/Reducers/store';
 
 const { getSelf } = UserActions;
 const { getSystemInfo } = SystemInfoActions;

@@ -1,3 +1,6 @@
+import React from 'react';
+import { useSelector } from 'react-redux';
+import _ from 'lodash';
 import {
   IconButton,
   Pagination,
@@ -11,14 +14,12 @@ import {
   TableRow,
   Typography,
 } from '@mui/material';
+import SyncLockIcon from '@mui/icons-material/SyncLock';
+
 import { AdminLayout } from '@/Components/DefaultLayout';
-import React from 'react';
 import { ResetPassword } from '@/Components/Popup';
 import { RootState, useTypedDispatch } from '@/Reducers/store';
 import { UserRequestActions } from '@/Reducers/Actions';
-import { useSelector } from 'react-redux';
-import _ from 'lodash';
-import SyncLockIcon from '@mui/icons-material/SyncLock';
 
 interface IUser {
   nickname: string;

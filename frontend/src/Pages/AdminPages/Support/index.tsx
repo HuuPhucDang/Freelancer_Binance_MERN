@@ -1,3 +1,4 @@
+import React from 'react';
 import {
   Avatar,
   Button,
@@ -6,10 +7,10 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
+
 import { AdminLayout } from '@/Components/DefaultLayout';
-import React from 'react';
-import { useTypedDispatch } from '../../../Reducers/store';
-import { ChatBoxActions } from '../../../Reducers/Actions';
+import { useTypedDispatch } from '@/Reducers/store';
+import { ChatBoxActions } from '@/Reducers/Actions';
 
 const users = [
   {

@@ -21,14 +21,17 @@ import TuneIcon from '@mui/icons-material/Tune';
 import VolatilityTable from './VolatilityTable';
 import CoinValueTable from './CoinValueTable';
 import MyInvoiceTable from './MyInvoiceTable';
-import { ROUTERS } from '../../../Constants';
+import { ENUMS, ROUTERS } from '../../../Constants';
 import { useTypedDispatch } from '../../../Reducers/store';
+import { Utils } from '../../../Libs';
 
 const volatilityHeaderHeight = 33;
 const centerVolatilityRow = 31;
 const volatilityItemHeight = 19;
 const partElementHeight = 200;
-const socket = io('http://222.255.117.249:3215/', { transports : ['websocket'] });
+const socket = io('http://222.255.117.249:3215/', {
+  transports: ['websocket'],
+});
 
 const Transaction: React.FC = () => {
   // Constructors
@@ -38,6 +41,8 @@ const Transaction: React.FC = () => {
   const volatilityRef = React.useRef<HTMLDivElement | null>(null);
   const [volatilityItemsPerCategory, setVolatilityItemsPerCategory] =
     React.useState<number>(0);
+
+  const userType = Utils.getUserData()?.userType?.type;
 
   React.useEffect(() => {
     const handleWindowSize = () => {
@@ -67,6 +72,20 @@ const Transaction: React.FC = () => {
       window.removeEventListener('resize', handleWindowSize);
     };
   }, []);
+
+  console.log(Utils.getUserData());
+
+  const validateUserType = (mark: 0 | 1 | 2 | 3) => {
+    const levels = [
+      ENUMS.EUserType.BEGINNER,
+      ENUMS.EUserType.INTERMEDIATE,
+      ENUMS.EUserType.ADVANCE,
+      ENUMS.EUserType.PROFESSINAL,
+    ];
+    const findIndex = levels.findIndex((item: string) => item === userType);
+    const result = findIndex === mark;
+    return result;
+  };
 
   const _renderLeftSection = () => {
     return (
@@ -362,8 +381,10 @@ const Transaction: React.FC = () => {
                               paddingX: '0',
                               minWidth: 'unset',
                             }}
+                            disabled={!validateUserType(0)}
+                            fullWidth
                           >
-                            Moonbot
+                            00:15:00
                           </Button>
                         </Grid>
                         <Grid item xs={6} sm={3} md={3}>
@@ -380,8 +401,9 @@ const Transaction: React.FC = () => {
                               minWidth: 'unset',
                             }}
                             fullWidth
+                            disabled={!validateUserType(1)}
                           >
-                            Moonbot
+                            00:30:00
                           </Button>
                         </Grid>
                         <Grid item xs={6} sm={3} md={3}>
@@ -398,8 +420,9 @@ const Transaction: React.FC = () => {
                               minWidth: 'unset',
                             }}
                             fullWidth
+                            disabled={!validateUserType(2)}
                           >
-                            Moonbot
+                            01:00:00
                           </Button>
                         </Grid>
                         <Grid item xs={6} sm={3} md={3}>
@@ -416,8 +439,9 @@ const Transaction: React.FC = () => {
                               minWidth: 'unset',
                             }}
                             fullWidth
+                            disabled={!validateUserType(3)}
                           >
-                            Moonbot
+                            06:00:00
                           </Button>
                         </Grid>
                       </Grid>
@@ -614,8 +638,10 @@ const Transaction: React.FC = () => {
                               width: '100%',
                               minWidth: 'unset',
                             }}
+                            fullWidth
+                            disabled={!validateUserType(0)}
                           >
-                            Moonbot
+                            00:15:00
                           </Button>
                         </Grid>
                         <Grid item xs={6} sm={3} md={3}>
@@ -631,8 +657,10 @@ const Transaction: React.FC = () => {
                               width: '100%',
                               minWidth: 'unset',
                             }}
+                            fullWidth
+                            disabled={!validateUserType(1)}
                           >
-                            Moonbot
+                            00:30:00
                           </Button>
                         </Grid>
                         <Grid item xs={6} sm={3} md={3}>
@@ -648,8 +676,10 @@ const Transaction: React.FC = () => {
                               width: '100%',
                               minWidth: 'unset',
                             }}
+                            fullWidth
+                            disabled={!validateUserType(2)}
                           >
-                            Moonbot
+                            01:00:00
                           </Button>
                         </Grid>
                         <Grid item xs={6} sm={3} md={3}>
@@ -665,8 +695,10 @@ const Transaction: React.FC = () => {
                               width: '100%',
                               minWidth: 'unset',
                             }}
+                            fullWidth
+                            disabled={!validateUserType(3)}
                           >
-                            Moonbot
+                            06:00:00
                           </Button>
                         </Grid>
                       </Grid>

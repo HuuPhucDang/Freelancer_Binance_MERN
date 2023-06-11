@@ -17,7 +17,7 @@ interface SectionProps {
   screenTitle?: string;
 }
 
-const { setLogged } = AuthActions;
+const { setLogged, logout } = AuthActions;
 
 const UserLayout: React.FC<SectionProps> = (props: SectionProps) => {
   // Constructors
@@ -42,13 +42,11 @@ const UserLayout: React.FC<SectionProps> = (props: SectionProps) => {
 
   React.useEffect(() => {
     const isAuthRouters = authRoutes.includes(pathname);
-    if (!isLogged && isAuthRouters && token && userData) {
-      dispatch(setLogged());
+    if (isAuthRouters && (!token || !userData)) {
+      dispatch(logout());
+      Utils.clearCookies();
+      Utils.redirect(ROUTERS.SIGN_IN);
     }
-    // else {
-    //   utils.redirect(ROUTERS.SIGN_IN);
-    //   utils.clearCookies();
-    // }
     window.scrollTo({ top: 0, left: 0 });
   }, [pathname]);
 

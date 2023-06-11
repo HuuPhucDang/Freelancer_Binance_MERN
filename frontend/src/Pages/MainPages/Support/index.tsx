@@ -8,9 +8,10 @@ import {
   TextField,
   Divider,
 } from '@mui/material';
+
 // Import local
 import { UserLayout } from '@/Components/DefaultLayout';
-import { Sidebar } from '../../../Components/LayoutParts';
+import { Sidebar } from '@/Components/LayoutParts';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
 
 const Support: React.FC = () => {

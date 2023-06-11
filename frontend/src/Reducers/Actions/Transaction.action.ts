@@ -207,7 +207,7 @@ const cancelTransactionSuccess = (payload: any) => {
   };
 };
 
-const cancelTransaction = (id: string) => {
+const cancelTransaction = (id: string, filterParams: any) => {
   return async (dispatch: any) => {
     dispatch(setTransactionLoading(true));
     await API.cancelTransaction(id)
@@ -215,7 +215,7 @@ const cancelTransaction = (id: string) => {
         const results = await Utils.resolveResponse(response);
         if (!results) await dispatch(cancelTransactionFail());
         else {
-          dispatch(fetchTransactions({}));
+          dispatch(fetchTransactions(filterParams));
           dispatch(cancelTransactionSuccess(results));
         }
       })

@@ -1,3 +1,8 @@
+import React from 'react';
+import { useSelector } from 'react-redux';
+import _ from 'lodash';
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
+import DoDisturbIcon from '@mui/icons-material/DoDisturb';
 import {
   Chip,
   IconButton,
@@ -13,17 +18,14 @@ import {
   Tooltip,
   Typography,
 } from '@mui/material';
+
 import { AdminLayout } from '@/Components/DefaultLayout';
-import React from 'react';
 import { ResetPassword } from '@/Components/Popup';
 import { RootState, useTypedDispatch } from '@/Reducers/store';
 import { TransactionActions } from '@/Reducers/Actions';
-import { useSelector } from 'react-redux';
-import _ from 'lodash';
-import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
-import DoDisturbIcon from '@mui/icons-material/DoDisturb';
 import { ENUMS } from '@/Constants';
 import { Utils } from '@/Libs';
+
 interface IFilterParam {
   type: string;
   status: string;
@@ -128,13 +130,8 @@ const types = {
   bonus: 'Thưởng',
 };
 
-const {
-  fetchTransactions,
-  resetTransactionReducer,
-  rechargeMoney,
-  denyTransaction,
-  withdrawMoney,
-} = TransactionActions;
+const { fetchTransactions, rechargeMoney, denyTransaction, withdrawMoney } =
+  TransactionActions;
 
 const Transaction: React.FC = () => {
   const dispatch = useTypedDispatch();
@@ -164,7 +161,8 @@ const Transaction: React.FC = () => {
         dispatch(rechargeMoney(item.id, approvePayload, filterParams));
       else if (item.type === 'withdraw')
         dispatch(withdrawMoney(item.id, approvePayload, filterParams));
-    } else if (action === 'deny') dispatch(denyTransaction(item.id, filterParams));
+    } else if (action === 'deny')
+      dispatch(denyTransaction(item.id, filterParams));
   };
 
   const rows = React.useMemo(() => {
@@ -289,7 +287,11 @@ const Transaction: React.FC = () => {
                     <Chip
                       color={statusOptions[row.status].color}
                       label={statusOptions[row.status].label}
-                      sx={{ width: '130px', borderRadius: '5px', fontWeight: 600 }}
+                      sx={{
+                        width: '130px',
+                        borderRadius: '5px',
+                        fontWeight: 600,
+                      }}
                       variant="outlined"
                     />
                   </TableCell>

@@ -1,24 +1,23 @@
-import {
-  Box,
-  Button,
-  FormControl,
-  Grid,
-  InputLabel,
-  OutlinedInput,
-  Stack,
-  TextField,
-  Typography,
-} from '@mui/material';
-import { AdminLayout } from '../../../Components/DefaultLayout';
-import Assets from '../../../Assets';
-import { RootState, useTypedDispatch } from '../../../Reducers/store';
 import React from 'react';
-import { SystemInfoActions } from '../../../Reducers/Actions';
 import { useSelector } from 'react-redux';
 import _ from 'lodash';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
+
+import {
+  Box,
+  Button,
+  FormControl,
+  Grid,
+  Stack,
+  TextField,
+  Typography,
+} from '@mui/material';
+import { AdminLayout } from '@/Components/DefaultLayout';
+import Assets from '@/Assets';
+import { RootState, useTypedDispatch } from '@/Reducers/store';
+import { SystemInfoActions } from '@/Reducers/Actions';
 
 const schema = yup
   .object({
@@ -45,7 +44,7 @@ const schema = yup
   .required();
 type FormData = yup.InferType<typeof schema>;
 
-const { getSystemInfo, resetSystemInfoReducer, updateSystemInfo } =
+const { getSystemInfo, updateSystemInfo } =
   SystemInfoActions;
 
 const BankInformation = () => {

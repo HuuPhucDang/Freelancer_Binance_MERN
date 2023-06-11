@@ -1,4 +1,6 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
+import _ from 'lodash';
 import {
   Grid,
   Button,
@@ -7,20 +9,18 @@ import {
   InputLabel,
   Select,
   Typography,
-  OutlinedInput,
   InputAdornment,
   Box,
   MenuItem,
   TextField,
 } from '@mui/material';
+
 // Import local
 import { UserLayout } from '@/Components/DefaultLayout';
 import { Sidebar } from '@/Components/LayoutParts';
-import { RootState, useTypedDispatch } from '../../../Reducers/store';
-import { TransactionActions, UserActions } from '../../../Reducers/Actions';
-import { Utils } from '../../../Libs';
-import { useSelector } from 'react-redux';
-import _ from 'lodash';
+import { RootState, useTypedDispatch } from '@/Reducers/store';
+import { TransactionActions, UserActions } from '@/Reducers/Actions';
+import { Utils } from '@/Libs';
 
 const { getSelf } = UserActions;
 const { requestWithdraw, resetTransactionReducer } = TransactionActions;

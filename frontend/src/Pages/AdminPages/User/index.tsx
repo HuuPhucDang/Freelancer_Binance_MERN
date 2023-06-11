@@ -1,14 +1,9 @@
+import React from 'react';
 import {
-  Button,
   Chip,
-  FormControl,
   IconButton,
-  InputLabel,
-  MenuItem,
-  OutlinedInput,
   Pagination,
   Paper,
-  Select,
   Stack,
   Table,
   TableBody,
@@ -18,13 +13,13 @@ import {
   TableRow,
   Typography,
 } from '@mui/material';
-import { AdminLayout } from '@/Components/DefaultLayout';
-import React from 'react';
-import RemoveRedEyeOutlinedIcon from '@mui/icons-material/RemoveRedEyeOutlined';
-import { RootState, useTypedDispatch } from '../../../Reducers/store';
 import { useSelector } from 'react-redux';
 import _ from 'lodash';
-import { UserActions } from '../../../Reducers/Actions';
+
+import { AdminLayout } from '@/Components/DefaultLayout';
+import RemoveRedEyeOutlinedIcon from '@mui/icons-material/RemoveRedEyeOutlined';
+import { RootState, useTypedDispatch } from '@/Reducers/store';
+import { UserActions } from '@/Reducers/Actions';
 
 interface IUser {
   nickname: string;
