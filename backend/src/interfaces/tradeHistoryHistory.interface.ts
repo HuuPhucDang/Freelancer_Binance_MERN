@@ -37,3 +37,11 @@ export interface ITradeHistory {
 export interface ITradeHistoryDoc extends ITradeHistory, Document {}
 
 export interface ITradeHistoryModel extends Model<ITradeHistoryDoc> {}
+
+export type CreateNewTradeBody = {
+  type: ETradeType;
+  betAmount: number;
+  betPrice: number;
+  symbol: string;
+  time: string;
+};

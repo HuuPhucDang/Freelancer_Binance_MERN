@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 import _ from "lodash";
 import User from "../../models/user.model";
 import UserType from "../../models/userType.model";
+import Wallet from "../../models/wallet.model";
 import ApiError from "../../helper/errors/ApiError";
 import { IOptions, QueryResult } from "../../helper/paginate/paginate";
 import {
@@ -60,7 +61,11 @@ export const registerUser = async (
     userId: user.id,
     probability: 0.1,
   });
+  const wallet = await Wallet.create({
+    balance: 0,
+  });
   user.userType = userType.id;
+  user.wallet = wallet.id;
   await user.save();
   return user;
 };

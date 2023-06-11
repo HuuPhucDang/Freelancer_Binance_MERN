@@ -1,5 +1,6 @@
 import { Socket } from "socket.io";
 import fetch from "node-fetch";
+import mongoose from "mongoose";
 import {
   ETradeType,
   ETradeResult,
@@ -8,9 +9,11 @@ import _ from "lodash";
 import Coin from "../models/coin.model";
 import TradeHistory from "../models/tradeHistory.model";
 import Wallet from "../models/wallet.model";
+import UserType from "../models/userType.model";
 
 const KLINE_URL = `https://api.binance.com/api/v3/klines?`;
 const AGGREGATE_URL = `https://api.binance.com/api/v3/aggTrades?`;
+const GET_TICKER_24H = `https://api.binance.com/api/v3/ticker/24hr?`;
 
 // symbol=BTCUSDT&interval=1h&limit=
 const checkResults = (
@@ -48,41 +51,79 @@ const intiChartSocket = (socket: Socket) => {
     const allCoins = await Coin.find().sort({ price: -1 });
     callback(allCoins);
   });
+  socket.on("getLatestCoinWithSymbol", async (data: any, callback: any) => {
+    const coin = await Coin.findOne({ symbol: data?.symbol });
+    callback(coin);
+  });
+  socket.on("getCoin24h", async (data: any, callback: any) => {
+    const currentCoin = await Coin.findOne({ symbol: data?.symbol });
+    if (currentCoin) {
+      const fetchUrl = `${GET_TICKER_24H}symbol=${data?.symbol}`;
+      const response = await fetch(fetchUrl);
+      const list: any = await response.json();
+      const newPrice = Number(list?.lastPrice) + currentCoin.intervention;
+      const newHighestPrice =
+        Number(list?.highPrice) < newPrice ? newPrice : Number(list?.highPrice);
+      const resolveList = {
+        ...list,
+        lastPrice: newPrice.toFixed(4),
+        highPrice: newHighestPrice.toFixed(4),
+      };
+      callback(resolveList);
+    }
+  });
   socket.on("checkTradeResult", async (data: any, callback: any) => {
-    const trade = await TradeHistory.findById(data?.tradeId);
-    if (trade) {
-      const currentCoin = await Coin.findOne({ symbol: trade.symbol });
-      if (currentCoin) {
-        trade.result = checkResults(
-          trade.betPrice,
-          currentCoin.price,
-          trade.type
-        );
-        await trade.save();
-        const wallet = await Wallet.findOne({ userId: trade.userId });
-        if (wallet) {
-          wallet.balance =
-            trade.result === ETradeResult.LOSE
-              ? wallet.balance - trade.betAmount
-              : wallet.balance + trade.betAmount;
-          await wallet.save();
-          callback({
-            trade,
-            wallet,
-          });
+    const allPendingTrade = await TradeHistory.find({
+      userId: new mongoose.Types.ObjectId(data?.userId),
+      result: ETradeResult.PENDING,
+    });
+    const wallet = await Wallet.findOne({
+      userId: new mongoose.Types.ObjectId(data?.userId),
+    });
+    const userType = await UserType.findOne({
+      userId: new mongoose.Types.ObjectId(data?.userId),
+    });
+    for (const trade of allPendingTrade) {
+      if (trade && userType) {
+        const currentCoin = await Coin.findOne({ symbol: trade.symbol });
+        if (currentCoin) {
+          trade.result = checkResults(
+            trade.betPrice,
+            currentCoin.price,
+            trade.type
+          );
+          await trade.save();
+          if (wallet) {
+            wallet.balance =
+              trade.result === ETradeResult.LOSE
+                ? wallet.balance - trade.betAmount * userType.probability
+                : wallet.balance + trade.betAmount * userType.probability;
+            await wallet.save();
+          }
         }
       }
     }
+    const allSavedTrade = await TradeHistory.find({
+      userId: new mongoose.Types.ObjectId(data?.userId),
+    });
+    callback({
+      trades: allSavedTrade,
+      wallet,
+    });
   });
   socket.on("getAggregateTradeList", async (data: any, callback: any) => {
     const coin = await Coin.findOne({ symbol: data?.symbol });
     if (coin) {
-      const fetchUrl = `${AGGREGATE_URL}symbol=${data?.symbol}&limit=1`;
+      const fetchUrl = `${AGGREGATE_URL}symbol=${data?.symbol}&limit=${
+        data?.limit || 200
+      }`;
       const response = await fetch(fetchUrl);
       const list: any = await response.json();
-      const resolveResult = list[0];
-      resolveResult["p"] = parseFloat(resolveResult["p"]) + coin.intervention;
-      resolveResult["q"] = parseFloat(resolveResult["q"]);
+      const resolveResult = _.map(list, (el) => ({
+        ...el,
+        p: Number((parseFloat(el?.p) + coin.intervention).toFixed(4)),
+        q: parseFloat(el?.q),
+      }));
       callback(resolveResult);
     }
   });
