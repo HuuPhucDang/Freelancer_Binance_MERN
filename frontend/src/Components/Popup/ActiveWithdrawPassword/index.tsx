@@ -47,6 +47,7 @@ const ActiveWithdrawPassword: React.FC<IProps> = ({
     handleSubmit,
     formState: { errors },
     control,
+    setValue,
     reset,
   } = useForm<FormData>({
     resolver: yupResolver(schema),
@@ -54,6 +55,8 @@ const ActiveWithdrawPassword: React.FC<IProps> = ({
 
   React.useEffect(() => {
     if (isSubmitWithdrawPasswordSuccess) {
+      setValue('password', '');
+      setValue('withdrawPassword', '');
       reset();
       onClose();
       dispatch(resetSecurityReducer());

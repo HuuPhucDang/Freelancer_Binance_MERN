@@ -61,6 +61,12 @@ const BankInformation = () => {
     setValue,
   } = useForm<FormData>({
     resolver: yupResolver(schema),
+    defaultValues: {
+      accountNumber: '',
+      bankName: '',
+      fullname: '',
+      message: '',
+    }
   });
   const QRCode: FileList | null = watch('QRCode') as FileList | null;
   const fullname: string = watch('fullname') as string;
@@ -119,7 +125,6 @@ const BankInformation = () => {
                           background: '#ffffff',
                         },
                       }}
-                      defaultValue={fullname}
                       InputProps={{
                         sx: {
                           backgroundColor: 'background.chargeInput',
@@ -142,7 +147,6 @@ const BankInformation = () => {
                       variant="outlined"
                       // size="small"
                       label="Số tài khoản"
-                      defaultValue={accountNumber}
                       sx={{
                         ' .MuiInputBase-root': {
                           background: '#ffffff',
@@ -169,7 +173,6 @@ const BankInformation = () => {
                       hiddenLabel
                       variant="outlined"
                       // size="small"
-                      defaultValue={bankName}
                       label="Ngân hàng"
                       sx={{
                         ' .MuiInputBase-root': {
@@ -198,7 +201,6 @@ const BankInformation = () => {
                       variant="outlined"
                       // size="small"
                       label="Nội dung"
-                      defaultValue={message}
                       sx={{
                         ' .MuiInputBase-root': {
                           background: '#ffffff',

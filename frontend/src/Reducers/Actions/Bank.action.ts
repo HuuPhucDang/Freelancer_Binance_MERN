@@ -1,6 +1,7 @@
 import { ACTION_TYPES } from '@/Constants';
 import API from '@/Apis';
 import { Utils } from '@libs';
+import { pushNotification } from '../../Libs/utils/Widget.utils';
 
 // SINGLE ACTIONS
 const setBankLoading = (payload: boolean) => {
@@ -48,6 +49,7 @@ const activeBankCard = (payload: {
             message: string;
             payload: any;
           } = results as { status: boolean; message: string; payload: any };
+          pushNotification({ type: 'success', message: resolveResult.message });
           Utils.setUserData(resolveResult.payload);
           dispatch(activeBankCardSuccess(results));
         }

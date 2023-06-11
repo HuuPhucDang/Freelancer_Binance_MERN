@@ -1,6 +1,7 @@
 import { ACTION_TYPES } from '@/Constants';
 import API from '@/Apis';
 import { Utils } from '@libs';
+import { pushNotification } from '../../Libs/utils/Widget.utils';
 
 // SINGLE ACTIONS
 const setVerificationLoading = (payload: boolean) => {
@@ -43,6 +44,7 @@ const uploadCardsId = (payload: FormData) => {
             message: string;
             payload: any;
           } = results as { status: boolean; message: string; payload: any };
+          pushNotification({ type: 'success', message: resolveResult.message });
           Utils.setUserData(resolveResult.payload);
           dispatch(uploadCardsIdSuccess(results));
         }
@@ -75,7 +77,12 @@ const fetchAllVerification = (payload: any) => {
         const results = await Utils.resolveResponse(response);
         if (!results) await dispatch(fetchAllVerificationFail());
         else {
-          dispatch(fetchAllVerificationSuccess(results));
+          const resolveResult: {
+            status: boolean;
+            message: string;
+            payload: any;
+          } = results as { status: boolean; message: string; payload: any };
+          dispatch(fetchAllVerificationSuccess(resolveResult.payload));
         }
       })
       .catch(async (error) => {
@@ -98,7 +105,7 @@ const approveVerificationSuccess = (payload: any) => {
   };
 };
 
-const approveVerification = (id: string) => {
+const approveVerification = (id: string, filterParams: any) => {
   return async (dispatch: any) => {
     dispatch(setVerificationLoading(true));
     await API.approveVerification(id)
@@ -106,6 +113,13 @@ const approveVerification = (id: string) => {
         const results = await Utils.resolveResponse(response);
         if (!results) await dispatch(approveVerificationFail());
         else {
+          const resolveResult: {
+            status: boolean;
+            message: string;
+            payload: any;
+          } = results as { status: boolean; message: string; payload: any };
+          pushNotification({ type: 'success', message: resolveResult.message });
+          dispatch(fetchAllVerification(filterParams));
           dispatch(approveVerificationSuccess(results));
         }
       })
@@ -129,7 +143,7 @@ const denyVerificationSuccess = (payload: any) => {
   };
 };
 
-const denyVerification = (id: string) => {
+const denyVerification = (id: string, filterParams: any) => {
   return async (dispatch: any) => {
     dispatch(setVerificationLoading(true));
     await API.denyVerification(id)
@@ -137,6 +151,13 @@ const denyVerification = (id: string) => {
         const results = await Utils.resolveResponse(response);
         if (!results) await dispatch(denyVerificationFail());
         else {
+          const resolveResult: {
+            status: boolean;
+            message: string;
+            payload: any;
+          } = results as { status: boolean; message: string; payload: any };
+          pushNotification({ type: 'success', message: resolveResult.message });
+          dispatch(fetchAllVerification(filterParams));
           dispatch(denyVerificationSuccess(results));
         }
       })

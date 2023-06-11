@@ -56,6 +56,7 @@ const ChangeWithdrawPassword: React.FC<IProps> = ({
     handleSubmit,
     formState: { errors },
     control,
+    setValue,
     reset,
   } = useForm<FormData>({
     resolver: yupResolver(schema),
@@ -63,6 +64,10 @@ const ChangeWithdrawPassword: React.FC<IProps> = ({
 
   React.useEffect(() => {
     if (isSubmitWithdrawPasswordSuccess) {
+      setValue('password', '');
+      setValue('email', '');
+      setValue('phonenumber', '');
+      setValue('newWithdrawPassword', '');
       reset();
       onClose();
       dispatch(resetSecurityReducer());
@@ -109,6 +114,7 @@ const ChangeWithdrawPassword: React.FC<IProps> = ({
                 variant="outlined"
                 size="small"
                 placeholder="Phone number *"
+                autoComplete='phone'
                 sx={{
                   marginTop: '10px',
                   color: 'text.secondary',

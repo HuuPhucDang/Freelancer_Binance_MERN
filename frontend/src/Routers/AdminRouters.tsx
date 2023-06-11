@@ -29,6 +29,10 @@ const AdminRouters = {
       path: ROUTERS.INTERVENTION,
       element: <AdminPages.Intervention />,
     },
+    {
+      path: ROUTERS.ADMIN_VERIFY,
+      element: <AdminPages.Verify />,
+    },
   ],
 };
 

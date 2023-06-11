@@ -25,6 +25,8 @@ const { getSelf } = UserActions;
 const { getSystemInfo } = SystemInfoActions;
 const { requestRecharge, resetTransactionReducer } = TransactionActions;
 
+const amountRatio = 0.000002;
+
 const Recharge: React.FC = () => {
   const dispatch = useTypedDispatch();
   const systemInfo = useSelector((state: RootState) =>
@@ -199,9 +201,10 @@ const Recharge: React.FC = () => {
                                 fontSize: '12px',
                                 marginLeft: '16px',
                                 color: 'text.primary',
+                                userSelect: 'none'
                               }}
                             >
-                              Tự quy đổi thành: USDT
+                              ~ {amount * amountRatio} USDT
                             </Typography>
                           </InputAdornment>
                         ),
@@ -232,7 +235,12 @@ const Recharge: React.FC = () => {
                 <Box
                   component="img"
                   src={systemInfo?.QRCode || Assets.qrImage}
-                  sx={{ width: '100%', height: 'auto', objectFit: 'contain' }}
+                  sx={{
+                    width: '100%',
+                    height: 'auto',
+                    maxWidth: '300px',
+                    objectFit: 'contain',
+                  }}
                 />
               </Grid>
             </Grid>

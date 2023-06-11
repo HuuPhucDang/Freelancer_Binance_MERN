@@ -20,13 +20,14 @@ import { AdminLayout } from '@/Components/DefaultLayout';
 import RemoveRedEyeOutlinedIcon from '@mui/icons-material/RemoveRedEyeOutlined';
 import { RootState, useTypedDispatch } from '@/Reducers/store';
 import { UserActions } from '@/Reducers/Actions';
+import { UserDetails } from '@/Components/Popup';
 
 interface IUser {
   nickname: string;
 }
 
 interface IUser {
-  id: number;
+  id: string;
   avatar: string;
   nicknameE: string;
   ownCode: string;
@@ -92,6 +93,7 @@ const Request = () => {
   const payload: IPayload = useSelector((state: RootState) =>
     _.get(state.USER, 'payload')
   );
+  const [currentUser, setCurrentUser] = React.useState<string>('');
 
   const [filterParams, setFilterParams] =
     React.useState<IFilterParam>(initialFilterParams);
@@ -110,7 +112,11 @@ const Request = () => {
             item.username,
             item.role,
             item.status,
-            <IconButton size="small" onClick={() => {}}>
+            <IconButton
+              size="small"
+              onClick={() => item.role !== 'admin' && setCurrentUser(item.id)}
+              disabled={item.role === 'admin'}
+            >
               <RemoveRedEyeOutlinedIcon />
             </IconButton>
           )
@@ -123,6 +129,11 @@ const Request = () => {
   const _renderMain = () => {
     return (
       <Stack sx={{ padding: '20px' }} direction="column">
+        <UserDetails
+          open={Boolean(currentUser)}
+          onClose={() => setCurrentUser('')}
+          currentUser={currentUser}
+        />
         <Typography sx={{ fontSize: '17px', fontWeight: 600 }}>
           Người dùng
         </Typography>
@@ -140,51 +151,67 @@ const Request = () => {
                 <TableCell align="center" sx={{ fontWeight: 600 }}>
                   Trạng thái
                 </TableCell>
+                <TableCell align="center" sx={{ fontWeight: 600 }}>
+                  Hành động
+                </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {rows.map((row) => (
+              {rows.length > 0 &&
+                rows.map((row: any, index: number) => (
+                  <TableRow
+                    key={`row-${index}`}
+                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                  >
+                    <TableCell component="th" scope="row">
+                      {row.nickname}
+                    </TableCell>
+                    <TableCell align="left">{row.username}</TableCell>
+                    <TableCell
+                      align="center"
+                      sx={{ textTransform: 'capitalize' }}
+                    >
+                      {row.role}
+                    </TableCell>
+                    <TableCell align="center">
+                      <Chip
+                        color={statusOptions[row.status].color}
+                        label={statusOptions[row.status].label}
+                        sx={{ width: '130px', borderRadius: '5px' }}
+                        variant="outlined"
+                      />
+                    </TableCell>
+                    <TableCell align="center">{row.action}</TableCell>
+                  </TableRow>
+                ))}
+              {rows.length === 0 && (
                 <TableRow
-                  key={row.name}
                   sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                 >
                   <TableCell component="th" scope="row">
-                    {row.nickname}
-                  </TableCell>
-                  <TableCell align="left">{row.username}</TableCell>
-                  <TableCell
-                    align="center"
-                    sx={{ textTransform: 'capitalize' }}
-                  >
-                    {row.role}
-                  </TableCell>
-                  <TableCell align="center">
-                    <Chip
-                      color={statusOptions[row.status].color}
-                      label={statusOptions[row.status].label}
-                      sx={{ width: '130px', borderRadius: '5px' }}
-                      variant="outlined"
-                    />
+                    Không có dữ liệu
                   </TableCell>
                 </TableRow>
-              ))}
+              )}
             </TableBody>
           </Table>
         </TableContainer>
-        <Stack
-          direction="row"
-          justifyContent="flex-end"
-          sx={{ marginTop: '15px' }}
-        >
-          <Pagination
-            count={payload.totalPages}
-            page={payload.page}
-            onChange={(_event: any, newPage) =>
-              setFilterParams({ ...filterParams, page: newPage })
-            }
-            shape="rounded"
-          />
-        </Stack>
+        {payload.totalPages > 0 && (
+          <Stack
+            direction="row"
+            justifyContent="flex-end"
+            sx={{ marginTop: '15px' }}
+          >
+            <Pagination
+              count={payload.totalPages}
+              page={payload.page}
+              onChange={(_event: any, newPage) =>
+                setFilterParams({ ...filterParams, page: newPage })
+              }
+              shape="rounded"
+            />
+          </Stack>
+        )}
       </Stack>
     );
   };

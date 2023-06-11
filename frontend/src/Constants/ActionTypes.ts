@@ -81,6 +81,8 @@ const _asyncActions: ActionTypes = generateSyncActions([
   'FETCH_ALL_VERIFICATION',
   'APPROVE_VERIFICATION',
   'DENY_VERIFICATION',
+  'GET_USER_BY_ID',
+  'UPDATE_USER_TYPE',
 ]);
 
 const _singleActions: ActionTypes = {

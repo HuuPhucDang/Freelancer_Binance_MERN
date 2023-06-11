@@ -121,6 +121,23 @@ export default (
         isUpdatePasswordSuccess: false,
       };
 
+    case ACTION_TYPES.GET_USER_BY_ID_SUCCESS:
+      return {
+        ...state,
+        requestIsSuccess: true,
+        requestHasError: false,
+        isActionLoading: false,
+        details: payload,
+      };
+    case ACTION_TYPES.GET_USER_BY_ID_FAILURE:
+      return {
+        ...state,
+        requestHasError: true,
+        requestIsSuccess: false,
+        isActionLoading: false,
+        details: {},
+      };
+
     default:
       return state;
   }
