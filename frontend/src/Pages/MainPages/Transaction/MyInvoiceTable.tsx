@@ -145,7 +145,7 @@ const MyInvoiceTable = () => {
                 padding: '4px 0',
               }}
             >
-              Số lượng (EDU)
+              Số lượng
             </TableCell>
             <TableCell
               align="right"
@@ -155,7 +155,7 @@ const MyInvoiceTable = () => {
                 padding: '4px 0',
               }}
             >
-              Tổng
+              Thời gian
             </TableCell>
           </TableRow>
         </TableHead>

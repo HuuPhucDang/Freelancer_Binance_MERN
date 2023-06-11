@@ -9,43 +9,107 @@ import {
   TableHead,
   Link,
 } from '@mui/material';
+import _ from 'lodash';
 import React from 'react';
-
-function createData(
-  price: number,
-  quantity: number,
-  total: number,
-  direction: string,
-  time: string
-) {
-  return { price, quantity, total, direction, time };
-}
-
-const downItem = createData(2634.56, 0.08648, 86.8989038, 'down', '11:04:51');
-
-const upItem = createData(2623.66, 0.00473, 1.136468, 'up', '11:04:50');
-
-const centerRow = createData(2623.66, 0.09475, 82.5888, 'more', '11:04:51');
-
+import { Utils } from '@/Libs';
 interface IProps {
-  itemsPerCategory: number;
+  symbol: string;
 }
 
-const VolatilityTable: React.FC<IProps> = ({ itemsPerCategory }) => {
-  const [resolveRows, setResolveRows] = React.useState<any[]>([]);
+const VolatilityTable: React.FC<IProps> = ({ symbol }: IProps) => {
+  const [latestRow, setLatestRow] = React.useState<any>({});
+  const [upRows, setUpRows] = React.useState<any[]>([]);
+  const [downRows, setDownRows] = React.useState<any[]>([]);
+
+  const getAggregateData = (data: any) => {
+    setDownRows((oldData) => {
+      const filteredData = _.filter(data, ['m', false]);
+      const newData = [...oldData, ...filteredData];
+      return newData.length > 80 ? newData.slice(-60) : newData;
+    });
+    setUpRows((oldData) => {
+      const filteredData = _.filter(data, ['m', true]);
+      const newData = [...oldData, ...filteredData];
+      return newData.length > 80 ? newData.slice(-60) : newData;
+    });
+    setLatestRow(_.last(data));
+  };
 
   React.useEffect(() => {
-    if (itemsPerCategory) {
-      const resolveDownItems = [];
-      const resolveUpItems = [];
-      for (let i = 0; i < itemsPerCategory; i++) {
-        resolveDownItems.push(downItem);
-        resolveUpItems.push(upItem);
-      }
-      const result = [...resolveDownItems, centerRow, ...resolveUpItems];
-      setResolveRows(result);
-    }
-  }, [itemsPerCategory]);
+    Utils.WebSocket.emit('getAggregateTradeList', { symbol }, getAggregateData);
+    const intervalAggeList = setInterval(() => {
+      Utils.WebSocket.emit(
+        'getAggregateTradeList',
+        { symbol, limit: 1 },
+        (data: any) => {
+          getAggregateData(data);
+        }
+      );
+    }, 3000);
+    return () => {
+      clearInterval(intervalAggeList);
+    };
+  }, [symbol]);
+
+  const randomPage = (min: number, max: number) => {
+    return Math.floor(Math.random() * (max - min + 1) + min);
+  };
+
+  const _renderRows = (isUp: boolean) => {
+    const sortedList = isUp ? upRows : downRows;
+    const page = randomPage(0, 1);
+
+    const randomSortList = _.slice(sortedList, page * 20, page * 20 + 20);
+    return randomSortList.map((row) => {
+      const total = row?.p * row?.q;
+      return (
+        <TableRow
+          key={`${row?.E}-${row?.q}-${row?.T}-${row?.a}`}
+          sx={{
+            '& .MuiTableCell-root': { border: 0 },
+          }}
+        >
+          <TableCell component="th" scope="row" sx={{ p: 0 }}>
+            <Typography
+              sx={{
+                fontSize: 9,
+                lineHeight: '11px',
+                color: isUp ? '#408827' : '#F21616',
+                p: '4px 0 4px 8px',
+                textAlign: 'left',
+              }}
+            >
+              {row?.p}
+            </Typography>
+          </TableCell>
+          <TableCell align="right" sx={{ p: 0 }}>
+            <Typography
+              sx={{
+                fontSize: 9,
+                lineHeight: '11px',
+                color: '#816A6A',
+                p: '4px',
+              }}
+            >
+              {row?.q}
+            </Typography>
+          </TableCell>
+          <TableCell align="right" sx={{ p: 0 }}>
+            <Typography
+              sx={{
+                fontSize: 9,
+                lineHeight: '11px',
+                color: '#816A6A',
+                padding: '4px 0',
+              }}
+            >
+              {total.toFixed(4)}
+            </Typography>
+          </TableCell>
+        </TableRow>
+      );
+    });
+  };
 
   return (
     <TableContainer
@@ -107,98 +171,48 @@ const VolatilityTable: React.FC<IProps> = ({ itemsPerCategory }) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {resolveRows.map((row, index) => {
-            if (row.direction === 'more')
-              return (
-                <TableRow
-                  key={`row-${index}`}
-                  sx={{
-                    '& .MuiTableCell-root': { border: 0 },
-                  }}
-                >
-                  <TableCell component="th" scope="row" sx={{ p: 0 }}>
-                    <Typography
-                      sx={{
-                        fontSize: 13,
-                        lineHeight: '11px',
-                        p: '10px 0 10px 8px',
-                        textAlign: 'left',
-                      }}
-                    >
-                      27,160.01
-                    </Typography>
-                  </TableCell>
-                  <TableCell align="right" sx={{ p: 0 }}>
-                    <Typography
-                      sx={{
-                        fontSize: 9,
-                        lineHeight: '11px',
-                        p: '4px',
-                      }}
-                    >
-                      $27,160.01
-                    </Typography>
-                  </TableCell>
-                  <TableCell align="right" sx={{ p: 0 }}>
-                    <Link
-                      sx={{
-                        fontSize: 9,
-                        lineHeight: '11px',
-                        padding: '4px 0',
-                      }}
-                    >
-                      Xem thêm
-                    </Link>
-                  </TableCell>
-                </TableRow>
-              );
-            return (
-              <TableRow
-                key={`row-${index}`}
+          {_renderRows(true)}
+          <TableRow
+            sx={{
+              '& .MuiTableCell-root': { border: 0 },
+            }}
+          >
+            <TableCell component="th" scope="row" sx={{ p: 0 }}>
+              <Typography
                 sx={{
-                  '& .MuiTableCell-root': { border: 0 },
+                  fontSize: 13,
+                  lineHeight: '11px',
+                  p: '10px 0 10px 8px',
+                  textAlign: 'left',
                 }}
               >
-                <TableCell component="th" scope="row" sx={{ p: 0 }}>
-                  <Typography
-                    sx={{
-                      fontSize: 9,
-                      lineHeight: '11px',
-                      color: row.direction === 'up' ? '#408827' : '#F21616',
-                      p: '4px 0 4px 8px',
-                      textAlign: 'left',
-                    }}
-                  >
-                    {row.price}
-                  </Typography>
-                </TableCell>
-                <TableCell align="right" sx={{ p: 0 }}>
-                  <Typography
-                    sx={{
-                      fontSize: 9,
-                      lineHeight: '11px',
-                      color: '#816A6A',
-                      p: '4px',
-                    }}
-                  >
-                    {row.quantity}
-                  </Typography>
-                </TableCell>
-                <TableCell align="right" sx={{ p: 0 }}>
-                  <Typography
-                    sx={{
-                      fontSize: 9,
-                      lineHeight: '11px',
-                      color: '#816A6A',
-                      padding: '4px 0',
-                    }}
-                  >
-                    {row.total}
-                  </Typography>
-                </TableCell>
-              </TableRow>
-            );
-          })}
+                {latestRow?.p}
+              </Typography>
+            </TableCell>
+            <TableCell align="right" sx={{ p: 0 }}>
+              <Typography
+                sx={{
+                  fontSize: 9,
+                  lineHeight: '11px',
+                  p: '4px',
+                }}
+              >
+                $27,160.01
+              </Typography>
+            </TableCell>
+            <TableCell align="right" sx={{ p: 0 }}>
+              <Link
+                sx={{
+                  fontSize: 9,
+                  lineHeight: '11px',
+                  padding: '4px 0',
+                }}
+              >
+                Xem thêm
+              </Link>
+            </TableCell>
+          </TableRow>
+          {_renderRows(false)}
         </TableBody>
       </Table>
     </TableContainer>

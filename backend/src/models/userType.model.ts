@@ -20,6 +20,10 @@ const userTypeSchema = new mongoose.Schema<IUserTypeDoc, IUserTypeModel>(
       enum: EUserType,
       default: EUserType.BEGINNER,
     },
+    probability: {
+      type: mongoose.Schema.Types.Number,
+      default: 0,
+    },
   },
   {
     timestamps: true,

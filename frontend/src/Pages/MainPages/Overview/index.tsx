@@ -63,7 +63,6 @@ const Overview: React.FC = () => {
 
   React.useEffect(() => {
     Utils.WebSocket.emit('getLatestCoins', null, (data: any) => {
-      console.table(data);
       setTableData(data);
     });
     Utils.WebSocket.on('updateAllCoinPriceNow', (data) => {

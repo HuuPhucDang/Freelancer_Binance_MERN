@@ -8,6 +8,7 @@ import transactionRoute from "./transaction.route";
 import requestRoute from "./request.route";
 import systemInforRoute from "./systemInfor.route";
 import chatBoxRoute from "./chatBox.route";
+import tradeRoute from "./trade.route";
 
 const router = express.Router();
 
@@ -52,6 +53,10 @@ const defaultIRoute: IRoute[] = [
   {
     path: "/chatBox",
     route: chatBoxRoute,
+  },
+  {
+    path: "/trade",
+    route: tradeRoute,
   },
 ];
 

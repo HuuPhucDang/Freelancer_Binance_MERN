@@ -1,3 +1,4 @@
+import React from 'react';
 import {
   Typography,
   Stack,
@@ -12,25 +13,24 @@ import {
 import StarIcon from '@mui/icons-material/Star';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
-
-function createTopRightData(label: string, price: number) {
-  return { label, price };
-}
-
-const topRightRows = [
-  createTopRightData('1INCH/BTC ', 0.0000623),
-  createTopRightData('1INCH/BTC ', 0.0000623),
-  createTopRightData('1INCH/BTC ', 0.0000623),
-  createTopRightData('1INCH/BTC ', 0.0000623),
-  createTopRightData('1INCH/BTC ', 0.0000623),
-  createTopRightData('1INCH/BTC ', 0.0000623),
-  createTopRightData('1INCH/BTC ', 0.0000623),
-  createTopRightData('1INCH/BTC ', 0.0000623),
-  createTopRightData('1INCH/BTC ', 0.0000623),
-  createTopRightData('1INCH/BTC ', 0.0000623),
-];
+import { Utils } from '@/Libs';
+import { ROUTERS } from '@/Constants';
 
 const CoinValueTable = () => {
+  const [coinData, setCoinData] = React.useState<any>([]);
+
+  React.useEffect(() => {
+    Utils.WebSocket.emit('getLatestCoins', null, (data: any) => {
+      setCoinData(data);
+    });
+    Utils.WebSocket.on('updateAllCoinPriceNow', (data) => {
+      setCoinData(data);
+    });
+    return () => {
+      // Utils.WebSocket.disconnect();
+    };
+  }, []);
+
   return (
     <TableContainer
       sx={{
@@ -118,7 +118,7 @@ const CoinValueTable = () => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {topRightRows.map((row, index) => (
+          {coinData.map((row: any, index: number) => (
             <TableRow
               key={`row-${index}`}
               sx={{
@@ -144,9 +144,11 @@ const CoinValueTable = () => {
                       fontSize: 9,
                       lineHeight: '11px',
                       color: '#816A6A',
+                      cursor: 'pointer'
                     }}
+                    onClick={() => Utils.replace(`${ROUTERS.TRANSACTION}?symbol=${row?.symbol}`)}
                   >
-                    {row.label}
+                    {row?.symbol}
                   </Typography>
                 </Stack>
               </TableCell>
@@ -158,7 +160,7 @@ const CoinValueTable = () => {
                     color: '#816A6A',
                   }}
                 >
-                  {row.price}
+                  {row?.price}
                 </Typography>
               </TableCell>
             </TableRow>
