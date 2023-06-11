@@ -8,7 +8,7 @@ import Widgets from '../Widgets';
 import { Utils } from '@/Libs';
 import AppBarComponent from '../AppBar';
 import { ROUTERS } from '@/Constants';
-import { useTypedDispatch, useTypedSelector } from '@/Reducers/store';
+import { useTypedDispatch } from '@/Reducers/store';
 import { AuthActions } from '@/Reducers/Actions';
 
 interface SectionProps {
@@ -17,13 +17,10 @@ interface SectionProps {
   screenTitle?: string;
 }
 
-const { setLogged, logout } = AuthActions;
+const { logout } = AuthActions;
 
 const UserLayout: React.FC<SectionProps> = (props: SectionProps) => {
   // Constructors
-  const isLogged: any = useTypedSelector((state: any) =>
-    _.get(state.AUTH, 'isLogged')
-  );
   const dispatch = useTypedDispatch();
   const token = Utils.getAccessToken();
   const userData = Utils.getUserData();

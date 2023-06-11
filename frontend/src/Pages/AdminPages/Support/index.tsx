@@ -172,7 +172,7 @@ const users = [
     ],
   },
 ];
-const { fetchChatBox, fetchChatBoxById, resetChatBoxReducer } = ChatBoxActions;
+const { fetchChatBox } = ChatBoxActions;
 
 const Support = () => {
   const dispatch = useTypedDispatch();

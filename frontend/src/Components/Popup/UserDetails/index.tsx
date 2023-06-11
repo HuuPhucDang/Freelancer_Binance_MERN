@@ -5,17 +5,12 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import {
-  Accordion,
-  AccordionDetails,
-  AccordionSummary,
   Avatar,
-  Box,
   Stack,
   ToggleButton,
   ToggleButtonGroup,
   Typography,
 } from '@mui/material';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { RootState, useTypedDispatch } from '../../../Reducers/store';
 import { UserActions } from '../../../Reducers/Actions';
 import { useSelector } from 'react-redux';
@@ -65,10 +60,10 @@ const RequestVerifyIDCard: React.FC<IProps> = ({
     if (open) dispatch(getUserById(currentUser));
   }, [open]);
 
-  const onChangeUserType = (newValue: string) => {
-    console.log('halo')
-  }
- 
+  const onChangeUserType = (_newValue: string) => {
+    console.log('halo');
+  };
+
   return (
     <Dialog open={open} onClose={onClose}>
       <DialogTitle sx={{ color: 'text.primary' }}>
@@ -100,7 +95,9 @@ const RequestVerifyIDCard: React.FC<IProps> = ({
               color="primary"
               value={details?.userType?.type}
               exclusive
-              onChange={(_event: any, newValue: string) => onChangeUserType(newValue)}
+              onChange={(_event: any, newValue: string) =>
+                onChangeUserType(newValue)
+              }
               aria-label="Platform"
             >
               <ToggleButton value={ENUMS.EUserType.BEGINNER}>
