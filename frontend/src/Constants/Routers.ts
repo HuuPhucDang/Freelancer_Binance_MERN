@@ -26,6 +26,7 @@ const ADMIN_ROUTERS = {
   BANK_INFORMATION: `${ADMIN_ROUTER_ROOT}/bank-information`,
   ADMIN_SUPPORT: `${ADMIN_ROUTER_ROOT}/support`,
   USERS: `${ADMIN_ROUTER_ROOT}/users`,
+  ADMIN_TRANSACTION: `${ADMIN_ROUTER_ROOT}/transaction`,
   INTERVENTION: `${ADMIN_ROUTER_ROOT}/intervention`,
 };
 

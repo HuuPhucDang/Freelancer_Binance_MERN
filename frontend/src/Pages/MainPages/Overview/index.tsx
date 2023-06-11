@@ -1,6 +1,5 @@
 import React from 'react';
 import _ from 'lodash';
-import { useSelector } from 'react-redux';
 import {
   Box,
   Typography,
@@ -19,16 +18,17 @@ import {
 } from '@mui/material';
 import ModeEditOutlineOutlinedIcon from '@mui/icons-material/ModeEditOutlineOutlined';
 import RemoveRedEyeOutlinedIcon from '@mui/icons-material/RemoveRedEyeOutlined';
+import ArrowCircleRightOutlinedIcon from '@mui/icons-material/ArrowCircleRightOutlined';
+
 // Import local
 import { UserLayout } from '@/Components/DefaultLayout';
 import Assets from '@/Assets';
-import ArrowCircleRightOutlinedIcon from '@mui/icons-material/ArrowCircleRightOutlined';
 import { Sidebar } from '@/Components/LayoutParts';
 import { EditAvatar, EditName } from '@/Components/Popup';
 import { ENUMS, ROUTERS } from '@/Constants';
 import { Utils } from '@/Libs';
 import { UserActions } from '@/Reducers/Actions';
-import { RootState, useTypedDispatch } from '@/Reducers/store';
+import { useTypedDispatch } from '@/Reducers/store';
 
 const userTypes = [
   {
@@ -54,9 +54,7 @@ const { getSelf } = UserActions;
 const Overview: React.FC = () => {
   // Constructors
   const dispatch = useTypedDispatch();
-  const userDetails = useSelector((state: RootState) =>
-    _.get(state.USER, 'details')
-  );
+  const userData = Utils.getUserData();
   const [isShowNamePopup, setIsShowNamePopup] = React.useState<boolean>(false);
   const [isShowAvatarPopup, setIsShowAvatarPopup] =
     React.useState<boolean>(false);
@@ -81,7 +79,7 @@ const Overview: React.FC = () => {
     let result = 'Sơ cấp';
     const findUserType = userTypes.find(
       (item: { label: string; value: string }) =>
-        item.value === userDetails?.userType
+        item.value === userData?.userType
     );
 
     if (findUserType) result = findUserType.label;
@@ -257,7 +255,7 @@ const Overview: React.FC = () => {
                   }}
                 >
                   <Avatar
-                    src={userDetails.avatar || ''}
+                    src={userData.avatar || ''}
                     sx={{ width: '70px', height: '70px', marginRight: '20px' }}
                   />
                   <Stack direction="column">
@@ -267,8 +265,8 @@ const Overview: React.FC = () => {
                       marginBottom="16px"
                     >
                       <Typography sx={{ marginRight: '16px' }}>
-                        {userDetails
-                          ? userDetails?.nickname
+                        {userData
+                          ? userData?.nickname
                           : 'Anonymous-User-b5b47p'}
                       </Typography>
                       <IconButton
@@ -294,7 +292,7 @@ const Overview: React.FC = () => {
                           ID người dùng
                         </Typography>
                         <Typography sx={{ fontSize: '12px' }}>
-                          {userDetails?.id}
+                          {userData?.id}
                         </Typography>
                       </Box>
                       <Box sx={{ minWidth: 'max-content' }}>

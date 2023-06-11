@@ -30,15 +30,20 @@ const getSystemInfoSuccess = (payload: any) => {
   };
 };
 
-const getSystemInfo = (payload: any) => {
+const getSystemInfo = () => {
   return async (dispatch: any) => {
     dispatch(setSystemInfoLoading(true));
-    await API.getSystemInfo(payload)
+    await API.getSystemInfo()
       .then(async (response: any) => {
         const results = await Utils.resolveResponse(response);
         if (!results) await dispatch(getSystemInfoFail());
         else {
-          dispatch(getSystemInfoSuccess(results));
+          const resolveResult: {
+            message: string;
+            payload: any;
+            status: boolean;
+          } = results as { message: string; payload: any; status: boolean };
+          dispatch(getSystemInfoSuccess(resolveResult.payload));
         }
       })
       .catch(async (error) => {

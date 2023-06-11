@@ -10,10 +10,11 @@ import {
 } from '@mui/material';
 import PersonIcon from '@mui/icons-material/Person';
 import { Fade } from 'react-reveal';
+
 // Import local
 import { UserLayout } from '@/Components/DefaultLayout';
 import Assets from '@/Assets';
-import { ROUTERS } from '../../../Constants';
+import { ROUTERS } from '@/Constants';
 
 const Home: React.FC = () => {
   // Constructors

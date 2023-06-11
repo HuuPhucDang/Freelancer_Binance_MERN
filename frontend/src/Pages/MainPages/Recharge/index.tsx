@@ -1,28 +1,60 @@
 import React from 'react';
+import _ from 'lodash';
+import { useSelector } from 'react-redux';
 import {
   Box,
   Typography,
   Grid,
   Button,
   Stack,
-  OutlinedInput,
   InputAdornment,
+  TextField,
 } from '@mui/material';
 // Import local
 import { UserLayout } from '@/Components/DefaultLayout';
 import { Sidebar } from '@/Components/LayoutParts';
 import Assets from '@/Assets';
-import { UserActions } from '../../../Reducers/Actions';
-import { useTypedDispatch } from '../../../Reducers/store';
+import {
+  SystemInfoActions,
+  TransactionActions,
+  UserActions,
+} from '@/Reducers/Actions';
+import { RootState, useTypedDispatch } from '@/Reducers/store';
 
 const { getSelf } = UserActions;
+const { getSystemInfo } = SystemInfoActions;
+const { requestRecharge, resetTransactionReducer } = TransactionActions;
 
 const Recharge: React.FC = () => {
   const dispatch = useTypedDispatch();
+  const systemInfo = useSelector((state: RootState) =>
+    _.get(state.SYSTEM_INFO, 'payload')
+  );
+  const requestRechargeSuccess = useSelector((state: RootState) =>
+    _.get(state.TRANSACTION, 'requestRechargeSuccess')
+  );
+  const invalidTypeMsg = 'Số tiền muốn nạp phải có định dạng số';
+  const [isErr, setIsErr] = React.useState<boolean>(false);
+  const [amount, setAmount] = React.useState<number>(0);
 
   React.useEffect(() => {
+    dispatch(getSystemInfo());
     dispatch(getSelf());
   }, []);
+
+  React.useEffect(() => {
+    if (requestRechargeSuccess) {
+      setIsErr(false);
+      setAmount(0);
+      dispatch(resetTransactionReducer());
+    }
+  }, [requestRechargeSuccess]);
+
+  const onSubmit = async () => {
+    const isNumber = !Number.isNaN(amount);
+    if (!isNumber) setIsErr(true);
+    else dispatch(requestRecharge({ amount }));
+  };
 
   // Constructors
   const renderMain = () => {
@@ -105,7 +137,7 @@ const Recharge: React.FC = () => {
                       }}
                     >
                       <Typography sx={{ fontWeight: 500, fontSize: '12px' }}>
-                        Họ và tên người nhận:
+                        Họ và tên người nhận: <b>{systemInfo?.fullname}</b>
                       </Typography>
                       <Typography
                         sx={{
@@ -114,7 +146,7 @@ const Recharge: React.FC = () => {
                           marginTop: '2px',
                         }}
                       >
-                        Số tài khoản:
+                        Số tài khoản: <b>{systemInfo?.accountNumber}</b>
                       </Typography>
                       <Typography
                         sx={{
@@ -123,7 +155,7 @@ const Recharge: React.FC = () => {
                           marginTop: '2px',
                         }}
                       >
-                        Ngân hàng:
+                        Ngân hàng: <b> {systemInfo?.bankName}</b>
                       </Typography>
                       <Typography
                         sx={{
@@ -132,33 +164,50 @@ const Recharge: React.FC = () => {
                           marginTop: '2px',
                         }}
                       >
-                        Nội dung:
+                        Nội dung: <b>{systemInfo?.message}</b>
                       </Typography>
                     </Box>
-                    <OutlinedInput
-                      type="text"
+                    <TextField
+                      hiddenLabel
+                      variant="outlined"
+                      size="small"
                       placeholder="Số tiền muốn nạp"
                       sx={{
-                        height: '39px',
-                        fontSize: '12px',
-                        paddingLeft: '16px',
-                        marginTop: '30px',
-                        backgroundColor: 'background.chargeInput',
-                        color: 'text.primary',
+                        ' .MuiInputBase-root': {
+                          background: '#ffffff',
+                        },
                       }}
-                      endAdornment={
-                        <InputAdornment position="start">
-                          <Typography
-                            sx={{
-                              fontSize: '12px',
-                              marginLeft: '16px',
-                              color: 'text.primary',
-                            }}
+                      type="number"
+                      value={amount}
+                      onChange={(e: any) => setAmount(e.target.value)}
+                      InputProps={{
+                        sx: {
+                          height: '39px',
+                          fontSize: '12px',
+                          paddingLeft: '16px',
+                          marginTop: '30px',
+                          backgroundColor: 'background.chargeInput',
+                          color: 'text.primary',
+                        },
+                        endAdornment: (
+                          <InputAdornment
+                            position="start"
+                            sx={{ marginRight: '14px' }}
                           >
-                            Tự quy đổi thành: USDT
-                          </Typography>
-                        </InputAdornment>
-                      }
+                            <Typography
+                              sx={{
+                                fontSize: '12px',
+                                marginLeft: '16px',
+                                color: 'text.primary',
+                              }}
+                            >
+                              Tự quy đổi thành: USDT
+                            </Typography>
+                          </InputAdornment>
+                        ),
+                      }}
+                      error={isErr}
+                      helperText={isErr ? invalidTypeMsg : ''}
                     />
                     <Button
                       sx={{
@@ -172,6 +221,7 @@ const Recharge: React.FC = () => {
                         marginTop: '20px',
                         alignSelf: 'center',
                       }}
+                      onClick={() => onSubmit()}
                     >
                       Gửi lệnh
                     </Button>
@@ -181,7 +231,7 @@ const Recharge: React.FC = () => {
               <Grid item md={4.5} display={{ xs: 'none', md: 'flex' }}>
                 <Box
                   component="img"
-                  src={Assets.qrImage}
+                  src={systemInfo?.QRCode || Assets.qrImage}
                   sx={{ width: '100%', height: 'auto', objectFit: 'contain' }}
                 />
               </Grid>

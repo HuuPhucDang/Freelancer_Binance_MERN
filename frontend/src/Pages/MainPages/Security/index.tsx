@@ -27,10 +27,9 @@ import {
   ActiveEmail,
 } from '@/Components/Popup';
 import { Utils } from '@/Libs';
-import { useTypedDispatch } from '../../../Reducers/store';
-// import { useSelector } from 'react-redux';
-import _ from 'lodash';
-import { UserActions } from '../../../Reducers/Actions';
+import { useTypedDispatch } from '@/Reducers/store';
+import { UserActions } from '@/Reducers/Actions';
+
 const { getSelf } = UserActions;
 
 const Security: React.FC = () => {

@@ -1,7 +1,6 @@
 import httpStatus from "http-status";
 import _ from "lodash";
 import UserRequest from "../../models/userRequest.model";
-import Transaction from "../../models/transaction.model";
 import ApiError from "../../helper/errors/ApiError";
 import { IOptions, QueryResult } from "../../helper/paginate/paginate";
 import { ForgotPassword } from "../../interfaces/user.interfaces";
@@ -34,6 +33,6 @@ export const fetchAllRequests = async (
   filter: Record<string, any>,
   options: IOptions
 ): Promise<QueryResult> => {
-  const userRequests = await Transaction.paginate(filter, options);
+  const userRequests = await UserRequest.paginate(filter, options);
   return userRequests;
 };

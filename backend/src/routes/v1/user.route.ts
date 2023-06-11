@@ -41,7 +41,7 @@ router
     validate(userValidation.getUser),
     userController.getUser
   )
-  .patch(
+  .put(
     auth("manageUsers"),
     validate(userValidation.updateUser),
     userController.updateUser

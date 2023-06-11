@@ -1,13 +1,10 @@
+import React from 'react';
+import { useSelector } from 'react-redux';
+import _ from 'lodash';
 import {
-  Button,
-  Chip,
-  FormControl,
   IconButton,
-  InputLabel,
-  MenuItem,
   Pagination,
   Paper,
-  Select,
   Stack,
   Table,
   TableBody,
@@ -17,175 +14,129 @@ import {
   TableRow,
   Typography,
 } from '@mui/material';
-import { AdminLayout } from '../../../Components/DefaultLayout';
-import React from 'react';
-import RemoveRedEyeOutlinedIcon from '@mui/icons-material/RemoveRedEyeOutlined';
-import { RequestConnectBank, RequestVerify } from '../../../Components/Popup';
-function createData(
-  name: string,
-  category: 'connectBank' | 'verify',
-  status: 'canceled' | 'accepted' | 'pending',
-  createdAt: Date,
-  action: React.ReactNode
-) {
-  return { name, category, status, createdAt, action };
+import SyncLockIcon from '@mui/icons-material/SyncLock';
+
+import { AdminLayout } from '@/Components/DefaultLayout';
+import { ResetPassword } from '@/Components/Popup';
+import { RootState, useTypedDispatch } from '@/Reducers/store';
+import { UserRequestActions } from '@/Reducers/Actions';
+
+interface IUser {
+  nickname: string;
 }
 
-const categoryOptions = {
-  connectBank: 'Liên kết ngân hàng',
-  verify: 'Xác minh',
+interface IRequest {
+  date: string;
+  id: number;
+  time: string;
+  type: 'forgot_password';
+  message: string;
+  userId: IUser;
+}
+
+interface IPayload {
+  limit: number;
+  page: number;
+  results: IRequest[];
+  totalPages: number;
+  totalResults: number;
+}
+
+interface ICreateData {
+  name: string;
+  type: 'forgot_password';
+  message: string;
+  createdAt: string;
+  action: React.ReactNode;
+}
+
+function createData(
+  name: string,
+  type: 'forgot_password',
+  message: string,
+  createdAt: string,
+  action: React.ReactNode
+) {
+  return { name, type, message, createdAt, action };
+}
+
+interface IFilterParam {
+  sortBy: string;
+  populate: string;
+  page: number;
+  limit: number;
+}
+
+const initialFilterParams = {
+  sortBy: 'date:DESC,time:DESC',
+  populate: 'userId',
+  page: 1,
+  limit: 15,
 };
 
-const statusOptions: {
-  [key: string]: {
-    label: string;
-    color: 'error' | 'success' | 'warning';
-  };
-} = {
-  canceled: {
-    color: 'error',
-    label: 'Đã hủy',
-  },
-  accepted: {
-    color: 'success',
-    label: 'Đã duyệt',
-  },
-  pending: {
-    color: 'warning',
-    label: 'Đang chờ',
-  },
+const types = {
+  forgot_password: 'Quên mật khẩu',
 };
 
-const Request = () => {
-  const [status, setStatus] = React.useState<string>('');
-  const [category, setCategory] = React.useState<string>('');
-  const [isShowBankDetailsPopup, setIsShowBankDetailsPopup] =
-    React.useState<boolean>(false);
-  const [isShowVerifyPopup, setIsShowVerifyPopup] =
-    React.useState<boolean>(false);
+const { fetchUserRequests } = UserRequestActions;
 
-  const rows = [
-    createData(
-      'Anonymous-User-b5b47',
-      'connectBank',
-      'pending',
-      new Date(),
-      <IconButton size="small" onClick={() => setIsShowBankDetailsPopup(true)}>
-        <RemoveRedEyeOutlinedIcon />
-      </IconButton>
-    ),
-    createData(
-      'Anonymous-User-b5b47',
-      'verify',
-      'accepted',
-      new Date(),
-      <IconButton size="small" onClick={() => setIsShowVerifyPopup(true)}>
-        <RemoveRedEyeOutlinedIcon />
-      </IconButton>
-    ),
-    createData(
-      'Anonymous-User-b5b47',
-      'verify',
-      'pending',
-      new Date(),
-      <IconButton size="small" onClick={() => setIsShowVerifyPopup(true)}>
-        <RemoveRedEyeOutlinedIcon />
-      </IconButton>
-    ),
-    createData(
-      'Anonymous-User-b5b47',
-      'connectBank',
-      'canceled',
-      new Date(),
-      <IconButton size="small" onClick={() => setIsShowBankDetailsPopup(true)}>
-        <RemoveRedEyeOutlinedIcon />
-      </IconButton>
-    ),
-    createData(
-      'Anonymous-User-b5b47',
-      'connectBank',
-      'accepted',
-      new Date(),
-      <IconButton size="small" onClick={() => setIsShowBankDetailsPopup(true)}>
-        <RemoveRedEyeOutlinedIcon />
-      </IconButton>
-    ),
-    createData(
-      'Anonymous-User-b5b47',
-      'connectBank',
-      'canceled',
-      new Date(),
-      <IconButton size="small" onClick={() => setIsShowBankDetailsPopup(true)}>
-        <RemoveRedEyeOutlinedIcon />
-      </IconButton>
-    ),
-    createData(
-      'Anonymous-User-b5b47',
-      'verify',
-      'pending',
-      new Date(),
-      <IconButton size="small" onClick={() => setIsShowVerifyPopup(true)}>
-        <RemoveRedEyeOutlinedIcon />
-      </IconButton>
-    ),
-  ];
+const Request: React.FC = () => {
+  const dispatch = useTypedDispatch();
+  const [isShowResetPassword, setIsShowResetPassword] =
+    React.useState<boolean>(false);
+  const [currentUser, setCurrentUser] = React.useState<any>(null);
+
+  const payload: IPayload = useSelector((state: RootState) =>
+    _.get(state.USER_REQUEST, 'payload')
+  );
+
+  const [filterParams, setFilterParams] =
+    React.useState<IFilterParam>(initialFilterParams);
+
+  React.useEffect(() => {
+    dispatch(fetchUserRequests(filterParams));
+  }, [filterParams]);
+
+  const rows = React.useMemo(() => {
+    const result: any[] = [];
+    if (payload.results && payload.results.length > 0) {
+      payload.results.map((item: IRequest) =>
+        result.push(
+          createData(
+            item.userId.nickname,
+            item.type,
+            item.message,
+            `${item.date}, ${item.time}`,
+            <IconButton
+              size="small"
+              onClick={() => {
+                setCurrentUser(item.userId);
+                setIsShowResetPassword(true);
+              }}
+            >
+              <SyncLockIcon />
+            </IconButton>
+          )
+        )
+      );
+    }
+    return result;
+  }, [payload]);
 
   const _renderMain = () => {
     return (
       <Stack sx={{ padding: '20px' }} direction="column">
-        <RequestVerify
-          open={isShowVerifyPopup}
-          onClose={() => setIsShowVerifyPopup(false)}
-        />
-        <RequestConnectBank
-          open={isShowBankDetailsPopup}
-          onClose={() => setIsShowBankDetailsPopup(false)}
+        <ResetPassword
+          user={currentUser}
+          open={isShowResetPassword}
+          onClose={() => {
+            setIsShowResetPassword(false);
+            setCurrentUser(null);
+          }}
         />
         <Typography sx={{ fontSize: '17px', fontWeight: 600 }}>
           Yêu cầu
         </Typography>
-        <Stack direction="row" marginTop="20px" spacing={2}>
-          <FormControl sx={{ width: '240px' }} size="small">
-            <InputLabel
-              id="demo-simple-select-label"
-              sx={{ color: 'text.primary' }}
-            >
-              Loại
-            </InputLabel>
-            <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              value={category}
-              label="Loại"
-              onChange={(e: any) => setCategory(e.target.value as string)}
-            >
-              <MenuItem value="verify">Xác minh</MenuItem>
-              <MenuItem value="connectBank">Liên kết ngân hàng</MenuItem>
-            </Select>
-          </FormControl>
-          <FormControl sx={{ width: '240px' }} size="small">
-            <InputLabel
-              id="demo-simple-select-label"
-              sx={{ color: 'text.primary' }}
-            >
-              Trạng thái
-            </InputLabel>
-            <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              value={status}
-              label="Trạng thái"
-              onChange={(e: any) => setStatus(e.target.value as string)}
-            >
-              <MenuItem value="pending">Chờ duyệt</MenuItem>
-              <MenuItem value="accepted">Đã duyệt</MenuItem>
-              <MenuItem value="canceled">Đã hủy</MenuItem>
-            </Select>
-          </FormControl>
-          <Button variant="contained" size="small">
-            Tìm kiếm
-          </Button>
-        </Stack>
         <TableContainer component={Paper} sx={{ marginTop: '30px' }}>
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
             <TableHead>
@@ -195,7 +146,7 @@ const Request = () => {
                   Loại yêu cầu
                 </TableCell>
                 <TableCell align="center" sx={{ fontWeight: 600 }}>
-                  Trạng thái
+                  Tin nhắn
                 </TableCell>
                 <TableCell align="center" sx={{ fontWeight: 600 }}>
                   Thời gian
@@ -206,7 +157,7 @@ const Request = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {rows.map((row) => (
+              {rows.map((row: ICreateData) => (
                 <TableRow
                   key={row.name}
                   sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
@@ -215,19 +166,12 @@ const Request = () => {
                     {row.name}
                   </TableCell>
                   <TableCell align="center">
-                    {categoryOptions[row.category]}
+                    {types[row.type]}
                   </TableCell>
                   <TableCell align="center">
-                    <Chip
-                      color={statusOptions[row.status].color}
-                      label={statusOptions[row.status].label}
-                      sx={{ width: '100px', borderRadius: '5px' }}
-                      variant="outlined"
-                    />
+                    {row.message}
                   </TableCell>
-                  <TableCell align="center">
-                    {row.createdAt.toLocaleDateString()}
-                  </TableCell>
+                  <TableCell align="center">{row.createdAt}</TableCell>
                   <TableCell align="center">{row.action}</TableCell>
                 </TableRow>
               ))}
@@ -239,7 +183,14 @@ const Request = () => {
           justifyContent="flex-end"
           sx={{ marginTop: '15px' }}
         >
-          <Pagination count={10} shape="rounded" />
+          <Pagination
+            count={payload.totalPages}
+            page={payload.page}
+            onChange={(_e: any, newPage: number) =>
+              setFilterParams({ ...filterParams, page: newPage })
+            }
+            shape="rounded"
+          />
         </Stack>
       </Stack>
     );

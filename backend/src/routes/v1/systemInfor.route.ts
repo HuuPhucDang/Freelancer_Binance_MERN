@@ -12,10 +12,10 @@ const router: Router = express.Router();
 router
   .post(
     "/:inforId",
+      multer.single("QRCode"),
     [auth("updateSystemInfor")],
     [
       validate(systemInforValidation.updateSystemInfor),
-      multer.fields([{ name: "QRCode" }]),
     ],
     systemInforController.updateSystemInfor
   )

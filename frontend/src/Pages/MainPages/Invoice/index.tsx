@@ -1,4 +1,6 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
+import _ from 'lodash';
 import {
   Grid,
   Stack,
@@ -12,50 +14,153 @@ import {
   Typography,
   Divider,
   Box,
+  Pagination,
 } from '@mui/material';
+
 // Import local
 import { UserLayout } from '@/Components/DefaultLayout';
 import { Sidebar } from '@/Components/LayoutParts';
 import { Select } from '@/Components/Common';
-import { TransactionActions } from '../../../Reducers/Actions';
-import { RootState, useTypedDispatch } from '../../../Reducers/store';
-import { useSelector } from 'react-redux';
-import _ from 'lodash';
+import { TransactionActions } from '@/Reducers/Actions';
+import { RootState, useTypedDispatch } from '@/Reducers/store';
+import { ENUMS } from '@/Constants';
+import { Utils } from '@/Libs';
+
+interface IFilterParam {
+  type: string;
+  status: string;
+  page: number;
+  limit: number;
+  sortBy: string;
+  populate: string;
+}
+
+interface ITransaction {
+  id: string;
+  amount: number;
+  balance: number;
+  date: string;
+  status:
+    | ENUMS.ETransactionStatus.CANCELED
+    | ENUMS.ETransactionStatus.DENIED
+    | ENUMS.ETransactionStatus.PENDING
+    | ENUMS.ETransactionStatus.RESOLVED;
+  time: string;
+  type:
+    | ENUMS.ETransactionType.BONUS
+    | ENUMS.ETransactionType.RECHARGE
+    | ENUMS.ETransactionType.WITHDRAW;
+}
+
+interface IPayload {
+  limit: number;
+  page: number;
+  results: ITransaction[];
+  totalPages: number;
+  totalResults: number;
+}
+
+interface ICreateData {
+  id: string;
+  date: string;
+  time: string;
+  type:
+    | ENUMS.ETransactionType.BONUS
+    | ENUMS.ETransactionType.RECHARGE
+    | ENUMS.ETransactionType.WITHDRAW;
+  status:
+    | ENUMS.ETransactionStatus.CANCELED
+    | ENUMS.ETransactionStatus.DENIED
+    | ENUMS.ETransactionStatus.PENDING
+    | ENUMS.ETransactionStatus.RESOLVED;
+  total: number;
+  surplus: number;
+}
 
 function createData(
+  id: string,
   date: string,
   time: string,
-  type: string,
-  status: string,
+  type:
+    | ENUMS.ETransactionType.BONUS
+    | ENUMS.ETransactionType.RECHARGE
+    | ENUMS.ETransactionType.WITHDRAW,
+  status:
+    | ENUMS.ETransactionStatus.CANCELED
+    | ENUMS.ETransactionStatus.DENIED
+    | ENUMS.ETransactionStatus.PENDING
+    | ENUMS.ETransactionStatus.RESOLVED,
   total: number,
   surplus: number
 ) {
-  return { date, time, type, status, total, surplus };
+  return { id, date, time, type, status, total, surplus };
 }
 
-const { fetchTransactions } = TransactionActions;
+const initialFilterParam = {
+  type: '',
+  status: '',
+  page: 1,
+  limit: 15,
+  sortBy: 'date:DESC,time:DESC',
+  populate: 'userId',
+};
+
+const { fetchTransactions, cancelTransaction } = TransactionActions;
+
+const types = {
+  [ENUMS.ETransactionType.RECHARGE]: 'Nạp',
+  [ENUMS.ETransactionType.WITHDRAW]: 'Rút',
+  [ENUMS.ETransactionType.BONUS]: 'Thưởng',
+};
+
+const status = {
+  [ENUMS.ETransactionStatus.CANCELED]: 'Đã hủy',
+  [ENUMS.ETransactionStatus.DENIED]: 'Đã từ chối',
+  [ENUMS.ETransactionStatus.PENDING]: 'Đang chờ',
+  [ENUMS.ETransactionStatus.RESOLVED]: 'Đã giải quyết',
+};
 
 const Invoice: React.FC = () => {
   // Constructors
   const dispatch = useTypedDispatch();
-  const transactions: any[] = useSelector((state: RootState) =>
+  const payload: IPayload = useSelector((state: RootState) =>
     _.get(state.TRANSACTION, 'payload')
   );
+  const [filterParams, setFilterParams] =
+    React.useState<IFilterParam>(initialFilterParam);
+
+  const fetchPayload = async () => {
+    const resolveFilters = Utils.resolveFilter(filterParams);
+    dispatch(fetchTransactions(resolveFilters));
+  };
+
   React.useEffect(() => {
-    dispatch(fetchTransactions({}));
-  }, []);
+    fetchPayload();
+  }, [filterParams]);
+
+  const onCancel = (item: { id: string }) => {
+    dispatch(cancelTransaction(item.id, filterParams));
+  };
 
   const rows = React.useMemo(() => {
     const result: any[] = [];
-    if (transactions && transactions?.length > 0) {
-      transactions.forEach((_item: any) =>
+    if (payload.results && payload.results?.length > 0) {
+      payload.results.forEach((item: ITransaction) =>
         result.push(
-          createData('2023-05-20', '16:30', 'Rút tiền', 'Đã xử lý', 200, 4000)
+          createData(
+            item.id,
+            item.date,
+            item.time,
+            item.type,
+            item.status,
+            item.amount,
+            item.balance
+          )
         )
       );
     }
     return result;
-  }, [transactions]);
+  }, [payload]);
 
   const renderMain = () => {
     return (
@@ -114,23 +219,55 @@ const Invoice: React.FC = () => {
                   <Select
                     placeholder="Loại"
                     options={[
-                      { label: 'Đang xử lý', value: 'processing' },
-                      { label: 'Đã xử lý', value: 'approved' },
-                      { label: 'Đã hủy', value: 'canceled' },
-                      { label: 'Đã từ chối', value: 'disagreed' },
+                      { label: 'Tất cả', value: '' },
+                      {
+                        label: 'Rút tiền',
+                        value: ENUMS.ETransactionType.WITHDRAW,
+                      },
+                      {
+                        label: 'Nạp tiền',
+                        value: ENUMS.ETransactionType.RECHARGE,
+                      },
+                      { label: 'Thưởng', value: ENUMS.ETransactionType.BONUS },
                     ]}
-                    selected=""
-                    onSelect={() => console.log('select')}
+                    selected={filterParams.type}
+                    onSelect={(newValue: string) =>
+                      setFilterParams({ ...filterParams, type: newValue })
+                    }
                     sx={{
                       marginRight: '10px',
                       backgroundColor: 'background.invoiceDropdown',
                     }}
                   />
                   <Select
-                    placeholder="Thời gian"
-                    options={[]}
-                    selected=""
-                    onSelect={() => console.log('select')}
+                    placeholder="Trạng thái"
+                    options={[
+                      { label: 'Tất cả', value: '' },
+                      {
+                        label: 'Đang xử lý',
+                        value: ENUMS.ETransactionStatus.PENDING,
+                      },
+                      {
+                        label: 'Đã xử lý',
+                        value: ENUMS.ETransactionStatus.RESOLVED,
+                      },
+                      {
+                        label: 'Đã hủy',
+                        value: ENUMS.ETransactionStatus.CANCELED,
+                      },
+                      {
+                        label: 'Đã từ chối',
+                        value: ENUMS.ETransactionStatus.DENIED,
+                      },
+                    ]}
+                    selected={filterParams.status}
+                    onSelect={(
+                      newValue:
+                        | ENUMS.ETransactionStatus.CANCELED
+                        | ENUMS.ETransactionStatus.DENIED
+                        | ENUMS.ETransactionStatus.PENDING
+                        | ENUMS.ETransactionStatus.RESOLVED
+                    ) => setFilterParams({ ...filterParams, status: newValue })}
                     sx={{
                       backgroundColor: 'background.invoiceDropdown',
                     }}
@@ -233,10 +370,23 @@ const Invoice: React.FC = () => {
                       >
                         Số dư
                       </TableCell>
+                      <TableCell
+                        align="center"
+                        sx={{
+                          fontSize: '14px',
+                          padding: {
+                            xs: '15px 5px',
+                            md: '15px',
+                          },
+                          width: '110px',
+                        }}
+                      >
+                        Hành động
+                      </TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {rows.map((row, index) => (
+                    {rows.map((row: ICreateData, index: number) => (
                       <TableRow
                         key={`row-${index}`}
                         sx={{
@@ -275,9 +425,10 @@ const Invoice: React.FC = () => {
                               fontSize: '13px',
                               lineHeight: '24px',
                               color: 'text.primary',
+                              fontWeight: 600,
                             }}
                           >
-                            {row.type}
+                            {types[row.type]}
                           </Typography>
                         </TableCell>
                         <TableCell align="center">
@@ -286,9 +437,10 @@ const Invoice: React.FC = () => {
                               fontSize: '13px',
                               lineHeight: '24px',
                               color: 'text.primary',
+                              fontWeight: 600,
                             }}
                           >
-                            {row.status}
+                            {status[row.status]}
                           </Typography>
                         </TableCell>
                         <TableCell align="center">
@@ -313,11 +465,43 @@ const Invoice: React.FC = () => {
                             ${row.surplus}
                           </Typography>
                         </TableCell>
+                        <TableCell align="center">
+                          <Typography
+                            sx={{
+                              fontSize: '13px',
+                              lineHeight: '24px',
+                              color: 'text.primary',
+                              opacity: row.status === 'pending' ? 1 : 0.5,
+                              textDecoration:
+                                row.status === 'pending'
+                                  ? 'underline'
+                                  : 'unset',
+                              ':hover': {
+                                cursor:
+                                  row.status === 'pending'
+                                    ? 'pointer'
+                                    : 'not-allowed',
+                              },
+                            }}
+                            onClick={() => onCancel(row)}
+                          >
+                            Hủy
+                          </Typography>
+                        </TableCell>
                       </TableRow>
                     ))}
                   </TableBody>
                 </Table>
               </TableContainer>
+              <Pagination
+                count={payload.totalPages}
+                page={payload.page}
+                onChange={(_e: any, newPage: number) =>
+                  setFilterParams({ ...filterParams, page: newPage })
+                }
+                shape="rounded"
+                sx={{marginTop: "20px", alignSelf: "end"}}
+              />
             </Stack>
           </Grid>
         </Grid>

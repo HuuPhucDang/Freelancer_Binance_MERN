@@ -15,6 +15,7 @@ import {
   UpdateUserNicknameBody,
 } from "../../interfaces/user.interfaces";
 import { assignReturnUser } from "../../utils";
+import { EUserType } from "../../interfaces/userType.interface";
 
 const makeDefaultNickname = (length: number) => {
   let result = "";
@@ -57,7 +58,7 @@ export const registerUser = async (
     nickname: `Anonymous-User-${makeDefaultNickname(6)}`,
   });
   const userType = await UserType.create({
-    name: "Beginner",
+    name: EUserType.BEGINNER,
     userId: user.id,
     probability: 0.1,
   });
@@ -101,9 +102,9 @@ export const getUserById = async (
  * Get user by ownerCode
  */
 export const getUserByOwnerCode = async (
-  ownCode: string
+  onwCode: string
 ): Promise<IUserDoc | null> => {
-  const user = await User.findOne({ ownCode })
+  const user = await User.find({ onwCode })
     .populate("verification")
     .populate("wallet")
     .populate("security")

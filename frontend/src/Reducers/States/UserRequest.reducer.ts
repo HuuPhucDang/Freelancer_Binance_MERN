@@ -2,6 +2,14 @@ import { ACTION_TYPES, DEFAULT_LOADING_STATES } from '@/Constants';
 
 const DEFAULT_STATES = {
   ...DEFAULT_LOADING_STATES,
+  requestForgotPasswordSuccess: false,
+  payload: {
+    limit: 10,
+    page: 1,
+    results: [],
+    totalPages: 1,
+    totalResults: 0,
+  },
 };
 
 export default (
@@ -25,6 +33,7 @@ export default (
         requestIsSuccess: true,
         requestHasError: false,
         isActionLoading: false,
+        requestForgotPasswordSuccess: true,
       };
     case ACTION_TYPES.REQUEST_FORGOT_PASSWORD_FAILURE:
       return {
@@ -32,6 +41,7 @@ export default (
         requestHasError: true,
         requestIsSuccess: false,
         isActionLoading: false,
+        requestForgotPasswordSuccess: false,
       };
 
     case ACTION_TYPES.FETCH_USER_REQUESTS_SUCCESS:
@@ -40,6 +50,7 @@ export default (
         requestIsSuccess: true,
         requestHasError: false,
         isActionLoading: false,
+        payload,
       };
     case ACTION_TYPES.FETCH_USER_REQUESTS_FAILURE:
       return {
@@ -47,6 +58,13 @@ export default (
         requestHasError: true,
         requestIsSuccess: false,
         isActionLoading: false,
+        payload: {
+          limit: 10,
+          page: 1,
+          results: [],
+          totalPages: 1,
+          totalResults: 0,
+        },
       };
 
     default:

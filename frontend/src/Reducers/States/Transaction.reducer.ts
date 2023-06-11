@@ -2,7 +2,17 @@ import { ACTION_TYPES, DEFAULT_LOADING_STATES } from '@/Constants';
 
 const DEFAULT_STATES = {
   ...DEFAULT_LOADING_STATES,
-  payload: [],
+  requestWithdrawSuccess: false,
+  requestRechargeSuccess: false,
+  rechargeMoneySuccess: false,
+  withdrawMoneySuccess: false,
+  payload: {
+    limit: 10,
+    page: 1,
+    results: [],
+    totalPages: 1,
+    totalResults: 0,
+  },
 };
 
 export default (
@@ -34,7 +44,13 @@ export default (
         requestHasError: true,
         requestIsSuccess: false,
         isActionLoading: false,
-        payload: [],
+        payload: {
+          limit: 10,
+          page: 1,
+          results: [],
+          totalPages: 1,
+          totalResults: 0,
+        },
       };
 
     case ACTION_TYPES.REQUEST_WITHDRAW_SUCCESS:
@@ -43,6 +59,7 @@ export default (
         requestIsSuccess: true,
         requestHasError: false,
         isActionLoading: false,
+        requestWithdrawSuccess: true,
       };
     case ACTION_TYPES.REQUEST_WITHDRAW_FAILURE:
       return {
@@ -50,6 +67,7 @@ export default (
         requestHasError: true,
         requestIsSuccess: false,
         isActionLoading: false,
+        requestWithdrawSuccess: false,
       };
 
     case ACTION_TYPES.REQUEST_RECHARGE_SUCCESS:
@@ -58,6 +76,7 @@ export default (
         requestIsSuccess: true,
         requestHasError: false,
         isActionLoading: false,
+        requestRechargeSuccess: true,
       };
     case ACTION_TYPES.REQUEST_RECHARGE_FAILURE:
       return {
@@ -65,6 +84,7 @@ export default (
         requestHasError: true,
         requestIsSuccess: false,
         isActionLoading: false,
+        requestRechargeSuccess: false,
       };
 
     case ACTION_TYPES.RECHARGE_MONEY_SUCCESS:
@@ -73,6 +93,7 @@ export default (
         requestIsSuccess: true,
         requestHasError: false,
         isActionLoading: false,
+        rechargeMoneySuccess: true,
       };
     case ACTION_TYPES.RECHARGE_MONEY_FAILURE:
       return {
@@ -80,6 +101,7 @@ export default (
         requestHasError: true,
         requestIsSuccess: false,
         isActionLoading: false,
+        rechargeMoneySuccess: false,
       };
 
     case ACTION_TYPES.WITHDRAW_MONEY_SUCCESS:
@@ -88,6 +110,7 @@ export default (
         requestIsSuccess: true,
         requestHasError: false,
         isActionLoading: false,
+        withdrawMoneySuccess: true,
       };
     case ACTION_TYPES.WITHDRAW_MONEY_FAILURE:
       return {
@@ -95,6 +118,7 @@ export default (
         requestHasError: true,
         requestIsSuccess: false,
         isActionLoading: false,
+        withdrawMoneySuccess: false,
       };
 
     case ACTION_TYPES.CANCEL_TRANSACTION_SUCCESS:

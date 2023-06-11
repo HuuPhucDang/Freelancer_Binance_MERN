@@ -2,6 +2,12 @@ import { ACTION_TYPES, DEFAULT_LOADING_STATES } from '@/Constants';
 
 const DEFAULT_STATES = {
   ...DEFAULT_LOADING_STATES,
+  payload: {
+    accountNumber: '',
+    bankName: '',
+    fullname: '',
+    message: '',
+  },
 };
 
 export default (
@@ -25,6 +31,7 @@ export default (
         requestIsSuccess: true,
         requestHasError: false,
         isActionLoading: false,
+        payload,
       };
     case ACTION_TYPES.GET_SYSTEM_INFO_FAILURE:
       return {
@@ -32,6 +39,12 @@ export default (
         requestHasError: true,
         requestIsSuccess: false,
         isActionLoading: false,
+        payload: {
+          accountNumber: '',
+          bankName: '',
+          fullname: '',
+          message: '',
+        },
       };
 
     case ACTION_TYPES.UPDATE_SYSTEM_INFO_SUCCESS:

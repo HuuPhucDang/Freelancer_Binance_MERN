@@ -1,4 +1,6 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
+import _ from 'lodash';
 import {
   Grid,
   Button,
@@ -7,25 +9,62 @@ import {
   InputLabel,
   Select,
   Typography,
-  OutlinedInput,
   InputAdornment,
   Box,
+  MenuItem,
+  TextField,
 } from '@mui/material';
+
 // Import local
 import { UserLayout } from '@/Components/DefaultLayout';
 import { Sidebar } from '@/Components/LayoutParts';
-import { useTypedDispatch } from '../../../Reducers/store';
-import { UserActions } from '../../../Reducers/Actions';
+import { RootState, useTypedDispatch } from '@/Reducers/store';
+import { TransactionActions, UserActions } from '@/Reducers/Actions';
+import { Utils } from '@/Libs';
 
 const { getSelf } = UserActions;
+const { requestWithdraw, resetTransactionReducer } = TransactionActions;
 
 const WithdrawMoney: React.FC = () => {
   // Constructors
+  const userData = Utils.getUserData();
   const dispatch = useTypedDispatch();
+  const requestWithdrawSuccess = useSelector((state: RootState) =>
+    _.get(state.TRANSACTION, 'requestWithdrawSuccess')
+  );
+  const errMsg = 'Trường này là bắt buộc';
+  const [isErr, setIsErr] = React.useState<boolean>(false);
+  const [bank, setBank] = React.useState<string>('');
+  const [amount, setAmount] = React.useState<number>(0);
 
   React.useEffect(() => {
     dispatch(getSelf());
   }, []);
+
+  React.useEffect(() => {
+    if (requestWithdrawSuccess) {
+      setIsErr(false);
+      setBank('');
+      setAmount(0);
+      dispatch(resetTransactionReducer());
+    }
+  }, [requestWithdrawSuccess]);
+
+  const onSubmit = async () => {
+    if (!bank || !amount) setIsErr(true);
+    else dispatch(requestWithdraw({ amount }));
+  };
+
+  const withdrawMoneyType = React.useMemo(() => {
+    const bank = userData?.bank;
+    if (bank)
+      return (
+        <MenuItem value={bank?.id}>
+          {bank?.bankName} - {bank?.fullname} - {bank?.accountNumber}
+        </MenuItem>
+      );
+    return <MenuItem disabled>Không có phương thức nhận tiền</MenuItem>;
+  }, [userData]);
 
   const renderMain = () => {
     return (
@@ -69,31 +108,48 @@ const WithdrawMoney: React.FC = () => {
               >
                 Rút tiền
               </Typography>
-              <OutlinedInput
-                type="text"
+              <TextField
+                hiddenLabel
+                variant="outlined"
+                size="small"
                 placeholder="Số tiền muốn rút"
                 sx={{
-                  height: '59px',
-                  fontSize: '15px',
-                  paddingLeft: '22px',
-                  marginTop: '40px',
-                  backgroundColor: 'background.chargeInput',
-                  color: 'text.primary',
-                  borderRadius: '3px',
+                  ' .MuiInputBase-root': {
+                    background: '#ffffff',
+                  },
                 }}
-                endAdornment={
-                  <InputAdornment position="start">
-                    <Typography
-                      sx={{
-                        fontSize: '12px',
-                        marginLeft: '16px',
-                        color: 'text.primary',
-                      }}
+                type="number"
+                value={amount}
+                onChange={(e: any) => setAmount(e.target.value)}
+                InputProps={{
+                  sx: {
+                    height: '59px',
+                    fontSize: '15px',
+                    paddingLeft: '22px',
+                    marginTop: '40px',
+                    backgroundColor: 'background.chargeInput',
+                    color: 'text.primary',
+                    borderRadius: '3px',
+                  },
+                  endAdornment: (
+                    <InputAdornment
+                      position="start"
+                      sx={{ marginRight: '14px' }}
                     >
-                      Tự quy đổi thành: USDT
-                    </Typography>
-                  </InputAdornment>
-                }
+                      <Typography
+                        sx={{
+                          fontSize: '12px',
+                          marginLeft: '16px',
+                          color: 'text.primary',
+                        }}
+                      >
+                        Tự quy đổi thành: USDT
+                      </Typography>
+                    </InputAdornment>
+                  ),
+                }}
+                error={isErr && !amount}
+                helperText={isErr ? errMsg : ''}
               />
               <FormControl fullWidth sx={{ marginTop: '20px' }}>
                 <InputLabel
@@ -106,16 +162,20 @@ const WithdrawMoney: React.FC = () => {
                   Phương thức nhận tiền
                 </InputLabel>
                 <Select
-                  value=""
+                  value={bank}
+                  onChange={(event: any) => setBank(event.target.value)}
                   label="Phương thức nhận tiền"
                   sx={{
                     backgroundColor: 'background.chargeInput',
                     color: 'text.primary',
                     borderRadius: '3px',
+                    padding: '0 22px',
                     ' >': { borderRadius: '3px' },
                     border: 'none',
                   }}
-                ></Select>
+                >
+                  {withdrawMoneyType}
+                </Select>
               </FormControl>
               <Button
                 sx={{
@@ -129,6 +189,8 @@ const WithdrawMoney: React.FC = () => {
                   marginTop: '22px',
                   alignSelf: 'center',
                 }}
+                disabled={!bank || !amount}
+                onClick={() => onSubmit()}
               >
                 Rút tiền
               </Button>

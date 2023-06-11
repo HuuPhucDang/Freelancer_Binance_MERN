@@ -23,6 +23,8 @@ const Transaction: React.FC = () => {
   const dispatch = useTypedDispatch();
   const volatilityRef = React.useRef<HTMLDivElement | null>(null);
 
+  const userType = Utils.getUserData()?.userType?.type;
+
   React.useEffect(() => {
     const symbol = query.get('symbol');
     if (!symbol) Utils.replace(`${ROUTERS.TRANSACTION}?symbol=BTCUSDT`);

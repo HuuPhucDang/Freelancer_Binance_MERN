@@ -81,6 +81,7 @@ const Select: React.FC<IProps> = ({
         onChange={handleChange}
         options={options}
         placeholder={placeholder || 'Country'}
+        isSearchable={false}
         styles={{
           container: (base) => ({
             ...base,

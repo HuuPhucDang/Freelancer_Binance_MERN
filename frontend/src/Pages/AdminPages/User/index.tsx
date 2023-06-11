@@ -1,14 +1,9 @@
+import React from 'react';
 import {
-  Button,
   Chip,
-  FormControl,
   IconButton,
-  InputLabel,
-  MenuItem,
-  OutlinedInput,
   Pagination,
   Paper,
-  Select,
   Stack,
   Table,
   TableBody,
@@ -18,18 +13,44 @@ import {
   TableRow,
   Typography,
 } from '@mui/material';
+import { useSelector } from 'react-redux';
+import _ from 'lodash';
+
 import { AdminLayout } from '@/Components/DefaultLayout';
-import React from 'react';
 import RemoveRedEyeOutlinedIcon from '@mui/icons-material/RemoveRedEyeOutlined';
-import { UserDetails } from '@/Components/Popup';
+import { RootState, useTypedDispatch } from '@/Reducers/store';
+import { UserActions } from '@/Reducers/Actions';
+
+interface IUser {
+  nickname: string;
+}
+
+interface IUser {
+  id: number;
+  avatar: string;
+  nicknameE: string;
+  ownCode: string;
+  role: 'admin' | 'user';
+  status: 'active' | 'inactive';
+  username: string;
+}
+
+interface IPayload {
+  limit: number;
+  page: number;
+  results: IUser[];
+  totalPages: number;
+  totalResults: number;
+}
+
 function createData(
-  name: string,
-  email: string,
-  phone: string,
-  status: 'active' | 'inactive' | 'pending',
+  nickname: string,
+  username: string,
+  role: string,
+  status: 'active' | 'inactive',
   action: React.ReactNode
 ) {
-  return { name, email, phone, status, action };
+  return { nickname, username, role, status, action };
 }
 
 const statusOptions: {
@@ -52,140 +73,72 @@ const statusOptions: {
   },
 };
 
-const Request = () => {
-  const [status, setStatus] = React.useState<string>('');
-  const [isShowPopup, setIsShowPopup] = React.useState<boolean>(false);
+interface IFilterParam {
+  sortBy: string;
+  page: number;
+  limit: number;
+}
 
-  const rows = [
-    createData(
-      'Anonymous-User-b5b47',
-      'example1@email.com',
-      '01238919238',
-      'active',
-      <IconButton size="small" onClick={() => setIsShowPopup(true)}>
-        <RemoveRedEyeOutlinedIcon />
-      </IconButton>
-    ),
-    createData(
-      'Anonymous-User-b5b47',
-      'example1@email.com',
-      '01238919238',
-      'active',
-      <IconButton size="small" onClick={() => setIsShowPopup(true)}>
-        <RemoveRedEyeOutlinedIcon />
-      </IconButton>
-    ),
-    createData(
-      'Anonymous-User-b5b47',
-      'example1@email.com',
-      '01238919238',
-      'pending',
-      <IconButton size="small" onClick={() => setIsShowPopup(true)}>
-        <RemoveRedEyeOutlinedIcon />
-      </IconButton>
-    ),
-    createData(
-      'Anonymous-User-b5b47',
-      'example1@email.com',
-      '01238919238',
-      'inactive',
-      <IconButton size="small" onClick={() => setIsShowPopup(true)}>
-        <RemoveRedEyeOutlinedIcon />
-      </IconButton>
-    ),
-    createData(
-      'Anonymous-User-b5b47',
-      'example1@email.com',
-      '01238919238',
-      'inactive',
-      <IconButton size="small" onClick={() => setIsShowPopup(true)}>
-        <RemoveRedEyeOutlinedIcon />
-      </IconButton>
-    ),
-    createData(
-      'Anonymous-User-b5b47',
-      'example1@email.com',
-      '01238919238',
-      'pending',
-      <IconButton size="small" onClick={() => setIsShowPopup(true)}>
-        <RemoveRedEyeOutlinedIcon />
-      </IconButton>
-    ),
-    createData(
-      'Anonymous-User-b5b47',
-      'example1@email.com',
-      '01238919238',
-      'inactive',
-      <IconButton size="small" onClick={() => setIsShowPopup(true)}>
-        <RemoveRedEyeOutlinedIcon />
-      </IconButton>
-    ),
-  ];
+const initialFilterParams = {
+  sortBy: 'date:DESC,time:DESC',
+  page: 1,
+  limit: 15,
+};
+
+const { fetchUsers } = UserActions;
+
+const Request = () => {
+  const dispatch = useTypedDispatch();
+  const payload: IPayload = useSelector((state: RootState) =>
+    _.get(state.USER, 'payload')
+  );
+
+  const [filterParams, setFilterParams] =
+    React.useState<IFilterParam>(initialFilterParams);
+
+  React.useEffect(() => {
+    dispatch(fetchUsers(filterParams));
+  }, [filterParams]);
+
+  const rows = React.useMemo(() => {
+    const result: any[] = [];
+    if (payload.results && payload.results.length > 0) {
+      payload.results.map((item: IUser) =>
+        result.push(
+          createData(
+            item.nickname,
+            item.username,
+            item.role,
+            item.status,
+            <IconButton size="small" onClick={() => {}}>
+              <RemoveRedEyeOutlinedIcon />
+            </IconButton>
+          )
+        )
+      );
+    }
+    return result;
+  }, [payload]);
 
   const _renderMain = () => {
     return (
       <Stack sx={{ padding: '20px' }} direction="column">
-        <UserDetails open={isShowPopup} onClose={() => setIsShowPopup(false)} />
         <Typography sx={{ fontSize: '17px', fontWeight: 600 }}>
           Người dùng
         </Typography>
-        <Stack direction="row" marginTop="20px" spacing={2}>
-          <FormControl size="small">
-            <InputLabel
-              htmlFor="component-outlined-name"
-              sx={{ color: 'text.primary' }}
-            >
-              Từ khóa
-            </InputLabel>
-            <OutlinedInput
-              id="component-outlined-name"
-              label="Từ khóa"
-              defaultValue=""
-            />
-          </FormControl>
-          <FormControl sx={{ width: '240px' }} size="small">
-            <InputLabel
-              id="demo-simple-select-label"
-              sx={{ color: 'text.primary' }}
-            >
-              Trạng thái
-            </InputLabel>
-            <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              value={status}
-              label="Trạng thái"
-              onChange={(e: any) => setStatus(e.target.value as string)}
-            >
-              <MenuItem value="pending">Chờ duyệt</MenuItem>
-              <MenuItem value="accepted">Đã duyệt</MenuItem>
-              <MenuItem value="canceled">Đã hủy</MenuItem>
-            </Select>
-          </FormControl>
-          <Button
-            variant="contained"
-            size="small"
-            sx={{ textTransform: 'unset' }}
-          >
-            Tìm kiếm
-          </Button>
-        </Stack>
         <TableContainer component={Paper} sx={{ marginTop: '30px' }}>
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
             <TableHead>
               <TableRow>
                 <TableCell sx={{ fontWeight: 600 }}>Tên người dùng</TableCell>
-                <TableCell align="center" sx={{ fontWeight: 600 }}>
-                  Email
+                <TableCell align="left" sx={{ fontWeight: 600 }}>
+                  Tên đăng nhập
                 </TableCell>
                 <TableCell align="center" sx={{ fontWeight: 600 }}>
-                  Số điện thoại
+                  Vai trò
                 </TableCell>
                 <TableCell align="center" sx={{ fontWeight: 600 }}>
                   Trạng thái
-                </TableCell>
-                <TableCell align="center" sx={{ fontWeight: 600 }}>
-                  Hành động
                 </TableCell>
               </TableRow>
             </TableHead>
@@ -196,10 +149,15 @@ const Request = () => {
                   sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                 >
                   <TableCell component="th" scope="row">
-                    {row.name}
+                    {row.nickname}
                   </TableCell>
-                  <TableCell align="center">{row.email}</TableCell>
-                  <TableCell align="center">{row.phone}</TableCell>
+                  <TableCell align="left">{row.username}</TableCell>
+                  <TableCell
+                    align="center"
+                    sx={{ textTransform: 'capitalize' }}
+                  >
+                    {row.role}
+                  </TableCell>
                   <TableCell align="center">
                     <Chip
                       color={statusOptions[row.status].color}
@@ -208,7 +166,6 @@ const Request = () => {
                       variant="outlined"
                     />
                   </TableCell>
-                  <TableCell align="center">{row.action}</TableCell>
                 </TableRow>
               ))}
             </TableBody>
@@ -219,12 +176,19 @@ const Request = () => {
           justifyContent="flex-end"
           sx={{ marginTop: '15px' }}
         >
-          <Pagination count={10} shape="rounded" />
+          <Pagination
+            count={payload.totalPages}
+            page={payload.page}
+            onChange={(_event: any, newPage) =>
+              setFilterParams({ ...filterParams, page: newPage })
+            }
+            shape="rounded"
+          />
         </Stack>
       </Stack>
     );
   };
-  return <AdminLayout content={_renderMain()} screenTitle="Yêu cầu" />;
+  return <AdminLayout content={_renderMain()} screenTitle="Người dùng" />;
 };
 
 export default Request;
