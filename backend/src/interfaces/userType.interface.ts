@@ -7,6 +7,13 @@ export enum EUserType {
   PROFESSINAL = "professional",
 }
 
+export enum ELimitTradeTime {
+  BEGINNER = 30,
+  INTERMEDIATE = 60,
+  ADVANCE = 120,
+  PROFESSINAL = 150,
+}
+
 export interface IUserType {
   userId: Schema.Types.ObjectId;
   name: string;

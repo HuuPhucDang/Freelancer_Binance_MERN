@@ -29,30 +29,6 @@ import { ENUMS, ROUTERS } from '@/Constants';
 import { Utils } from '@/Libs';
 import { UserActions } from '@/Reducers/Actions';
 import { useTypedDispatch } from '@/Reducers/store';
-import utils from '@/Libs/utils';
-
-function createData(
-  icon: string,
-  symbol: string,
-  name: string,
-  value: number,
-  traffic: number
-) {
-  return { icon, symbol, name, value, traffic };
-}
-
-const rows = [
-  createData(Assets.bnbIcon, 'BNB', 'BNB', 309.2, -0.06),
-  createData(Assets.btcIcon, 'BTC', 'Bitcoin', 28.814, -0.4),
-  createData(Assets.ethIcon, 'ETH', 'Ehereum', 1.809, -0.29),
-  createData(Assets.pepeIcon, 'PEPE', 'PEPE', 0.546, 0.29),
-  createData(Assets.eduIcon, 'EDU', 'Open...', 1.35, 2.0),
-  createData(Assets.drepIcon, 'DREP', 'DREP', 0.177, -0.12),
-  createData(Assets.suiIcon, 'SUI', 'Sui', 1.57, 2.13),
-  createData(Assets.funIcon, 'FUN', 'Funtoken', 0.34, 2),
-  createData(Assets.idIcon, 'ID', 'Space ID', 1.12, -0.12),
-  createData(Assets.hookIcon, 'HOOK', 'Hooked Pr', 2.67, 2.13),
-];
 
 const userTypes = [
   {
@@ -78,13 +54,25 @@ const { getSelf } = UserActions;
 const Overview: React.FC = () => {
   // Constructors
   const dispatch = useTypedDispatch();
-  const userData = utils.getUserData();
+  const userData = Utils.getUserData();
   const [isShowNamePopup, setIsShowNamePopup] = React.useState<boolean>(false);
   const [isShowAvatarPopup, setIsShowAvatarPopup] =
     React.useState<boolean>(false);
 
+  const [tableData, setTableData] = React.useState<any>([]);
+
   React.useEffect(() => {
+    Utils.WebSocket.emit('getLatestCoins', null, (data: any) => {
+      console.table(data);
+      setTableData(data);
+    });
+    Utils.WebSocket.on('updateAllCoinPriceNow', (data) => {
+      setTableData(data);
+    });
     dispatch(getSelf());
+    return () => {
+      // Utils.WebSocket.disconnect();
+    };
   }, []);
 
   // Renders
@@ -98,6 +86,114 @@ const Overview: React.FC = () => {
     if (findUserType) result = findUserType.label;
     return result;
   }, []);
+
+  const _renderTable = () => (
+    <TableContainer
+      component={Paper}
+      sx={{
+        marginTop: '20px',
+        boxShadow: 'none',
+        borderRadius: '0px',
+      }}
+    >
+      <Table
+        size="small"
+        sx={{
+          minWidth: '100%',
+          backgroundColor: 'background.mainContent',
+        }}
+        aria-label="simple table"
+      >
+        <TableBody>
+          {_.isEmpty(tableData) && (
+            <TableRow
+              sx={{
+                '&:last-child td, &:last-child th': { border: 0 },
+              }}
+            >
+              <TableCell
+                component="th"
+                scope="row"
+                sx={{ textAlign: 'center' }}
+              >
+                No Coins avaiable
+              </TableCell>
+            </TableRow>
+          )}
+          {_.map(tableData, (item, index) => (
+            <TableRow
+              key={index}
+              sx={{
+                '&:last-child td, &:last-child th': { border: 0 },
+              }}
+            >
+              <TableCell component="th" scope="row" sx={{ padding: '4px' }}>
+                <Stack direction="row" alignItems="center">
+                  <Box
+                    component="img"
+                    src={item?.icon}
+                    sx={{
+                      width: '22px',
+                      height: 'auto',
+                      objectFit: 'contain',
+                      marginRight: '10px',
+                    }}
+                  />
+                  <Typography
+                    sx={{
+                      fontSize: '13px',
+                      lienHeight: '20px',
+                      fontWeight: 600,
+                      color: 'text.primary',
+                    }}
+                  >
+                    {item?.symbol}
+                  </Typography>
+                </Stack>
+              </TableCell>
+              <TableCell align="right" sx={{ padding: '4px' }}>
+                <Typography
+                  sx={{
+                    fontSize: '10px',
+                    lineHeight: '24px',
+                    color: 'text.primary',
+                  }}
+                >
+                  {item?.price}
+                </Typography>
+              </TableCell>
+              <TableCell align="right" sx={{ padding: '4px' }}>
+                <Typography
+                  sx={{
+                    fontSize: '10px',
+                    lineHeight: '24px',
+                    color: item?.growth < 0 ? '#F03030' : '#23631D',
+                  }}
+                >
+                  {item?.growth}%
+                </Typography>
+              </TableCell>
+              <TableCell align="right" sx={{ padding: '4px' }}>
+                <Link
+                  sx={{
+                    fontSize: '10px',
+                    lineHeight: '14px',
+                    fontWeight: 400,
+                    color: 'text.burntSienna',
+                    textAlign: 'left',
+                    marginTop: '20px',
+                  }}
+                  href={ROUTERS.TRANSACTION}
+                >
+                  Giao dịch
+                </Link>
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
+  );
 
   const renderMain = () => {
     return (
@@ -336,122 +432,7 @@ const Overview: React.FC = () => {
                       <ArrowCircleRightOutlinedIcon />
                     </IconButton>
                   </Stack>
-                  <TableContainer
-                    component={Paper}
-                    sx={{
-                      marginTop: '20px',
-                      boxShadow: 'none',
-                      borderRadius: '0px',
-                    }}
-                  >
-                    <Table
-                      size="small"
-                      sx={{
-                        minWidth: '100%',
-                        backgroundColor: 'background.mainContent',
-                      }}
-                      aria-label="simple table"
-                    >
-                      <TableBody>
-                        {rows.map((row) => (
-                          <TableRow
-                            key={row.name}
-                            sx={{
-                              '&:last-child td, &:last-child th': { border: 0 },
-                            }}
-                          >
-                            <TableCell
-                              component="th"
-                              scope="row"
-                              sx={{ padding: '4px' }}
-                            >
-                              <Stack direction="row" alignItems="center">
-                                <Box
-                                  component="img"
-                                  src={row.icon}
-                                  sx={{
-                                    width: '22px',
-                                    height: 'auto',
-                                    objectFit: 'contain',
-                                    marginRight: '10px',
-                                  }}
-                                />
-                                <Typography
-                                  sx={{
-                                    fontSize: '13px',
-                                    lienHeight: '20px',
-                                    fontWeight: 600,
-                                    color: 'text.primary',
-                                  }}
-                                >
-                                  {row.symbol}
-                                </Typography>
-                                <Typography
-                                  sx={{
-                                    fontSize: '13px',
-                                    lienHeight: '20px',
-                                    fontWeight: 600,
-                                    marginLeft: '10px',
-                                  }}
-                                >
-                                  {row.name}
-                                </Typography>
-                              </Stack>
-                            </TableCell>
-                            <TableCell align="right" sx={{ padding: '4px' }}>
-                              <Typography
-                                sx={{
-                                  fontSize: '10px',
-                                  lineHeight: '24px',
-                                  color: 'text.primary',
-                                }}
-                              >
-                                {row.value}
-                              </Typography>
-                            </TableCell>
-                            <TableCell align="right" sx={{ padding: '4px' }}>
-                              {row.traffic < 0 ? (
-                                <Typography
-                                  sx={{
-                                    fontSize: '10px',
-                                    lineHeight: '24px',
-                                    color: '#F03030',
-                                  }}
-                                >
-                                  {row.traffic}%
-                                </Typography>
-                              ) : (
-                                <Typography
-                                  sx={{
-                                    fontSize: '10px',
-                                    lineHeight: '24px',
-                                    color: '#23631D',
-                                  }}
-                                >
-                                  +{row.traffic}%
-                                </Typography>
-                              )}
-                            </TableCell>
-                            <TableCell align="right" sx={{ padding: '4px' }}>
-                              <Link
-                                sx={{
-                                  fontSize: '10px',
-                                  lineHeight: '14px',
-                                  fontWeight: 400,
-                                  color: 'text.burntSienna',
-                                  textAlign: 'left',
-                                  marginTop: '20px',
-                                }}
-                                href={ROUTERS.TRANSACTION}
-                              >
-                                Giao dịch
-                              </Link>
-                            </TableCell>
-                          </TableRow>
-                        ))}
-                      </TableBody>
-                    </Table>
-                  </TableContainer>
+                  {_renderTable()}
                 </Stack>
               </Grid>
             </Grid>

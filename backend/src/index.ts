@@ -1,6 +1,11 @@
 import mongoose from "mongoose";
 import { Server } from "socket.io";
-import { scheduledFunctions, Seender, intiChatSocket } from "./services";
+import {
+  scheduledFunctions,
+  Seender,
+  intiChatSocket,
+  initInterventionSocket,
+} from "./services";
 import app from "./app";
 import config from "./config/config";
 import logger from "./logger/logger";
@@ -17,13 +22,15 @@ mongoose.connect(config.mongoose.url).then(() => {
   });
   const io = new Server(server);
   global.io = io;
-  io.on("connection", (_socket) => {
-    console.log("a user connected on trade");
+  io.on("connection", (socket) => {
+    console.log("a user connected");
+    initInterventionSocket(socket);
   });
   io.on("accessChatPage", (socket) => {
-    intiChatSocket(socket)
+    intiChatSocket(socket);
   });
   Seender.createSeedAdmin();
+  Seender.createSeedCoins();
   scheduledFunctions();
 });
 

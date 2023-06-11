@@ -74,7 +74,7 @@ const EditName: React.FC<IProps> = ({ open = false, onClose }) => {
           >
             <Grid container spacing={2}>
               {avatarOptions.map((item: string) => (
-                <Grid item xs={6}>
+                <Grid item xs={6} key={item}>
                   <FormControlLabel
                     key={`avatar-${item}`}
                     value={item}

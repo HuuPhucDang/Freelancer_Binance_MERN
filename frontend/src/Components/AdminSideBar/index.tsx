@@ -6,6 +6,7 @@ import ChatIcon from '@mui/icons-material/Chat';
 import React from 'react';
 import PeopleIcon from '@mui/icons-material/People';
 import LogoutIcon from '@mui/icons-material/Logout';
+import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
 import { useLocation } from 'react-router';
 import { useTypedDispatch } from '../../Reducers/store';
 import { AuthActions } from '../../Reducers/Actions';
@@ -13,6 +14,11 @@ import { Utils } from '../../Libs';
 import StackedLineChartIcon from '@mui/icons-material/StackedLineChart';
 
 const navigationItems = [
+  {
+    label: 'Can Thiệp Giá',
+    path: ROUTERS.INTERVENTION,
+    icon: <MonetizationOnIcon sx={{ fontSize: '16px', marginRight: '5px' }} />,
+  },
   {
     label: 'Người dùng',
     path: ROUTERS.USERS,

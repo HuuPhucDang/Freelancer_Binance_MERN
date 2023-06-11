@@ -131,7 +131,6 @@ const Invoice: React.FC = () => {
 
   const fetchPayload = async () => {
     const resolveFilters = Utils.resolveFilter(filterParams);
-    console.log(resolveFilters);
     dispatch(fetchTransactions(resolveFilters));
   };
 

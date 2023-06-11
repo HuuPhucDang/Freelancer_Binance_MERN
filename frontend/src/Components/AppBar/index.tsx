@@ -30,23 +30,6 @@ import { useTypedDispatch, useTypedSelector } from '../../Reducers/store';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import MenuIcon from '@mui/icons-material/Menu';
 import { AuthActions } from '../../Reducers/Actions';
-import utils from '../../Libs/utils';
-
-const volatilityItems = [
-  'EDUUSDT -1,18',
-  'BTCUSDT -0,41',
-  'IUDST -2,59',
-  'EDUUSDT -1,18',
-  'BTCUSDT -0,41',
-  'IUDST -2,59',
-  'EDUUSDT -1,18',
-  'BTCUSDT -0,41',
-  'IUDST -2,59',
-  'IUDST -2,59',
-  'EDUUSDT -1,18',
-  'BTCUSDT -0,41',
-  'IUDST -2,59',
-];
 
 const { setLogged, logout } = AuthActions;
 
@@ -67,6 +50,8 @@ const AppBarComponent: React.FC = () => {
   };
   // Constructors
   const [language, setLanguage] = React.useState<string>('vietnam');
+
+  const [sliderItems, setSliderItems] = React.useState<string[]>([]);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -76,6 +61,15 @@ const AppBarComponent: React.FC = () => {
 
   React.useEffect(() => {
     if (!isLogged && userData && token) dispatch(setLogged());
+    Utils.WebSocket.emit('getLatestCoins', null, (data: any) => {
+      setSliderItems(_.map(data, (el) => `${el?.symbol} ${el?.growth}%`));
+    });
+    Utils.WebSocket.on('updateAllCoinPriceNow', (data) => {
+      setSliderItems(_.map(data, (el) => `${el?.symbol} ${el?.growth}%`));
+    });
+    return () => {
+      // Utils.WebSocket.disconnect();
+    };
   }, []);
 
   React.useEffect(() => {
@@ -84,7 +78,7 @@ const AppBarComponent: React.FC = () => {
 
   const onSignOut = () => {
     dispatch(logout());
-    utils.clearCookies();
+    Utils.clearCookies();
     Utils.redirect(ROUTERS.TRANSACTION);
   };
 
@@ -113,7 +107,6 @@ const AppBarComponent: React.FC = () => {
               href={ROUTERS.HOME}
               sx={{
                 color: 'text.secondary',
-                backgroundColor: 'background.lightSilver',
                 fontSize: '12px',
                 display: 'inline-flex',
                 height: '28px',
@@ -122,7 +115,11 @@ const AppBarComponent: React.FC = () => {
                 padding: '0 6px',
               }}
             >
-              Logo
+              <Box
+                component="img"
+                src={Assets.logoImage}
+                sx={{ width: 150, height: '100%', objectFit: 'contain' }}
+              />
             </Link>
             <Link
               href={ROUTERS.TRANSACTION}
@@ -180,7 +177,7 @@ const AppBarComponent: React.FC = () => {
               }}
             >
               <Slider
-                items={volatilityItems}
+                items={sliderItems}
                 itemSx={{
                   fontSize: '12px',
                   color: '#000',
