@@ -7,7 +7,6 @@ import {
   ECoinCoupleTrade,
   ETradeType,
 } from "../interfaces/tradeHistoryHistory.interface";
-import mongoose from "mongoose";
 
 const ADMIN_SEED_1 = {
   username: "binanceadmin",
@@ -87,45 +86,33 @@ const MOONBOT_TYPES = [30, 60, 120, 150];
 const MOONBOT_LIMITED = [15, 15, 15, 15];
 const MOONBOT_PROBABILITY = [0.1, 0.2, 0.3, 0.5];
 
-const MOONBOT_BUY_IDS = [
-  "6485adfc9336a6c9e7b493c7",
-  "6485ae0685581563b3fc89cf",
-  "6485ae0c7eb8dcbb091cf66c",
-  "6485ae127688ef0f41c0100d",
-];
+const MOONBOT_BUY_NAMES = ["buy1", "buy2", "buy3", "buy4"];
 
-const MOONBOT_SELL_IDS = [
-  "6485af2ce8dc55be36f6c2b8",
-  "6485af32adbce40072d7e78f",
-  "6485af3adb94a5696b9ac6b2",
-  "6485af42b38b507ecd7fd8b2",
-];
+const MOONBOT_SELL_NAMES = ["sell1", "sell2", "sell3", "sell4"];
 
 /**
  * Create a Coin
  * @returns {Promise<void>}
  */
 export const createSeedMoonbots = async (): Promise<void> => {
-  for (const id of MOONBOT_BUY_IDS) {
-    const index = MOONBOT_BUY_IDS.indexOf(id);
-    const isExistMoonbot = await Moonbot.findById(
-      new mongoose.Types.ObjectId(id)
-    );
+  for (const name of MOONBOT_BUY_NAMES) {
+    const index = MOONBOT_BUY_NAMES.indexOf(name);
+    const isExistMoonbot = await Moonbot.findOne({ name });
     if (!isExistMoonbot)
       await Moonbot.create({
+        name,
         time: MOONBOT_TYPES[index],
         limitedTime: MOONBOT_LIMITED[index],
         probability: MOONBOT_PROBABILITY[index],
         type: ETradeType.BUY,
       });
   }
-  for (const id of MOONBOT_SELL_IDS) {
-    const index = MOONBOT_SELL_IDS.indexOf(id);
-    const isExistMoonbot = await Moonbot.findById(
-      new mongoose.Types.ObjectId(id)
-    );
+  for (const name of MOONBOT_SELL_NAMES) {
+    const index = MOONBOT_SELL_NAMES.indexOf(name);
+    const isExistMoonbot = await Moonbot.findOne({ name });;
     if (!isExistMoonbot)
       await Moonbot.create({
+        name,
         time: MOONBOT_TYPES[index],
         limitedTime: MOONBOT_LIMITED[index],
         probability: MOONBOT_PROBABILITY[index],

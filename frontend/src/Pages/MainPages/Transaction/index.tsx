@@ -84,7 +84,7 @@ const Transaction: React.FC = () => {
                   }}
                 >
                   <Grid container columnSpacing={1}>
-                    <TradeField />
+                    <TradeField symbol={query.get('symbol')} />
                   </Grid>
                 </Stack>
               </Stack>

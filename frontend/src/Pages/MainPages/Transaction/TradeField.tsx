@@ -42,10 +42,10 @@ const styleInput = {
 };
 
 const LIMIT_BET: any = {
-  [ENUMS.EUserType.BEGINNER]: ['30s'],
-  [ENUMS.EUserType.INTERMEDIATE]: ['30s', '60s'],
-  [ENUMS.EUserType.ADVANCE]: ['30s', '60s', '120s'],
-  [ENUMS.EUserType.PROFESSINAL]: ['30s', '60s', '120s', '150s'],
+  [ENUMS.EUserType.BEGINNER]: [0],
+  [ENUMS.EUserType.INTERMEDIATE]: [0, 1],
+  [ENUMS.EUserType.ADVANCE]: [0, 1, 2],
+  [ENUMS.EUserType.PROFESSINAL]: [0, 1, 2, 3],
 };
 
 const LIMIT_PROBABILITY: any = {
@@ -57,14 +57,15 @@ const LIMIT_PROBABILITY: any = {
 
 const { getSelf } = UserActions;
 const { createTrade } = TradeActions;
-
+enum TRADE_TYPE {
+  BUY = 'buy',
+  SELL = 'sell',
+}
 interface ITradeFieldProps {
-  currentPrice: number;
   symbol: string;
 }
 
 const TradeField: React.FC<ITradeFieldProps> = ({
-  currentPrice,
   symbol,
 }: ITradeFieldProps) => {
   // Constructors
@@ -92,11 +93,30 @@ const TradeField: React.FC<ITradeFieldProps> = ({
   const [ballance, setBallance] = React.useState<number>(0);
   const [betAmount, setBetAmount] = React.useState<number>(0);
   const [betSellAmount, setBetSellAmount] = React.useState<number>(0);
+  const [moonbotButtons, setMoonbootButtons] = React.useState<any>([]);
+  const [coinPrice, setCoinPrice] = React.useState<number>(0);
 
   React.useEffect(() => {
     dispatch(getSelf());
     return () => {
       // clearInterval(intervalLatest24h);
+    };
+  }, []);
+
+  React.useEffect(() => {
+    Utils.WebSocket.emit('getAllMoonboot', null, (data: any) => {
+      setMoonbootButtons(data);
+    });
+    Utils.WebSocket.on('updateAllMoonbotNow', (data) => {
+      setMoonbootButtons(data);
+    });
+    const updateCoinPriceInterval = setInterval(() => {
+      Utils.WebSocket.emit('getCoinWithSymbol', { symbol }, (data: any) => {
+        setCoinPrice(data?.price);
+      });
+    }, 3000);
+    return () => {
+      clearInterval(updateCoinPriceInterval);
     };
   }, []);
 
@@ -109,8 +129,8 @@ const TradeField: React.FC<ITradeFieldProps> = ({
   }, [userDetails]);
 
   // Events
-  const onSetBetTime = (time: string, type: 'BUY' | 'SELL') => {
-    if (type === 'BUY') {
+  const onSetBetTime = (time: string, type: TRADE_TYPE) => {
+    if (type === TRADE_TYPE.BUY) {
       if (time !== betTime) {
         setBetTime(time);
         setProbability(LIMIT_PROBABILITY[time]);
@@ -123,13 +143,13 @@ const TradeField: React.FC<ITradeFieldProps> = ({
     }
   };
 
-  const createNewTrade = (betType: 'buy' | 'sell') => {
+  const createNewTrade = (betType: TRADE_TYPE) => {
     let validated = true;
     if (betTime === 'buy') validated = _.includes(LIMIT_BET[userType], betTime);
     else validated = _.includes(LIMIT_BET[userType], betSellTime);
     if (validated) {
       const payload = {
-        betPrice: currentPrice,
+        betPrice: coinPrice,
         betAmount,
         type: betType,
         symbol,
@@ -141,9 +161,9 @@ const TradeField: React.FC<ITradeFieldProps> = ({
   };
 
   // Renders
-  const _renderMoonBot = (type: 'BUY' | 'SELL') =>
-    _.map(['30s', '60s', '120s', '160s'], (item, index) => (
-      <Grid item xs={6} sm={3} md={3} key={`${item}-${index}${type}`}>
+  const _renderMoonBot = (type: TRADE_TYPE) =>
+    _.map(_.filter(moonbotButtons, ['type', type]), (item, index) => (
+      <Grid item xs={6} sm={3} md={3} key={`${item?.id}`}>
         <Button
           variant="contained"
           sx={{
@@ -156,15 +176,15 @@ const TradeField: React.FC<ITradeFieldProps> = ({
             paddingX: '0',
             minWidth: 'unset',
           }}
-          disabled={!_.includes(LIMIT_BET[userType], item)}
-          onClick={() => onSetBetTime(item, type)}
+          disabled={!_.includes(LIMIT_BET[userType], index)}
+          onClick={() => onSetBetTime(`${item?.time}s`, type)}
         >
-          {item}
+          {item?.time}s
         </Button>
       </Grid>
     ));
 
-  const _renderInputs = (type: 'BUY' | 'SELL') => {
+  const _renderInputs = (type: TRADE_TYPE) => {
     return (
       <>
         <Box sx={styleBox}>
@@ -177,7 +197,7 @@ const TradeField: React.FC<ITradeFieldProps> = ({
               step: 0.01,
             }}
             onChange={(e) => {
-              if (type === 'BUY') setBetAmount(Number(e.target.value));
+              if (type === TRADE_TYPE.BUY) setBetAmount(Number(e.target.value));
               else setBetSellAmount(Number(e.target.value));
             }}
             InputProps={{
@@ -195,7 +215,7 @@ const TradeField: React.FC<ITradeFieldProps> = ({
             variant="filled"
             sx={styleInput}
             type="number"
-            value={currentPrice}
+            value={coinPrice}
             disabled
             InputProps={{
               endAdornment: (
@@ -214,7 +234,7 @@ const TradeField: React.FC<ITradeFieldProps> = ({
             disabled
             type="number"
             value={
-              type === 'BUY'
+              type === TRADE_TYPE.BUY
                 ? betAmount + betAmount * probability
                 : betSellAmount + betSellAmount * sellProbability
             }
@@ -235,7 +255,7 @@ const TradeField: React.FC<ITradeFieldProps> = ({
             disabled
             type="number"
             value={
-              type === 'BUY'
+              type === TRADE_TYPE.BUY
                 ? betAmount - betAmount * probability
                 : betSellAmount - betSellAmount * sellProbability
             }
@@ -257,9 +277,9 @@ const TradeField: React.FC<ITradeFieldProps> = ({
       <Typography sx={{ fontSize: '13px', lineHeight: '15px' }}>
         Số dư: {ballance - betAmount - betSellAmount}
       </Typography>
-      {_renderInputs('BUY')}
+      {_renderInputs(TRADE_TYPE.BUY)}
       <Grid container spacing={0.5} marginTop="5px">
-        {_renderMoonBot('BUY')}
+        {_renderMoonBot(TRADE_TYPE.BUY)}
       </Grid>
       <Button
         color="success"
@@ -272,7 +292,7 @@ const TradeField: React.FC<ITradeFieldProps> = ({
           fontWeight: 900,
           background: '#2EBD85',
         }}
-        onClick={() => createNewTrade('buy')}
+        onClick={() => createNewTrade(TRADE_TYPE.BUY)}
       >
         Mua
       </Button>
@@ -284,9 +304,9 @@ const TradeField: React.FC<ITradeFieldProps> = ({
       <Typography sx={{ fontSize: '13px', lineHeight: '15px' }}>
         Thời gian: {betTime}
       </Typography>
-      {_renderInputs('SELL')}
+      {_renderInputs(TRADE_TYPE.SELL)}
       <Grid container spacing={0.5} marginTop="5px">
-        {_renderMoonBot('SELL')}
+        {_renderMoonBot(TRADE_TYPE.SELL)}
       </Grid>
       <Button
         color="error"
@@ -299,7 +319,7 @@ const TradeField: React.FC<ITradeFieldProps> = ({
           fontWeight: 900,
           background: '#F03030',
         }}
-        onClick={() => createNewTrade('sell')}
+        onClick={() => createNewTrade(TRADE_TYPE.SELL)}
       >
         Bán
       </Button>

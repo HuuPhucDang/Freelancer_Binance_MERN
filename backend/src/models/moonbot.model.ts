@@ -5,6 +5,11 @@ import { ETradeType } from "../interfaces/tradeHistoryHistory.interface";
 
 const moonbotSchema = new mongoose.Schema<IMoonbotDoc, IMoonbotModel>(
   {
+    name: {
+      type: mongoose.Schema.Types.String,
+      unique: true,
+      private: true,
+    },
     time: {
       type: mongoose.Schema.Types.Number,
       default: 0,

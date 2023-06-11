@@ -51,6 +51,10 @@ const intiChartSocket = (socket: Socket) => {
     const allCoins = await Coin.find().sort({ price: -1 });
     callback(allCoins);
   });
+  socket.on("getCoinWithSymbol", async (data: any, callback: any) => {
+    const coin = await Coin.findOne({ symbol: data?.symbol });
+    callback(coin);
+  });
   socket.on("getLatestCoinWithSymbol", async (data: any, callback: any) => {
     const coin = await Coin.findOne({ symbol: data?.symbol });
     callback(coin);

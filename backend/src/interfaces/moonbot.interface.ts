@@ -6,6 +6,7 @@ export interface IMoonbot {
   limitedTime: number;
   type: ETradeType;
   probability: number;
+  name: string;
 }
 
 export interface IMoonbotDoc extends IMoonbot, Document {}
