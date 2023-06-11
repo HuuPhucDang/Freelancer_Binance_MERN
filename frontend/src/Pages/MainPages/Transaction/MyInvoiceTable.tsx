@@ -13,11 +13,13 @@ import { useEffect } from 'react';
 import _ from 'lodash';
 import dayjs from 'dayjs';
 import { useSelector } from 'react-redux';
+import { Utils } from '@/Libs';
 
 import { useTypedDispatch, RootState } from '@/Reducers/store';
-import { TradeActions } from '@/Reducers/Actions';
+import { TradeActions, UserActions } from '@/Reducers/Actions';
 
 const { fetchTrades } = TradeActions;
+const { getSelf } = UserActions;
 
 const MyInvoiceTable = () => {
   const dispatch = useTypedDispatch();
@@ -29,7 +31,14 @@ const MyInvoiceTable = () => {
   );
 
   useEffect(() => {
+    Utils.WebSocket.on('updateTradeListNow', () => {
+      dispatch(fetchTrades());
+      dispatch(getSelf());
+    });
     dispatch(fetchTrades());
+    return () => {
+      // clearInterval(checkResultInterval);
+    };
   }, []);
 
   return (
@@ -89,7 +98,13 @@ const MyInvoiceTable = () => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {isFetchLoading && <CircularProgress />}
+          {isFetchLoading && (
+            <TableRow>
+              <TableCell colSpan={3}>
+                <CircularProgress />
+              </TableCell>
+            </TableRow>
+          )}
           {!isFetchLoading &&
             allTrades.map((row: any, index: number) => (
               <TableRow
@@ -117,9 +132,9 @@ const MyInvoiceTable = () => {
                       lineHeight: '11px',
                       padding: '4px 0',
                       color:
-                        row.type === 'pending'
+                        row.result === 'pending'
                           ? '#816A6A'
-                          : row.type === 'win'
+                          : row.result === 'win'
                           ? '#408827'
                           : '#F21616',
                     }}
@@ -135,9 +150,9 @@ const MyInvoiceTable = () => {
                       padding: '4px 0',
                       color: '#816A6A',
                     }}
-                    title={dayjs(row?.createdAt).format('DD/MM/YYYY')}
+                    title={dayjs(row?.betTime).format('DD/MM/YYYY')}
                   >
-                    {dayjs(row?.createdAt).format('hh:mm:ss')}
+                    {dayjs(row?.betTime).format('hh:mm:ss')}
                   </Typography>
                 </TableCell>
               </TableRow>

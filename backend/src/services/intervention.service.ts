@@ -94,16 +94,13 @@ const intiChartSocket = (socket: Socket) => {
       callback(resolveList);
     }
   });
-  socket.on("checkTradeResult", async (data: any, callback: any) => {
-    const allPendingTrade = await TradeHistory.find({
-      userId: new mongoose.Types.ObjectId(data?.userId),
-      result: ETradeResult.PENDING,
-    });
-    const wallet = await Wallet.findOne({
-      userId: new mongoose.Types.ObjectId(data?.userId),
-    });
-    for (const trade of allPendingTrade) {
-      if (trade) {
+  socket.on("checkTradeResult", async (data: any) => {
+    const trade = await TradeHistory.findById(
+      new mongoose.Types.ObjectId(data?.tradeId)
+    );
+    if (trade) {
+      console.log(`WAITING CHECK TRADE FOR ${data?.timeout}`, data?.tradeId);
+      setTimeout(async () => {
         const currentCoin = await Coin.findOne({ symbol: trade.symbol });
         if (currentCoin) {
           trade.result = checkResults(
@@ -111,18 +108,23 @@ const intiChartSocket = (socket: Socket) => {
             currentCoin.price,
             trade.type
           );
+          const wallet = await Wallet.findOne({
+            userId: new mongoose.Types.ObjectId(data?.userId),
+          });
           await trade.save();
           if (wallet) {
-            wallet.balance =
+            const amount = trade.betAmount * trade.probability;
+            const balanceResult =
               trade.result === ETradeResult.LOSE
-                ? wallet.balance - trade.betAmount * trade.probability
-                : wallet.balance + trade.betAmount * trade.probability;
+                ? wallet.balance - amount
+                : wallet.balance + amount;
+            wallet.balance = balanceResult;
             await wallet.save();
           }
         }
-      }
+        global.io.emit("updateTradeListNow");
+      }, data?.timeout || 1);
     }
-    callback(null);
   });
   socket.on("getAggregateTradeList", async (data: any, callback: any) => {
     const coin = await Coin.findOne({ symbol: data?.symbol });

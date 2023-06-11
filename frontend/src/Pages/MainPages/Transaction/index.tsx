@@ -84,7 +84,7 @@ const Transaction: React.FC = () => {
                   }}
                 >
                   <Grid container columnSpacing={1}>
-                    <TradeField symbol={query.get('symbol')} />
+                    <TradeField symbol={query.get('symbol') || 'BTCUSDT'} />
                   </Grid>
                 </Stack>
               </Stack>

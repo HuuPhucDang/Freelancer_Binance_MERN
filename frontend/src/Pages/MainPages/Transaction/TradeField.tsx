@@ -9,6 +9,7 @@ import {
   Box,
   Link,
 } from '@mui/material';
+import dayjs from 'dayjs';
 import _ from 'lodash';
 import { useSelector } from 'react-redux';
 
@@ -48,13 +49,6 @@ const LIMIT_BET: any = {
   [ENUMS.EUserType.PROFESSINAL]: [0, 1, 2, 3],
 };
 
-const LIMIT_PROBABILITY: any = {
-  '30s': 0.1,
-  '60s': 0.2,
-  '120s': 0.3,
-  '150s': 0.5,
-};
-
 const { getSelf } = UserActions;
 const { createTrade } = TradeActions;
 enum TRADE_TYPE {
@@ -71,7 +65,7 @@ const TradeField: React.FC<ITradeFieldProps> = ({
   // Constructors
   const dispatch = useTypedDispatch();
   const isActionLoading = useSelector((state: RootState) =>
-    _.get(state.TRADE, 'isFetchLoading')
+    _.get(state.TRADE, 'isActionLoading')
   );
   const isLogged = useSelector((state: RootState) =>
     _.get(state.AUTH, 'isLogged')
@@ -84,17 +78,18 @@ const TradeField: React.FC<ITradeFieldProps> = ({
   );
   const [betTime, setBetTime] = React.useState<string>('30s');
   const [betSellTime, setBetSellTime] = React.useState<string>('30s');
-  const [probability, setProbability] = React.useState<number>(
-    LIMIT_PROBABILITY[betTime]
-  );
-  const [sellProbability, setSellProbability] = React.useState<number>(
-    LIMIT_PROBABILITY[betSellTime]
-  );
+  const [probability, setProbability] = React.useState<number>(0);
+  const [sellProbability, setSellProbability] = React.useState<number>(0);
   const [ballance, setBallance] = React.useState<number>(0);
   const [betAmount, setBetAmount] = React.useState<number>(0);
   const [betSellAmount, setBetSellAmount] = React.useState<number>(0);
   const [moonbotButtons, setMoonbootButtons] = React.useState<any>([]);
   const [coinPrice, setCoinPrice] = React.useState<number>(0);
+  const [limitedTimes, setLimitedTimes] = React.useState<number>(0);
+  const [betType, setBetType] = React.useState<string>('buy');
+  const [serverTime, setServerTime] = React.useState<string>(
+    dayjs().format('hh:mm:ss')
+  );
 
   React.useEffect(() => {
     dispatch(getSelf());
@@ -106,6 +101,10 @@ const TradeField: React.FC<ITradeFieldProps> = ({
   React.useEffect(() => {
     Utils.WebSocket.emit('getAllMoonboot', null, (data: any) => {
       setMoonbootButtons(data);
+      const getFirstMoonboot: any = _.first(data);
+      setBetTime(`${getFirstMoonboot?.time}s`);
+      setProbability(getFirstMoonboot?.probability);
+      setLimitedTimes(getFirstMoonboot?.limitedTime);
     });
     Utils.WebSocket.on('updateAllMoonbotNow', (data) => {
       setMoonbootButtons(data);
@@ -115,8 +114,12 @@ const TradeField: React.FC<ITradeFieldProps> = ({
         setCoinPrice(data?.price);
       });
     }, 3000);
+    const serverTimeInterval = setInterval(() => {
+      setServerTime(dayjs().format('hh:mm:ss'));
+    }, 1000);
     return () => {
       clearInterval(updateCoinPriceInterval);
+      clearInterval(serverTimeInterval);
     };
   }, []);
 
@@ -129,35 +132,36 @@ const TradeField: React.FC<ITradeFieldProps> = ({
   }, [userDetails]);
 
   // Events
-  const onSetBetTime = (time: string, type: TRADE_TYPE) => {
+  const onSetBetTime = (
+    time: string,
+    type: TRADE_TYPE,
+    probability: number
+  ) => {
     if (type === TRADE_TYPE.BUY) {
       if (time !== betTime) {
         setBetTime(time);
-        setProbability(LIMIT_PROBABILITY[time]);
+        setProbability(probability);
       }
     } else {
       if (time !== betSellTime) {
         setBetSellTime(time);
-        setSellProbability(LIMIT_PROBABILITY[time]);
+        setSellProbability(probability);
       }
     }
   };
 
   const createNewTrade = (betType: TRADE_TYPE) => {
-    let validated = true;
-    if (betTime === 'buy') validated = _.includes(LIMIT_BET[userType], betTime);
-    else validated = _.includes(LIMIT_BET[userType], betSellTime);
-    if (validated) {
-      const payload = {
-        betPrice: coinPrice,
-        betAmount,
-        type: betType,
-        symbol,
-        probability,
-        time: betTime,
-      };
-      dispatch(createTrade(payload));
-    }
+    const payload = {
+      betPrice: coinPrice,
+      betAmount: betType === TRADE_TYPE.BUY ? betAmount : betSellAmount,
+      type: betType,
+      symbol,
+      probability: betType === TRADE_TYPE.BUY ? probability : sellProbability,
+      time: betType === TRADE_TYPE.BUY ? betTime : betSellTime,
+    };
+    dispatch(
+      createTrade(payload, limitedTimes, Number(betSellTime.replace('s', '')))
+    );
   };
 
   // Renders
@@ -177,7 +181,11 @@ const TradeField: React.FC<ITradeFieldProps> = ({
             minWidth: 'unset',
           }}
           disabled={!_.includes(LIMIT_BET[userType], index)}
-          onClick={() => onSetBetTime(`${item?.time}s`, type)}
+          onClick={() => {
+            onSetBetTime(`${item?.time}s`, type, item?.probability);
+            setLimitedTimes(item?.limitedTime || 0);
+            setBetType(item?.type);
+          }}
         >
           {item?.time}s
         </Button>
@@ -292,6 +300,7 @@ const TradeField: React.FC<ITradeFieldProps> = ({
           fontWeight: 900,
           background: '#2EBD85',
         }}
+        disabled={isActionLoading || betType === TRADE_TYPE.SELL}
         onClick={() => createNewTrade(TRADE_TYPE.BUY)}
       >
         Mua
@@ -301,8 +310,15 @@ const TradeField: React.FC<ITradeFieldProps> = ({
 
   const _renderRightSide = () => (
     <Grid item xs={6}>
-      <Typography sx={{ fontSize: '13px', lineHeight: '15px' }}>
-        Thời gian: {betTime}
+      <Typography
+        sx={{
+          fontSize: '13px',
+          lineHeight: '15px',
+          color: isActionLoading ? '#F21616' : '#408827',
+        }}
+      >
+        Thời gian: {serverTime}
+        {isActionLoading && `(Server đã đóng thời gian cho phép giao dịch)`}
       </Typography>
       {_renderInputs(TRADE_TYPE.SELL)}
       <Grid container spacing={0.5} marginTop="5px">
@@ -319,6 +335,7 @@ const TradeField: React.FC<ITradeFieldProps> = ({
           fontWeight: 900,
           background: '#F03030',
         }}
+        disabled={isActionLoading || betType === TRADE_TYPE.BUY}
         onClick={() => createNewTrade(TRADE_TYPE.SELL)}
       >
         Bán

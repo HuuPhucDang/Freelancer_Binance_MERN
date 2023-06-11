@@ -64,6 +64,7 @@ export const registerUser = async (
   });
   const wallet = await Wallet.create({
     balance: 0,
+    userId: user.id,
   });
   user.userType = userType.id;
   user.wallet = wallet.id;

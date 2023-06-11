@@ -11,6 +11,7 @@ import TradeHistory from "../../models/tradeHistory.model";
 import Wallet from "../../models/wallet.model";
 import UserType from "../../models/userType.model";
 import { getUserById } from "../user/user.service";
+import moment from "moment";
 
 const LIMIT_BET = {
   [EUserType.BEGINNER]: ["30s"],
@@ -25,7 +26,7 @@ const LIMIT_BET = {
 export const createNewTrade = async (
   userId: mongoose.Types.ObjectId,
   createBody: CreateNewTradeBody
-): Promise<ITradeHistoryDoc[]> => {
+): Promise<ITradeHistoryDoc> => {
   const user = await getUserById(userId);
   if (!user) throw new ApiError(httpStatus.NOT_FOUND, "User not found!");
   const wallet = await Wallet.findOne({ userId });
@@ -41,12 +42,13 @@ export const createNewTrade = async (
     throw new ApiError(httpStatus.BAD_REQUEST, "Your level lower bet level!");
   wallet.balance = wallet.balance - createBody.betAmount;
   await wallet.save();
-  await TradeHistory.create({
+  const savedTrade = await TradeHistory.create({
     ...createBody,
     userId,
+    betTime: moment().format("DD/MM/YYYY hh:mm:ss"),
   });
-
-  return await TradeHistory.find({ userId }).sort({ updatedAt: -1 });
+  global.io.emit("updateTradeListNow");
+  return savedTrade;
 };
 
 /**
@@ -57,5 +59,5 @@ export const fetchAllTrades = async (
 ): Promise<ITradeHistoryDoc[]> => {
   const user = await getUserById(userId);
   if (!user) throw new ApiError(httpStatus.NOT_FOUND, "User not found!");
-  return await TradeHistory.find({ userId }).sort({ updatedAt: -1 });
+  return await TradeHistory.find({ userId }).sort({ betTime: -1 });
 };

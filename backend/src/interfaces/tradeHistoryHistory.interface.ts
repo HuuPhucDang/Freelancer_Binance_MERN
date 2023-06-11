@@ -33,6 +33,7 @@ export interface ITradeHistory {
   symbol: string;
   time: string;
   probability: number;
+  betTime: string;
 }
 
 export interface ITradeHistoryDoc extends ITradeHistory, Document {}

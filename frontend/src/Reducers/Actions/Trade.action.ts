@@ -43,7 +43,7 @@ const fetchTrades = () => {
     dispatch(setFetchLoading(true));
     await API.fetchTrande()
       .then(async (response: any) => {
-        const results = await Utils.resolveResponse(response);
+        const results: any = await Utils.resolveResponse(response);
         if (!results) await dispatch(fetchTradesFail());
         else {
           dispatch(fetchTradesSuccess(results?.payload));
@@ -62,22 +62,33 @@ const createTradeFail = () => {
   };
 };
 
-const createTradeSuccess = (payload: any) => {
+const createTradeSuccess = () => {
   return {
     type: ACTION_TYPES.CREATE_TRADE_SUCCESS,
-    payload,
   };
 };
 
-const createTrade = (payload: any) => {
+const createTrade = (payload: any, limitTime: number, timeout: number) => {
   return async (dispatch: any) => {
     dispatch(setActionLoading(true));
     await API.createNewTrade(payload)
       .then(async (response: any) => {
-        const results = await Utils.resolveResponse(response);
+        const results: any = await Utils.resolveResponse(response);
         if (!results) await dispatch(createTradeFail());
         else {
-          dispatch(createTradeSuccess(results));
+          const userData = Utils.getUserData();
+          Utils.WebSocket.emit(
+            'checkTradeResult',
+            {
+              userId: userData?.id,
+              timeout: timeout * 1000,
+              tradeId: results?.payload?.id,
+            },
+            () => {}
+          );
+          setTimeout(() => {
+            dispatch(createTradeSuccess());
+          }, limitTime * 1000);
         }
       })
       .catch(async (error) => {

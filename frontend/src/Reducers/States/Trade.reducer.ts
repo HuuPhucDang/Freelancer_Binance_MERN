@@ -19,6 +19,12 @@ export default (
         isActionLoading: payload,
       };
     }
+    case ACTION_TYPES.SET_TRADE_FETCH_LOADING: {
+      return {
+        ...state,
+        isFetchLoading: payload,
+      };
+    }
     case ACTION_TYPES.RESET_TRADE_REDUCER: {
       return DEFAULT_STATES;
     }
@@ -45,7 +51,6 @@ export default (
         requestIsSuccess: true,
         requestHasError: false,
         isActionLoading: false,
-        allTrades: payload,
       };
     case ACTION_TYPES.CREATE_TRADE_FAILURE:
       return {
