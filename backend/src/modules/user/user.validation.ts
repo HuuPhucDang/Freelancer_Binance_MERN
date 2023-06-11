@@ -38,6 +38,7 @@ export const updateUser = {
   body: Joi.object()
     .keys({
       password: Joi.string().custom(password),
+      onwCode: Joi.string(),
     })
     .min(1),
 };
