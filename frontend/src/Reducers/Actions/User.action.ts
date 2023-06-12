@@ -1,6 +1,7 @@
 import { ACTION_TYPES } from '@/Constants';
 import API from '@/Apis';
 import { Utils } from '@libs';
+import { pushNotification } from '../../Libs/utils/Widget.utils';
 
 // SINGLE ACTIONS
 const setUserLoading = (payload: boolean) => {
@@ -244,12 +245,53 @@ const updateUserType = (payload: { userId: string; userType: string }) => {
         const result = await Utils.resolveResponse(response);
         if (!result) await dispatch(updateUserTypeFail());
         else {
-          dispatch(updateUserTypeSuccess(result));
+          const { message }: { message: string } = result as {
+            message: string;
+          };
+          pushNotification({ type: 'success', message });
+          const { payload }: { payload: any } = result as { payload: any };
+          dispatch(updateUserTypeSuccess(payload));
         }
       })
       .catch(async (error: any) => {
         await Utils.resolveFailureResponse(error);
         await dispatch(updateUserTypeFail());
+      });
+  };
+};
+
+const updateUserSuccess = (payload: any) => {
+  return {
+    type: ACTION_TYPES.UPDATE_USER_SUCCESS,
+    payload,
+  };
+};
+
+const updateUserFail = () => {
+  return {
+    type: ACTION_TYPES.UPDATE_USER_FAILURE,
+  };
+};
+
+const updateUser = (userId: string, payload: any) => {
+  return async (dispatch: any) => {
+    dispatch(setUserLoading(true));
+    await API.updateUser(userId, payload)
+      .then(async (response: any) => {
+        const result = await Utils.resolveResponse(response);
+        if (!result) await dispatch(updateUserFail());
+        else {
+          const { message }: { message: string } = result as {
+            message: string;
+          };
+          pushNotification({ type: 'success', message });
+          const { payload }: { payload: any } = result as { payload: any };
+          dispatch(updateUserSuccess(payload));
+        }
+      })
+      .catch(async (error: any) => {
+        await Utils.resolveFailureResponse(error);
+        await dispatch(updateUserFail());
       });
   };
 };
@@ -263,4 +305,5 @@ export default {
   updatePassword,
   getUserById,
   updateUserType,
+  updateUser,
 };

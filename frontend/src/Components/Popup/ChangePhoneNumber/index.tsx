@@ -1,4 +1,9 @@
 import * as React from 'react';
+import { useSelector } from 'react-redux';
+import _ from 'lodash';
+import { useForm, Controller } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
@@ -6,14 +11,10 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import { Stack } from '@mui/material';
-import { RootState, useTypedDispatch } from '../../../Reducers/store';
-import { SecurityActions } from '../../../Reducers/Actions';
-import { useSelector } from 'react-redux';
-import _ from 'lodash';
-import { useForm, Controller } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from 'yup';
-import { Utils } from '../../../Libs';
+
+import { RootState, useTypedDispatch } from '@/Reducers/store';
+import { SecurityActions } from '@/Reducers/Actions';
+import { Utils } from '@/Libs';
 
 interface IProps {
   open: boolean;

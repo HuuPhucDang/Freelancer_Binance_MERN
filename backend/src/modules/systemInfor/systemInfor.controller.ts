@@ -15,8 +15,8 @@ export const getSystemInfor = catchAsync(
 export const updateSystemInfor = catchAsync(
   async (req: Request, res: Response) => {
     if (typeof req.params["inforId"] === "string") {
-      const allFiles: any = req.files;
-      const img = fs.readFileSync(allFiles?.QRCode[0]?.path);
+      const allFiles: any = req.file;
+      const img = fs.readFileSync(allFiles?.path);
       const encode_image = img.toString("base64");
       const updateBody: any = {
         QRUrl: encode_image,

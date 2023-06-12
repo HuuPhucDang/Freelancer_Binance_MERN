@@ -31,9 +31,16 @@ const resolveFilter = (filterParams: any) => {
   const results = {};
   for (const key in filterParams) {
     const currentValue = filterParams[key];
-    if (currentValue !== 'all' && Boolean(currentValue)) _.assign(results, { [key]: currentValue });
+    if (currentValue !== 'all' && Boolean(currentValue))
+      _.assign(results, { [key]: currentValue });
   }
   return results;
 };
 
-export { checkNetworkConnection, redirect, sleep, replace, resolveFilter };
+export {
+  checkNetworkConnection,
+  redirect,
+  sleep,
+  replace,
+  resolveFilter,
+};

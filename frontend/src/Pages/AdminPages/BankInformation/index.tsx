@@ -18,6 +18,8 @@ import { AdminLayout } from '@/Components/DefaultLayout';
 import Assets from '@/Assets';
 import { RootState, useTypedDispatch } from '@/Reducers/store';
 import { SystemInfoActions } from '@/Reducers/Actions';
+import { Utils } from '../../../Libs';
+import { Buffer } from 'buffer';
 
 const schema = yup
   .object({
@@ -44,14 +46,15 @@ const schema = yup
   .required();
 type FormData = yup.InferType<typeof schema>;
 
-const { getSystemInfo, updateSystemInfo } =
-  SystemInfoActions;
+const { getSystemInfo, updateSystemInfo } = SystemInfoActions;
 
 const BankInformation = () => {
   const dispatch = useTypedDispatch();
   const systemInfo: any = useSelector((state: RootState) =>
     _.get(state.SYSTEM_INFO, 'payload')
   );
+  const [QRUrl, setQRUrl] = React.useState<string>('');
+
   const {
     handleSubmit,
     formState: { errors },
@@ -66,7 +69,7 @@ const BankInformation = () => {
       bankName: '',
       fullname: '',
       message: '',
-    }
+    },
   });
   const QRCode: FileList | null = watch('QRCode') as FileList | null;
 
@@ -80,8 +83,21 @@ const BankInformation = () => {
       setValue('fullname', systemInfo?.fullname);
       setValue('message', systemInfo?.message);
       setValue('accountNumber', systemInfo?.accountNumber);
+
+      if (systemInfo?.QRUrl) {
+        // const qrBlob = Utils.convertBufferToBlob(systemInfo.QRUrl);
+        // const url = URL.createObjectURL(qrBlob);
+        // setQRUrl(url);
+      }
     }
   }, [systemInfo]);
+
+  React.useEffect(() => {
+    if (QRCode && QRCode?.[0]) {
+      const url = URL.createObjectURL(QRCode?.[0]);
+      setQRUrl(url);
+    }
+  }, [QRCode]);
 
   const onSubmit = (data: any) => {
     if (systemInfo?.id) {
@@ -221,11 +237,7 @@ const BankInformation = () => {
               <input type="file" {...register('QRCode')} />
               <Box
                 component="img"
-                src={
-                  QRCode?.[0]
-                    ? URL.createObjectURL(QRCode?.[0])
-                    : Assets.qrImage
-                }
+                src={QRUrl || Assets.qrImage}
                 sx={{
                   width: '100%',
                   height: 'auto',

@@ -24,12 +24,12 @@ const getRefreshToken = () => {
 };
 
 const setUserData = (userData: any) => {
-  cookies.set(COOKIE_KEYS.USER_DATA, userData);
+  localStorage.setItem(COOKIE_KEYS.USER_DATA, JSON.stringify(userData));
 };
 
 const getUserData = () => {
-  const userData = cookies.get(COOKIE_KEYS.USER_DATA) || {};
-  return userData;
+  const userData = localStorage.getItem(COOKIE_KEYS.USER_DATA) || "{}";
+  return JSON.parse(userData);
 };
 
 const saveThemeMode = (mode: 'dark' | 'light') => {

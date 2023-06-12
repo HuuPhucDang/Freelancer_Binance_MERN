@@ -37,6 +37,10 @@ const SignIn = () => {
     control,
   } = useForm<FormData>({
     resolver: yupResolver(schema),
+    defaultValues: {
+      password: '',
+      username: '',
+    },
   });
 
   React.useEffect(() => {
@@ -76,6 +80,7 @@ const SignIn = () => {
                 variant="outlined"
                 size="small"
                 placeholder="Email"
+                autoComplete="username"
                 sx={{
                   marginTop: '10px',
                   color: 'text.secondary',
@@ -99,6 +104,7 @@ const SignIn = () => {
                 size="small"
                 placeholder="Mật khẩu"
                 type="password"
+                autoComplete="current-password"
                 sx={{
                   marginTop: '10px',
                   color: 'text.secondary',

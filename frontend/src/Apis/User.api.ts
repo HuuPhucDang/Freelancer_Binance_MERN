@@ -31,11 +31,15 @@ export const updateUserType = async (payload: {
   userId: string;
   userType: string;
 }) => {
-  return sendRequest(`${USERS.BASIC}/${payload.userId}`, 'PUT', {
+  return sendRequest(`${USERS.UPDATE_USER_TYPE}/${payload.userId}`, 'PUT', {
     userType: payload.userType,
   });
 };
 
 export const getUserById = async (id: string) => {
   return sendRequest(`${USERS.BASIC}/${id}`, 'GET');
+};
+
+export const updateUser = async (id: string, payload: any) => {
+  return sendRequest(`${USERS.BASIC}/${id}`, 'PUT', payload);
 };

@@ -16,6 +16,8 @@ import { UserActions } from '../../../Reducers/Actions';
 import { useSelector } from 'react-redux';
 import _ from 'lodash';
 import { ENUMS } from '../../../Constants';
+import randomstring from 'randomstring';
+
 interface IProps {
   currentUser: string;
   open: boolean;
@@ -25,6 +27,9 @@ interface IProps {
 interface IDetails {
   avatar: string;
   nickname: string;
+  onwCode?: string;
+  inviteCode?: string;
+  role: string;
   userType: {
     name: string;
     type: string;
@@ -44,7 +49,7 @@ const status = {
   [ENUMS.EVerifyType.PENDING]: 'Đang chờ',
 };
 
-const { getUserById } = UserActions;
+const { getUserById, updateUserType, updateUser } = UserActions;
 
 const RequestVerifyIDCard: React.FC<IProps> = ({
   open = false,
@@ -61,7 +66,16 @@ const RequestVerifyIDCard: React.FC<IProps> = ({
   }, [open]);
 
   const onChangeUserType = (_newValue: string) => {
-    console.log('halo');
+    dispatch(updateUserType({ userId: currentUser, userType: _newValue }));
+  };
+
+  const onGenerateInviteCode = () => {
+    const newInviteCode = randomstring.generate({
+      length: 6,
+      capitalization: 'lowercase',
+      charset: 'alphabetic',
+    });
+    dispatch(updateUser(currentUser, { onwCode: newInviteCode }));
   };
 
   return (
@@ -82,6 +96,25 @@ const RequestVerifyIDCard: React.FC<IProps> = ({
             <Typography>
               <b>Số điện thoại</b>: 0123487989
             </Typography>
+            {details?.onwCode ? (
+              <Stack direction="row" alignItems="center">
+                <Typography>
+                  <b>Mã mời</b>: {details?.onwCode}
+                </Typography>
+                <Button
+                  sx={{ marginLeft: '10px' }}
+                  size="small"
+                  onClick={() => onGenerateInviteCode()}
+                >
+                  Tạo mã mới
+                </Button>
+              </Stack>
+            ) : null}
+            {details?.inviteCode ? (
+              <Typography>
+                <b>Mã mời</b>: {details?.inviteCode}
+              </Typography>
+            ) : null}
             <Typography>
               <b>Xác thực</b>:{' '}
               {!details?.verification
@@ -100,16 +133,28 @@ const RequestVerifyIDCard: React.FC<IProps> = ({
               }
               aria-label="Platform"
             >
-              <ToggleButton value={ENUMS.EUserType.BEGINNER}>
+              <ToggleButton
+                disabled={details?.role === 'admin'}
+                value={ENUMS.EUserType.BEGINNER}
+              >
                 Sơ cấp
               </ToggleButton>
-              <ToggleButton value={ENUMS.EUserType.INTERMEDIATE}>
+              <ToggleButton
+                disabled={details?.role === 'admin'}
+                value={ENUMS.EUserType.INTERMEDIATE}
+              >
                 Trung cấp
               </ToggleButton>
-              <ToggleButton value={ENUMS.EUserType.ADVANCE}>
+              <ToggleButton
+                disabled={details?.role === 'admin'}
+                value={ENUMS.EUserType.ADVANCE}
+              >
                 Nâng cao
               </ToggleButton>
-              <ToggleButton value={ENUMS.EUserType.PROFESSINAL}>
+              <ToggleButton
+                disabled={details?.role === 'admin'}
+                value={ENUMS.EUserType.PROFESSINAL}
+              >
                 Chuyên nghiệp
               </ToggleButton>
             </ToggleButtonGroup>

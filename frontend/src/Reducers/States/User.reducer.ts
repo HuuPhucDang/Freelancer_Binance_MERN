@@ -138,6 +138,38 @@ export default (
         details: {},
       };
 
+    case ACTION_TYPES.UPDATE_USER_SUCCESS:
+      return {
+        ...state,
+        requestIsSuccess: true,
+        requestHasError: false,
+        isActionLoading: false,
+        details: payload,
+      };
+    case ACTION_TYPES.UPDATE_USER_FAILURE:
+      return {
+        ...state,
+        requestHasError: true,
+        requestIsSuccess: false,
+        isActionLoading: false,
+      };
+
+    case ACTION_TYPES.UPDATE_USER_TYPE_SUCCESS:
+      return {
+        ...state,
+        requestIsSuccess: true,
+        requestHasError: false,
+        isActionLoading: false,
+        details: payload,
+      };
+    case ACTION_TYPES.UPDATE_USER_TYPE_FAILURE:
+      return {
+        ...state,
+        requestHasError: true,
+        requestIsSuccess: false,
+        isActionLoading: false,
+      };
+
     default:
       return state;
   }
