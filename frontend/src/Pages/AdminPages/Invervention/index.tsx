@@ -94,7 +94,6 @@ const Request: React.FC = () => {
               <Grid item xs={3}>
                 <Button
                   color="error"
-                  disabled={newIntervention[item?.symbol] < 0}
                   variant="contained"
                   fullWidth
                   size="small"
@@ -122,7 +121,6 @@ const Request: React.FC = () => {
               <Grid item xs={3}>
                 <Button
                   color="success"
-                  disabled={newIntervention[item?.symbol] > 0}
                   variant="contained"
                   fullWidth
                   size="small"

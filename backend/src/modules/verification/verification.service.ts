@@ -79,11 +79,7 @@ export const changeIDCardStatus = async (
       "DD/MM/YYYY hh:mm:ss"
     )}!`,
   });
-
-  Object.assign(findVerification, {
-    verification: { ...user.verification, status },
-  });
-
+  findVerification.status = status;
   await findVerification.save();
   const savedUser = await getUserById(userId);
   if (savedUser) return assignReturnUser(savedUser);
@@ -94,9 +90,9 @@ export const fetchAllIDCards = async (
   filter: Record<string, any>,
   options: IOptions
 ): Promise<QueryResult> => {
-  const allVerifications = Verification.paginate(
-    { ...filter, populate: "selfieImageUrl, frontImageUrl, backImageUrl" },
-    options
-  );
+  const allVerifications = Verification.paginate(filter, {
+    ...options,
+    populate: "userId,selfieImageUrl",
+  });
   return allVerifications;
 };

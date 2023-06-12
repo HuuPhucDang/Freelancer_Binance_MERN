@@ -69,10 +69,6 @@ const BankInformation = () => {
     }
   });
   const QRCode: FileList | null = watch('QRCode') as FileList | null;
-  const fullname: string = watch('fullname') as string;
-  const accountNumber: string = watch('accountNumber') as string;
-  const bankName: string = watch('bankName') as string;
-  const message: string = watch('message') as string;
 
   React.useEffect(() => {
     dispatch(getSystemInfo());

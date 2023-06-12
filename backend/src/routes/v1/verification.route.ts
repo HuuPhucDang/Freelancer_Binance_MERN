@@ -9,19 +9,6 @@ import { multer } from "../../utils";
 
 const router: Router = express.Router();
 
-router.post(
-  "/uploadIdCard",
-  [auth("selfUpdate")],
-  [
-    validate(verificationValidation.uploadIDCards),
-    multer.fields([
-      { name: "frontImage" },
-      { name: "backImage" },
-      { name: "selfieImage" },
-    ]),
-  ],
-  verificationController.uploadIDCards
-);
 
 router.put(
   "/approve/:userId",
@@ -35,6 +22,20 @@ router.put(
   [auth("manageIDCards")],
   [validate(verificationValidation.actionIDCard)],
   verificationController.deniedIDCards
+);
+
+router.post(
+  "/uploadIdCard",
+  [auth("selfUpdate")],
+  [
+    validate(verificationValidation.uploadIDCards),
+    multer.fields([
+      { name: "frontImage" },
+      { name: "backImage" },
+      { name: "selfieImage" },
+    ]),
+  ],
+  verificationController.uploadIDCards
 );
 
 router.get(

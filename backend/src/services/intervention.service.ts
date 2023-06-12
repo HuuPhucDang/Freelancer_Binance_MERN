@@ -122,7 +122,7 @@ const intiChartSocket = (socket: Socket) => {
             await wallet.save();
           }
         }
-        global.io.emit("updateTradeListNow");
+        global.io.emit("updateTradeListNow", { userId: trade.userId });
       }, data?.timeout || 1);
     }
   });

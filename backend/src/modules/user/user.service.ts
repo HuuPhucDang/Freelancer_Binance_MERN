@@ -13,6 +13,7 @@ import {
   NewRegisteredUser,
   UpdateUserAvatarBody,
   UpdateUserNicknameBody,
+  UpdateUserTypeBody,
 } from "../../interfaces/user.interfaces";
 import { assignReturnUser } from "../../utils";
 import { EUserType } from "../../interfaces/userType.interface";
@@ -56,6 +57,7 @@ export const registerUser = async (
   const user = await User.create({
     ...userBody,
     nickname: `Anonymous-User-${makeDefaultNickname(6)}`,
+    inviter: findInviter.id,
   });
   const userType = await UserType.create({
     name: EUserType.BEGINNER,
@@ -151,6 +153,34 @@ export const updateUserById = async (
   Object.assign(user, updateBody);
   await user.save();
   return user;
+};
+
+/**
+ * Update user type
+ */
+export const updateUserType = async (
+  userId: mongoose.Types.ObjectId,
+  updateBody: UpdateUserTypeBody
+): Promise<IUserDoc | null> => {
+  const user = await getUserById(userId);
+  if (!user) throw new ApiError(httpStatus.NOT_FOUND, "User not found!");
+  let userType = await UserType.findOne({ userId });
+  if (!userType) {
+    userType = await UserType.create({
+      name: updateBody.userType,
+      type: updateBody.userType,
+      userId: user.id,
+      probability: 0.1,
+    });
+    user.userType = userType.id;
+    await user.save();
+    return await getUserById(userId);
+  }
+  userType.type = updateBody.userType;
+  userType.name = updateBody.userType;
+  await userType.save();
+
+  return await getUserById(userId);
 };
 
 /**

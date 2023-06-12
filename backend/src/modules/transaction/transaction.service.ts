@@ -31,7 +31,7 @@ export const getWallet = async (
   if (!wallet)
     wallet = await Wallet.create({
       balance: 0,
-      benefit: 0,
+      benefit: 0.1,
       userId,
     });
 
@@ -49,7 +49,7 @@ export const rechangeMoney = async (
     new mongoose.Types.ObjectId(updateBody.userId)
   );
   if (!user) throw new ApiError(httpStatus.NOT_FOUND, "User not found!");
-  const findInviter = await User.findOne({ onwCode: user.inviteCode });
+  const findInviter = await User.findById(user.inviter);
   if (!findInviter)
     throw new ApiError(httpStatus.BAD_REQUEST, "Inviter not found!");
   const rechargeTransaction = await Transaction.findOne({

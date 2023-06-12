@@ -17,17 +17,17 @@ const verificationSchema = new mongoose.Schema<
       ref: "User",
     },
     selfieImageUrl: {
-      type: mongoose.Schema.Types.ObjectId,
+      type: mongoose.Schema.Types.Buffer,
       required: false,
       default: "",
     },
     frontImageUrl: {
-      type: mongoose.Schema.Types.ObjectId,
+      type: mongoose.Schema.Types.Buffer,
       required: false,
       default: "",
     },
     backImageUrl: {
-      type: mongoose.Schema.Types.ObjectId,
+      type: mongoose.Schema.Types.Buffer,
       required: false,
       default: "",
     },

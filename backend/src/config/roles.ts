@@ -5,6 +5,7 @@ const BASIC_ROLES = [
   "fetchTransactions",
   "chatRoom",
   "trade",
+  "notification",
 ];
 
 const allRoles = {

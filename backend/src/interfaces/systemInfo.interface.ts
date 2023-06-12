@@ -1,7 +1,7 @@
 import { Model, Document, Schema } from "mongoose";
 
 export interface ISystemInfor {
-  QRUrl: Schema.Types.ObjectId;
+  QRUrl: Schema.Types.Buffer;
   fullname: string;
   bankName: string;
   accountNumber: string;
