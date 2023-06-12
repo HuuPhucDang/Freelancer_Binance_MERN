@@ -62,10 +62,10 @@ const AppBarComponent: React.FC = () => {
   React.useEffect(() => {
     if (!isLogged && userData && token) dispatch(setLogged());
     Utils.WebSocket.emit('getLatestCoins', null, (data: any) => {
-      setSliderItems(_.map(data, (el) => `${el?.symbol} ${el?.growth}%`));
+      setSliderItems(_.map(data, (el) => `${el?.symbol} ${el?.price}`));
     });
     Utils.WebSocket.on('updateAllCoinPriceNow', (data) => {
-      setSliderItems(_.map(data, (el) => `${el?.symbol} ${el?.growth}%`));
+      setSliderItems(_.map(data, (el) => `${el?.symbol} ${el?.price}`));
     });
     return () => {
       // Utils.WebSocket.disconnect();

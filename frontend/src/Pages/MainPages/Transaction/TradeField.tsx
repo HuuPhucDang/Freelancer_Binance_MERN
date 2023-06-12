@@ -9,7 +9,6 @@ import {
   Box,
   Link,
 } from '@mui/material';
-import dayjs from 'dayjs';
 import _ from 'lodash';
 import { useSelector } from 'react-redux';
 
@@ -64,9 +63,6 @@ const TradeField: React.FC<ITradeFieldProps> = ({
 }: ITradeFieldProps) => {
   // Constructors
   const dispatch = useTypedDispatch();
-  const isActionLoading = useSelector((state: RootState) =>
-    _.get(state.TRADE, 'isActionLoading')
-  );
   const isLogged = useSelector((state: RootState) =>
     _.get(state.AUTH, 'isLogged')
   );
@@ -87,24 +83,20 @@ const TradeField: React.FC<ITradeFieldProps> = ({
   const [coinPrice, setCoinPrice] = React.useState<number>(0);
   const [limitedTimes, setLimitedTimes] = React.useState<number>(0);
   const [betType, setBetType] = React.useState<string>('buy');
-  const [serverTime, setServerTime] = React.useState<string>(
-    dayjs().format('hh:mm:ss')
-  );
+  const [serverTime, setServerTime] = React.useState<number>(0);
+  const [isLimitTrade, setIsLimitTrade] = React.useState<boolean>(false);
+  const [startServerTime, setStartServerTime] = React.useState<number>(0);
 
   React.useEffect(() => {
     dispatch(getSelf());
-    return () => {
-      // clearInterval(intervalLatest24h);
-    };
-  }, []);
-
-  React.useEffect(() => {
     Utils.WebSocket.emit('getAllMoonboot', null, (data: any) => {
       setMoonbootButtons(data);
       const getFirstMoonboot: any = _.first(data);
       setBetTime(`${getFirstMoonboot?.time}s`);
       setProbability(getFirstMoonboot?.probability);
       setLimitedTimes(getFirstMoonboot?.limitedTime);
+      setServerTime(getFirstMoonboot?.time);
+      setStartServerTime(getFirstMoonboot?.time);
     });
     Utils.WebSocket.on('updateAllMoonbotNow', (data) => {
       setMoonbootButtons(data);
@@ -114,14 +106,23 @@ const TradeField: React.FC<ITradeFieldProps> = ({
         setCoinPrice(data?.price);
       });
     }, 3000);
-    const serverTimeInterval = setInterval(() => {
-      setServerTime(dayjs().format('hh:mm:ss'));
-    }, 1000);
     return () => {
       clearInterval(updateCoinPriceInterval);
-      clearInterval(serverTimeInterval);
     };
   }, []);
+
+  React.useEffect(() => {
+    // exit early when we reach 0
+    if (!serverTime) {
+      setServerTime(startServerTime);
+      return;
+    }
+    const intervalId = setInterval(() => {
+      setServerTime(serverTime - 1);
+    }, 1000);
+
+    return () => clearInterval(intervalId);
+  }, [serverTime]);
 
   React.useEffect(() => {
     const getUserType =
@@ -130,6 +131,11 @@ const TradeField: React.FC<ITradeFieldProps> = ({
     setUserType(getUserType);
     setBallance(getBanlance);
   }, [userDetails]);
+
+  React.useEffect(() => {
+    if (serverTime <= limitedTimes) setIsLimitTrade(true);
+    else setIsLimitTrade(false);
+  }, [serverTime]);
 
   // Events
   const onSetBetTime = (
@@ -148,6 +154,8 @@ const TradeField: React.FC<ITradeFieldProps> = ({
         setSellProbability(probability);
       }
     }
+    setStartServerTime(Number(time.replace('s', '')))
+    setServerTime(Number(time.replace('s', '')));
   };
 
   const createNewTrade = (betType: TRADE_TYPE) => {
@@ -283,7 +291,7 @@ const TradeField: React.FC<ITradeFieldProps> = ({
   const _renderLeftSide = () => (
     <Grid item xs={6}>
       <Typography sx={{ fontSize: '13px', lineHeight: '15px' }}>
-        Số dư: {ballance - betAmount - betSellAmount}
+        Số dư: {ballance} USDT
       </Typography>
       {_renderInputs(TRADE_TYPE.BUY)}
       <Grid container spacing={0.5} marginTop="5px">
@@ -300,7 +308,7 @@ const TradeField: React.FC<ITradeFieldProps> = ({
           fontWeight: 900,
           background: '#2EBD85',
         }}
-        disabled={isActionLoading || betType === TRADE_TYPE.SELL}
+        disabled={isLimitTrade || betType === TRADE_TYPE.SELL}
         onClick={() => createNewTrade(TRADE_TYPE.BUY)}
       >
         Mua
@@ -314,11 +322,11 @@ const TradeField: React.FC<ITradeFieldProps> = ({
         sx={{
           fontSize: '13px',
           lineHeight: '15px',
-          color: isActionLoading ? '#F21616' : '#408827',
+          color: isLimitTrade ? '#F21616' : '#408827',
         }}
       >
-        Thời gian: {serverTime}
-        {isActionLoading && `(Server đã đóng thời gian cho phép giao dịch)`}
+        Thời gian: {serverTime}s
+        {isLimitTrade && `(Quá thời gian cho phép giao dịch)`}
       </Typography>
       {_renderInputs(TRADE_TYPE.SELL)}
       <Grid container spacing={0.5} marginTop="5px">
@@ -335,7 +343,7 @@ const TradeField: React.FC<ITradeFieldProps> = ({
           fontWeight: 900,
           background: '#F03030',
         }}
-        disabled={isActionLoading || betType === TRADE_TYPE.BUY}
+        disabled={isLimitTrade || betType === TRADE_TYPE.BUY}
         onClick={() => createNewTrade(TRADE_TYPE.SELL)}
       >
         Bán

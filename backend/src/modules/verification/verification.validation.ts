@@ -2,9 +2,9 @@ import Joi from "joi";
 import { objectId } from "../../helper/validate/custom.validation";
 
 export const uploadIDCards = Joi.object().keys({
-  frontImage: Joi.binary().required(),
-  backImage: Joi.binary().required(),
-  selfieImage: Joi.binary().required(),
+  frontImage: Joi.binary(),
+  backImage: Joi.binary(),
+  selfieImage: Joi.binary(),
 });
 
 export const actionIDCard = {

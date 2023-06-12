@@ -11,9 +11,11 @@ export const uploadIDCards = catchAsync(async (req: Request, res: Response) => {
   const allFiles: any = req.files;
   const updateBody: any = {};
   Object.keys(allFiles).map((key: any) => {
-    const img = fs.readFileSync(allFiles[key][0]?.path);
-    const encode_image = img.toString("base64");
-    updateBody[`${key}Url`] = encode_image;
+    if (allFiles[key][0]?.path) {
+      const img = fs.readFileSync(allFiles[key][0]?.path);
+      const encode_image = img.toString("base64");
+      updateBody[`${key}Url`] = encode_image;
+    }
   });
   const user = await verificationService.uploadIdCards(
     new mongoose.Types.ObjectId(req.user.id),

@@ -1,17 +1,14 @@
 import React from 'react';
-import { Typography, Grid, Stack, Box, Link } from '@mui/material';
+import { Typography, Grid, Stack, Box } from '@mui/material';
 import { useLocation } from 'react-router-dom';
 import { UserLayout } from '@/Components/DefaultLayout';
-import TapAndPlayIcon from '@mui/icons-material/TapAndPlay';
-import NotificationsIcon from '@mui/icons-material/Notifications';
-import MarkChatUnreadIcon from '@mui/icons-material/MarkChatUnread';
 import { StocksChart } from '@/Components/LayoutParts';
-import TuneIcon from '@mui/icons-material/Tune';
 import VolatilityTable from './VolatilityTable';
 import CoinValueTable from './CoinValueTable';
 import MyInvoiceTable from './MyInvoiceTable';
 import StaticHeader from './StaticHeader';
 import TradeField from './TradeField';
+import FooterCoin from './FooterCoin';
 import { ROUTERS } from '../../../Constants';
 import { Utils } from '@/Libs';
 
@@ -139,161 +136,6 @@ const Transaction: React.FC = () => {
     );
   };
 
-  const _renderBottomSection = () => {
-    return (
-      <Grid container>
-        <Grid item xs={6} sm={6} md={2} order={{ xs: 2, md: 1 }}>
-          <Stack padding="10px 10px">
-            <Stack
-              direction="row"
-              alignItems="center"
-              borderRight="1px solid #ccc"
-            >
-              <TapAndPlayIcon
-                sx={{
-                  marginRight: '10px',
-                  color: '#408827',
-                  fontSize: '16px',
-                }}
-              />
-              <Typography sx={{ fontSize: '12px', color: '#408827' }}>
-                Kết nối ổn định
-              </Typography>
-            </Stack>
-          </Stack>
-        </Grid>
-        <Grid
-          item
-          xs={0}
-          sm={12}
-          md={7}
-          order={{ xs: 1, md: 2 }}
-          display={{ xs: 'none', sm: 'block' }}
-        >
-          <Grid container padding="10px 20px">
-            <Grid
-              item
-              xs={1}
-              display="flex"
-              flexDirection="row"
-              justifyContent="center"
-              sx={{ fontSize: '11px', color: '#BBAEAE' }}
-            >
-              <TuneIcon />
-            </Grid>
-            <Grid
-              item
-              xs={3.66}
-              display="flex"
-              flexDirection="row"
-              alignItems="center"
-              sx={{ fontSize: '11px', color: '#BBAEAE' }}
-            >
-              EDUUSDT{' '}
-              <span
-                style={{
-                  color: '#F03030',
-                  display: 'inline-block',
-                  margin: '0 2px',
-                }}
-              >
-                -1.81
-              </span>{' '}
-              1.111094
-            </Grid>
-            <Grid
-              item
-              xs={3.66}
-              display="flex"
-              alignItems="center"
-              flexDirection="row"
-              sx={{ fontSize: '11px', color: '#BBAEAE' }}
-            >
-              EDUUSDT{' '}
-              <span
-                style={{
-                  color: '#F03030',
-                  display: 'inline-block',
-                  margin: '0 2px',
-                }}
-              >
-                -1.81
-              </span>{' '}
-              1.111094
-            </Grid>
-            <Grid
-              item
-              xs={3.66}
-              display="flex"
-              alignItems="center"
-              flexDirection="row"
-              sx={{ fontSize: '11px', color: '#BBAEAE' }}
-            >
-              EDUUSDT{' '}
-              <span
-                style={{
-                  color: '#F03030',
-                  display: 'inline-block',
-                  margin: '0 2px',
-                }}
-              >
-                -1.81
-              </span>{' '}
-              1.111094
-            </Grid>
-          </Grid>
-        </Grid>
-        <Grid item xs={6} sm={6} md={3} order={{ xs: 3, md: 3 }}>
-          <Stack
-            alignItems="center"
-            direction="row"
-            justifyContent="space-evenly"
-            padding="10px 0"
-          >
-            <Stack
-              flexDirection="row"
-              alignItems="center"
-              borderLeft={{
-                xs: 'none',
-                md: '1px solid #BBAEAE',
-              }}
-              paddingLeft="10px"
-            >
-              <NotificationsIcon
-                sx={{
-                  fontSize: '16px',
-                  marginRight: '6px',
-                  color: '#7D6F6F',
-                }}
-              />
-              <Typography
-                sx={{ fontSize: '11px', fontWeight: 500, color: '#7D6F6F' }}
-              >
-                Thông báo
-              </Typography>
-            </Stack>
-            <Link href={ROUTERS.SUPPORT}>
-              <Stack flexDirection="row" alignItems="center">
-                <MarkChatUnreadIcon
-                  sx={{
-                    fontSize: '16px',
-                    marginRight: '6px',
-                    color: '#7D6F6F',
-                  }}
-                />
-                <Typography
-                  sx={{ fontSize: '11px', fontWeight: 500, color: '#7D6F6F' }}
-                >
-                  Hỗ trợ trực tuyến
-                </Typography>
-              </Stack>
-            </Link>
-          </Stack>
-        </Grid>
-      </Grid>
-    );
-  };
-
   const renderMain = () => {
     return (
       <Box
@@ -327,7 +169,7 @@ const Transaction: React.FC = () => {
           </Grid>
         </Grid>
         <Grid item xs={12}>
-          {_renderBottomSection()}
+          <FooterCoin />
         </Grid>
       </Box>
     );

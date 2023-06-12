@@ -14,6 +14,7 @@ import Moonboot from "../models/moonbot.model";
 const KLINE_URL = `https://api.binance.com/api/v3/klines?`;
 const AGGREGATE_URL = `https://api.binance.com/api/v3/aggTrades?`;
 const GET_TICKER_24H = `https://api.binance.com/api/v3/ticker/24hr?`;
+const GET_PRICE_URL = `https://api.binance.com/api/v3/avgPrice?symbol=`;
 
 // symbol=BTCUSDT&interval=1h&limit=
 const checkResults = (
@@ -37,14 +38,25 @@ const intiChartSocket = (socket: Socket) => {
   socket.on("interventionCoin", async (data: any) => {
     const updateCoin = await Coin.findOne({ symbol: data?.symbol });
     if (updateCoin) {
-      const newPrice = updateCoin.price + Number(data?.intervention);
-      const newGrowth = ((newPrice - updateCoin.price) / newPrice) * 100;
-      updateCoin.growth = parseFloat(newGrowth.toFixed(2));
-      updateCoin.price = parseFloat(newPrice.toFixed(4));
-      updateCoin.intervention = data?.intervention || 0;
+      if (data?.intervention) {
+        updateCoin.intervention = data.intervention;
+        const newPrice = updateCoin.price + Number(data?.intervention);
+        const newGrowth = ((newPrice - updateCoin.price) / newPrice) * 100;
+        updateCoin.growth = parseFloat(newGrowth.toFixed(2));
+        updateCoin.price = parseFloat(newPrice.toFixed(4));
+      } else {
+        updateCoin.intervention = 0;
+        const updateUrl = `${GET_PRICE_URL}${data?.symbol}`;
+        const response = await fetch(updateUrl);
+        const newCoins: any = await response.json();
+        const newPrice = Number(newCoins?.price);
+        const newGrowth = ((newPrice - updateCoin.price) / newPrice) * 100;
+        updateCoin.growth = parseFloat(newGrowth.toFixed(2));
+        updateCoin.price = parseFloat(newPrice.toFixed(4));
+      }
       await updateCoin.save();
       const allCoins = await Coin.find().sort({ price: -1 });
-      socket.emit("updateAllCoinPriceNow", allCoins);
+      global.io.emit("updateAllCoinPriceNow", allCoins);
     }
   });
   socket.on("getLatestCoins", async (_data: any, callback: any) => {
@@ -75,7 +87,7 @@ const intiChartSocket = (socket: Socket) => {
       await moonboot.save();
     }
     const moonboots = await Moonboot.find();
-    socket.emit("updateAllMoonbotNow", moonboots);
+    global.io.emit("updateAllMoonbotNow", moonboots);
   });
   socket.on("getCoin24h", async (data: any, callback: any) => {
     const currentCoin = await Coin.findOne({ symbol: data?.symbol });
@@ -114,10 +126,10 @@ const intiChartSocket = (socket: Socket) => {
           await trade.save();
           if (wallet) {
             const amount = trade.betAmount * trade.probability;
-            const balanceResult =
-              trade.result === ETradeResult.LOSE
-                ? wallet.balance - amount
-                : wallet.balance + amount;
+            const recieveAmount = ETradeResult.LOSE
+              ? trade.betAmount - amount
+              : trade.betAmount + amount;
+            const balanceResult = wallet.balance + recieveAmount;
             wallet.balance = balanceResult;
             await wallet.save();
           }
