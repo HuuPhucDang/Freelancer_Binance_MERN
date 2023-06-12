@@ -147,15 +147,17 @@ const TradeField: React.FC<ITradeFieldProps> = ({
       if (time !== betTime) {
         setBetTime(time);
         setProbability(probability);
+        setStartServerTime(Number(time.replace('s', '')));
+        setServerTime(Number(time.replace('s', '')));
       }
     } else {
       if (time !== betSellTime) {
         setBetSellTime(time);
         setSellProbability(probability);
+        setStartServerTime(Number(time.replace('s', '')));
+        setServerTime(Number(time.replace('s', '')));
       }
     }
-    setStartServerTime(Number(time.replace('s', '')))
-    setServerTime(Number(time.replace('s', '')));
   };
 
   const createNewTrade = (betType: TRADE_TYPE) => {
