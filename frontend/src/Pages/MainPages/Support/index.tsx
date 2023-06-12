@@ -1,4 +1,6 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
+import _ from 'lodash';
 import {
   Box,
   Typography,
@@ -13,8 +15,86 @@ import {
 import { UserLayout } from '@/Components/DefaultLayout';
 import { Sidebar } from '@/Components/LayoutParts';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
+import { Utils } from '@/Libs';
+import { ChatBoxActions } from '@/Reducers/Actions';
+import { RootState, useTypedDispatch } from '@/Reducers/store';
+
+const { fetchChatBox } = ChatBoxActions;
 
 const Support: React.FC = () => {
+  const userData = Utils.getUserData();
+  const dispatch = useTypedDispatch();
+  const payload: any[] = useSelector((state: RootState) =>
+    _.get(state.CHAT_BOX, 'payload')
+  );
+  const [currentRoom, setCurrentRoom] = React.useState<any>({
+    roomId: '',
+    receiverId: '',
+  });
+  const [message, setMessage] = React.useState<string>('');
+  const messageBoxRef = React.useRef<HTMLDivElement | null>(null);
+
+  const scrollToBottom = () => {
+    setTimeout(() => {
+      if (messageBoxRef && messageBoxRef.current) {
+        messageBoxRef.current.scrollTo({
+          top: messageBoxRef.current.scrollHeight,
+          behavior: 'auto',
+        });
+      }
+    }, 100);
+  };
+
+  React.useEffect(() => {
+    dispatch(fetchChatBox());
+    Utils.WebSocket.on('receiveMessage', (data: any) => {
+      setMessage('');
+      setCurrentRoom({ roomId: data.id, ...data });
+      scrollToBottom();
+    });
+  }, []);
+
+  React.useEffect(() => {
+    if (payload.length > 0) {
+      const findRoom = payload.find(
+        (item: { senderId: { id: string } }) => item.senderId.id === userData.id
+      );
+      if (findRoom) {
+        setCurrentRoom({ roomId: findRoom.id, ...findRoom });
+        scrollToBottom();
+
+        Utils.WebSocket.emit(
+          'joinRoom',
+          { userId: userData.id, roomId: findRoom.id },
+          (data: any) => {
+            console.log(data?.message);
+          }
+        );
+      }
+    }
+  }, [payload]);
+
+  const onSendMessage = () => {
+    Utils.WebSocket.emit(
+      'sendMessage',
+      {
+        userId: userData.id,
+        roomId: currentRoom.roomId,
+        receiverId: currentRoom.receiverId,
+        message,
+      },
+      () => {
+        setMessage('');
+      }
+    );
+  };
+
+  const findUser = (userId: string) => {
+    const { receiverId, senderId } = currentRoom;
+    if (userId === receiverId?.id) return receiverId;
+    return senderId;
+  };
+
   // Constructors
   const renderMain = () => {
     return (
@@ -88,114 +168,44 @@ const Support: React.FC = () => {
                 <Box
                   sx={{
                     padding: '0px 10px 16px 10px',
-                    maxHeight: '260px',
+                    maxHeight: '350px',
                     overflow: 'auto',
                   }}
+                  ref={messageBoxRef}
                 >
-                  <Stack direction="column">
-                    <Stack direction="row" alignItems="center">
-                      <Typography sx={{ fontSize: '14px' }}>
-                        You (change name)
-                      </Typography>
-                      <Divider sx={{ flex: 1, marginLeft: '10px' }} />
-                      <Typography sx={{ fontSize: '14px' }}>10:05</Typography>
-                    </Stack>
-                    <Typography
-                      sx={{
-                        fontSize: '12px',
-                        marginLeft: '20px',
-                        marginTop: '5px',
-                      }}
-                    >
-                      Bạn cần tôi giúp gì?{' '}
-                    </Typography>
-                  </Stack>
-                  <Stack direction="column" marginTop="16px">
-                    <Stack direction="row" alignItems="center">
-                      <Typography sx={{ fontSize: '14px' }}>Linh</Typography>
-                      <Divider sx={{ flex: 1, marginLeft: '10px' }} />
-                      <Typography sx={{ fontSize: '14px' }}>10:04</Typography>
-                    </Stack>
-                    <Typography
-                      sx={{
-                        fontSize: '12px',
-                        marginLeft: '20px',
-                        marginTop: '5px',
-                      }}
-                    >
-                      Em cần hỗ trợ....{' '}
-                    </Typography>
-                  </Stack>
-                  <Stack direction="column" marginTop="16px">
-                    <Stack direction="row" alignItems="center">
-                      <Typography sx={{ fontSize: '14px' }}>
-                        You (change name)
-                      </Typography>
-                      <Divider sx={{ flex: 1, marginLeft: '10px' }} />
-                      <Typography sx={{ fontSize: '14px' }}>10:03</Typography>
-                    </Stack>
-                    <Typography
-                      sx={{
-                        fontSize: '12px',
-                        marginLeft: '20px',
-                        marginTop: '5px',
-                      }}
-                    >
-                      .........
-                    </Typography>
-                  </Stack>
-                  <Stack direction="column" marginTop="16px">
-                    <Stack direction="row" alignItems="center">
-                      <Typography sx={{ fontSize: '14px' }}>Linh</Typography>
-                      <Divider sx={{ flex: 1, marginLeft: '10px' }} />
-                      <Typography sx={{ fontSize: '14px' }}>10:02</Typography>
-                    </Stack>
-                    <Typography
-                      sx={{
-                        fontSize: '12px',
-                        marginLeft: '20px',
-                        marginTop: '5px',
-                      }}
-                    >
-                      .........
-                    </Typography>
-                  </Stack>
-                  <Stack direction="column" marginTop="16px">
-                    <Stack direction="row" alignItems="center">
-                      <Typography sx={{ fontSize: '14px' }}>Linh</Typography>
-                      <Divider sx={{ flex: 1, marginLeft: '10px' }} />
-                      <Typography sx={{ fontSize: '14px' }}>10:01</Typography>
-                    </Stack>
-                    <Typography
-                      sx={{
-                        fontSize: '12px',
-                        marginLeft: '20px',
-                        marginTop: '5px',
-                      }}
-                    >
-                      .........
-                    </Typography>
-                  </Stack>
-                  <Stack direction="column" marginTop="16px">
-                    <Stack direction="row" alignItems="center">
-                      <Typography sx={{ fontSize: '14px' }}>Linh</Typography>
-                      <Divider sx={{ flex: 1, marginLeft: '10px' }} />
-                    </Stack>
-                    <Typography
-                      sx={{
-                        fontSize: '12px',
-                        marginLeft: '20px',
-                        marginTop: '5px',
-                      }}
-                    >
-                      .........
-                    </Typography>
-                  </Stack>
+                  {currentRoom?.messages?.map((item: any) => {
+                    return (
+                      <Stack
+                        direction="column"
+                        key={`message-${item.id}`}
+                        marginBottom="16px"
+                      >
+                        <Stack direction="row" alignItems="center">
+                          <Typography sx={{ fontSize: '14px', fontWeight: 600 }}>
+                            {findUser(item.senderId)?.nickname}{' '}
+                            {item.senderId === userData.id ? '(You)' : ''}
+                          </Typography>
+                          <Divider sx={{ flex: 1, marginLeft: '10px' }} />
+                        </Stack>
+                        <Typography
+                          sx={{
+                            fontSize: '12px',
+                            marginLeft: '20px',
+                            marginTop: '5px',
+                          }}
+                        >
+                          {item.message}
+                        </Typography>
+                      </Stack>
+                    );
+                  })}
                 </Box>
                 <TextField
                   rows={2}
                   multiline
                   placeholder="Điền nội dung tin nhắn"
+                  value={message}
+                  onChange={(e) => setMessage(e.target.value)}
                   sx={{
                     marginTop: '10px',
                     background: '#ffffff',
@@ -219,6 +229,8 @@ const Support: React.FC = () => {
                     marginTop: '10px',
                     alignSelf: 'flex-end',
                   }}
+                  onClick={() => onSendMessage()}
+                  disabled={!Boolean(message.trim())}
                 >
                   Gửi
                 </Button>

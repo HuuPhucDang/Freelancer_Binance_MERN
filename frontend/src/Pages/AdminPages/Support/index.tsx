@@ -9,182 +9,86 @@ import {
 } from '@mui/material';
 
 import { AdminLayout } from '@/Components/DefaultLayout';
-import { useTypedDispatch } from '@/Reducers/store';
+import { RootState, useTypedDispatch } from '@/Reducers/store';
 import { ChatBoxActions } from '@/Reducers/Actions';
+import { Utils } from '../../../Libs';
+import { useSelector } from 'react-redux';
+import _ from 'lodash';
 
-const users = [
-  {
-    id: '01',
-    name: 'User 001',
-    messages: [
-      {
-        senderId: '01',
-        message: 'Hello, someone can help me?',
-        time: '03:05:00 13/05/2023',
-      },
-      {
-        senderId: '00',
-        message: 'Yes, can I help you?',
-        time: '03:05:00 13/05/2023',
-      },
-      {
-        senderId: '01',
-        message: '............',
-        time: '03:05:00 13/05/2023',
-      },
-      {
-        senderId: '01',
-        message: '............',
-        time: '03:05:00 13/05/2023',
-      },
-      {
-        senderId: '00',
-        message: '............',
-        time: '03:05:00 13/05/2023',
-      },
-      {
-        senderId: '00',
-        message: '............',
-        time: '03:05:00 13/05/2023',
-      },
-            {
-        senderId: '00',
-        message: 'Yes, can I help you?',
-        time: '03:05:00 13/05/2023',
-      },
-      {
-        senderId: '01',
-        message: '............',
-        time: '03:05:00 13/05/2023',
-      },
-      {
-        senderId: '01',
-        message: '............',
-        time: '03:05:00 13/05/2023',
-      },
-      {
-        senderId: '00',
-        message: '............',
-        time: '03:05:00 13/05/2023',
-      },
-      {
-        senderId: '00',
-        message: '............',
-        time: '03:05:00 13/05/2023',
-      },
-            {
-        senderId: '00',
-        message: 'Yes, can I help you?',
-        time: '03:05:00 13/05/2023',
-      },
-      {
-        senderId: '01',
-        message: '............',
-        time: '03:05:00 13/05/2023',
-      },
-      {
-        senderId: '01',
-        message: '............',
-        time: '03:05:00 13/05/2023',
-      },
-      {
-        senderId: '00',
-        message: '............',
-        time: '03:05:00 13/05/2023',
-      },
-      {
-        senderId: '00',
-        message: '............',
-        time: '03:05:00 13/05/2023',
-      },
-    ],
-  },
-  {
-    id: '02',
-    name: 'User 002',
-    messages: [
-      {
-        senderId: '02',
-        message: 'Hello, someone can help me?',
-        time: '03:05:00 13/05/2023',
-      },
-      {
-        senderId: '00',
-        message: 'Yes, can I help you?',
-        time: '03:05:00 13/05/2023',
-      },
-      {
-        senderId: '02',
-        message: '............',
-        time: '03:05:00 13/05/2023',
-      },
-      {
-        senderId: '02',
-        message: '............',
-        time: '03:05:00 13/05/2023',
-      },
-      {
-        senderId: '00',
-        message: '............',
-        time: '03:05:00 13/05/2023',
-      },
-      {
-        senderId: '01',
-        message: '............',
-        time: '03:05:00 13/05/2023',
-      },
-    ],
-  },
-  {
-    id: '03',
-    name: 'User 003',
-    messages: [
-      {
-        senderId: '03',
-        message: 'Hello, someone can help me?',
-        time: '03:05:00 13/05/2023',
-      },
-      {
-        senderId: '00',
-        message: 'Yes, can I help you?',
-        time: '03:05:00 13/05/2023',
-      },
-      {
-        senderId: '03',
-        message: '............',
-        time: '03:05:00 13/05/2023',
-      },
-      {
-        senderId: '03',
-        message: '............',
-        time: '03:05:00 13/05/2023',
-      },
-      {
-        senderId: '00',
-        message: '............',
-        time: '03:05:00 13/05/2023',
-      },
-      {
-        senderId: '01',
-        message: '............',
-        time: '03:05:00 13/05/2023',
-      },
-    ],
-  },
-];
-const { fetchChatBox, fetchChatBoxById, resetChatBoxReducer } = ChatBoxActions;
+const { fetchChatBox } = ChatBoxActions;
 
 const Support = () => {
+  const userData = Utils.getUserData();
   const dispatch = useTypedDispatch();
-  const [selectedUser, setSelectedUser] = React.useState<string>('');
+  const payload: any[] = useSelector((state: RootState) =>
+    _.get(state.CHAT_BOX, 'payload')
+  );
+  const [currentRoom, setCurrentRoom] = React.useState<any>({
+    roomId: '',
+    receiverId: '',
+  });
+  const [currentPayload, setCurrentPayload] = React.useState<any>([]);
+  const [message, setMessage] = React.useState<string>('');
+  const messageBoxRef = React.useRef<HTMLDivElement | null>(null);
+
+  const scrollToBottom = () => {
+    setTimeout(() => {
+      if (messageBoxRef && messageBoxRef.current) {
+        messageBoxRef.current.scrollTo({
+          top: messageBoxRef.current.scrollHeight,
+          behavior: 'auto',
+        });
+      }
+    }, 100);
+  };
 
   React.useEffect(() => {
     dispatch(fetchChatBox());
+    Utils.WebSocket.on('receiveMessage', (data: any) => {
+      const resolvePayload = currentPayload.map((item: any) => {
+        if (item.id === data.id) return data;
+        return item;
+      });
+      setCurrentPayload(resolvePayload);
+      setMessage('');
+      setCurrentRoom({ roomId: data.id, ...data });
+      scrollToBottom();
+    });
   }, []);
 
+  React.useEffect(() => {
+    if (payload.length > 0) {
+      payload.forEach((item: any) => {
+        Utils.WebSocket.emit(
+          'joinRoom',
+          { userId: userData.id, roomId: item.id },
+          (data: any) => {
+            console.log(data?.message);
+          }
+        );
+      });
+      setCurrentPayload(payload);
+    }
+  }, [payload]);
+
+  const onSendMessage = () => {
+    Utils.WebSocket.emit(
+      'sendMessage',
+      {
+        userId: userData.id,
+        roomId: currentRoom.roomId,
+        receiverId: currentRoom.receiverId,
+        message,
+      },
+      () => {
+        setMessage('');
+      }
+    );
+  };
+
   const _renderMsg = () => {
-    const findUser = users.find((user: any) => user.id === selectedUser);
-    const messages = findUser?.messages;
+    // const findUser = users.find((user: any) => user.id === selectedUser);
+    const { messages } = currentRoom;
     return (
       <Stack direction="column" sx={{ height: '100%' }}>
         <Stack
@@ -193,13 +97,14 @@ const Support = () => {
           spacing={2}
           padding="10px"
           sx={{ maxHeight: 'calc(100vh - 121.5px)', overflow: 'auto' }}
+          ref={messageBoxRef}
         >
           {messages && messages.length > 0 ? (
-            messages.map((item: any, index: number) => {
-              const isSender = item.senderId === '00';
+            messages.map((item: any) => {
+              const isSender = item.senderId === userData.id;
               return (
                 <Stack
-                  key={`message-${findUser.id}-${index}`}
+                  key={`message-${item.id}`}
                   direction="row"
                   justifyContent={isSender ? 'flex-end' : 'flex-start'}
                 >
@@ -215,7 +120,7 @@ const Support = () => {
                     sx={{
                       padding: '10px',
                       backgroundColor: isSender
-                        ? 'background.chargeInput'
+                        ? 'background.lightSilver'
                         : 'background.mainContent',
                       borderRadius: '5px',
                       fontSize: '14px',
@@ -239,8 +144,15 @@ const Support = () => {
             size="small"
             fullWidth
             placeholder="Nhập tin nhắn trước khi gửi"
+            value={message}
+            onChange={(e: any) => setMessage(e.target.value)}
           />
-          <Button size="small" variant="contained">
+          <Button
+            size="small"
+            variant="contained"
+            disabled={!Boolean(message.trim())}
+            onClick={() => onSendMessage()}
+          >
             Gửi
           </Button>
         </Stack>
@@ -270,12 +182,14 @@ const Support = () => {
           maxWidth="800px"
           border="1px solid #BEBEBE"
         >
-          <Grid item xs={3} borderRight="1px solid #BEBEBE">
+          <Grid item xs={5} md={3} borderRight="1px solid #BEBEBE">
             <Stack direction="column">
-              {users.map((user: any) => {
-                const { messages } = user;
+              {currentPayload.map((item: any) => {
+                const { messages, senderId, receiverId } = item;
                 const lastMsg = messages[messages.length - 1];
-                const isActive = user.id === selectedUser;
+                const user =
+                  senderId.id === userData.id ? receiverId : senderId;
+                const isActive = item.id === currentRoom.roomId;
                 return (
                   <Stack
                     direction="row"
@@ -298,7 +212,10 @@ const Support = () => {
                         color: 'text.secondary',
                       },
                     }}
-                    onClick={() => setSelectedUser(user.id)}
+                    onClick={() => {
+                      setCurrentRoom({ ...item, roomId: item.id });
+                      scrollToBottom();
+                    }}
                   >
                     <Avatar
                       sx={{
@@ -306,14 +223,15 @@ const Support = () => {
                         height: '40px',
                         marginRight: '10px',
                       }}
+                      src={user.avatar}
                     />
                     <Stack direction="column">
                       <Typography sx={{ fontSize: '15px', fontWeight: 600 }}>
-                        {user.name}
+                        {user.nickname}
                       </Typography>
                       <Typography sx={{ fontSize: '13px' }}>
                         {lastMsg?.senderId !== '00' ? '' : 'You: '}
-                        {lastMsg ? lastMsg.message : ''}
+                        {lastMsg ? lastMsg.message : 'No message'}
                       </Typography>
                     </Stack>
                   </Stack>
@@ -321,16 +239,14 @@ const Support = () => {
               })}
             </Stack>
           </Grid>
-          <Grid item xs={9}>
-            {selectedUser ? _renderMsg() : _renderRequiredUser()}
+          <Grid item xs={7} md={9}>
+            {currentRoom ? _renderMsg() : _renderRequiredUser()}
           </Grid>
         </Grid>
       </Stack>
     );
   };
-  return (
-    <AdminLayout content={_renderMain()} screenTitle="Hỗ trợ" />
-  );
+  return <AdminLayout content={_renderMain()} screenTitle="Hỗ trợ" />;
 };
 
 export default Support;

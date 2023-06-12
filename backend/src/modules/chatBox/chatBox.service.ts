@@ -8,7 +8,7 @@ import ChatMessage from "../../models/chatMessage.model";
 import {
   IChatBoxDoc,
   CreateMessageBody,
-  EChatBox
+  EChatBox,
 } from "../../interfaces/chatBox.interface";
 
 export const getChatBoxes = async (
@@ -22,7 +22,12 @@ export const getChatBoxes = async (
       .populate("messages")
       .populate("senderId");
   } else {
-    const userChatBox = await ChatBox.findOne({ senderId: userId });
+    const userChatBox = await ChatBox.findOne({ senderId: userId })
+      .populate("messages")
+      .populate("messages.senderId")
+      .populate("messages.receiverId")
+      .populate("senderId")
+      .populate("receiverId");
     const admin = await User.findOne({ role: "admin" });
     if (!admin) throw new ApiError(httpStatus.NOT_FOUND, "Admin not found!");
     if (!userChatBox) {
@@ -73,6 +78,8 @@ export const createMessage = async (
   const savedChatRoom = await ChatBox.findById(chatRoom.id)
     .populate("messages")
     .populate("messages.senderId")
-    .populate("messages.receiverId");
+    .populate("messages.receiverId")
+    .populate("senderId")
+    .populate("receiverId");
   return savedChatRoom;
 };

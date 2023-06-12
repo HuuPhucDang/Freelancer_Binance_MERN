@@ -25,6 +25,7 @@ mongoose.connect(config.mongoose.url).then(() => {
   io.on("connection", (socket) => {
     console.log("a user connected");
     initInterventionSocket(socket);
+    intiChatSocket(socket);
   });
   io.on("accessChatPage", (socket) => {
     intiChatSocket(socket);

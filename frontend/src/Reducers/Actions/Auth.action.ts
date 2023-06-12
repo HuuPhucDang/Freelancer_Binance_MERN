@@ -100,12 +100,12 @@ const register = (payload: {
           const resolveResult: { message: string } = result as {
             message: string;
           };
+          dispatch(registerSuccess(result));
+          await Utils.redirect(ROUTERS.SIGN_IN);
           pushNotification({
             type: 'success',
             message: resolveResult.message,
           });
-          dispatch(registerSuccess(result));
-          Utils.redirect(ROUTERS.SIGN_IN);
         }
       })
       .catch(async (error: any) => {
