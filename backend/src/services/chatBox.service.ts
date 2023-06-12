@@ -45,7 +45,7 @@ const intiChatSocket = (socket: Socket) => {
       data?.userId,
       data
     );
-    socket.to(data?.roomId).emit("receiveMessage", sendedMessage);
+    io.to(data?.roomId).emit("receiveMessage", sendedMessage);
   });
   socket.on("leaveRoom", (data: any, callback: any) => {
     // leave room

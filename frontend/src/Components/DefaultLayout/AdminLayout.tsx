@@ -23,8 +23,12 @@ const AdminLayout: React.FC<SectionProps> = (props: SectionProps) => {
   const { content, screenTitle } = props;
 
   React.useEffect(() => {
-    if (userData?.role !== 'admin' || !token)
-      return Utils.redirect(ROUTERS.SIGN_IN);
+    if (userData?.role !== 'admin') {
+      console.log(token);
+      if (token) Utils.redirect(ROUTERS.TRANSACTION);
+      else Utils.redirect(ROUTERS.SIGN_IN);
+    }
+
     window.scrollTo({ top: 0, left: 0 });
   }, [pathname]);
 

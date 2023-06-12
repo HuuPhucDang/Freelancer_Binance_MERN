@@ -311,8 +311,8 @@ const ConnectBank: React.FC = () => {
           direction="column"
           sx={{
             position: 'absolute',
-            bottom: '12%',
-            left: '10%',
+            top: '44%',
+            left: '30%',
             userSelect: 'none',
           }}
         >
@@ -324,17 +324,47 @@ const ConnectBank: React.FC = () => {
               fontWeight: 500,
             }}
           >
-            {userData.bank.accountNumber}
+            {userData?.bank?.accountNumber}
           </Typography>
+        </Stack>
+        <Stack
+          direction="column"
+          sx={{
+            position: 'absolute',
+            top: '13%',
+            left: '30%',
+            userSelect: 'none',
+          }}
+        >
           <Typography
             sx={{
-              fontSize: '14px',
+              fontSize: '20px',
               textTransform: 'uppercase',
-              fontWeight: 500,
               color: 'text.burntSienna',
+              fontWeight: 500,
             }}
           >
             {userData.bank.fullname}
+          </Typography>
+        </Stack>
+        <Stack
+          direction="column"
+          sx={{
+            position: 'absolute',
+            bottom: '20%',
+            left: '13%',
+            userSelect: 'none',
+          }}
+        >
+          <Typography
+            sx={{
+              fontSize: '20px',
+              textTransform: 'uppercase',
+              color: 'text.burntSienna',
+              fontWeight: 500,
+            }}
+          >
+            {userData?.bank?.bankName}
           </Typography>
         </Stack>
       </Box>

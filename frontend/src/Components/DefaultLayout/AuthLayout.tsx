@@ -2,8 +2,11 @@ import React from 'react';
 import _ from 'lodash';
 import { Helmet } from 'react-helmet-async';
 import { Box, Stack } from '@mui/material';
+import { useLocation } from 'react-router';
 
 import Widgets from '../Widgets';
+import { Utils } from '@/Libs';
+import { ROUTERS } from '@/Constants';
 
 interface SectionProps {
   content: JSX.Element;
@@ -13,7 +16,17 @@ interface SectionProps {
 
 const AuthLayout: React.FC<SectionProps> = (props: SectionProps) => {
   // Constructors
+  const { pathname } = useLocation();
+  const userData = Utils.getUserData();
+  const token = Utils.getAccessToken();
   const { screenTitle, content } = props;
+
+  React.useEffect(() => {
+    if (token) {
+      if (userData?.role === 'user') Utils.redirect(ROUTERS.REQUEST);
+      else Utils.redirect(ROUTERS.TRANSACTION);
+    }
+  }, [pathname]);
 
   return (
     <Stack direction="column">

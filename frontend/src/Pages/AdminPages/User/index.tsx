@@ -114,8 +114,8 @@ const Request = () => {
             item.status,
             <IconButton
               size="small"
-              onClick={() => item.role !== 'admin' && setCurrentUser(item.id)}
-              disabled={item.role === 'admin'}
+              onClick={() => setCurrentUser(item.id)}
+              // disabled={item.role === 'admin'}
             >
               <RemoveRedEyeOutlinedIcon />
             </IconButton>

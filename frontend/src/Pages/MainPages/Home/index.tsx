@@ -10,14 +10,16 @@ import {
 } from '@mui/material';
 import PersonIcon from '@mui/icons-material/Person';
 import { Fade } from 'react-reveal';
-
+import LocalAtmIcon from '@mui/icons-material/LocalAtm';
 // Import local
 import { UserLayout } from '@/Components/DefaultLayout';
 import Assets from '@/Assets';
 import { ROUTERS } from '@/Constants';
+import { Utils } from '@/Libs';
 
 const Home: React.FC = () => {
   // Constructors
+  const userData = Utils.getUserData();
 
   // Renders
   const _renderHero = () => {
@@ -90,17 +92,28 @@ const Home: React.FC = () => {
                   // color: 'text.secondary',
                   textTransform: 'unset',
                 }}
-                startIcon={<PersonIcon />}
+                startIcon={userData ? <LocalAtmIcon /> : <PersonIcon />}
                 color="burntSienna"
               >
-                <Link
-                  sx={{
-                    fontSize: '12px',
-                  }}
-                  href={ROUTERS.SIGN_UP}
-                >
-                  Đăng kí bằng Email hoặc Điện thoại
-                </Link>
+                {userData ? (
+                  <Link
+                    sx={{
+                      fontSize: '12px',
+                    }}
+                    href={ROUTERS.TRANSACTION}
+                  >
+                    Giao dịch ngay
+                  </Link>
+                ) : (
+                  <Link
+                    sx={{
+                      fontSize: '12px',
+                    }}
+                    href={ROUTERS.SIGN_UP}
+                  >
+                    Đăng kí bằng Email hoặc Điện thoại
+                  </Link>
+                )}
               </Button>
               <Typography
                 sx={{ fontSize: '12px', lineHeight: '15px', margin: '10px 0' }}
@@ -938,20 +951,37 @@ const Home: React.FC = () => {
             display="flex"
             justifyContent={{ xs: 'center', md: 'flex-end' }}
           >
-            <Button
-              sx={{
-                backgroundColor: 'background.burntSienna',
-                color: 'text.secondary',
-                textTransform: 'unset',
-                height: '53px',
-                width: '220px',
-                fontWeight: 700,
-                fontSize: '14px',
-              }}
-              href={ROUTERS.SIGN_UP}
-            >
-              Mở Tài Khoản (đăng kí)
-            </Button>
+            {userData ? (
+              <Button
+                sx={{
+                  backgroundColor: 'background.burntSienna',
+                  color: 'text.secondary',
+                  textTransform: 'unset',
+                  height: '53px',
+                  width: '220px',
+                  fontWeight: 700,
+                  fontSize: '14px',
+                }}
+                href={ROUTERS.RECHARGE}
+              >
+                Nạp
+              </Button>
+            ) : (
+              <Button
+                sx={{
+                  backgroundColor: 'background.burntSienna',
+                  color: 'text.secondary',
+                  textTransform: 'unset',
+                  height: '53px',
+                  width: '220px',
+                  fontWeight: 700,
+                  fontSize: '14px',
+                }}
+                href={ROUTERS.SIGN_UP}
+              >
+                Mở Tài Khoản (đăng kí)
+              </Button>
+            )}
           </Grid>
           <Grid
             item
@@ -960,20 +990,37 @@ const Home: React.FC = () => {
             display="flex"
             justifyContent={{ xs: 'center', md: 'flex-start' }}
           >
-            <Button
-              sx={{
-                backgroundColor: 'background.lightSilver',
-                color: 'text.secondary',
-                textTransform: 'unset',
-                height: '53px',
-                width: '220px',
-                fontWeight: 700,
-                fontSize: '14px',
-              }}
-              href={ROUTERS.SIGN_IN}
-            >
-              Giao dịch ngay (đăng nhập){' '}
-            </Button>
+            {userData ? (
+              <Button
+                sx={{
+                  backgroundColor: 'background.lightSilver',
+                  color: 'text.secondary',
+                  textTransform: 'unset',
+                  height: '53px',
+                  width: '220px',
+                  fontWeight: 700,
+                  fontSize: '14px',
+                }}
+                href={ROUTERS.WITHDRAW_MONEY}
+              >
+                Rút
+              </Button>
+            ) : (
+              <Button
+                sx={{
+                  backgroundColor: 'background.lightSilver',
+                  color: 'text.secondary',
+                  textTransform: 'unset',
+                  height: '53px',
+                  width: '220px',
+                  fontWeight: 700,
+                  fontSize: '14px',
+                }}
+                href={ROUTERS.SIGN_IN}
+              >
+                Giao dịch ngay (đăng nhập){' '}
+              </Button>
+            )}
           </Grid>
         </Grid>
       </Stack>

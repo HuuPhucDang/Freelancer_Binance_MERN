@@ -12,7 +12,7 @@ import {
 // Import local
 import { UserLayout } from '@/Components/DefaultLayout';
 import { Sidebar } from '@/Components/LayoutParts';
-import { UploadIDCard } from '@/Components/Popup';
+import { UploadAvatar, UploadIDCard } from '@/Components/Popup';
 import { Utils } from '@/Libs';
 import { ROUTERS } from '@/Constants';
 import { useTypedDispatch } from '@/Reducers/store';
@@ -25,6 +25,8 @@ const Verify: React.FC = () => {
   const dispatch = useTypedDispatch();
   const userData = Utils.getUserData();
   const [isShowUploadIDCardPopup, setIsShowUploadIDCardPopup] =
+    React.useState<boolean>(false);
+  const [isShowAvatarPopup, setIsShowAvatarPopup] =
     React.useState<boolean>(false);
 
   React.useEffect(() => {
@@ -57,6 +59,10 @@ const Verify: React.FC = () => {
               width: '187px',
               fontWeight: 400,
             }}
+            disabled={
+              userData?.verification?.status === 'pending' &&
+              userData?.verification?.backImageUrl?.data?.length > 0
+            }
             onClick={() => setIsShowUploadIDCardPopup(true)}
           >
             Cập nhật thẻ CCCD/CMND
@@ -73,7 +79,11 @@ const Verify: React.FC = () => {
               width: '187px',
               fontWeight: 400,
             }}
-            onClick={() => setIsShowUploadIDCardPopup(true)}
+            onClick={() => setIsShowAvatarPopup(true)}
+            disabled={
+              userData?.verification?.status === 'pending' &&
+              userData?.verification?.selfieImageUrl?.data?.length > 0
+            }
           >
             Cập nhật ảnh chân dung
           </Button>
@@ -83,22 +93,6 @@ const Verify: React.FC = () => {
   };
 
   const _renderVerifiedField = () => {
-    if (userData?.verification?.status === 'pending' || typeof userData?.verification === 'string')
-      return (
-        <Stack direction="column">
-          <Typography
-            sx={{
-              fontSize: '14px',
-              lineHeight: '28px',
-              fontWeight: 400,
-            }}
-          >
-            Danh tính của bạn đang được xác minh. Vui lòng chờ đến khi có kết
-            quả!
-          </Typography>
-        </Stack>
-      );
-
     return (
       <Stack direction="column">
         <Typography
@@ -134,6 +128,10 @@ const Verify: React.FC = () => {
         <UploadIDCard
           open={isShowUploadIDCardPopup}
           onClose={() => setIsShowUploadIDCardPopup(false)}
+        />
+        <UploadAvatar
+          open={isShowAvatarPopup}
+          onClose={() => setIsShowAvatarPopup(false)}
         />
         <Grid container columnSpacing={4}>
           <Grid
@@ -184,9 +182,11 @@ const Verify: React.FC = () => {
                 >
                   <Grid container>
                     <Grid item xs={10}>
-                      {userData?.verification
-                        ? _renderVerifiedField()
-                        : _renderUnverifyField()}
+                      {!userData?.verification ||
+                      userData?.verification?.status === 'pending' ||
+                      typeof userData?.verification === 'string'
+                        ? _renderUnverifyField()
+                        : _renderVerifiedField()}
                     </Grid>
                     <Grid
                       item

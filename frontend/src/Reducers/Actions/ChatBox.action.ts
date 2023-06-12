@@ -38,7 +38,8 @@ const fetchChatBox = () => {
         const results = await Utils.resolveResponse(response);
         if (!results) await dispatch(fetchChatBoxFail());
         else {
-          dispatch(fetchChatBoxSuccess(results));
+          const { payload }: { payload: any } = results as { payload: any };
+          dispatch(fetchChatBoxSuccess(payload));
         }
       })
       .catch(async (error) => {

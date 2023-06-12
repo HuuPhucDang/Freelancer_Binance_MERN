@@ -8,6 +8,7 @@ export default {
     BASIC: '/users',
     GET_SELF: '/users/self',
     UPDATE_NICKNAME: '/users/nickname',
+    UPDATE_USER_TYPE: '/users/userType',
   },
   SECURITY: {
     CHANGE_PASSWORD: '/security/changePassword',

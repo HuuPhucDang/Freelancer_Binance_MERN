@@ -1,4 +1,9 @@
 import * as React from 'react';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
+import { useSelector } from 'react-redux';
+import _ from 'lodash';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -6,14 +11,11 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { Box, Grid, Typography } from '@mui/material';
-import Assets from '../../../Assets';
-import { RootState, useTypedDispatch } from '../../../Reducers/store';
-import { VerificationActions } from '../../../Reducers/Actions';
-import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from 'yup';
-import { useSelector } from 'react-redux';
-import _ from 'lodash';
+
+import Assets from '@/Assets';
+import { RootState, useTypedDispatch } from '@/Reducers/store';
+import { VerificationActions } from '@/Reducers/Actions';
+
 
 interface IProps {
   open: boolean;
@@ -33,13 +35,6 @@ const schema = yup
     backImage: yup
       .mixed()
       .test('required', 'Ảnh mặt sau là trường bắt buộc', (file) => {
-        const resolveFile: FileList = file as FileList;
-        if (resolveFile && resolveFile.length > 0) return true;
-        return false;
-      }),
-    selfieImage: yup
-      .mixed()
-      .test('required', 'Ảnh chân dung là trường bắt buộc', (file) => {
         const resolveFile: FileList = file as FileList;
         if (resolveFile && resolveFile.length > 0) return true;
         return false;
@@ -65,7 +60,6 @@ const UploadIDCard: React.FC<IProps> = ({ open = false, onClose }) => {
 
   const frontImage: FileList | null = watch('frontImage') as FileList | null;
   const backImage: FileList | null = watch('backImage') as FileList | null;
-  const selfieImage: FileList | null = watch('selfieImage') as FileList | null;
   const isUploadSuccess: boolean = useSelector((state: RootState) =>
     _.get(state.VERIFICATION, 'isUploadSuccess')
   );
@@ -86,7 +80,6 @@ const UploadIDCard: React.FC<IProps> = ({ open = false, onClose }) => {
     const formData = new FormData();
     formData.append('frontImage', data.frontImage[0]);
     formData.append('backImage', data.backImage[0]);
-    formData.append('selfieImage', data.selfieImage[0]);
     dispatch(uploadCardsId(formData));
   };
 
@@ -145,30 +138,6 @@ const UploadIDCard: React.FC<IProps> = ({ open = false, onClose }) => {
             {errors?.backImage?.message ? (
               <Typography color="error" sx={{ fontSize: '14px' }}>
                 {errors?.backImage?.message}
-              </Typography>
-            ) : null}
-          </Grid>
-          <Grid item xs={12}>
-            <Typography sx={{ fontSize: '14px', fontWeight: 600 }}>
-              Ảnh chân dung
-            </Typography>
-            <Box
-              component="img"
-              src={
-                selfieImage?.[0]
-                  ? URL.createObjectURL(selfieImage?.[0])
-                  : 'https://thumbs.dreamstime.com/b/default-avatar-profile-icon-vector-social-media-user-photo-183042379.jpg'
-              }
-              sx={{
-                width: '100%',
-                aspectRatio: 4 / 3,
-                objectFit: 'cover',
-              }}
-            />
-            <input type="file" {...register('selfieImage')} />
-            {errors?.selfieImage?.message ? (
-              <Typography color="error" sx={{ fontSize: '14px' }}>
-                {errors?.selfieImage?.message}
               </Typography>
             ) : null}
           </Grid>

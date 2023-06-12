@@ -86,6 +86,7 @@ const _asyncActions: ActionTypes = generateSyncActions([
   'UPDATE_USER_TYPE',
   'FETCH_TRADE',
   'CREATE_TRADE',
+  'UPDATE_USER',
 ]);
 
 const _singleActions: ActionTypes = {
