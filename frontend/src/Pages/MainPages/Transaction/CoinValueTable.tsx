@@ -20,10 +20,10 @@ const CoinValueTable = () => {
   const [coinData, setCoinData] = React.useState<any>([]);
 
   React.useEffect(() => {
-    Utils.WebSocket.emit('getLatestCoins', null, (data: any) => {
+    Utils.WebSocket.on('updateAllCoinPriceNow', (data) => {
       setCoinData(data);
     });
-    Utils.WebSocket.on('updateAllCoinPriceNow', (data) => {
+    Utils.WebSocket.emit('getLatestCoins', null, (data: any) => {
       setCoinData(data);
     });
     return () => {

@@ -30,8 +30,8 @@ export const uploadIdCards = async (
     (await user.save()).populate("verification");
     return assignReturnUser(user);
   }
-  if (findVerification.status === EVerifyType.PENDING)
-    throw new ApiError(httpStatus.BAD_REQUEST, "You already upload ID cards!");
+  // if (findVerification.status === EVerifyType.PENDING)
+  //   throw new ApiError(httpStatus.BAD_REQUEST, "You already upload ID cards!");
   if (findVerification.status === EVerifyType.APPROVED)
     throw new ApiError(
       httpStatus.BAD_REQUEST,

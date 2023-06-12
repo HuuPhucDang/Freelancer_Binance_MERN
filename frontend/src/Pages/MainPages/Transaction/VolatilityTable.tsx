@@ -46,6 +46,15 @@ const VolatilityTable: React.FC<IProps> = ({ symbol }: IProps) => {
         }
       );
     }, 3000);
+    Utils.WebSocket.on('updateAllCoinPriceNow', () => {
+      Utils.WebSocket.emit(
+        'getAggregateTradeList',
+        { symbol, limit: 1 },
+        (data: any) => {
+          getAggregateData(data);
+        }
+      );
+    });
     return () => {
       clearInterval(intervalAggeList);
     };

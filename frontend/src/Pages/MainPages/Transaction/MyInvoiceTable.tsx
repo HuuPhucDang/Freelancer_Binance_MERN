@@ -88,7 +88,7 @@ const MyInvoiceTable = () => {
                 padding: '4px 0',
               }}
             >
-              Số lượng
+              Số lượng (USDT)
             </TableCell>
             <TableCell
               align="right"

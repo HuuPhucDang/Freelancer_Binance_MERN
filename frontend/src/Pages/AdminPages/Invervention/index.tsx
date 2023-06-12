@@ -8,7 +8,7 @@ import {
   CardActions,
   Grid,
   TextField,
-  Stack
+  Stack,
 } from '@mui/material';
 import _ from 'lodash';
 import React, { useState, useEffect } from 'react';
@@ -19,7 +19,7 @@ import { AdminLayout } from '../../../Components/DefaultLayout';
 import { Utils } from '@libs';
 
 const Request: React.FC = () => {
-    useState<boolean>(false);
+  useState<boolean>(false);
   const [coinData, setCoinData] = useState<any>([]);
   const [newIntervention, setNewIntervention] = useState<any>({});
   const [renderKey, setRenderKey] = useState<number>(Math.random());
@@ -45,10 +45,10 @@ const Request: React.FC = () => {
   }, []);
 
   // Events
-  const onInteracIntervention = (symbol: any, isStart: boolean) => {
+  const onInteracIntervention = (symbol: any) => {
     Utils.WebSocket.emit('interventionCoin', {
       symbol,
-      intervention: isStart ? newIntervention[symbol] : 0,
+      intervention: 0,
     });
   };
 
@@ -134,15 +134,16 @@ const Request: React.FC = () => {
             </Grid>
           </CardContent>
           <CardActions disableSpacing>
-            <Button
-              color={item?.intervention ? 'error' : 'success'}
-              onClick={() =>
-                onInteracIntervention(item?.symbol, !item?.intervention)
-              }
-              variant="contained"
-            >
-              {item?.intervention ? 'Kết Thúc' : 'Bắt đầu'}
-            </Button>
+            {item?.intervention !== 0 && (
+              <Button
+                color="error"
+                onClick={() => onInteracIntervention(item?.symbol)}
+                variant="contained"
+                fullWidth
+              >
+                Kết Thúc can thiệp
+              </Button>
+            )}
           </CardActions>
         </Card>
       </Grid>

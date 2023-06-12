@@ -1,7 +1,7 @@
 import { ACTION_TYPES } from '@/Constants';
 import API from '@/Apis';
 import { Utils } from '@libs';
-// import { pushNotification } from '../../Libs/utils/Widget.utils';
+import { pushNotification } from '../../Libs/utils/Widget.utils';
 
 // SINGLE ACTIONS
 const setActionLoading = (payload: boolean) => {
@@ -68,7 +68,7 @@ const createTradeSuccess = () => {
   };
 };
 
-const createTrade = (payload: any, limitTime: number, timeout: number) => {
+const createTrade = (payload: any, _limitTime: number, timeout: number) => {
   return async (dispatch: any) => {
     dispatch(setActionLoading(true));
     await API.createNewTrade(payload)
@@ -86,9 +86,11 @@ const createTrade = (payload: any, limitTime: number, timeout: number) => {
             },
             () => {}
           );
-          setTimeout(() => {
-            dispatch(createTradeSuccess());
-          }, limitTime * 1000);
+          dispatch(createTradeSuccess());
+          pushNotification({
+            type: 'success',
+            message: 'Giao dịch thành công!',
+          });
         }
       })
       .catch(async (error) => {
