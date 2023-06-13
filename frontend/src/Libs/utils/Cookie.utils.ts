@@ -5,7 +5,10 @@ const cookies = new Cookies();
 
 const setAccessToken = (payload: { token: string; expires: string }) => {
   const { token, expires } = payload;
-  cookies.set(COOKIE_KEYS.ACCESS_TOKEN, token, { expires: new Date(expires) });
+  cookies.set(COOKIE_KEYS.ACCESS_TOKEN, token, {
+    path: '/',
+    expires: new Date(expires),
+  });
 };
 
 const getAccessToken = () => {
@@ -15,7 +18,10 @@ const getAccessToken = () => {
 
 const setRefreshToken = (payload: { token: string; expires: string }) => {
   const { token, expires } = payload;
-  cookies.set(COOKIE_KEYS.REFRESH_TOKEN, token, { expires: new Date(expires) });
+  cookies.set(COOKIE_KEYS.REFRESH_TOKEN, token, {
+    path: '/',
+    expires: new Date(expires),
+  });
 };
 
 const getRefreshToken = () => {
@@ -42,8 +48,12 @@ const getThemeMode = () => {
 };
 
 const clearCookies = () => {
-  cookies.remove(COOKIE_KEYS.ACCESS_TOKEN, { path: '/' });
-  cookies.remove(COOKIE_KEYS.REFRESH_TOKEN, { path: '/' });
+  cookies.remove(COOKIE_KEYS.ACCESS_TOKEN, {
+    path: '/',
+  });
+  cookies.remove(COOKIE_KEYS.REFRESH_TOKEN, {
+    path: '/',
+  });
   localStorage.removeItem(COOKIE_KEYS.USER_DATA);
 };
 

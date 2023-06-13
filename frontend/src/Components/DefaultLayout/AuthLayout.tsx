@@ -1,25 +1,25 @@
 import React from 'react';
 import _ from 'lodash';
-import { Helmet } from 'react-helmet-async';
+// import { Helmet } from 'react-helmet-async';
 import { Box, Stack } from '@mui/material';
-import { useLocation } from 'react-router';
+import { Outlet, useLocation } from 'react-router';
 
 import Widgets from '../Widgets';
 import { Utils } from '@/Libs';
 import { ROUTERS } from '@/Constants';
 
 interface SectionProps {
-  content: JSX.Element;
-  currentPage?: string;
-  screenTitle?: string;
+  // content: JSX.Element;
+  // currentPage?: string;
+  // screenTitle?: string;
 }
 
-const AuthLayout: React.FC<SectionProps> = (props: SectionProps) => {
+const AuthLayout: React.FC<SectionProps> = () => {
   // Constructors
   const { pathname } = useLocation();
   const userData = Utils.getUserData();
   const token = Utils.getAccessToken();
-  const { screenTitle, content } = props;
+  // const { screenTitle, content } = props;
 
   React.useEffect(() => {
     if (token) {
@@ -31,9 +31,6 @@ const AuthLayout: React.FC<SectionProps> = (props: SectionProps) => {
   return (
     <Stack direction="column">
       <Box sx={{ background: 'background.default', flex: 1 }}>
-        <Helmet>
-          <title>{screenTitle ? screenTitle : 'Binance'}</title>
-        </Helmet>
         <Stack
           sx={{
             width: '100vw',
@@ -43,7 +40,8 @@ const AuthLayout: React.FC<SectionProps> = (props: SectionProps) => {
             justifyContent: 'center',
           }}
         >
-          {content}
+          <Outlet />
+          {/* {content} */}
         </Stack>
         <Widgets.Notification />
         <Widgets.Alert />

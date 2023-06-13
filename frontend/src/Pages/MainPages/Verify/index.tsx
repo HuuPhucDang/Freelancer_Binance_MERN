@@ -48,7 +48,16 @@ const Verify: React.FC = () => {
             fontWeight: 400,
           }}
         >
-          Xác minh danh tính của bạn để mua và giao dịch trên Binance.
+          {userData?.verification?.status === 'pending' &&
+          userData?.verification?.backImageUrl &&
+          userData?.verification?.frontImageUrl &&
+          userData?.verification?.selfieImageUrl
+            ? 'Danh tính của bạn đang được xác minh!'
+            : `${
+                userData?.verification?.status === 'denied'
+                  ? 'Xác minh của bạn đã bị từ chối. Vui lòng xác minh lại!'
+                  : 'Xác minh danh tính của bạn để mua và giao dịch trên Binance.'
+              }`}
         </Typography>
         <Stack direction="row" marginTop="20px">
           <Button
@@ -108,11 +117,6 @@ const Verify: React.FC = () => {
             fontWeight: 400,
           }}
         >
-          {userData?.verification?.status === 'pending' &&
-            userData?.verification?.backImageUrl &&
-            userData?.verification?.frontImageUrl &&
-            userData?.verification?.selfieImageUrl &&
-            'Danh tính của bạn đang được xác minh!'}
           {userData?.verification?.status === 'approved' && (
             <>
               Danh tính của bạn đã được xác minh danh tính. Bạn có thể bắt đầu{' '}
@@ -203,7 +207,8 @@ const Verify: React.FC = () => {
                   <Grid container>
                     <Grid item xs={10}>
                       {userData?.verification?.status === 'pending' ||
-                      userData?.verification?.status === 'canceled'
+                      userData?.verification?.status === 'denied' ||
+                      !userData?.verification
                         ? _renderUnverifyField
                         : _renderVerifiedField()}
                     </Grid>

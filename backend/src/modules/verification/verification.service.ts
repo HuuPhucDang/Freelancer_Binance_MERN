@@ -71,7 +71,7 @@ export const changeIDCardStatus = async (
       "This ID card has been verified!"
     );
   if (findVerification.status === EVerifyType.DENY)
-    throw new ApiError(httpStatus.BAD_REQUEST, "This ID card has been deined!");
+    throw new ApiError(httpStatus.BAD_REQUEST, "This ID card has been denied!");
 
   await Notification.create({
     userId: user.id,
@@ -80,6 +80,11 @@ export const changeIDCardStatus = async (
     )}!`,
   });
   findVerification.status = status;
+  if (status === EVerifyType.DENY) {
+    findVerification.selfieImageUrl = '';
+    findVerification.frontImageUrl = '';
+    findVerification.backImageUrl = '';
+  }
   await findVerification.save();
   const savedUser = await getUserById(userId);
   if (savedUser) return assignReturnUser(savedUser);

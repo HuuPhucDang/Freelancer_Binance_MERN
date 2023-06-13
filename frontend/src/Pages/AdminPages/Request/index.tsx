@@ -68,7 +68,7 @@ interface IFilterParam {
 }
 
 const initialFilterParams = {
-  sortBy: 'date:DESC,time:DESC',
+  sortBy: 'createdAt:desc',
   populate: 'userId',
   page: 1,
   limit: 15,

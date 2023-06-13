@@ -41,9 +41,7 @@ const Request: React.FC = () => {
       Utils.WebSocket.emit(
         'updateMoonbot',
         { id, time, limitedTime, probability },
-        (data: any) => {
-          console.log(data);
-        }
+        () => {}
       );
     }
   };

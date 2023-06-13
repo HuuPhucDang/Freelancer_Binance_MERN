@@ -87,7 +87,6 @@ const BankInformation = () => {
 
   React.useEffect(() => {
     if (QRCode && QRCode?.[0]) {
-      console.log(QRCode);
       const url = URL.createObjectURL(QRCode?.[0]);
       setQRUrl(url);
     }
