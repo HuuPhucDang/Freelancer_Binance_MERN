@@ -29,6 +29,5 @@ export const updateSystemInfor = catchAsync(
         responsePayload(true, "Update system infor successfully!", user)
       );
     }
-    res.send(responsePayload(false, "Update system infor failure!", null));
   }
 );

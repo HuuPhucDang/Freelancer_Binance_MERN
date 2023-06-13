@@ -20,6 +20,7 @@ import {
   UserActions,
 } from '@/Reducers/Actions';
 import { RootState, useTypedDispatch } from '@/Reducers/store';
+import { Utils } from '@/Libs';
 
 const { getSelf } = UserActions;
 const { getSystemInfo } = SystemInfoActions;
@@ -35,6 +36,7 @@ const Recharge: React.FC = () => {
   const requestRechargeSuccess = useSelector((state: RootState) =>
     _.get(state.TRANSACTION, 'requestRechargeSuccess')
   );
+  const userData = Utils.getUserData();
   const invalidTypeMsg = 'Số tiền muốn nạp phải có định dạng số';
   const [isErr, setIsErr] = React.useState<boolean>(false);
   const [amount, setAmount] = React.useState<number>(0);
@@ -166,7 +168,10 @@ const Recharge: React.FC = () => {
                           marginTop: '2px',
                         }}
                       >
-                        Nội dung: <b>{systemInfo?.message}</b>
+                        Nội dung:{' '}
+                        <b>
+                          tk:{userData?.username} {systemInfo?.message}
+                        </b>
                       </Typography>
                     </Box>
                     <TextField
@@ -201,7 +206,7 @@ const Recharge: React.FC = () => {
                                 fontSize: '12px',
                                 marginLeft: '16px',
                                 color: 'text.primary',
-                                userSelect: 'none'
+                                userSelect: 'none',
                               }}
                             >
                               ~ {amount * amountRatio} USDT
@@ -234,7 +239,7 @@ const Recharge: React.FC = () => {
               <Grid item md={4.5} display={{ xs: 'none', md: 'flex' }}>
                 <Box
                   component="img"
-                  src={systemInfo?.QRCode || Assets.qrImage}
+                  src={`data:image/*;base64,${systemInfo?.QRUrl}`}
                   sx={{
                     width: '100%',
                     height: 'auto',

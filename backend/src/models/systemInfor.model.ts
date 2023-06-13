@@ -11,7 +11,7 @@ const systemInforSchema = new mongoose.Schema<
 >(
   {
     QRUrl: {
-      type: mongoose.Schema.Types.Buffer,
+      type: mongoose.Schema.Types.String,
       required: false,
       default: "",
     },

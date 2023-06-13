@@ -28,7 +28,7 @@ const setUserData = (userData: any) => {
 };
 
 const getUserData = () => {
-  const userData = localStorage.getItem(COOKIE_KEYS.USER_DATA) || "{}";
+  const userData = localStorage.getItem(COOKIE_KEYS.USER_DATA) || '{}';
   return JSON.parse(userData);
 };
 
@@ -42,9 +42,9 @@ const getThemeMode = () => {
 };
 
 const clearCookies = () => {
-  cookies.remove(COOKIE_KEYS.ACCESS_TOKEN);
-  cookies.remove(COOKIE_KEYS.REFRESH_TOKEN);
-  cookies.remove(COOKIE_KEYS.USER_DATA);
+  cookies.remove(COOKIE_KEYS.ACCESS_TOKEN, { path: '/' });
+  cookies.remove(COOKIE_KEYS.REFRESH_TOKEN, { path: '/' });
+  cookies.remove(COOKIE_KEYS.USER_DATA, { path: '/' });
 };
 
 export {

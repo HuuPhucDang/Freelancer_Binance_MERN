@@ -20,7 +20,7 @@ router.put(
 );
 
 router.put(
-  "/userType",
+  "/userType/:userId",
   auth("manageUsers"),
   validate(userValidation.updateUserType),
   userController.updateUserType
