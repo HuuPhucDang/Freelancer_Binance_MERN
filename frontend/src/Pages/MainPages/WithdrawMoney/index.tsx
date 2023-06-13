@@ -36,9 +36,17 @@ const WithdrawMoney: React.FC = () => {
   const [isErr, setIsErr] = React.useState<boolean>(false);
   const [bank, setBank] = React.useState<string>('');
   const [amount, setAmount] = React.useState<number>(0);
+  const [enchangeRate, setEnchangeRate] = React.useState<number>(0);
 
   React.useEffect(() => {
     dispatch(getSelf());
+    Utils.WebSocket.emit(
+      'exchangeCurrency',
+      { symbol: 'VNDUSDT' },
+      (data: any) => {
+        setEnchangeRate(data || 0);
+      }
+    );
   }, []);
 
   React.useEffect(() => {
@@ -143,7 +151,7 @@ const WithdrawMoney: React.FC = () => {
                           color: 'text.primary',
                         }}
                       >
-                        Tự quy đổi thành: VND
+                        Tự quy đổi thành: {amount * enchangeRate} VND
                       </Typography>
                     </InputAdornment>
                   ),

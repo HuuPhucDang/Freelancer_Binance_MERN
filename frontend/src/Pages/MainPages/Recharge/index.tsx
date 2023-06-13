@@ -26,8 +26,6 @@ const { getSelf } = UserActions;
 const { getSystemInfo } = SystemInfoActions;
 const { requestRecharge, resetTransactionReducer } = TransactionActions;
 
-const amountRatio = 0.000002;
-
 const Recharge: React.FC = () => {
   const dispatch = useTypedDispatch();
   const systemInfo = useSelector((state: RootState) =>
@@ -40,8 +38,16 @@ const Recharge: React.FC = () => {
   const invalidTypeMsg = 'Số tiền muốn nạp phải có định dạng số';
   const [isErr, setIsErr] = React.useState<boolean>(false);
   const [amount, setAmount] = React.useState<number>(0);
+  const [enchangeRate, setEnchangeRate] = React.useState<number>(0);
 
   React.useEffect(() => {
+    Utils.WebSocket.emit(
+      'exchangeCurrency',
+      { symbol: 'USDTVND' },
+      (data: any) => {
+        setEnchangeRate(data || 0);
+      }
+    );
     dispatch(getSystemInfo());
     dispatch(getSelf());
   }, []);
@@ -57,7 +63,7 @@ const Recharge: React.FC = () => {
   const onSubmit = async () => {
     const isNumber = !Number.isNaN(amount);
     if (!isNumber) setIsErr(true);
-    else dispatch(requestRecharge({ amount }));
+    else dispatch(requestRecharge({ amount: amount / enchangeRate }));
   };
 
   // Constructors
@@ -209,7 +215,7 @@ const Recharge: React.FC = () => {
                                 userSelect: 'none',
                               }}
                             >
-                              ~ {amount * amountRatio} USDT
+                              ~ {amount / enchangeRate} USDT
                             </Typography>
                           </InputAdornment>
                         ),

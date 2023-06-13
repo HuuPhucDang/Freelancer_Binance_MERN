@@ -10,12 +10,13 @@ import Coin from "../models/coin.model";
 import TradeHistory from "../models/tradeHistory.model";
 import Wallet from "../models/wallet.model";
 import Moonboot from "../models/moonbot.model";
+import TradeNotification from "../models/tradeNotification.model";
+import ExchangeCurrency from "../models/exchangeCurrency.model";
 
 const KLINE_URL = `https://api.binance.com/api/v3/klines?`;
 const AGGREGATE_URL = `https://api.binance.com/api/v3/aggTrades?`;
 const GET_TICKER_24H = `https://api.binance.com/api/v3/ticker/24hr?`;
 const GET_PRICE_URL = `https://api.binance.com/api/v3/avgPrice?symbol=`;
-// const EXCHANGE_CURRENCY = `https://www.okx.com/v3/c2c/tradingOrders/mostUsedPaymentAndBestPriceAds?&cryptoCurrency=USDT&fiatCurrency=VND`;
 
 // symbol=BTCUSDT&interval=1h&limit=
 const checkResults = (
@@ -88,11 +89,10 @@ const intiChartSocket = (socket: Socket) => {
     const moonboots = await Moonboot.find();
     global.io.emit("updateAllMoonbotNow", moonboots);
   });
-  // socket.on("exchangeCurrency", async (data: any, callback: any) => {
-  //   const response = await fetch(EXCHANGE_CURRENCY);
-  //   const newCoins: any = await response.json();
-  //   callback(newCoins);
-  // });
+  socket.on("exchangeCurrency", async (data: any, callback: any) => {
+    const result = await ExchangeCurrency.findOne({ symbol: data?.symbol });
+    callback(result?.price);
+  });
   socket.on("getCoin24h", async (data: any, callback: any) => {
     const currentCoin = await Coin.findOne({ symbol: data?.symbol });
     if (currentCoin) {
@@ -136,11 +136,29 @@ const intiChartSocket = (socket: Socket) => {
             const balanceResult = wallet.balance + recieveAmount;
             wallet.balance = balanceResult;
             await wallet.save();
+            const firstText = trade.type === ETradeType.BUY ? "mua" : "bán";
+            const resultText =
+              trade.result === ETradeResult.LOSE ? "thua" : "thắng";
+            const notification = await TradeNotification.create({
+              userId: new mongoose.Types.ObjectId(data?.userId),
+              message: `Bạn đã ${resultText} ${amount} khi ${firstText} ${trade.symbol} ở mức ${trade.betPrice}`,
+              time: trade.betTime,
+            });
+            global.io.emit("updateNewNotification", {
+              userId: trade.userId,
+              notification,
+            });
           }
         }
         global.io.emit("updateTradeListNow", { userId: trade.userId });
       }, data?.timeout || 1);
     }
+  });
+  socket.on("getAllTradeNotification", async (data: any, callback: any) => {
+    const notifications = await TradeNotification.find({
+      userId: new mongoose.Types.ObjectId(data?.userId),
+    }).sort({ time: -1 });
+    callback(notifications);
   });
   socket.on("getAggregateTradeList", async (data: any, callback: any) => {
     const coin = await Coin.findOne({ symbol: data?.symbol });

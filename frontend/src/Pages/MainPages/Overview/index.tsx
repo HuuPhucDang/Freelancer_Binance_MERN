@@ -59,6 +59,7 @@ const Overview: React.FC = () => {
     React.useState<boolean>(false);
 
   const [tableData, setTableData] = React.useState<any>([]);
+  const [enchangeRate, setEnchangeRate] = React.useState<number>(0);
 
   React.useEffect(() => {
     Utils.WebSocket.emit('getLatestCoins', null, (data: any) => {
@@ -67,6 +68,13 @@ const Overview: React.FC = () => {
     Utils.WebSocket.on('updateAllCoinPriceNow', (data) => {
       setTableData(data);
     });
+    Utils.WebSocket.emit(
+      'exchangeCurrency',
+      { symbol: 'USDTVND' },
+      (data: any) => {
+        setEnchangeRate(data || 0);
+      }
+    );
     dispatch(getSelf());
     return () => {
       // Utils.WebSocket.disconnect();
@@ -341,10 +349,10 @@ const Overview: React.FC = () => {
                           fontSize: '16px',
                           fontWeight: 600,
                           lineHeight: '30px',
-                          marginLeft: "30px"
+                          marginLeft: '30px',
                         }}
                       >
-                        ~~ {userData?.wallet?.balance} VND
+                        ~~ {userData?.wallet?.balance * enchangeRate} VND
                       </Typography>
                     </Stack>
                   </Box>

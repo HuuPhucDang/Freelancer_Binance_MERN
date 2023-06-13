@@ -11,11 +11,19 @@ const StaticHeader: React.FC<IStaticHeaderProp> = ({
 }: IStaticHeaderProp) => {
   // Constructors
   const [latest24h, setLatest24h] = React.useState<any>({});
+  const [enchangeRate, setEnchangeRate] = React.useState<number>(0);
 
   React.useEffect(() => {
     Utils.WebSocket.emit('getCoin24h', { symbol }, (data: any) => {
       setLatest24h(data);
     });
+    Utils.WebSocket.emit(
+      'exchangeCurrency',
+      { symbol: 'USDTVND' },
+      (data: any) => {
+        setEnchangeRate(data || 0);
+      }
+    );
     const intervalLatest24h = setInterval(() => {
       Utils.WebSocket.emit('getCoin24h', { symbol }, (data: any) => {
         setLatest24h(data);
@@ -39,7 +47,9 @@ const StaticHeader: React.FC<IStaticHeaderProp> = ({
           <Typography sx={{ fontSize: '12px' }}>
             {Number(latest24h?.lastPrice).toFixed(4)}
           </Typography>
-          <Typography sx={{ fontSize: '12px' }}>$1.1111</Typography>
+          <Typography sx={{ fontSize: '12px' }}>
+            {enchangeRate * Number(latest24h?.lastPrice).toFixed(4)}
+          </Typography>
         </Stack>
         <Stack direction="column">
           <Typography sx={{ fontSize: 10 }}>Biến động giá 24h</Typography>
