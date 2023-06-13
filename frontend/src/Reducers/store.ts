@@ -32,7 +32,13 @@ export const configuredStore = () => {
   const store = configureStore({
     reducer: rootReducer,
     middleware: (getDefaultMiddleware) => {
-      const middleware = [...getDefaultMiddleware(), router];
+      const middleware = [
+        ...getDefaultMiddleware({
+          immutableCheck: false,
+          serializableCheck: false,
+        }),
+        router,
+      ];
       if (logger) return [...middleware, logger];
       return middleware;
     },

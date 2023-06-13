@@ -461,6 +461,16 @@ const AppBarComponent: React.FC = () => {
                     Tổng quan
                   </Link>
                 </ListItem>
+                {userData.role === 'admin' ? (
+                  <ListItem>
+                    <Link
+                      href={ROUTERS.REQUEST}
+                      sx={{ color: 'text.primary', fontSize: '12px' }}
+                    >
+                      Quản lý
+                    </Link>
+                  </ListItem>
+                ) : null}
                 <ListItem>
                   <Link
                     onClick={() => onSignOut()}

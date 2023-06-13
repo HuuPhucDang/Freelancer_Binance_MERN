@@ -286,8 +286,8 @@ const Transaction: React.FC = () => {
                     </TableCell>
                     <TableCell align="center">
                       <Chip
-                        color={statusOptions[row.status].color}
-                        label={statusOptions[row.status].label}
+                        color={statusOptions[row.status]?.color}
+                        label={statusOptions[row.status]?.label}
                         sx={{
                           width: '130px',
                           borderRadius: '5px',
