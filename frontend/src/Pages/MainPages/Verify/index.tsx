@@ -60,8 +60,8 @@ const Verify: React.FC = () => {
               fontWeight: 400,
             }}
             disabled={
-              userData?.verification?.status === 'pending' &&
-              userData?.verification?.backImageUrl?.data?.length > 0
+              userData?.verification?.backImageUrl &&
+              userData?.verification?.frontImageUrl
             }
             onClick={() => setIsShowUploadIDCardPopup(true)}
           >
@@ -80,10 +80,7 @@ const Verify: React.FC = () => {
               fontWeight: 400,
             }}
             onClick={() => setIsShowAvatarPopup(true)}
-            disabled={
-              userData?.verification?.status === 'pending' &&
-              userData?.verification?.selfieImageUrl?.data?.length > 0
-            }
+            disabled={userData?.verification?.selfieImageUrl}
           >
             Cập nhật ảnh chân dung
           </Button>
@@ -102,11 +99,25 @@ const Verify: React.FC = () => {
             fontWeight: 400,
           }}
         >
-          Danh tính của bạn đã được xác minh danh tính. Bạn có thể bắt đầu{' '}
-          <Link href={ROUTERS.TRANSACTION} sx={{ textDecoration: 'underline' }}>
-            giao dịch trên Binance
-          </Link>
-          .
+          {userData?.verification?.status === 'pending' &&
+            userData?.verification?.backImageUrl &&
+            userData?.verification?.frontImageUrl &&
+            userData?.verification?.selfieImageUrl &&
+            'Danh tính của bạn đang được xác minh!'}
+          {userData?.verification?.status === 'approved' && (
+            <>
+              Danh tính của bạn đã được xác minh danh tính. Bạn có thể bắt đầu{' '}
+              <Link
+                href={ROUTERS.TRANSACTION}
+                sx={{ textDecoration: 'underline' }}
+              >
+                giao dịch trên Binance
+              </Link>
+              .
+            </>
+          )}
+          {userData?.verification?.status === 'denied' &&
+            'Danh tính của bạn đã bị từ chối'}
         </Typography>
       </Stack>
     );
@@ -182,11 +193,12 @@ const Verify: React.FC = () => {
                 >
                   <Grid container>
                     <Grid item xs={10}>
-                      {!userData?.verification ||
-                      userData?.verification?.status === 'pending' ||
-                      typeof userData?.verification === 'string'
-                        ? _renderUnverifyField()
-                        : _renderVerifiedField()}
+                      {userData?.verification?.status === 'pending' &&
+                      userData?.verification?.backImageUrl &&
+                      userData?.verification?.frontImageUrl &&
+                      userData?.verification?.selfieImageUrl
+                        ? _renderVerifiedField()
+                        : _renderUnverifyField()}
                     </Grid>
                     <Grid
                       item

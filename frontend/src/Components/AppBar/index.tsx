@@ -79,7 +79,7 @@ const AppBarComponent: React.FC = () => {
   const onSignOut = () => {
     dispatch(logout());
     Utils.clearCookies();
-    Utils.redirect(ROUTERS.HOME);
+    Utils.replace(ROUTERS.SIGN_IN);
   };
 
   const handleChangeLanguage = (

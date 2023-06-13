@@ -32,19 +32,19 @@ export const uploadIdCards = async (
   }
   // if (findVerification.status === EVerifyType.PENDING)
   //   throw new ApiError(httpStatus.BAD_REQUEST, "You already upload ID cards!");
-  if (findVerification.status === EVerifyType.APPROVED)
-    throw new ApiError(
-      httpStatus.BAD_REQUEST,
-      "Admin has been verified your information!"
-    );
-  if (findVerification.status === EVerifyType.DENY)
-    throw new ApiError(
-      httpStatus.BAD_REQUEST,
-      "Admin has been denied your information!"
-    );
+  // if (findVerification.status === EVerifyType.APPROVED)
+  //   throw new ApiError(
+  //     httpStatus.BAD_REQUEST,
+  //     "Admin has been verified your information!"
+  //   );
+  // if (findVerification.status === EVerifyType.DENY)
+  //   throw new ApiError(
+  //     httpStatus.BAD_REQUEST,
+  //     "Admin has been denied your information!"
+  //   );
 
   Object.assign(findVerification, {
-    updateBody,
+    ...updateBody,
     status: EVerifyType.PENDING,
   });
   await findVerification.save();
