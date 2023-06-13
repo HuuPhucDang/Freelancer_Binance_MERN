@@ -141,7 +141,7 @@ const intiChartSocket = (socket: Socket) => {
               trade.result === ETradeResult.LOSE ? "thua" : "thắng";
             const notification = await TradeNotification.create({
               userId: new mongoose.Types.ObjectId(data?.userId),
-              message: `Bạn đã ${resultText} ${amount} khi ${firstText} ${trade.symbol} ở mức ${trade.betPrice}`,
+              message: `Bạn đã ${resultText} ${amount} USDT khi ${firstText} ${trade.symbol} ở mức ${trade.betPrice}`,
               time: trade.betTime,
             });
             global.io.emit("updateNewNotification", {

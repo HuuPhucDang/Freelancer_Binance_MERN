@@ -68,7 +68,7 @@ const VolatilityTable: React.FC<IProps> = ({ symbol }: IProps) => {
     const sortedList = isUp ? upRows : downRows;
     const page = randomPage(0, 1);
 
-    const randomSortList = _.slice(sortedList, page * 20, page * 20 + 20);
+    const randomSortList = _.slice(sortedList, page * 18, page * 18 + 18);
     return randomSortList.map((row) => {
       const total = row?.p * row?.q;
       return (
