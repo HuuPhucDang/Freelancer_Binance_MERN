@@ -34,8 +34,8 @@ const MyInvoiceTable = () => {
   );
 
   useEffect(() => {
-    Utils.WebSocket.on('updateTradeListNow', (id) => {
-      if (id === userDetails?.id) {
+    Utils.WebSocket.on('updateTradeListNow', (data) => {
+      if (data?.userId === userDetails?.id) {
         dispatch(fetchTrades());
         dispatch(getSelf());
       }
@@ -88,7 +88,7 @@ const MyInvoiceTable = () => {
                 padding: '4px 0',
               }}
             >
-              Số lượng (USDT)
+              Số lượng USDT
             </TableCell>
             <TableCell
               align="right"

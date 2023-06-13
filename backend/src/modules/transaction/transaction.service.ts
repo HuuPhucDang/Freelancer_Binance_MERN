@@ -50,7 +50,7 @@ export const rechangeMoney = async (
   );
   if (!user) throw new ApiError(httpStatus.NOT_FOUND, "User not found!");
   const findInviter = await User.findById(user.inviter);
-  if (!findInviter)
+  if (!findInviter && user.role === "user")
     throw new ApiError(httpStatus.BAD_REQUEST, "Inviter not found!");
   const rechargeTransaction = await Transaction.findOne({
     _id: transactionId,
@@ -65,29 +65,29 @@ export const rechangeMoney = async (
   if (rechargeTransaction.status === ETransactionStatus.DENIED)
     throw new ApiError(httpStatus.BAD_REQUEST, "Transaction already denied!");
 
+  if (findInviter) {
+    const inviterWallet = await getWallet(findInviter.wallet, findInviter.id);
+    const benefit = inviterWallet.benefit * rechargeTransaction.amount;
+    inviterWallet.balance = inviterWallet.balance + benefit;
+    await inviterWallet.save();
+    findInviter.wallet = inviterWallet.id;
+    await findInviter.save();
+    await Transaction.create({
+      userId: findInviter.id,
+      date: moment().format("YYYY-MM-DD"),
+      time: moment().format("hh:mm:ss"),
+      balance: inviterWallet.balance,
+      amount: benefit,
+      type: ETransactionType.BONUS,
+      status: ETransactionStatus.RESOLVED,
+    });
+  }
+
   const userWallet = await getWallet(user.wallet, user.id);
-  const inviterWallet = await getWallet(findInviter.wallet, user.id);
-
   userWallet.balance = userWallet.balance + rechargeTransaction.amount;
-
   await userWallet.save();
-
-  const benefit = inviterWallet.benefit * rechargeTransaction.amount;
-
-  inviterWallet.balance = inviterWallet.balance + benefit;
-
-  await inviterWallet.save();
-
-  await Transaction.create({
-    userId: findInviter.id,
-    date: moment().format("YYYY-MM-DD"),
-    time: moment().format("hh:mm:ss"),
-    balance: inviterWallet.balance,
-    amount: benefit,
-    type: ETransactionType.BONUS,
-    status: ETransactionStatus.RESOLVED,
-  });
-
+  user.wallet = userWallet.id;
+  await user.save();
   rechargeTransaction.status = ETransactionStatus.RESOLVED;
   await rechargeTransaction.save();
   const savedUser = await getUserById(user.id);
@@ -144,7 +144,8 @@ export const requestRechargeMoney = async (
   const user = await User.findById(userId);
   if (!user) throw new ApiError(httpStatus.NOT_FOUND, "User not found!");
   const userWallet = await getWallet(user.wallet, user.id);
-
+  user.wallet = userWallet.id;
+  await user.save();
   const transaction = await Transaction.create({
     userId,
     date: moment().format("YYYY-MM-DD"),
@@ -168,6 +169,8 @@ export const requestWithdrawMoney = async (
   const user = await User.findById(userId);
   if (!user) throw new ApiError(httpStatus.NOT_FOUND, "User not found!");
   const userWallet = await getWallet(user.wallet, user.id);
+  user.wallet = userWallet.id;
+  await user.save();
   const transaction = await Transaction.create({
     userId,
     date: moment().format("YYYY-MM-DD"),
