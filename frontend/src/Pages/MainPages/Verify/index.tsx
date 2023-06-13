@@ -15,8 +15,10 @@ import { Sidebar } from '@/Components/LayoutParts';
 import { UploadAvatar, UploadIDCard } from '@/Components/Popup';
 import { Utils } from '@/Libs';
 import { ROUTERS } from '@/Constants';
-import { useTypedDispatch } from '@/Reducers/store';
+import { RootState, useTypedDispatch } from '@/Reducers/store';
 import { UserActions } from '@/Reducers/Actions';
+import { useSelector } from 'react-redux';
+import _ from 'lodash';
 
 const { getSelf } = UserActions;
 
@@ -24,6 +26,9 @@ const Verify: React.FC = () => {
   // Constructors
   const dispatch = useTypedDispatch();
   const userData = Utils.getUserData();
+  const details = useSelector((state: RootState) =>
+    _.get(state.USER, 'details')
+  );
   const [isShowUploadIDCardPopup, setIsShowUploadIDCardPopup] =
     React.useState<boolean>(false);
   const [isShowAvatarPopup, setIsShowAvatarPopup] =
@@ -33,7 +38,7 @@ const Verify: React.FC = () => {
     dispatch(getSelf());
   }, []);
 
-  const _renderUnverifyField = () => {
+  const _renderUnverifyField = React.useMemo(() => {
     return (
       <Stack direction="column">
         <Typography
@@ -61,7 +66,8 @@ const Verify: React.FC = () => {
             }}
             disabled={
               userData?.verification?.backImageUrl &&
-              userData?.verification?.frontImageUrl
+              userData?.verification?.frontImageUrl &&
+              userData?.verification?.status === 'pending'
             }
             onClick={() => setIsShowUploadIDCardPopup(true)}
           >
@@ -80,14 +86,17 @@ const Verify: React.FC = () => {
               fontWeight: 400,
             }}
             onClick={() => setIsShowAvatarPopup(true)}
-            disabled={userData?.verification?.selfieImageUrl}
+            disabled={
+              userData?.verification?.selfieImageUrl &&
+              userData?.verification?.status === 'pending'
+            }
           >
             Cập nhật ảnh chân dung
           </Button>
         </Stack>
       </Stack>
     );
-  };
+  }, [details]);
 
   const _renderVerifiedField = () => {
     return (
@@ -193,12 +202,10 @@ const Verify: React.FC = () => {
                 >
                   <Grid container>
                     <Grid item xs={10}>
-                      {userData?.verification?.status === 'pending' &&
-                      userData?.verification?.backImageUrl &&
-                      userData?.verification?.frontImageUrl &&
-                      userData?.verification?.selfieImageUrl
-                        ? _renderVerifiedField()
-                        : _renderUnverifyField()}
+                      {userData?.verification?.status === 'pending' ||
+                      userData?.verification?.status === 'canceled'
+                        ? _renderUnverifyField
+                        : _renderVerifiedField()}
                     </Grid>
                     <Grid
                       item

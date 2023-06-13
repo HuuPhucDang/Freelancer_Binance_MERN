@@ -27,6 +27,7 @@ const SignIn = () => {
   const isLogged: any = useTypedSelector((state: any) =>
     _.get(state.AUTH, 'isLogged')
   );
+  const buttonRef = React.useRef<any>(null);
   const token = Utils.getUserData();
   const userData = Utils.getUserData();
   const dispatch = useTypedDispatch();
@@ -48,6 +49,12 @@ const SignIn = () => {
   }, [isLogged]);
 
   const onSubmit = (data: FormData) => dispatch(login(data));
+
+  const onEnter = (e: any) => {
+    if (e.key === 'Enter' || e.keyCode === 13 && buttonRef && buttonRef.current) {
+      buttonRef.current.click();
+    }
+  };
 
   const _renderMain = () => {
     return (
@@ -88,6 +95,7 @@ const SignIn = () => {
                     backgroundColor: 'background.secondary',
                   },
                 }}
+                onKeyUp={onEnter}
                 error={Boolean(errors?.username?.message)}
                 helperText={errors?.username?.message}
                 {...field}
@@ -112,6 +120,7 @@ const SignIn = () => {
                     backgroundColor: 'background.secondary',
                   },
                 }}
+                onKeyUp={onEnter}
                 error={Boolean(errors?.password?.message)}
                 helperText={errors?.password?.message}
                 {...field}
@@ -129,6 +138,7 @@ const SignIn = () => {
                 filter: 'brightness(0.95)',
               },
             }}
+            ref={buttonRef}
             onClick={handleSubmit(onSubmit)}
           >
             Đăng nhập
