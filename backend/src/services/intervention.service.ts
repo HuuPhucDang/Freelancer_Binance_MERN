@@ -15,6 +15,7 @@ const KLINE_URL = `https://api.binance.com/api/v3/klines?`;
 const AGGREGATE_URL = `https://api.binance.com/api/v3/aggTrades?`;
 const GET_TICKER_24H = `https://api.binance.com/api/v3/ticker/24hr?`;
 const GET_PRICE_URL = `https://api.binance.com/api/v3/avgPrice?symbol=`;
+// const EXCHANGE_CURRENCY = `https://www.okx.com/v3/c2c/tradingOrders/mostUsedPaymentAndBestPriceAds?&cryptoCurrency=USDT&fiatCurrency=VND`;
 
 // symbol=BTCUSDT&interval=1h&limit=
 const checkResults = (
@@ -87,6 +88,11 @@ const intiChartSocket = (socket: Socket) => {
     const moonboots = await Moonboot.find();
     global.io.emit("updateAllMoonbotNow", moonboots);
   });
+  // socket.on("exchangeCurrency", async (data: any, callback: any) => {
+  //   const response = await fetch(EXCHANGE_CURRENCY);
+  //   const newCoins: any = await response.json();
+  //   callback(newCoins);
+  // });
   socket.on("getCoin24h", async (data: any, callback: any) => {
     const currentCoin = await Coin.findOne({ symbol: data?.symbol });
     if (currentCoin) {
