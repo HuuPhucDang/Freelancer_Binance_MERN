@@ -13,6 +13,7 @@ import { AuthActions } from '@/Reducers/Actions';
 import GppGoodIcon from '@mui/icons-material/GppGood';
 import { Utils } from '@/Libs';
 import StackedLineChartIcon from '@mui/icons-material/StackedLineChart';
+import TuneIcon from '@mui/icons-material/Tune';
 
 const navigationItems = [
   {
@@ -40,6 +41,13 @@ const navigationItems = [
     path: ROUTERS.ADMIN_TRANSACTION,
     icon: (
       <StackedLineChartIcon sx={{ fontSize: '16px', marginRight: '5px' }} />
+    ),
+  },
+  {
+    label: 'Chỉnh sửa giá',
+    path: ROUTERS.EDIT_PRICE,
+    icon: (
+      <TuneIcon sx={{ fontSize: '16px', marginRight: '5px' }} />
     ),
   },
   {

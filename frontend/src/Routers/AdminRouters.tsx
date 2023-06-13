@@ -33,6 +33,10 @@ const AdminRouters = {
       path: ROUTERS.ADMIN_VERIFY,
       element: <AdminPages.Verify />,
     },
+    {
+      path: ROUTERS.EDIT_PRICE,
+      element: <AdminPages.PriceEdit />,
+    },
   ],
 };
 
