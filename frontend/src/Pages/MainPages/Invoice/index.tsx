@@ -139,7 +139,8 @@ const Invoice: React.FC = () => {
   }, [filterParams]);
 
   const onCancel = (item: { id: string }) => {
-    dispatch(cancelTransaction(item.id, filterParams));
+    const resolveFilterParams = Utils.resolveFilter(filterParams);
+    dispatch(cancelTransaction(item.id, resolveFilterParams));
   };
 
   const rows = React.useMemo(() => {

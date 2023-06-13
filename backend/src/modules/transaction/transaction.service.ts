@@ -198,8 +198,8 @@ export const cancelTransaction = async (
   const user = await User.findById(userId);
   if (!user) throw new ApiError(httpStatus.NOT_FOUND, "User not found!");
   const transaction = await Transaction.findOne({
-    id: transactionId,
-    userId: user.id,
+    _id: transactionId,
+    userId: new mongoose.Types.ObjectId(user.id),
   });
   if (!transaction)
     throw new ApiError(httpStatus.BAD_REQUEST, "Transaction not found!");
