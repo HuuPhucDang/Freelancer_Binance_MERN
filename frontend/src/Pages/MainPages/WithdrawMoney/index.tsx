@@ -143,7 +143,7 @@ const WithdrawMoney: React.FC = () => {
                           color: 'text.primary',
                         }}
                       >
-                        Tự quy đổi thành: USDT
+                        Tự quy đổi thành: VND
                       </Typography>
                     </InputAdornment>
                   ),

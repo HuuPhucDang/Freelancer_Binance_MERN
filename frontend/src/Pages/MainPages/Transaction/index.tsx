@@ -15,7 +15,7 @@ import { Utils } from '@/Libs';
 const Transaction: React.FC = () => {
   // Constructors
   const { search } = useLocation();
-  const query = React.useMemo(() => new URLSearchParams(search), [search]);
+  const query = new URLSearchParams(search);
   const volatilityRef = React.useRef<HTMLDivElement | null>(null);
 
   React.useEffect(() => {

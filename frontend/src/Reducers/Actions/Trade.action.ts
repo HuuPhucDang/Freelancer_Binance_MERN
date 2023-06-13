@@ -62,9 +62,10 @@ const createTradeFail = () => {
   };
 };
 
-const createTradeSuccess = () => {
+const createTradeSuccess = (payload: any) => {
   return {
     type: ACTION_TYPES.CREATE_TRADE_SUCCESS,
+    payload,
   };
 };
 
@@ -86,7 +87,7 @@ const createTrade = (payload: any, _limitTime: number, timeout: number) => {
             },
             () => {}
           );
-          dispatch(createTradeSuccess());
+          dispatch(createTradeSuccess(results));
           pushNotification({
             type: 'success',
             message: 'Giao dịch thành công!',

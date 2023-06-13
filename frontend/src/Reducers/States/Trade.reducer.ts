@@ -51,6 +51,7 @@ export default (
         requestIsSuccess: true,
         requestHasError: false,
         isActionLoading: false,
+        allTrades: [payload, ...state.allTrades],
       };
     case ACTION_TYPES.CREATE_TRADE_FAILURE:
       return {

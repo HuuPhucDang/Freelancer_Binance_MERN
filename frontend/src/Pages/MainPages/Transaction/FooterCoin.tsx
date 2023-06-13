@@ -36,6 +36,7 @@ const FooterCoin: React.FC = () => {
             flexDirection="row"
             alignItems="center"
             sx={{ fontSize: '11px', color: '#BBAEAE' }}
+            key={index}
           >
             {item?.symbol} {item?.price}
           </Grid>
