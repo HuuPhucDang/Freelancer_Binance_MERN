@@ -1,5 +1,13 @@
 import React from 'react';
-import { Typography, Grid, Stack, Link } from '@mui/material';
+import {
+  Typography,
+  Grid,
+  Stack,
+  Link,
+  SwipeableDrawer,
+  Divider,
+  Box,
+} from '@mui/material';
 import TapAndPlayIcon from '@mui/icons-material/TapAndPlay';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import MarkChatUnreadIcon from '@mui/icons-material/MarkChatUnread';
@@ -8,9 +16,60 @@ import { Utils } from '@/Libs';
 import { ROUTERS } from '@/Constants';
 import _ from 'lodash';
 
+const examples = [
+  {
+    message:
+      'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Doloremque qui vero laborum magnam sunt sequi!',
+    time: new Date().toDateString(),
+  },
+  {
+    message:
+      'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Doloremque qui vero laborum magnam sunt sequi!',
+    time: new Date().toDateString(),
+  },
+  {
+    message:
+      'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Doloremque qui vero laborum magnam sunt sequi!',
+    time: new Date().toDateString(),
+  },
+  {
+    message:
+      'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Doloremque qui vero laborum magnam sunt sequi!',
+    time: new Date().toDateString(),
+  },
+  {
+    message:
+      'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Doloremque qui vero laborum magnam sunt sequi!',
+    time: new Date().toDateString(),
+  },
+  {
+    message:
+      'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Doloremque qui vero laborum magnam sunt sequi!',
+    time: new Date().toDateString(),
+  },
+  {
+    message:
+      'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Doloremque qui vero laborum magnam sunt sequi!',
+    time: new Date().toDateString(),
+  },
+  {
+    message:
+      'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Doloremque qui vero laborum magnam sunt sequi!',
+    time: new Date().toDateString(),
+  },
+  {
+    message:
+      'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Doloremque qui vero laborum magnam sunt sequi!',
+    time: new Date().toDateString(),
+  },
+];
+
 const FooterCoin: React.FC = () => {
   // Constructors
   const [coinData, setCoinData] = React.useState<any>([]);
+  const [isShowNotification, setIsShowNotification] =
+    React.useState<boolean>(false);
+  const [notification, setNotification] = React.useState<any[]>([]);
 
   React.useEffect(() => {
     Utils.WebSocket.emit('getLatestCoins', null, (data: any) => {
@@ -19,10 +78,26 @@ const FooterCoin: React.FC = () => {
     Utils.WebSocket.on('updateAllCoinPriceNow', (data) => {
       setCoinData(data);
     });
+    // Remove after apply socket
+    setNotification(examples);
+    // On new message
+    Utils.WebSocket.on('getNotification', (data: any) => {
+      // Set message
+      // setNotification(data);
+    });
     return () => {
       // clearInterval(intervalLatest24h);
     };
   }, []);
+
+  const onShowNotificationDrawer = () => {
+    setIsShowNotification(true);
+    // Emit the socket for read all notification here
+    Utils.WebSocket.emit('readAllNotification', null, (data: any) => {
+      // Set message
+      // setNotification(data);
+    });
+  };
 
   // Renders
   const _renderCoins = () =>
@@ -43,9 +118,56 @@ const FooterCoin: React.FC = () => {
       return null;
     });
 
+  const isHasNewNotification = React.useMemo(() => {
+    let result = false;
+    if (notification.length > 0) {
+      notification.forEach((item: { status: string }) => {
+        if (item.status === 'unread') result = true;
+      });
+    }
+    return result;
+  }, [notification]);
+
   const renderMain = () => {
     return (
       <Grid container>
+        <SwipeableDrawer
+          anchor="right"
+          open={isShowNotification}
+          onClose={() => setIsShowNotification(false)}
+          onOpen={() => setIsShowNotification(true)}
+        >
+          <Stack
+            direction="column"
+            sx={{ width: '300px', padding: '15px', overflow: 'auto' }}
+          >
+            {notification.map(
+              (item: { message: string; time: string }, index: number) => {
+                return (
+                  <React.Fragment key={`message-${item.time}`}>
+                    <Stack direction="column">
+                      <Typography sx={{ fontSize: '14px' }}>
+                        {item.message}
+                      </Typography>
+                      <Typography
+                        sx={{
+                          fontSize: '12px',
+                          fontWeight: 600,
+                          marginTop: '4px',
+                        }}
+                      >
+                        {item.time}
+                      </Typography>
+                    </Stack>
+                    {index !== notification.length - 1 ? (
+                      <Divider sx={{ margin: '10px 0' }} />
+                    ) : null}
+                  </React.Fragment>
+                );
+              }
+            )}
+          </Stack>
+        </SwipeableDrawer>
         <Grid item xs={6} sm={6} md={2} order={{ xs: 2, md: 1 }}>
           <Stack padding="10px 10px">
             <Stack
@@ -104,15 +226,36 @@ const FooterCoin: React.FC = () => {
               }}
               paddingLeft="10px"
             >
-              <NotificationsIcon
-                sx={{
-                  fontSize: '16px',
-                  marginRight: '6px',
-                  color: '#7D6F6F',
-                }}
-              />
+              <Stack sx={{ position: 'relative' }}>
+                {isHasNewNotification ? (
+                  <Box
+                    sx={{
+                      width: '6px',
+                      height: '6px',
+                      borderRadius: '50%',
+                      background: '#F21616',
+                      position: 'absolute',
+                      top: -1,
+                      right: 5,
+                    }}
+                  />
+                ) : null}
+                <NotificationsIcon
+                  sx={{
+                    fontSize: '16px',
+                    marginRight: '6px',
+                    color: '#7D6F6F',
+                  }}
+                />
+              </Stack>
               <Typography
-                sx={{ fontSize: '11px', fontWeight: 500, color: '#7D6F6F' }}
+                sx={{
+                  fontSize: '11px',
+                  fontWeight: 500,
+                  color: '#7D6F6F',
+                  ':hover': { cursor: 'pointer' },
+                }}
+                onClick={() => onShowNotificationDrawer()}
               >
                 Thông báo
               </Typography>
