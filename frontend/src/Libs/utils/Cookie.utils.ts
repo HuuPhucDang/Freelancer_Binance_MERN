@@ -44,7 +44,7 @@ const getThemeMode = () => {
 const clearCookies = () => {
   cookies.remove(COOKIE_KEYS.ACCESS_TOKEN, { path: '/' });
   cookies.remove(COOKIE_KEYS.REFRESH_TOKEN, { path: '/' });
-  cookies.remove(COOKIE_KEYS.USER_DATA, { path: '/' });
+  localStorage.removeItem(COOKIE_KEYS.USER_DATA);
 };
 
 export {
