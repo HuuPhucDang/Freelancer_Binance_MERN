@@ -27,7 +27,8 @@ const Support = () => {
     roomId: '',
     receiverId: '',
   });
-  const [currentPayload, setCurrentPayload] = React.useState<any>([]);
+  const [, setCurrentPayload] = React.useState<any>([]);
+  const valueRef = React.useRef<any>([]);
   const [message, setMessage] = React.useState<string>('');
   const messageBoxRef = React.useRef<HTMLDivElement | null>(null);
 
@@ -44,16 +45,6 @@ const Support = () => {
 
   React.useEffect(() => {
     dispatch(fetchChatBox());
-    Utils.WebSocket.on('receiveMessage', (data: any) => {
-      const resolvePayload = currentPayload.map((item: any) => {
-        if (item.id === data.id) return data;
-        return item;
-      });
-      setCurrentPayload(resolvePayload);
-      setMessage('');
-      setCurrentRoom({ roomId: data.id, ...data });
-      scrollToBottom();
-    });
   }, []);
 
   React.useEffect(() => {
@@ -67,7 +58,27 @@ const Support = () => {
           }
         );
       });
+      valueRef.current = payload;
       setCurrentPayload(payload);
+
+      Utils.WebSocket.on('receiveMessage', (data: any) => {
+        if (valueRef.current.length > 0) {
+          const resolvePayload = valueRef.current.map((item: any) => {
+            if (item.id === data.id) {
+              return {
+                ...item,
+                ...data,
+              };
+            }
+            return item;
+          });
+          valueRef.current = resolvePayload;
+          // setCurrentPayload(resolvePayload);
+        }
+        setMessage('');
+        setCurrentRoom({ roomId: data.id, ...data });
+        scrollToBottom();
+      });
     }
   }, [payload]);
 
@@ -162,7 +173,7 @@ const Support = () => {
 
   const _renderRequiredUser = () => {
     return (
-      <Typography sx={{ fontSize: '14px', padding: '10px' }}>
+      <Typography sx={{ fontSize: '14px', padding: '15px' }}>
         Vui lòng chọn người dùng trước khi hỗ trợ
       </Typography>
     );
@@ -184,63 +195,72 @@ const Support = () => {
         >
           <Grid item xs={5} md={3} borderRight="1px solid #BEBEBE">
             <Stack direction="column">
-              {currentPayload.map((item: any) => {
-                const { messages, senderId, receiverId } = item;
-                const lastMsg = messages[messages.length - 1];
-                const user =
-                  senderId.id === userData.id ? receiverId : senderId;
-                const isActive = item.id === currentRoom.roomId;
-                return (
-                  <Stack
-                    direction="row"
-                    key={`user-${user.id}`}
-                    padding="10px"
-                    sx={{
-                      color: isActive ? 'text.secondary' : 'text.primary',
-                      backgroundColor: isActive
-                        ? 'background.primary'
-                        : 'background.default',
-                      fontSize: '14px',
-                      display: 'flex',
-                      alignItems: 'center',
-                      padding: '10px',
-                      ':hover': {
-                        cursor: 'pointer',
-                        backgroundColor: isActive
-                          ? 'background.primary'
-                          : 'background.lightSilver',
-                        color: 'text.secondary',
-                      },
-                    }}
-                    onClick={() => {
-                      setCurrentRoom({ ...item, roomId: item.id });
-                      scrollToBottom();
-                    }}
-                  >
-                    <Avatar
-                      sx={{
-                        width: '40px',
-                        height: '40px',
-                        marginRight: '10px',
-                      }}
-                      src={user.avatar}
-                    />
-                    <Stack direction="column">
-                      <Typography sx={{ fontSize: '15px', fontWeight: 600 }}>
-                        {user.nickname}
-                      </Typography>
-                      <Typography sx={{ fontSize: '13px' }}>
-                        {lastMsg?.senderId !== '00' ? '' : 'You: '}
-                        {lastMsg ? lastMsg.message : 'No message'}
-                      </Typography>
-                    </Stack>
-                  </Stack>
-                );
-              })}
+              {valueRef.current.length > 0
+                ? valueRef.current.map((item: any) => {
+                    const { messages, senderId, receiverId } = item;
+                    const lastMsg = messages[messages.length - 1];
+                    const user =
+                      senderId.id === userData.id ? receiverId : senderId;
+                    const isActive = item.id === currentRoom.roomId;
+                    return (
+                      <Stack
+                        direction="row"
+                        key={`user-${user.id}`}
+                        padding="10px"
+                        sx={{
+                          color: isActive ? 'text.secondary' : 'text.primary',
+                          backgroundColor: isActive
+                            ? 'background.primary'
+                            : 'background.default',
+                          fontSize: '14px',
+                          display: 'flex',
+                          alignItems: 'center',
+                          padding: '10px',
+                          ':hover': {
+                            cursor: 'pointer',
+                            backgroundColor: isActive
+                              ? 'background.primary'
+                              : 'background.lightSilver',
+                            color: 'text.secondary',
+                          },
+                        }}
+                        onClick={() => {
+                          setCurrentRoom({ ...item, roomId: item.id });
+                          scrollToBottom();
+                        }}
+                      >
+                        <Avatar
+                          sx={{
+                            width: '40px',
+                            height: '40px',
+                            marginRight: '10px',
+                          }}
+                          src={user.avatar}
+                        />
+                        <Stack direction="column">
+                          <Typography
+                            sx={{ fontSize: '15px', fontWeight: 600 }}
+                          >
+                            {user.nickname}
+                          </Typography>
+                          <Typography sx={{ fontSize: '13px' }}>
+                            {lastMsg?.senderId !== '00' ? '' : 'You: '}
+                            {lastMsg ? lastMsg.message : 'No message'}
+                          </Typography>
+                        </Stack>
+                      </Stack>
+                    );
+                  })
+                : null}
+              {valueRef.current.length === 0 ? (
+                <Typography sx={{ fontSize: '14px', padding: '15px' }}>
+                  Không có thông tin về người dùng
+                </Typography>
+              ) : null}
             </Stack>
           </Grid>
           <Grid item xs={7} md={9}>
-            {currentRoom ? _renderMsg() : _renderRequiredUser()}
+            {currentRoom?.roomId ? _renderMsg() : _renderRequiredUser()}
           </Grid>
         </Grid>
       </Stack>

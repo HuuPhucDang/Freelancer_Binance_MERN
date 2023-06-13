@@ -230,7 +230,7 @@ const Support: React.FC = () => {
                     alignSelf: 'flex-end',
                   }}
                   onClick={() => onSendMessage()}
-                  disabled={!Boolean(message.trim())}
+                  disabled={!Boolean(message.trim()) || !Boolean(currentRoom?.roomId)}
                 >
                   Gửi
                 </Button>
