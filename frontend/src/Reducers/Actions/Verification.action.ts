@@ -2,6 +2,7 @@ import { ACTION_TYPES } from '@/Constants';
 import API from '@/Apis';
 import { Utils } from '@libs';
 import { pushNotification } from '../../Libs/utils/Widget.utils';
+import UserActions from './User.action'
 
 // SINGLE ACTIONS
 const setVerificationLoading = (payload: boolean) => {
@@ -47,6 +48,7 @@ const uploadCardsId = (payload: FormData) => {
           pushNotification({ type: 'success', message: resolveResult.message });
           Utils.setUserData(resolveResult.payload);
           dispatch(uploadCardsIdSuccess(results));
+          dispatch(UserActions.getSelf())
         }
       })
       .catch(async (error) => {

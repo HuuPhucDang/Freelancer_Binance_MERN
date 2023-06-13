@@ -70,8 +70,8 @@ const SideBar = () => {
 
   const onSignOut = () => {
     dispatch(logout());
-    Utils.redirect(ROUTERS.SIGN_IN);
     Utils.clearCookies();
+    Utils.replace(ROUTERS.SIGN_IN);
   };
 
   const _renderNavBar = () =>

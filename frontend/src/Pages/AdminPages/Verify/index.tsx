@@ -61,15 +61,11 @@ const statusOptions: {
     color: 'error' | 'success' | 'warning';
   };
 } = {
-  [ENUMS.ETransactionStatus.CANCELED]: {
-    color: 'error',
-    label: 'Đã hủy',
-  },
-  [ENUMS.ETransactionStatus.RESOLVED]: {
+  [ENUMS.EVerifyType.APPROVED]: {
     color: 'success',
     label: 'Đã duyệt',
   },
-  [ENUMS.ETransactionStatus.PENDING]: {
+  [ENUMS.EVerifyType.PENDING]: {
     color: 'warning',
     label: 'Đang chờ',
   },

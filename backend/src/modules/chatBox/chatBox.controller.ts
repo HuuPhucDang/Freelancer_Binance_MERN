@@ -19,6 +19,5 @@ export const getChatBoxById = catchAsync(
       );
       res.send(responsePayload(true, "Get chat box successfully!", chatBox));
     }
-    res.send(responsePayload(false, "Get chat box failure!", null));
   }
 );

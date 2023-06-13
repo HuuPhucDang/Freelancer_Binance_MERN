@@ -26,6 +26,9 @@ const MyInvoiceTable = () => {
   const allTrades: any = useSelector(
     (state: RootState) => _.get(state.TRADE, 'allTrades') || []
   );
+  const isLogged: any = useSelector((state: RootState) =>
+    _.get(state.AUTH, 'isLogged')
+  );
   const userDetails = useSelector((state: RootState) =>
     _.get(state.USER, 'details')
   );
@@ -40,7 +43,7 @@ const MyInvoiceTable = () => {
         dispatch(getSelf());
       }
     });
-    dispatch(fetchTrades());
+    if (isLogged) dispatch(fetchTrades());
     return () => {
       // clearInterval(checkResultInterval);
     };

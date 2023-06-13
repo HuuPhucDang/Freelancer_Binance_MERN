@@ -13,7 +13,6 @@ export const rechangeMoney = catchAsync(async (req: Request, res: Response) => {
     );
     res.send(responsePayload(true, "Rechange successfully!", user));
   }
-  res.send(responsePayload(false, "Rechange money failure!", null));
 });
 
 export const withdrawMoney = catchAsync(async (req: Request, res: Response) => {
@@ -24,7 +23,6 @@ export const withdrawMoney = catchAsync(async (req: Request, res: Response) => {
     );
     res.send(responsePayload(true, "Withdraw money successfully!", user));
   }
-  res.send(responsePayload(false, "Withdraw money successfully!", null));
 });
 
 export const requestWithdrawMoney = catchAsync(
@@ -62,7 +60,6 @@ export const cancelTransaction = catchAsync(
         responsePayload(true, "Cancel transaction successfully!", transaction)
       );
     }
-    res.send(responsePayload(false, "Cancel transaction money failure!", null));
   }
 );
 
@@ -77,7 +74,6 @@ export const denyTransaction = catchAsync(
         responsePayload(true, "Deny transaction successfully!", transaction)
       );
     }
-    res.send(responsePayload(false, "Deny transaction money failure!", null));
   }
 );
 

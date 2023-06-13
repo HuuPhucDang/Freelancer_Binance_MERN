@@ -32,19 +32,19 @@ export const uploadIdCards = async (
   }
   // if (findVerification.status === EVerifyType.PENDING)
   //   throw new ApiError(httpStatus.BAD_REQUEST, "You already upload ID cards!");
-  if (findVerification.status === EVerifyType.APPROVED)
-    throw new ApiError(
-      httpStatus.BAD_REQUEST,
-      "Admin has been verified your information!"
-    );
-  if (findVerification.status === EVerifyType.DENY)
-    throw new ApiError(
-      httpStatus.BAD_REQUEST,
-      "Admin has been denied your information!"
-    );
+  // if (findVerification.status === EVerifyType.APPROVED)
+  //   throw new ApiError(
+  //     httpStatus.BAD_REQUEST,
+  //     "Admin has been verified your information!"
+  //   );
+  // if (findVerification.status === EVerifyType.DENY)
+  //   throw new ApiError(
+  //     httpStatus.BAD_REQUEST,
+  //     "Admin has been denied your information!"
+  //   );
 
   Object.assign(findVerification, {
-    updateBody,
+    ...updateBody,
     status: EVerifyType.PENDING,
   });
   await findVerification.save();
@@ -65,12 +65,12 @@ export const changeIDCardStatus = async (
       httpStatus.BAD_REQUEST,
       "Can not find any verification!"
     );
-  if (findVerification?.status === EVerifyType.APPROVED)
+  if (findVerification.status === EVerifyType.APPROVED)
     throw new ApiError(
       httpStatus.BAD_REQUEST,
       "This ID card has been verified!"
     );
-  if (findVerification?.status === EVerifyType.DENY)
+  if (findVerification.status === EVerifyType.DENY)
     throw new ApiError(httpStatus.BAD_REQUEST, "This ID card has been deined!");
 
   await Notification.create({

@@ -76,10 +76,13 @@ export const updateUserNickname = catchAsync(
 
 export const updateUserType = catchAsync(
   async (req: Request, res: Response) => {
-    const user = await userService.updateUserType(
-      new mongoose.Types.ObjectId(req.user.id),
-      req.body
-    );
-    res.send(responsePayload(true, "Update user type successfully!", user));
+    if (typeof req.params["userId"] === "string") {
+      const user = await userService.updateUserType(
+        new mongoose.Types.ObjectId(req.params["userId"]),
+        req.body
+      );
+      res.send(responsePayload(true, "Update user successfully!", user));
+    }
+    res.send(responsePayload(true, "Update user type failure!", null));
   }
 );

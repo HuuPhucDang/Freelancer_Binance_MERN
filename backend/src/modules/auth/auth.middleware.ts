@@ -10,7 +10,7 @@ const verifyCallback =
   async (err: Error, user: IUserDoc, info: string) => {
     if (err || info || !user)
       return reject(
-        new ApiError(httpStatus.UNAUTHORIZED, "Please authenticate")
+        new ApiError(httpStatus.UNAUTHORIZED, "Please login before start actions")
       );
 
     req.user = user;

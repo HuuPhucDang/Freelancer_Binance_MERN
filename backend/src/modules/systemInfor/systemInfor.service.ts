@@ -28,7 +28,6 @@ export const updateSystemInfo = async (
   const systemInfor = await SystemInfor.findOne(inforId);
   if (!systemInfor)
     throw new ApiError(httpStatus.NOT_FOUND, "Infor not found!");
-
   Object.assign(systemInfor, updateBody);
   await systemInfor.save();
   return systemInfor;

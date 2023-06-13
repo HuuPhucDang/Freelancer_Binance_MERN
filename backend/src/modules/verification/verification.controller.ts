@@ -33,7 +33,6 @@ export const approvedIDCards = catchAsync(
       );
       res.send(responsePayload(true, "Approved ID Card successfully!", user));
     }
-    res.send(responsePayload(false, "Approved ID Card failure!", null));
   }
 );
 
@@ -45,7 +44,6 @@ export const deniedIDCards = catchAsync(async (req: Request, res: Response) => {
     );
     res.send(responsePayload(true, "Denied ID Card successfully!", user));
   }
-  res.send(responsePayload(false, "Denied ID Card failure!", null));
 });
 
 export const fetchAllVerifications = catchAsync(
