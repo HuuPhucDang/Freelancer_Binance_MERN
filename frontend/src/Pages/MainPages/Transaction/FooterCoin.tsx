@@ -16,60 +16,13 @@ import { Utils } from '@/Libs';
 import { ROUTERS } from '@/Constants';
 import _ from 'lodash';
 
-const examples = [
-  {
-    message:
-      'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Doloremque qui vero laborum magnam sunt sequi!',
-    time: new Date().toDateString(),
-  },
-  {
-    message:
-      'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Doloremque qui vero laborum magnam sunt sequi!',
-    time: new Date().toDateString(),
-  },
-  {
-    message:
-      'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Doloremque qui vero laborum magnam sunt sequi!',
-    time: new Date().toDateString(),
-  },
-  {
-    message:
-      'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Doloremque qui vero laborum magnam sunt sequi!',
-    time: new Date().toDateString(),
-  },
-  {
-    message:
-      'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Doloremque qui vero laborum magnam sunt sequi!',
-    time: new Date().toDateString(),
-  },
-  {
-    message:
-      'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Doloremque qui vero laborum magnam sunt sequi!',
-    time: new Date().toDateString(),
-  },
-  {
-    message:
-      'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Doloremque qui vero laborum magnam sunt sequi!',
-    time: new Date().toDateString(),
-  },
-  {
-    message:
-      'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Doloremque qui vero laborum magnam sunt sequi!',
-    time: new Date().toDateString(),
-  },
-  {
-    message:
-      'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Doloremque qui vero laborum magnam sunt sequi!',
-    time: new Date().toDateString(),
-  },
-];
-
 const FooterCoin: React.FC = () => {
   // Constructors
   const [coinData, setCoinData] = React.useState<any>([]);
   const [isShowNotification, setIsShowNotification] =
     React.useState<boolean>(false);
   const [notification, setNotification] = React.useState<any[]>([]);
+  const userDetails = Utils.getUserData();
 
   React.useEffect(() => {
     Utils.WebSocket.emit('getLatestCoins', null, (data: any) => {
@@ -78,12 +31,20 @@ const FooterCoin: React.FC = () => {
     Utils.WebSocket.on('updateAllCoinPriceNow', (data) => {
       setCoinData(data);
     });
-    // Remove after apply socket
-    setNotification(examples);
     // On new message
-    Utils.WebSocket.on('getNotification', (data: any) => {
+    Utils.WebSocket.emit(
+      'getAllTradeNotification',
+      { userId: userDetails?.id },
+      (data: any) => {
+        // Set message
+        setNotification(data);
+      }
+    );
+
+    Utils.WebSocket.on('updateNewNotification', (data: any) => {
       // Set message
-      // setNotification(data);
+      if (data?.userId === userDetails?.id)
+        setNotification([data?.notification, ...notification]);
     });
     return () => {
       // clearInterval(intervalLatest24h);
@@ -93,10 +54,10 @@ const FooterCoin: React.FC = () => {
   const onShowNotificationDrawer = () => {
     setIsShowNotification(true);
     // Emit the socket for read all notification here
-    Utils.WebSocket.emit('readAllNotification', null, (data: any) => {
-      // Set message
-      // setNotification(data);
-    });
+    // Utils.WebSocket.emit('readAllNotification', null, (data: any) => {
+    //   // Set message
+    //   // setNotification(data);
+    // });
   };
 
   // Renders

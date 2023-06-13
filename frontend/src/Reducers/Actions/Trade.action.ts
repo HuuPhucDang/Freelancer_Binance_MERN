@@ -87,7 +87,7 @@ const createTrade = (payload: any, _limitTime: number, timeout: number) => {
             },
             () => {}
           );
-          dispatch(createTradeSuccess(results));
+          dispatch(createTradeSuccess(results?.payload));
           pushNotification({
             type: 'success',
             message: 'Giao dịch thành công!',

@@ -11,7 +11,6 @@ import {
 } from '@mui/material';
 import { useEffect } from 'react';
 import _ from 'lodash';
-import dayjs from 'dayjs';
 import { useSelector } from 'react-redux';
 import { Utils } from '@/Libs';
 
@@ -147,9 +146,9 @@ const MyInvoiceTable = () => {
                       padding: '4px 0',
                       color: '#816A6A',
                     }}
-                    title={dayjs(row?.betTime).format('DD/MM/YYYY')}
+                    title={row?.betTime}
                   >
-                    {dayjs(row?.betTime).format('hh:mm:ss')}
+                    {row?.betTime.split(' ')[1]}
                   </Typography>
                 </TableCell>
               </TableRow>
