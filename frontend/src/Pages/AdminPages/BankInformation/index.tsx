@@ -81,12 +81,13 @@ const BankInformation = () => {
       setValue('fullname', systemInfo?.fullname);
       setValue('message', systemInfo?.message);
       setValue('accountNumber', systemInfo?.accountNumber);
-      setQRUrl(systemInfo?.QRUrl);
+      setQRUrl(`data:image/*;base64,${systemInfo?.QRUrl}`);
     }
   }, [systemInfo]);
 
   React.useEffect(() => {
     if (QRCode && QRCode?.[0]) {
+      console.log(QRCode);
       const url = URL.createObjectURL(QRCode?.[0]);
       setQRUrl(url);
     }
@@ -232,14 +233,15 @@ const BankInformation = () => {
                 component="img"
                 src={
                   QRUrl
-                    ? `data:image/*;base64,${systemInfo?.QRUrl}`
+                    ? QRUrl
                     : Assets.qrImage
                 }
                 sx={{
                   width: '100%',
                   height: 'auto',
-                  objectFit: 'contain',
+                  objectFit: 'cover',
                   marginTop: '16px',
+                  aspectRatio: 1,
                 }}
               />
               {errors?.QRCode?.message ? (
