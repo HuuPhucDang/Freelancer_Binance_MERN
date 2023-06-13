@@ -48,7 +48,7 @@ const StaticHeader: React.FC<IStaticHeaderProp> = ({
             {Number(latest24h?.lastPrice).toFixed(4)}
           </Typography>
           <Typography sx={{ fontSize: '12px' }}>
-            {enchangeRate * Number(latest24h?.lastPrice).toFixed(4)}
+            {(enchangeRate * latest24h?.lastPrice || 0).toFixed(2)}
           </Typography>
         </Stack>
         <Stack direction="column">
