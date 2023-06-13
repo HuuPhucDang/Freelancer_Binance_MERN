@@ -76,9 +76,7 @@ const intiChartSocket = (socket: Socket) => {
     callback(moonboot);
   });
   socket.on("updateMoonbot", async (data: any) => {
-    const moonboot = await Moonboot.findById({
-      id: new mongoose.Types.ObjectId(data?.id),
-    });
+    const moonboot = await Moonboot.findById(data?.id);
     if (moonboot) {
       Object.assign(
         moonboot,

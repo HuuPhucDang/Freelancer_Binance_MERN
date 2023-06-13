@@ -5,5 +5,15 @@ import User from './User';
 import Transaction from './Transaction';
 import Intervention from './Invervention';
 import Verify from './Verify';
+import PriceEdit from './PriceEdit';
 
-export { BankInformation, Request, Support, User, Intervention, Transaction, Verify };
+export {
+  BankInformation,
+  Request,
+  Support,
+  User,
+  Intervention,
+  Transaction,
+  Verify,
+  PriceEdit,
+};
