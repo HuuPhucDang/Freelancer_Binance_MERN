@@ -18,9 +18,10 @@ import {
   Tooltip,
   Typography,
 } from '@mui/material';
+import RemoveRedEyeOutlinedIcon from '@mui/icons-material/RemoveRedEyeOutlined';
 
 import { AdminLayout } from '@/Components/DefaultLayout';
-import { ResetPassword } from '@/Components/Popup';
+import { ResetPassword, VerifyDetails } from '@/Components/Popup';
 import { RootState, useTypedDispatch } from '@/Reducers/store';
 import { VerificationActions } from '@/Reducers/Actions';
 import { ENUMS } from '@/Constants';
@@ -84,6 +85,7 @@ interface ICreateData {
   status: string;
   total: number;
   surplus: number;
+  view: React.ReactNode;
   action: React.ReactNode;
 }
 
@@ -98,9 +100,10 @@ function createData(
   id: string,
   user: IUser,
   status: string,
+  view: React.ReactNode,
   action: React.ReactNode
 ) {
-  return { id, user, status, action };
+  return { id, user, status, view, action };
 }
 
 const initialFilterParam = {
@@ -118,7 +121,7 @@ const Verify: React.FC = () => {
   const userData = Utils.getUserData();
   const [isShowResetPassword, setIsShowResetPassword] =
     React.useState<boolean>(false);
-  const [currentUser, setCurrentUser] = React.useState<any>(null);
+  const [currentItem, setCurrentItem] = React.useState<any>(null);
 
   const payload: IPayload = useSelector((state: RootState) =>
     _.get(state.VERIFICATION, 'payload')
@@ -147,6 +150,13 @@ const Verify: React.FC = () => {
             item.id,
             item.userId || userData,
             item.status,
+            <IconButton
+              size="small"
+              onClick={() => setCurrentItem(item)}
+              disabled={item.status === 'denied'}
+            >
+              <RemoveRedEyeOutlinedIcon />
+            </IconButton>,
             <Stack direction="row" justifyContent="center">
               <Tooltip title="Chấp nhận">
                 <span>
@@ -185,12 +195,11 @@ const Verify: React.FC = () => {
   const _renderMain = () => {
     return (
       <Stack sx={{ padding: '20px' }} direction="column">
-        <ResetPassword
-          user={currentUser}
-          open={isShowResetPassword}
+        <VerifyDetails
+          item={currentItem}
+          open={Boolean(currentItem)}
           onClose={() => {
-            setIsShowResetPassword(false);
-            setCurrentUser(null);
+            setCurrentItem(null);
           }}
         />
         <Typography sx={{ fontSize: '17px', fontWeight: 600 }}>
@@ -208,6 +217,9 @@ const Verify: React.FC = () => {
                 <TableCell sx={{ fontWeight: 600 }}>Người dùng</TableCell>
                 <TableCell align="center" sx={{ fontWeight: 600 }}>
                   Trạng thái
+                </TableCell>
+                <TableCell align="center" sx={{ fontWeight: 600 }}>
+                  Xem
                 </TableCell>
                 <TableCell align="center" sx={{ fontWeight: 600 }}>
                   Hành động
@@ -242,6 +254,7 @@ const Verify: React.FC = () => {
                         variant="outlined"
                       />
                     </TableCell>
+                    <TableCell align="center">{row.view}</TableCell>
                     <TableCell align="center">{row.action}</TableCell>
                   </TableRow>
                 ))}
