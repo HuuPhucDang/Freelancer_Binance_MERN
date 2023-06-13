@@ -44,7 +44,7 @@ const navigationItems = [
     ),
   },
   {
-    label: 'Chỉnh sửa giá',
+    label: 'Chỉnh sửa Moonbot',
     path: ROUTERS.EDIT_PRICE,
     icon: (
       <TuneIcon sx={{ fontSize: '16px', marginRight: '5px' }} />

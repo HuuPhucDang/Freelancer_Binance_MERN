@@ -105,7 +105,6 @@ export const withdrawMoney = async (
   const user = await User.findById(updateBody.userId);
   if (!user) throw new ApiError(httpStatus.NOT_FOUND, "User not found!");
   const userWallet = await getWallet(user.wallet, user.id);
-
   if (userWallet.balance < updateBody.amount)
     throw new ApiError(
       httpStatus.BAD_REQUEST,
@@ -170,6 +169,11 @@ export const requestWithdrawMoney = async (
   if (!user) throw new ApiError(httpStatus.NOT_FOUND, "User not found!");
   const userWallet = await getWallet(user.wallet, user.id);
   user.wallet = userWallet.id;
+  if (userWallet.balance < updateBody.amount)
+    throw new ApiError(
+      httpStatus.BAD_REQUEST,
+      "Can not withdraw more than current balance!"
+    );
   await user.save();
   const transaction = await Transaction.create({
     userId,

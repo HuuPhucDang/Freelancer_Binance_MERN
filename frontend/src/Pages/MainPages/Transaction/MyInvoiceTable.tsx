@@ -29,25 +29,20 @@ const MyInvoiceTable = () => {
   const isLogged: any = useSelector((state: RootState) =>
     _.get(state.AUTH, 'isLogged')
   );
-  const userDetails = useSelector((state: RootState) =>
-    _.get(state.USER, 'details')
-  );
+  const userDetails = Utils.getUserData();
   const isFetchLoading = useSelector((state: RootState) =>
     _.get(state.TRADE, 'isFetchLoading')
   );
 
   useEffect(() => {
     Utils.WebSocket.on('updateTradeListNow', (data) => {
-      if (data?.userId === userDetails?.id) {
-        dispatch(fetchTrades());
-        dispatch(getSelf());
-      }
+      if (data?.userId === userDetails?.id) dispatch(getSelf());
     });
     if (isLogged) dispatch(fetchTrades());
     return () => {
       // clearInterval(checkResultInterval);
     };
-  }, []);
+  }, [isLogged]);
 
   return (
     <TableContainer
@@ -139,12 +134,6 @@ const MyInvoiceTable = () => {
                       fontSize: 9,
                       lineHeight: '11px',
                       padding: '4px 0',
-                      color:
-                        row.result === 'pending'
-                          ? '#816A6A'
-                          : row.result === 'win'
-                          ? '#408827'
-                          : '#F21616',
                     }}
                   >
                     {row?.betAmount}

@@ -81,12 +81,7 @@ const BankInformation = () => {
       setValue('fullname', systemInfo?.fullname);
       setValue('message', systemInfo?.message);
       setValue('accountNumber', systemInfo?.accountNumber);
-
-      if (systemInfo?.QRUrl) {
-        // const qrBlob = Utils.convertBufferToBlob(systemInfo.QRUrl);
-        // const url = URL.createObjectURL(qrBlob);
-        // setQRUrl(url);
-      }
+      setQRUrl(systemInfo?.QRUrl);
     }
   }, [systemInfo]);
 
@@ -235,7 +230,11 @@ const BankInformation = () => {
               <input type="file" {...register('QRCode')} />
               <Box
                 component="img"
-                src={QRUrl || Assets.qrImage}
+                src={
+                  QRUrl
+                    ? `data:image/*;base64,${systemInfo?.QRUrl}`
+                    : Assets.qrImage
+                }
                 sx={{
                   width: '100%',
                   height: 'auto',

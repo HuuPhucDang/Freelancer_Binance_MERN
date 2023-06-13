@@ -11,6 +11,7 @@ import {
 } from '@mui/material';
 import _ from 'lodash';
 import { useSelector } from 'react-redux';
+import { useConfirm } from 'material-ui-confirm';
 
 import { useTypedDispatch, RootState } from '../../../Reducers/store';
 import { Utils } from '@/Libs';
@@ -63,6 +64,7 @@ const TradeField: React.FC<ITradeFieldProps> = ({
 }: ITradeFieldProps) => {
   // Constructors
   const dispatch = useTypedDispatch();
+  const confirm = useConfirm();
   const isLogged = useSelector((state: RootState) =>
     _.get(state.AUTH, 'isLogged')
   );
@@ -88,15 +90,20 @@ const TradeField: React.FC<ITradeFieldProps> = ({
   const [startServerTime, setStartServerTime] = React.useState<number>(0);
 
   React.useEffect(() => {
-    dispatch(getSelf());
+    if (isLogged) dispatch(getSelf());
     Utils.WebSocket.emit('getAllMoonboot', null, (data: any) => {
       setMoonbootButtons(data);
       const getFirstMoonboot: any = _.first(data);
+      const getFirstSellMoonboot: any = _.first(
+        _.filter(data, ['type', TRADE_TYPE.SELL])
+      );
       setBetTime(`${getFirstMoonboot?.time}s`);
       setProbability(getFirstMoonboot?.probability);
       setLimitedTimes(getFirstMoonboot?.limitedTime);
       setServerTime(getFirstMoonboot?.time);
       setStartServerTime(getFirstMoonboot?.time);
+      setBetSellTime(`${getFirstSellMoonboot?.time}s`);
+      setSellProbability(getFirstSellMoonboot?.probability);
     });
     Utils.WebSocket.on('updateAllMoonbotNow', (data) => {
       setMoonbootButtons(data);
@@ -109,7 +116,7 @@ const TradeField: React.FC<ITradeFieldProps> = ({
     return () => {
       clearInterval(updateCoinPriceInterval);
     };
-  }, []);
+  }, [symbol]);
 
   React.useEffect(() => {
     // exit early when we reach 0
@@ -190,11 +197,20 @@ const TradeField: React.FC<ITradeFieldProps> = ({
             paddingX: '0',
             minWidth: 'unset',
           }}
-          disabled={!_.includes(LIMIT_BET[userType], index)}
+          // disabled={!_.includes(LIMIT_BET[userType], index)}
           onClick={() => {
-            onSetBetTime(`${item?.time}s`, type, item?.probability);
-            setLimitedTimes(item?.limitedTime || 0);
-            setBetType(item?.type);
+            if (!_.includes(LIMIT_BET[userType], index)) {
+              confirm({
+                title: '',
+                description: `Level của bạn không đủ để sử dụng chế độ ${item?.time}s! Vui lòng liên hệ admin để nâng cấp level!`,
+              }).then(() => {
+                Utils.redirect(ROUTERS.SUPPORT);
+              });
+            } else {
+              onSetBetTime(`${item?.time}s`, type, item?.probability);
+              setLimitedTimes(item?.limitedTime || 0);
+              setBetType(item?.type);
+            }
           }}
         >
           {item?.time}s

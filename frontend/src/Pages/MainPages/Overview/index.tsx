@@ -181,7 +181,7 @@ const Overview: React.FC = () => {
                     textAlign: 'left',
                     marginTop: '20px',
                   }}
-                  href={ROUTERS.TRANSACTION}
+                  href={`${ROUTERS.TRANSACTION}?symbol=${item?.symbol}`}
                 >
                   Giao dịch
                 </Link>

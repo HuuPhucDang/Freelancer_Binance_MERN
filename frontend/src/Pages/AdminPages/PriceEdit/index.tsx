@@ -53,7 +53,6 @@ const Request: React.FC = () => {
     const buttonsType = buttons.filter(
       (item: { type: string }) => item.type === type
     );
-    console.log(buttonsType);
     return (
       <Grid container columnSpacing={2} rowSpacing={2}>
         {_.map(buttonsType, (item, index) => (
