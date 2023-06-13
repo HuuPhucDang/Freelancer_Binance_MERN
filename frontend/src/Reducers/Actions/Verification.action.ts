@@ -46,7 +46,7 @@ const uploadCardsId = (payload: FormData) => {
             payload: any;
           } = results as { status: boolean; message: string; payload: any };
           pushNotification({ type: 'success', message: resolveResult.message });
-          Utils.setUserData(resolveResult.payload);
+          // Utils.setUserData(resolveResult.payload);
           dispatch(uploadCardsIdSuccess(results));
           dispatch(UserActions.getSelf())
         }

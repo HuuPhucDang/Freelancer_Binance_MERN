@@ -7,6 +7,7 @@ import * as yup from 'yup';
 import { useTypedDispatch } from '@/Reducers/store';
 import { AuthActions } from '@/Reducers/Actions';
 import AuthLayout from '@/Components/DefaultLayout/AuthLayout';
+import { Helmet } from 'react-helmet-async';
 
 const schema = yup
   .object({
@@ -55,129 +56,134 @@ const SignUp = () => {
 
   const _renderMain = () => {
     return (
-      <Stack
-        direction="column"
-        sx={{
-          border: '1px solid #ccc',
-          borderRadius: '8px',
-          padding: '30px 15px',
-          minWidth: '300px',
-        }}
-      >
-        <Typography
-          sx={{ fontSize: '16px', fontWeight: 600, marginBottom: '20px' }}
-        >
-          Đăng ký
-        </Typography>
-        <Controller
-          name="username"
-          control={control}
-          render={({ field }) => (
-            <TextField
-              hiddenLabel
-              variant="outlined"
-              size="small"
-              placeholder="Email, Số ĐT *"
-              sx={{
-                marginTop: '10px',
-                color: 'text.secondary',
-                ' .MuiInputBase-root': {
-                  backgroundColor: 'background.secondary',
-                },
-              }}
-              error={Boolean(errors?.username?.message)}
-              helperText={errors?.username?.message}
-              {...field}
-            />
-          )}
-        />
-        <Controller
-          name="password"
-          control={control}
-          render={({ field }) => (
-            <TextField
-              hiddenLabel
-              variant="outlined"
-              size="small"
-              placeholder="Mật khẩu *"
-              type="password"
-              sx={{
-                marginTop: '10px',
-                color: 'text.secondary',
-                ' .MuiInputBase-root': {
-                  backgroundColor: 'background.secondary',
-                },
-              }}
-              error={Boolean(errors?.password?.message)}
-              helperText={errors?.password?.message}
-              {...field}
-            />
-          )}
-        />
-        <Controller
-          name="confirmPassword"
-          control={control}
-          render={({ field }) => (
-            <TextField
-              hiddenLabel
-              variant="outlined"
-              size="small"
-              placeholder="Xác nhận mật khẩu *"
-              type="password"
-              sx={{
-                marginTop: '10px',
-                color: 'text.secondary',
-                ' .MuiInputBase-root': {
-                  backgroundColor: 'background.secondary',
-                },
-              }}
-              error={Boolean(errors?.confirmPassword?.message)}
-              helperText={errors?.confirmPassword?.message}
-              {...field}
-            />
-          )}
-        />
-        <Controller
-          name="inviteCode"
-          control={control}
-          render={({ field }) => (
-            <TextField
-              hiddenLabel
-              variant="outlined"
-              size="small"
-              placeholder="Mã mời *"
-              sx={{
-                marginTop: '10px',
-                color: 'text.secondary',
-                ' .MuiInputBase-root': {
-                  backgroundColor: 'background.secondary',
-                },
-              }}
-              error={Boolean(errors?.inviteCode?.message)}
-              helperText={errors?.inviteCode?.message}
-              {...field}
-            />
-          )}
-        />
-        <Button
-          variant="contained"
+      <>
+        <Helmet>
+          <title>Đăng ký</title>
+        </Helmet>
+        <Stack
+          direction="column"
           sx={{
-            marginTop: '10px',
-            backgroundColor: 'background.burntSienna',
-            ':hover': {
-              backgroundColor: 'background.burntSienna',
-              filter: 'brightness(0.95)',
-            },
+            border: '1px solid #ccc',
+            borderRadius: '8px',
+            padding: '30px 15px',
+            minWidth: '300px',
           }}
-          onClick={handleSubmit(onSubmit)}
         >
-          Đăng ký
-        </Button>
-      </Stack>
+          <Typography
+            sx={{ fontSize: '16px', fontWeight: 600, marginBottom: '20px' }}
+          >
+            Đăng ký
+          </Typography>
+          <Controller
+            name="username"
+            control={control}
+            render={({ field }) => (
+              <TextField
+                hiddenLabel
+                variant="outlined"
+                size="small"
+                placeholder="Email, Số ĐT *"
+                sx={{
+                  marginTop: '10px',
+                  color: 'text.secondary',
+                  ' .MuiInputBase-root': {
+                    backgroundColor: 'background.secondary',
+                  },
+                }}
+                error={Boolean(errors?.username?.message)}
+                helperText={errors?.username?.message}
+                {...field}
+              />
+            )}
+          />
+          <Controller
+            name="password"
+            control={control}
+            render={({ field }) => (
+              <TextField
+                hiddenLabel
+                variant="outlined"
+                size="small"
+                placeholder="Mật khẩu *"
+                type="password"
+                sx={{
+                  marginTop: '10px',
+                  color: 'text.secondary',
+                  ' .MuiInputBase-root': {
+                    backgroundColor: 'background.secondary',
+                  },
+                }}
+                error={Boolean(errors?.password?.message)}
+                helperText={errors?.password?.message}
+                {...field}
+              />
+            )}
+          />
+          <Controller
+            name="confirmPassword"
+            control={control}
+            render={({ field }) => (
+              <TextField
+                hiddenLabel
+                variant="outlined"
+                size="small"
+                placeholder="Xác nhận mật khẩu *"
+                type="password"
+                sx={{
+                  marginTop: '10px',
+                  color: 'text.secondary',
+                  ' .MuiInputBase-root': {
+                    backgroundColor: 'background.secondary',
+                  },
+                }}
+                error={Boolean(errors?.confirmPassword?.message)}
+                helperText={errors?.confirmPassword?.message}
+                {...field}
+              />
+            )}
+          />
+          <Controller
+            name="inviteCode"
+            control={control}
+            render={({ field }) => (
+              <TextField
+                hiddenLabel
+                variant="outlined"
+                size="small"
+                placeholder="Mã mời *"
+                sx={{
+                  marginTop: '10px',
+                  color: 'text.secondary',
+                  ' .MuiInputBase-root': {
+                    backgroundColor: 'background.secondary',
+                  },
+                }}
+                error={Boolean(errors?.inviteCode?.message)}
+                helperText={errors?.inviteCode?.message}
+                {...field}
+              />
+            )}
+          />
+          <Button
+            variant="contained"
+            sx={{
+              marginTop: '10px',
+              backgroundColor: 'background.burntSienna',
+              ':hover': {
+                backgroundColor: 'background.burntSienna',
+                filter: 'brightness(0.95)',
+              },
+            }}
+            onClick={handleSubmit(onSubmit)}
+          >
+            Đăng ký
+          </Button>
+        </Stack>
+      </>
     );
   };
 
-  return <AuthLayout screenTitle="Đăng ký" content={_renderMain()} />;
+  return _renderMain();
 };
 
 export default SignUp;

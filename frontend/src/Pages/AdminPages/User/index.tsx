@@ -81,7 +81,7 @@ interface IFilterParam {
 }
 
 const initialFilterParams = {
-  sortBy: 'date:DESC,time:DESC',
+  sortBy: 'data:desc,time:desc',
   page: 1,
   limit: 15,
 };

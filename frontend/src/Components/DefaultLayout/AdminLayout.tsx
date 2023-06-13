@@ -24,7 +24,6 @@ const AdminLayout: React.FC<SectionProps> = (props: SectionProps) => {
 
   React.useEffect(() => {
     if (userData?.role !== 'admin') {
-      console.log(token);
       if (token) Utils.redirect(ROUTERS.TRANSACTION);
       else Utils.redirect(ROUTERS.SIGN_IN);
     }

@@ -68,10 +68,10 @@ const SideBar = () => {
   const { pathname } = useLocation();
   const dispatch = useTypedDispatch();
 
-  const onSignOut = () => {
-    dispatch(logout());
-    Utils.clearCookies();
-    Utils.replace(ROUTERS.SIGN_IN);
+  const onSignOut = async () => {
+    await dispatch(logout());
+    await Utils.clearCookies();
+    await Utils.replace(ROUTERS.SIGN_IN);
   };
 
   const _renderNavBar = () =>

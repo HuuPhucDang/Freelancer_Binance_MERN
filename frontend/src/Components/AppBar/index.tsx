@@ -76,10 +76,10 @@ const AppBarComponent: React.FC = () => {
     if (isMd) setAnchorMenu(null);
   }, [isMd]);
 
-  const onSignOut = () => {
-    dispatch(logout());
-    Utils.clearCookies();
-    Utils.replace(ROUTERS.SIGN_IN);
+  const onSignOut = async () => {
+    await dispatch(logout());
+    await Utils.clearCookies();
+    await Utils.replace(ROUTERS.SIGN_IN);
   };
 
   const handleChangeLanguage = (

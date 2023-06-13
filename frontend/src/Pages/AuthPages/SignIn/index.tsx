@@ -11,6 +11,7 @@ import { Utils } from '@/Libs';
 import { ROUTERS } from '@/Constants';
 import { ForgotPassword } from '@/Components/Popup';
 import AuthLayout from '@/Components/DefaultLayout/AuthLayout';
+import { Helmet } from 'react-helmet-async';
 
 const { login } = AuthActions;
 
@@ -51,7 +52,10 @@ const SignIn = () => {
   const onSubmit = (data: FormData) => dispatch(login(data));
 
   const onEnter = (e: any) => {
-    if (e.key === 'Enter' || e.keyCode === 13 && buttonRef && buttonRef.current) {
+    if (
+      e.key === 'Enter' ||
+      (e.keyCode === 13 && buttonRef && buttonRef.current)
+    ) {
       buttonRef.current.click();
     }
   };
@@ -59,6 +63,9 @@ const SignIn = () => {
   const _renderMain = () => {
     return (
       <>
+        <Helmet>
+          <title>Đăng nhập</title>
+        </Helmet>
         <ForgotPassword
           open={isShowPopup}
           onClose={() => setIsShowPopup(false)}
@@ -163,7 +170,7 @@ const SignIn = () => {
     );
   };
 
-  return <AuthLayout screenTitle="Đăng nhập" content={_renderMain()} />;
+  return _renderMain();
 };
 
 export default SignIn;

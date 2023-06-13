@@ -121,7 +121,7 @@ const initialFilterParam = {
   status: 'all',
   page: 1,
   limit: 15,
-  sortBy: 'date:DESC,time:DESC',
+  sortBy: 'data:desc,time:desc',
   populate: 'userId',
 };
 const types = {
