@@ -13,6 +13,7 @@ import ChangePhoneNumber from './ChangePhoneNumber';
 import ActiveWithdrawPassword from './ActiveWithdrawPassword';
 import ChangeWithdrawPassword from './ChangeWithdrawPassword';
 import ResetPassword from './ResetPassword';
+import VerifyDetails from './VerifyDetails';
 
 export {
   ForgotPassword,
@@ -30,4 +31,5 @@ export {
   ActiveWithdrawPassword,
   ChangeWithdrawPassword,
   ResetPassword,
+  VerifyDetails,
 };
