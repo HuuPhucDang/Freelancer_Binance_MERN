@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import moment from "moment";
+// import moment from "moment";
 import paginate from "../helper/paginate/paginate";
 import toJSON from "../helper/toJSON/toJSON";
 import {
@@ -20,11 +20,12 @@ const transactionSchema = new mongoose.Schema<
     },
     date: {
       type: mongoose.Schema.Types.String,
-      default: moment().format("YYYY-MM-DD"),
+      required: false,
+      default: "",
     },
     time: {
       type: mongoose.Schema.Types.String,
-      default: moment().format("hh:mm:ss"),
+      default: "",
     },
     balance: {
       type: mongoose.Schema.Types.Number,
