@@ -8,6 +8,7 @@ import * as SystemInfoAPI from './SystemInfo';
 import * as TransactionAPI from './Transaction.api';
 import * as UserRequestAPI from './UserRequest.api';
 import * as TradeAPI from './Trade.api';
+import * as NotificationAPI from './Notification.api';
 
 export default {
   ...AuthAPI,
@@ -20,4 +21,5 @@ export default {
   ...TransactionAPI,
   ...UserRequestAPI,
   ...TradeAPI,
+  ...NotificationAPI,
 };

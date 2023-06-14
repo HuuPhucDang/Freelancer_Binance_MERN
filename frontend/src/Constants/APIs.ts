@@ -49,4 +49,7 @@ export default {
   TRADE: {
     BASIC: '/trade',
   },
+  NOTIFICATION: {
+    BASIC: '/notification',
+  },
 };
