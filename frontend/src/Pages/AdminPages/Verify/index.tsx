@@ -109,7 +109,7 @@ function createData(
 const initialFilterParam = {
   page: 1,
   limit: 15,
-  sortBy: 'createdAt:desc',
+  sortBy: 'createAt:desc',
   populate: 'userId',
 };
 
