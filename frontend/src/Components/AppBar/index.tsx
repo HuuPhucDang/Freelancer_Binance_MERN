@@ -26,19 +26,30 @@ import { Utils } from '@libs';
 import { ROUTERS } from '@/Constants';
 import { LanguageSelect, Slider } from '../Common';
 import PersonIcon from '@mui/icons-material/Person';
-import { useTypedDispatch, useTypedSelector } from '../../Reducers/store';
+import {
+  RootState,
+  useTypedDispatch,
+  useTypedSelector,
+} from '../../Reducers/store';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import MenuIcon from '@mui/icons-material/Menu';
-import { AuthActions } from '../../Reducers/Actions';
+import { AuthActions, NotificationActions } from '../../Reducers/Actions';
+import { useLocation } from 'react-router';
+import { useSelector } from 'react-redux';
 
 const { setLogged, logout } = AuthActions;
+const { fetchNotification } = NotificationActions;
 
 const AppBarComponent: React.FC = () => {
   const dispatch = useTypedDispatch();
+  const { pathname } = useLocation();
   const userData = Utils.getUserData();
   const token = Utils.getAccessToken();
   const isLogged: any = useTypedSelector((state: any) =>
     _.get(state.AUTH, 'isLogged')
+  );
+  const notifications: { message: string }[] = useSelector((state: RootState) =>
+    _.get(state.NOTIFICATION, 'payload')
   );
   const theme = useTheme();
   const isMd = useMediaQuery(theme.breakpoints.down('md'));
@@ -58,6 +69,10 @@ const AppBarComponent: React.FC = () => {
     setAnchorEl(event.currentTarget);
   };
   const isDarkMode = Utils.getThemeMode() === 'dark';
+
+  React.useEffect(() => {
+    dispatch(fetchNotification());
+  }, [pathname]);
 
   React.useEffect(() => {
     if (!isLogged && userData && token) dispatch(setLogged());
@@ -88,6 +103,15 @@ const AppBarComponent: React.FC = () => {
   ) => {
     setLanguage(newAlignment);
   };
+
+  const notificationItems = React.useMemo(() => {
+    const result: string[] = [];
+    if (notifications.length > 0)
+      notifications.forEach((item: { message: string }) =>
+        result.push(item.message)
+      );
+    return result;
+  }, [notifications]);
 
   const _renderMainBar = () => {
     return (
@@ -379,7 +403,6 @@ const AppBarComponent: React.FC = () => {
         <Stack
           direction="row"
           sx={{
-            maxWidth: '852px',
             justifyContent: 'start',
             alignItems: 'center',
             width: '100%',
@@ -387,11 +410,7 @@ const AppBarComponent: React.FC = () => {
         >
           {isLogged ? (
             <Slider
-              items={[
-                'Nhận chiết khấu giao dịch lên tới 100 USD khi đăng ký thành công với mã mời (dành cho người dùng đã xác minh)',
-                'Nhận chiết khấu giao dịch lên tới 100 USD khi đăng ký thành công với mã mời (dành cho người dùng đã xác minh)',
-                'Nhận chiết khấu giao dịch lên tới 100 USD khi đăng ký thành công với mã mời (dành cho người dùng đã xác minh)',
-              ]}
+              items={notificationItems}
               itemSx={{
                 fontSize: '10px',
                 color: '#000000',
