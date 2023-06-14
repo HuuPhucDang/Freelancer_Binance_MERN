@@ -123,8 +123,8 @@ export const withdrawMoney = async (
   if (withdrawTransaction.status === ETransactionStatus.DENIED)
     throw new ApiError(httpStatus.BAD_REQUEST, "Transaction already denied!");
 
-  userWallet.balance = userWallet.balance - withdrawTransaction.amount;
-  await userWallet.save();
+  // userWallet.balance = userWallet.balance - withdrawTransaction.amount;
+  // await userWallet.save();
   withdrawTransaction.status = ETransactionStatus.RESOLVED;
   await withdrawTransaction.save();
 
@@ -174,6 +174,9 @@ export const requestWithdrawMoney = async (
       httpStatus.BAD_REQUEST,
       "Can not withdraw more than current balance!"
     );
+
+  userWallet.balance = userWallet.balance - updateBody.amount;
+  await userWallet.save();
   await user.save();
   const transaction = await Transaction.create({
     userId,
@@ -209,6 +212,11 @@ export const cancelTransaction = async (
     throw new ApiError(httpStatus.BAD_REQUEST, "Transaction already denied!");
   if (transaction.status === ETransactionStatus.CANCELED)
     throw new ApiError(httpStatus.BAD_REQUEST, "Transaction already canceled!");
+  const userWallet = await getWallet(user.wallet, user.id);
+  user.wallet = userWallet.id;
+  userWallet.balance = userWallet.balance + transaction.amount;
+  await userWallet.save();
+
   transaction.status = ETransactionStatus.CANCELED;
   await transaction.save();
   return transaction;
@@ -232,6 +240,11 @@ export const denyTransaction = async (
     throw new ApiError(httpStatus.BAD_REQUEST, "Transaction already canceled!");
   if (transaction.status === ETransactionStatus.DENIED)
     throw new ApiError(httpStatus.BAD_REQUEST, "Transaction already denied!");
+  const userWallet = await getWallet(user.wallet, user.id);
+  user.wallet = userWallet.id;
+  userWallet.balance = userWallet.balance + transaction.amount;
+  await userWallet.save();
+
   transaction.status = ETransactionStatus.DENIED;
   await transaction.save();
   return transaction;

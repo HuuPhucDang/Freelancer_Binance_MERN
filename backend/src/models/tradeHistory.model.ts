@@ -7,7 +7,6 @@ import {
   ETradeResult,
   ETradeType,
 } from "../interfaces/tradeHistoryHistory.interface";
-import moment from "moment";
 
 const tradeHistorySchema = new mongoose.Schema<
   ITradeHistoryDoc,
@@ -49,7 +48,7 @@ const tradeHistorySchema = new mongoose.Schema<
     },
     betTime: {
       type: mongoose.Schema.Types.String,
-      default: moment().format("DD/MM/YYYY hh:mm:ss"),
+      default: '',
     },
   },
   {
