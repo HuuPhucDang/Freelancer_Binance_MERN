@@ -25,12 +25,12 @@ const VolatilityTable: React.FC<IProps> = ({ symbol }: IProps) => {
     setDownRows((oldData) => {
       const filteredData = _.filter(data, ['m', false]);
       const newData = [...oldData, ...filteredData];
-      return newData.length > 80 ? newData.slice(-60) : newData;
+      return newData.length > 60 ? newData.slice(-60) : newData;
     });
     setUpRows((oldData) => {
       const filteredData = _.filter(data, ['m', true]);
       const newData = [...oldData, ...filteredData];
-      return newData.length > 80 ? newData.slice(-60) : newData;
+      return newData.length > 60 ? newData.slice(-60) : newData;
     });
     setLatestRow(_.last(data));
   };
@@ -68,7 +68,7 @@ const VolatilityTable: React.FC<IProps> = ({ symbol }: IProps) => {
     const sortedList = isUp ? upRows : downRows;
     const page = randomPage(0, 1);
 
-    const randomSortList = _.slice(sortedList, page * 18, page * 18 + 18);
+    const randomSortList = _.slice(sortedList, page * 16, page * 16 + 16);
     return randomSortList.map((row) => {
       const total = row?.p * row?.q;
       return (

@@ -20,14 +20,17 @@ export const getChatBoxes = async (
   if (user.role === "admin") {
     chatRooms = await ChatBox.find({ receiverId: userId })
       .populate("messages")
-      .populate("senderId");
+      .populate("senderId")
+      .populate("receiverId")
+      .populate("messages.senderId")
+      .populate("messages.receiverId");
   } else {
     const userChatBox = await ChatBox.findOne({ senderId: userId })
+      .populate("senderId")
+      .populate("receiverId")
       .populate("messages")
       .populate("messages.senderId")
-      .populate("messages.receiverId")
-      .populate("senderId")
-      .populate("receiverId");
+      .populate("messages.receiverId");
     const admin = await User.findOne({ role: "admin" });
     if (!admin) throw new ApiError(httpStatus.NOT_FOUND, "Admin not found!");
     if (!userChatBox) {

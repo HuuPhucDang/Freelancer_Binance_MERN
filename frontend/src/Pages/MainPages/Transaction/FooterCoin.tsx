@@ -40,11 +40,16 @@ const FooterCoin: React.FC = () => {
         setNotification(data);
       }
     );
-
-    Utils.WebSocket.on('updateNewNotification', (data: any) => {
+    Utils.WebSocket.on('updateNewNotification', () => {
       // Set message
-      if (data?.userId === userDetails?.id)
-        setNotification([data?.notification, ...notification]);
+      Utils.WebSocket.emit(
+        'getAllTradeNotification',
+        { userId: userDetails?.id },
+        (data: any) => {
+          // Set message
+          setNotification(data);
+        }
+      );
     });
     return () => {
       // clearInterval(intervalLatest24h);
@@ -104,17 +109,20 @@ const FooterCoin: React.FC = () => {
         >
           <Stack
             direction="column"
-            sx={{ width: '300px', padding: '15px', overflow: 'auto' }}
+            sx={{ width: '500px', padding: '15px', overflow: 'auto' }}
           >
             {notification.map(
               (item: { message: string; time: string }, index: number) => {
                 return (
                   <React.Fragment key={`message-${item.time}`}>
                     <Stack direction="column">
-                      <Typography sx={{ fontSize: '14px' }}>
-                        {item.message}
-                      </Typography>
                       <Typography
+                        sx={{ fontSize: '14px' }}
+                        component="div"
+                        dangerouslySetInnerHTML={{ __html: item.message }}
+                      />
+
+                      {/* <Typography
                         sx={{
                           fontSize: '12px',
                           fontWeight: 600,
@@ -122,7 +130,7 @@ const FooterCoin: React.FC = () => {
                         }}
                       >
                         {item.time}
-                      </Typography>
+                      </Typography> */}
                     </Stack>
                     {index !== notification.length - 1 ? (
                       <Divider sx={{ margin: '10px 0' }} />
