@@ -102,6 +102,12 @@ const Request: React.FC = () => {
                   InputProps={{
                     inputProps: { step: '0.1', max: '100', min: '0' },
                   }}
+                  onBlur={(e: any) => {
+                    if (e.target.value > 100) e.target.value = 100;
+                    else if (e.target.value > 0 && e.target.value < 100)
+                      e.target.value = e.target.value;
+                    else e.target.value = '';
+                  }}
                 />
               </Grid>
               <Grid item xs={3}>
