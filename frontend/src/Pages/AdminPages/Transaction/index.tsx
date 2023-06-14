@@ -38,6 +38,7 @@ interface IFilterParam {
 interface IUser {
   id: string;
   nickname: string;
+  username: string;
 }
 
 interface ITransaction {
@@ -272,7 +273,7 @@ const Transaction: React.FC = () => {
                       scope="row"
                       sx={{ padding: '15px' }}
                     >
-                      {row.user?.nickname}
+                      {row.user?.username}
                     </TableCell>
                     <TableCell align="center">
                       {row.date}, {row.time}

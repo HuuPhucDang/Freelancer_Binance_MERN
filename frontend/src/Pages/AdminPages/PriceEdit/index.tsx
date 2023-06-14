@@ -92,7 +92,6 @@ const Request: React.FC = () => {
               <Grid item xs={3}>
                 <TextField
                   fullWidth
-                  type="number"
                   size="small"
                   label="Xác suất"
                   name="probability"
@@ -102,6 +101,12 @@ const Request: React.FC = () => {
                   inputProps={{ step: '0.1', max: '100', min: '0' }}
                   InputProps={{
                     inputProps: { step: '0.1', max: '100', min: '0' },
+                  }}
+                  onBlur={(e: any) => {
+                    if (e.target.value > 100) e.target.value = 100;
+                    else if (e.target.value > 0 && e.target.value < 100)
+                      e.target.value = e.target.value;
+                    else e.target.value = '';
                   }}
                 />
               </Grid>
