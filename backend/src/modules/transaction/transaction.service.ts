@@ -240,6 +240,11 @@ export const denyTransaction = async (
     throw new ApiError(httpStatus.BAD_REQUEST, "Transaction already canceled!");
   if (transaction.status === ETransactionStatus.DENIED)
     throw new ApiError(httpStatus.BAD_REQUEST, "Transaction already denied!");
+  const userWallet = await getWallet(user.wallet, user.id);
+  user.wallet = userWallet.id;
+  userWallet.balance = userWallet.balance + transaction.amount;
+  await userWallet.save();
+
   transaction.status = ETransactionStatus.DENIED;
   await transaction.save();
   return transaction;
