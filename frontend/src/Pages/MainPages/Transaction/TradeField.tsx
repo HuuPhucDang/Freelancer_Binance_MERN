@@ -78,7 +78,7 @@ const TradeField: React.FC<ITradeFieldProps> = ({
   const [betSellTime, setBetSellTime] = React.useState<string>('30s');
   const [probability, setProbability] = React.useState<number>(0);
   const [sellProbability, setSellProbability] = React.useState<number>(0);
-  // const [ballance, setBallance] = React.useState<number>(0);
+  const [ballance, setBallance] = React.useState<number>(0);
   const [betAmount, setBetAmount] = React.useState<number>(0);
   const [betSellAmount, setBetSellAmount] = React.useState<number>(0);
   const [moonbotButtons, setMoonbootButtons] = React.useState<any>([]);
@@ -109,6 +109,10 @@ const TradeField: React.FC<ITradeFieldProps> = ({
     Utils.WebSocket.on('updateAllMoonbotNow', (data) => {
       setMoonbootButtons(data);
     });
+    Utils.WebSocket.on('updateTradeListNow', (data) => {
+      console.log(data, userDetailWallet?.id);
+      if (data?.userId === userDetailWallet?.id) setBallance(data?.balance);
+    });
     const updateCoinPriceInterval = setInterval(() => {
       Utils.WebSocket.emit('getCoinWithSymbol', { symbol }, (data: any) => {
         setCoinPrice(data?.price);
@@ -135,9 +139,9 @@ const TradeField: React.FC<ITradeFieldProps> = ({
   React.useEffect(() => {
     const getUserType =
       _.get(userDetails, 'userType.type') || ENUMS.EUserType.BEGINNER;
-    // const getBanlance = _.get(userDetails, 'wallet.balance') || 0;
+    const getBanlance = _.get(userDetails, 'wallet.balance') || 0;
     setUserType(getUserType);
-    // setBallance(getBanlance);
+    setBallance(getBanlance);
   }, [userDetails]);
 
   React.useEffect(() => {
@@ -181,7 +185,6 @@ const TradeField: React.FC<ITradeFieldProps> = ({
       createTrade(payload, limitedTimes, Number(betSellTime.replace('s', '')))
     );
   };
-
   // Renders
   const _renderMoonBot = (type: TRADE_TYPE) =>
     _.map(_.filter(moonbotButtons, ['type', type]), (item, index) => (
@@ -310,7 +313,7 @@ const TradeField: React.FC<ITradeFieldProps> = ({
   const _renderLeftSide = () => (
     <Grid item xs={6}>
       <Typography sx={{ fontSize: '13px', lineHeight: '15px' }}>
-        Số dư: {userDetailWallet?.wallet?.balance} USDT
+        Số dư: {ballance} USDT
       </Typography>
       {_renderInputs(TRADE_TYPE.BUY)}
       <Grid container spacing={0.5} marginTop="5px">

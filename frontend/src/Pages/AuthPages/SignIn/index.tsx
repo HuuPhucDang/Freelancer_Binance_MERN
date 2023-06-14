@@ -10,7 +10,7 @@ import { AuthActions } from '@/Reducers/Actions';
 import { Utils } from '@/Libs';
 import { ROUTERS } from '@/Constants';
 import { ForgotPassword } from '@/Components/Popup';
-import AuthLayout from '@/Components/DefaultLayout/AuthLayout';
+// import AuthLayout from '@/Components/DefaultLayout/AuthLayout';
 import { Helmet } from 'react-helmet-async';
 
 const { login } = AuthActions;

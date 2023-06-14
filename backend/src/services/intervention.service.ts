@@ -12,6 +12,7 @@ import Wallet from "../models/wallet.model";
 import Moonboot from "../models/moonbot.model";
 import TradeNotification from "../models/tradeNotification.model";
 import ExchangeCurrency from "../models/exchangeCurrency.model";
+import moment from "moment";
 
 const KLINE_URL = `https://api.binance.com/api/v3/klines?`;
 const AGGREGATE_URL = `https://api.binance.com/api/v3/aggTrades?`;
@@ -139,10 +140,22 @@ const intiChartSocket = (socket: Socket) => {
             const firstText = trade.type === ETradeType.BUY ? "mua" : "bán";
             const resultText =
               trade.result === ETradeResult.LOSE ? "thua" : "thắng";
+            const betPrice =
+              trade.type === ETradeType.BUY ? trade.betPrice : -trade.betPrice;
             const notification = await TradeNotification.create({
               userId: new mongoose.Types.ObjectId(data?.userId),
-              message: `Bạn đã ${resultText} ${amount} USDT khi ${firstText} ${trade.symbol} ở mức ${trade.betPrice}`,
+              message: `Bạn đã <b>${resultText} ${amount}</b> USDT khi ${firstText} ${
+                trade.symbol
+              } ở mức <b>${betPrice}</b> lúc ${trade.betTime}, Mức giá ${
+                trade.symbol
+              } khi kết thúc lệnh là <b>${
+                currentCoin.price
+              }</b> lúc ${moment().format("DD/MM/YYYY hh:mm:ss")}`,
               time: trade.betTime,
+            });
+            global.io.emit("updateTradeListNow", {
+              userId: trade.userId,
+              balance: wallet?.balance,
             });
             global.io.emit("updateNewNotification", {
               userId: trade.userId,
@@ -150,7 +163,6 @@ const intiChartSocket = (socket: Socket) => {
             });
           }
         }
-        global.io.emit("updateTradeListNow", { userId: trade.userId });
       }, data?.timeout || 1);
     }
   });

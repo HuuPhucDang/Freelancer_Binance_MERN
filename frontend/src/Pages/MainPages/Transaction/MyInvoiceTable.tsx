@@ -12,13 +12,11 @@ import {
 import { useEffect } from 'react';
 import _ from 'lodash';
 import { useSelector } from 'react-redux';
-import { Utils } from '@/Libs';
 
 import { useTypedDispatch, RootState } from '@/Reducers/store';
-import { TradeActions, UserActions } from '@/Reducers/Actions';
+import { TradeActions } from '@/Reducers/Actions';
 
 const { fetchTrades } = TradeActions;
-const { getSelf } = UserActions;
 
 const MyInvoiceTable = () => {
   const dispatch = useTypedDispatch();
@@ -28,15 +26,11 @@ const MyInvoiceTable = () => {
   const isLogged: any = useSelector((state: RootState) =>
     _.get(state.AUTH, 'isLogged')
   );
-  const userDetails = Utils.getUserData();
   const isFetchLoading = useSelector((state: RootState) =>
     _.get(state.TRADE, 'isFetchLoading')
   );
 
   useEffect(() => {
-    Utils.WebSocket.on('updateTradeListNow', (data) => {
-      if (data?.userId === userDetails?.id) dispatch(getSelf());
-    });
     if (isLogged) dispatch(fetchTrades());
     return () => {
       // clearInterval(checkResultInterval);

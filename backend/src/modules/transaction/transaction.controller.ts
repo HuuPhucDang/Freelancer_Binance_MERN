@@ -17,7 +17,7 @@ export const rechangeMoney = catchAsync(async (req: Request, res: Response) => {
 
 export const withdrawMoney = catchAsync(async (req: Request, res: Response) => {
   if (typeof req.params["transactionId"] === "string") {
-    const user = await transactionService.rechangeMoney(
+    const user = await transactionService.withdrawMoney(
       new mongoose.Types.ObjectId(req.params["transactionId"]),
       req.body
     );

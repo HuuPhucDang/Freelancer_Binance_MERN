@@ -54,10 +54,9 @@ const Request: React.FC = () => {
     return (
       <Grid container columnSpacing={2} rowSpacing={2}>
         {_.map(buttonsType, (item, index) => (
-          <Grid item xs={12}>
+          <Grid item xs={12} key={index}>
             <Grid
               container
-              xs={12}
               columnSpacing={2}
               rowSpacing={2}
               key={index}
@@ -99,9 +98,10 @@ const Request: React.FC = () => {
                   key={`probability-${index}`}
                   defaultValue={0 || item?.probability}
                   required
-                  // inputProps={{ step: 1, min: 1, max: 100 }}
-                  type="number"
-                  inputProps={{ min: '4', max: '10' }}
+                  inputProps={{ step: '0.1', max: '100', min: '0' }}
+                  InputProps={{
+                    inputProps: { step: '0.1', max: '100', min: '0' },
+                  }}
                 />
               </Grid>
               <Grid item xs={3}>
