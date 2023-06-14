@@ -93,14 +93,15 @@ const Request: React.FC = () => {
               <Grid item xs={3}>
                 <TextField
                   fullWidth
-                  type="number"
                   size="small"
                   label="Xác suất"
                   name="probability"
                   key={`probability-${index}`}
                   defaultValue={0 || item?.probability}
                   required
-                  inputProps={{ step: '0.1' }}
+                  // inputProps={{ step: 1, min: 1, max: 100 }}
+                  type="number"
+                  inputProps={{ min: '4', max: '10' }}
                 />
               </Grid>
               <Grid item xs={3}>

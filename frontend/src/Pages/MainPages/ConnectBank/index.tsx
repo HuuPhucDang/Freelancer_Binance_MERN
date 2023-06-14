@@ -311,26 +311,6 @@ const ConnectBank: React.FC = () => {
           direction="column"
           sx={{
             position: 'absolute',
-            top: '44%',
-            left: '30%',
-            userSelect: 'none',
-          }}
-        >
-          <Typography
-            sx={{
-              fontSize: '20px',
-              textTransform: 'uppercase',
-              color: 'text.burntSienna',
-              fontWeight: 500,
-            }}
-          >
-            {userData?.bank?.accountNumber}
-          </Typography>
-        </Stack>
-        <Stack
-          direction="column"
-          sx={{
-            position: 'absolute',
             top: '13%',
             left: '30%',
             userSelect: 'none',
@@ -351,7 +331,47 @@ const ConnectBank: React.FC = () => {
           direction="column"
           sx={{
             position: 'absolute',
+            top: '44%',
+            left: '30%',
+            userSelect: 'none',
+          }}
+        >
+          <Typography
+            sx={{
+              fontSize: '20px',
+              textTransform: 'uppercase',
+              color: 'text.burntSienna',
+              fontWeight: 500,
+            }}
+          >
+            {userData?.bank?.accountNumber}
+          </Typography>
+        </Stack>
+        <Stack
+          direction="column"
+          sx={{
+            position: 'absolute',
             bottom: '24%',
+            left: '30%',
+            userSelect: 'none',
+          }}
+        >
+          <Typography
+            sx={{
+              fontSize: '20px',
+              textTransform: 'uppercase',
+              color: 'text.burntSienna',
+              fontWeight: 500,
+            }}
+          >
+            {userData?.wallet?.balance || 0} USDT
+          </Typography>
+        </Stack>
+        <Stack
+          direction="column"
+          sx={{
+            position: 'absolute',
+            bottom: '10%',
             left: '13%',
             userSelect: 'none',
           }}
@@ -367,26 +387,7 @@ const ConnectBank: React.FC = () => {
             {userData?.bank?.bankName}
           </Typography>
         </Stack>
-        <Stack
-          direction="column"
-          sx={{
-            position: 'absolute',
-            bottom: '12%',
-            left: '13%',
-            userSelect: 'none',
-          }}
-        >
-          <Typography
-            sx={{
-              fontSize: '20px',
-              textTransform: 'uppercase',
-              color: 'text.burntSienna',
-              fontWeight: 500,
-            }}
-          >
-            {userData?.wallet?.balance} USDT
-          </Typography>
-        </Stack>
+
       </Box>
     );
   };
