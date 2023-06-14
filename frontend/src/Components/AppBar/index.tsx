@@ -71,7 +71,7 @@ const AppBarComponent: React.FC = () => {
   const isDarkMode = Utils.getThemeMode() === 'dark';
 
   React.useEffect(() => {
-    dispatch(fetchNotification());
+    if (token) dispatch(fetchNotification());
   }, [pathname]);
 
   React.useEffect(() => {
@@ -110,6 +110,7 @@ const AppBarComponent: React.FC = () => {
       notifications.forEach((item: { message: string }) =>
         result.push(item.message)
       );
+    else result.push("Hiện tại không có thông báo nào!")
     return result;
   }, [notifications]);
 
