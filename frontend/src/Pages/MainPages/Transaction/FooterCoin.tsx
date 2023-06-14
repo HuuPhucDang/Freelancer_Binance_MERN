@@ -53,11 +53,14 @@ const FooterCoin: React.FC = () => {
 
   const onShowNotificationDrawer = () => {
     setIsShowNotification(true);
-    // Emit the socket for read all notification here
-    // Utils.WebSocket.emit('readAllNotification', null, (data: any) => {
-    //   // Set message
-    //   // setNotification(data);
-    // });
+    Utils.WebSocket.emit(
+      'getAllTradeNotification',
+      { userId: userDetails?.id },
+      (data: any) => {
+        // Set message
+        setNotification(data);
+      }
+    );
   };
 
   // Renders
