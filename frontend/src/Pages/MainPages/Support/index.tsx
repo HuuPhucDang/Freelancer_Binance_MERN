@@ -49,16 +49,14 @@ const Support: React.FC = () => {
     dispatch(fetchChatBox());
     Utils.WebSocket.on('receiveMessage', (data: any) => {
       setMessage('');
-      setCurrentRoom({ roomId: data.id, ...data });
+      if (data.id) setCurrentRoom({ roomId: data.id, ...data });
       scrollToBottom();
     });
   }, []);
 
   React.useEffect(() => {
     if (payload.length > 0) {
-      const findRoom = payload.find(
-        (item: { senderId: { id: string } }) => item.senderId.id === userData.id
-      );
+      const findRoom = payload[0];
       if (findRoom) {
         setCurrentRoom({ roomId: findRoom.id, ...findRoom });
         scrollToBottom();
@@ -181,7 +179,9 @@ const Support: React.FC = () => {
                         marginBottom="16px"
                       >
                         <Stack direction="row" alignItems="center">
-                          <Typography sx={{ fontSize: '14px', fontWeight: 600 }}>
+                          <Typography
+                            sx={{ fontSize: '14px', fontWeight: 600 }}
+                          >
                             {findUser(item.senderId)?.nickname}{' '}
                             {item.senderId === userData.id ? '(You)' : ''}
                           </Typography>
@@ -230,7 +230,9 @@ const Support: React.FC = () => {
                     alignSelf: 'flex-end',
                   }}
                   onClick={() => onSendMessage()}
-                  disabled={!Boolean(message.trim()) || !Boolean(currentRoom?.roomId)}
+                  disabled={
+                    !Boolean(message.trim()) || !Boolean(currentRoom?.roomId)
+                  }
                 >
                   Gửi
                 </Button>

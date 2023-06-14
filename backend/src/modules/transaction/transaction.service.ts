@@ -111,7 +111,7 @@ export const withdrawMoney = async (
       "Can not withdraw more than current balance!"
     );
   const withdrawTransaction = await Transaction.findOne({
-    id: transactionId,
+    _id: transactionId,
     userId: user.id,
   });
   if (!withdrawTransaction)
