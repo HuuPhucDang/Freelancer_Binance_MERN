@@ -5,6 +5,7 @@ import {
   Seender,
   intiChatSocket,
   initInterventionSocket,
+  startmoonBootInterval,
 } from "./services";
 import app from "./app";
 import config from "./config/config";
@@ -34,6 +35,7 @@ mongoose.connect(config.mongoose.url).then(() => {
   Seender.createSeedCoins();
   Seender.createSeedMoonbots();
   scheduledFunctions();
+  startmoonBootInterval();
 });
 
 const exitHandler = () => {

@@ -19,7 +19,8 @@ const AGGREGATE_URL = `https://api.binance.com/api/v3/aggTrades?`;
 const GET_TICKER_24H = `https://api.binance.com/api/v3/ticker/24hr?`;
 const GET_PRICE_URL = `https://api.binance.com/api/v3/avgPrice?symbol=`;
 
-// symbol=BTCUSDT&interval=1h&limit=
+let moonBootInterval: any = {};
+
 const checkResults = (
   bet: number,
   newPrice: number,
@@ -34,6 +35,21 @@ const checkResults = (
       if (bet >= newPrice) return ETradeResult.LOSE;
       else return ETradeResult.WIN;
     }
+  }
+};
+
+export const startmoonBootInterval = async () => {
+  const moonbots = await Moonboot.find();
+  for (const moonbot of moonbots) {
+    let countDown = moonbot.time;
+    moonBootInterval[moonbot.id] = setInterval(() => {
+      countDown -= 1;
+      if (countDown < 0) countDown = moonbot.time;
+      global.io.emit("updateCountDown", {
+        time: countDown,
+        id: moonbot.id,
+      });
+    }, 1000);
   }
 };
 
@@ -86,6 +102,18 @@ const intiChartSocket = (socket: Socket) => {
         _.pick(data, "time", "limitedTime", "probability")
       );
       await moonboot.save();
+      if (moonBootInterval[moonboot.id]) {
+        clearInterval(moonBootInterval[moonboot.id]);
+        let countDown = moonboot.time;
+        moonBootInterval[moonboot.id] = setInterval(() => {
+          countDown -= 1;
+          if (countDown < 0) countDown = moonboot.time;
+          global.io.emit("updateCountDown", {
+            time: countDown,
+            id: moonboot.id,
+          });
+        }, 1000);
+      }
     }
     const moonboots = await Moonboot.find();
     global.io.emit("updateAllMoonbotNow", moonboots);

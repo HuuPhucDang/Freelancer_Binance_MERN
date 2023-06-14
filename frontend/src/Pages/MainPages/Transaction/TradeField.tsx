@@ -87,7 +87,8 @@ const TradeField: React.FC<ITradeFieldProps> = ({
   const [betType, setBetType] = React.useState<string>('buy');
   const [serverTime, setServerTime] = React.useState<number>(0);
   const [isLimitTrade, setIsLimitTrade] = React.useState<boolean>(false);
-  const [startServerTime, setStartServerTime] = React.useState<number>(0);
+  const [selectedIndex, setSelectedIndex] = React.useState<number>(0);
+  const [selectedMoonBot, setSelectedMoonBot] = React.useState<string>('');
   const userDetailWallet = Utils.getUserData();
 
   React.useEffect(() => {
@@ -102,17 +103,17 @@ const TradeField: React.FC<ITradeFieldProps> = ({
       setProbability(getFirstMoonboot?.probability);
       setLimitedTimes(getFirstMoonboot?.limitedTime);
       setServerTime(getFirstMoonboot?.time);
-      setStartServerTime(getFirstMoonboot?.time);
       setBetSellTime(`${getFirstSellMoonboot?.time}s`);
       setSellProbability(getFirstSellMoonboot?.probability);
+      setSelectedMoonBot(getFirstMoonboot?.id);
     });
     Utils.WebSocket.on('updateAllMoonbotNow', (data) => {
       setMoonbootButtons(data);
     });
     Utils.WebSocket.on('updateTradeListNow', (data) => {
-      console.log(data, userDetailWallet?.id);
       if (data?.userId === userDetailWallet?.id) setBallance(data?.balance);
     });
+
     const updateCoinPriceInterval = setInterval(() => {
       Utils.WebSocket.emit('getCoinWithSymbol', { symbol }, (data: any) => {
         setCoinPrice(data?.price);
@@ -124,16 +125,22 @@ const TradeField: React.FC<ITradeFieldProps> = ({
   }, [symbol]);
 
   React.useEffect(() => {
-    // exit early when we reach 0
-    if (!serverTime) {
-      setServerTime(startServerTime);
-      return;
-    }
-    const intervalId = setInterval(() => {
-      setServerTime(serverTime - 1);
-    }, 1000);
+    Utils.WebSocket.off('updateCountDown');
+    Utils.WebSocket.on('updateCountDown', (data) => {
+      if (selectedMoonBot === data?.id) setServerTime(data?.time);
+    });
+  }, [selectedMoonBot]);
 
-    return () => clearInterval(intervalId);
+  React.useEffect(() => {
+    // exit early when we reach 0
+    // if (!serverTime) {
+    //   setServerTime(startServerTime);
+    //   return;
+    // }
+    // const intervalId = setInterval(() => {
+    //   setServerTime(serverTime - 1);
+    // }, 1000);
+    // return () => clearInterval(intervalId);
   }, [serverTime]);
 
   React.useEffect(() => {
@@ -159,31 +166,58 @@ const TradeField: React.FC<ITradeFieldProps> = ({
       if (time !== betTime) {
         setBetTime(time);
         setProbability(probability);
-        setStartServerTime(Number(time.replace('s', '')));
-        setServerTime(Number(time.replace('s', '')));
       }
     } else {
       if (time !== betSellTime) {
         setBetSellTime(time);
         setSellProbability(probability);
-        setStartServerTime(Number(time.replace('s', '')));
-        setServerTime(Number(time.replace('s', '')));
       }
     }
   };
 
   const createNewTrade = (betType: TRADE_TYPE) => {
-    const payload = {
-      betPrice: coinPrice,
-      betAmount: betType === TRADE_TYPE.BUY ? betAmount : betSellAmount,
-      type: betType,
-      symbol,
-      probability: betType === TRADE_TYPE.BUY ? probability : sellProbability,
-      time: betType === TRADE_TYPE.BUY ? betTime : betSellTime,
-    };
-    dispatch(
-      createTrade(payload, limitedTimes, Number(betSellTime.replace('s', '')))
-    );
+    if (serverTime <= limitedTimes) {
+      confirm({
+        title: '',
+        description: `Bạn không thể đặt trong thời gian khoá giao dịch!`,
+      }).then(() => {});
+    } else {
+      if (!_.includes(LIMIT_BET[userType], selectedIndex)) {
+        confirm({
+          title: '',
+          description: `Level của bạn không đủ để sử dụng chế độ ${
+            betType === TRADE_TYPE.BUY ? betTime : betSellTime
+          }! Vui lòng liên hệ admin để nâng cấp level!`,
+        }).then(() => {
+          Utils.redirect(ROUTERS.SUPPORT);
+        });
+      } else {
+        const amount = betType === TRADE_TYPE.BUY ? betAmount : betSellAmount;
+        if (!amount) {
+          confirm({
+            title: '',
+            description: `Bạn nhập mức cược!`,
+          }).then(() => {});
+        } else {
+          const payload = {
+            betPrice: coinPrice,
+            betAmount: betType === TRADE_TYPE.BUY ? betAmount : betSellAmount,
+            type: betType,
+            symbol,
+            probability:
+              betType === TRADE_TYPE.BUY ? probability : sellProbability,
+            time: betType === TRADE_TYPE.BUY ? betTime : betSellTime,
+          };
+          dispatch(
+            createTrade(
+              payload,
+              limitedTimes,
+              Number(betSellTime.replace('s', ''))
+            )
+          );
+        }
+      }
+    }
   };
   // Renders
   const _renderMoonBot = (type: TRADE_TYPE) =>
@@ -195,13 +229,13 @@ const TradeField: React.FC<ITradeFieldProps> = ({
             fontSize: 9,
             lineHeight: '11px',
             textTransform: 'unset',
-            backgroundColor: 'background.newsHeader',
+            backgroundColor:
+              selectedMoonBot === item?.id ? 'error' : 'background.newsHeader',
             color: 'text.secondary',
             width: '100%',
             paddingX: '0',
             minWidth: 'unset',
           }}
-          // disabled={!_.includes(LIMIT_BET[userType], index)}
           onClick={() => {
             if (!_.includes(LIMIT_BET[userType], index)) {
               confirm({
@@ -214,6 +248,8 @@ const TradeField: React.FC<ITradeFieldProps> = ({
               onSetBetTime(`${item?.time}s`, type, item?.probability);
               setLimitedTimes(item?.limitedTime || 0);
               setBetType(item?.type);
+              setSelectedMoonBot(item?.id);
+              setSelectedIndex(index);
             }
           }}
         >
