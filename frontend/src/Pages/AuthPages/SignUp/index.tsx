@@ -6,7 +6,7 @@ import * as yup from 'yup';
 
 import { useTypedDispatch } from '@/Reducers/store';
 import { AuthActions } from '@/Reducers/Actions';
-import AuthLayout from '@/Components/DefaultLayout/AuthLayout';
+// import AuthLayout from '@/Components/DefaultLayout/AuthLayout';
 import { Helmet } from 'react-helmet-async';
 
 const schema = yup

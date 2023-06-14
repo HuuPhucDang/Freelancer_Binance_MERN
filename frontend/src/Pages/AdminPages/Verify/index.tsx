@@ -21,7 +21,7 @@ import {
 import RemoveRedEyeOutlinedIcon from '@mui/icons-material/RemoveRedEyeOutlined';
 
 import { AdminLayout } from '@/Components/DefaultLayout';
-import { ResetPassword, VerifyDetails } from '@/Components/Popup';
+import { VerifyDetails } from '@/Components/Popup';
 import { RootState, useTypedDispatch } from '@/Reducers/store';
 import { VerificationActions } from '@/Reducers/Actions';
 import { ENUMS } from '@/Constants';
@@ -119,8 +119,8 @@ const { fetchAllVerification, approveVerification, denyVerification } =
 const Verify: React.FC = () => {
   const dispatch = useTypedDispatch();
   const userData = Utils.getUserData();
-  const [isShowResetPassword, setIsShowResetPassword] =
-    React.useState<boolean>(false);
+  // const [isShowResetPassword, setIsShowResetPassword] =
+  //   React.useState<boolean>(false);
   const [currentItem, setCurrentItem] = React.useState<any>(null);
 
   const payload: IPayload = useSelector((state: RootState) =>
