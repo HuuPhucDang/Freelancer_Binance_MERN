@@ -53,7 +53,9 @@ const Slider: React.FC<IProps> = ({
       >
         {items.map((item: string, index: number) => (
           <SwiperSlide key={`item-${index}-${item}`}>
-            <Typography sx={itemSx}>{item}</Typography>
+            <Typography sx={{ minWidth: 'max-content', ...itemSx }}>
+              {item}
+            </Typography>
           </SwiperSlide>
         ))}
       </Swiper>
