@@ -8,6 +8,7 @@ import { useTypedDispatch } from '@/Reducers/store';
 import { AuthActions } from '@/Reducers/Actions';
 // import AuthLayout from '@/Components/DefaultLayout/AuthLayout';
 import { Helmet } from 'react-helmet-async';
+import React from 'react';
 
 const schema = yup
   .object({
@@ -47,12 +48,22 @@ const SignUp = () => {
   } = useForm<FormData>({
     resolver: yupResolver(schema),
   });
+  const buttonRef = React.useRef<any>(null);
 
   // React.useEffect(() => {
   //   if (isLogged) Utils.redirect(ROUTERS.TRANSACTION);
   // }, [isLogged]);
 
   const onSubmit = (data: FormData) => dispatch(register(data));
+
+  const onEnter = (e: any) => {
+    if (
+      e.key === 'Enter' ||
+      (e.keyCode === 13 && buttonRef && buttonRef.current)
+    ) {
+      buttonRef.current.click();
+    }
+  };
 
   const _renderMain = () => {
     return (
@@ -90,6 +101,7 @@ const SignUp = () => {
                     backgroundColor: 'background.secondary',
                   },
                 }}
+                onKeyUp={onEnter}
                 error={Boolean(errors?.username?.message)}
                 helperText={errors?.username?.message}
                 {...field}
@@ -113,6 +125,7 @@ const SignUp = () => {
                     backgroundColor: 'background.secondary',
                   },
                 }}
+                onKeyUp={onEnter}
                 error={Boolean(errors?.password?.message)}
                 helperText={errors?.password?.message}
                 {...field}
@@ -136,6 +149,7 @@ const SignUp = () => {
                     backgroundColor: 'background.secondary',
                   },
                 }}
+                onKeyUp={onEnter}
                 error={Boolean(errors?.confirmPassword?.message)}
                 helperText={errors?.confirmPassword?.message}
                 {...field}
@@ -158,6 +172,7 @@ const SignUp = () => {
                     backgroundColor: 'background.secondary',
                   },
                 }}
+                onKeyUp={onEnter}
                 error={Boolean(errors?.inviteCode?.message)}
                 helperText={errors?.inviteCode?.message}
                 {...field}
@@ -174,6 +189,7 @@ const SignUp = () => {
                 filter: 'brightness(0.95)',
               },
             }}
+            ref={buttonRef}
             onClick={handleSubmit(onSubmit)}
           >
             Đăng ký
