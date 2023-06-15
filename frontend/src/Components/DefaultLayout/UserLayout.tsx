@@ -57,7 +57,7 @@ const UserLayout: React.FC<SectionProps> = (props: SectionProps) => {
       <AppBarComponent />
       <Widgets.Notification />
       <Widgets.Alert />
-      <Box sx={{ background: 'background.default', flex: 1 }}>
+      <Box sx={{ background: 'background.default', height: 'calc(100vh - 70px)' }}>
         <Helmet>
           <title>{screenTitle ? screenTitle : 'Binance'}</title>
         </Helmet>

@@ -89,7 +89,7 @@ const StaticHeader: React.FC<IStaticHeaderProp> = ({
   const renderMain = () => {
     const getUSDT = symbol.substring(symbol.length - 4);
     return (
-      <Grid container>
+      <Grid container height="max-content">
         <Grid item xs={2.5}>
           <Stack
             direction="row"
