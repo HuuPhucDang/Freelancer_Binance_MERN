@@ -74,7 +74,7 @@ interface ICreateData {
     | ENUMS.ETransactionStatus.PENDING
     | ENUMS.ETransactionStatus.RESOLVED;
   total: number;
-  surplus: number;
+  balance: number;
 }
 
 function createData(
@@ -91,9 +91,9 @@ function createData(
     | ENUMS.ETransactionStatus.PENDING
     | ENUMS.ETransactionStatus.RESOLVED,
   total: number,
-  surplus: number
+  balance: number
 ) {
-  return { id, date, time, type, status, total, surplus };
+  return { id, date, time, type, status, total, balance };
 }
 
 const initialFilterParam = {
@@ -356,7 +356,7 @@ const Invoice: React.FC = () => {
                           width: '110px',
                         }}
                       >
-                        Số tiền
+                        Số lượng (USDT)
                       </TableCell>
                       <TableCell
                         align="center"
@@ -369,7 +369,7 @@ const Invoice: React.FC = () => {
                           width: '110px',
                         }}
                       >
-                        Số dư
+                        Số dư (USDT)
                       </TableCell>
                       <TableCell
                         align="center"
@@ -478,10 +478,7 @@ const Invoice: React.FC = () => {
                                 color: 'text.primary',
                               }}
                             >
-                              {row.total.toLocaleString('vi-VI', {
-                                style: 'currency',
-                                currency: 'VND',
-                              })}
+                              {row.total}
                             </Typography>
                           </TableCell>
                           <TableCell align="center">
@@ -492,10 +489,7 @@ const Invoice: React.FC = () => {
                                 color: 'text.primary',
                               }}
                             >
-                              {row.surplus.toLocaleString('vi-VI', {
-                                style: 'currency',
-                                currency: 'VND',
-                              })}
+                              {row.balance}
                             </Typography>
                           </TableCell>
                           <TableCell align="center">
