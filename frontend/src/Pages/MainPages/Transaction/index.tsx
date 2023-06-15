@@ -13,9 +13,9 @@ import { ROUTERS } from '../../../Constants';
 import { Utils } from '@/Libs';
 
 const volatilityHeaderHeight = 33;
-const centerVolatilityRow = 31;
+const centerVolatilityRow = 40;
 const volatilityItemHeight = 19;
-const partElementHeight = 200;
+const partElementHeight = 180;
 
 const Transaction: React.FC = () => {
   // Constructors
@@ -43,7 +43,7 @@ const Transaction: React.FC = () => {
         const itemPerCategory = isLargeThanHalf
           ? Math.ceil(eachCategoryHeight / volatilityItemHeight)
           : Math.floor(eachCategoryHeight / volatilityItemHeight);
-        setVolatilityItemsPerCategory(itemPerCategory);
+        setVolatilityItemsPerCategory(itemPerCategory - 1);
       }
     };
     window.addEventListener('load', handleWindowSize);
@@ -54,8 +54,6 @@ const Transaction: React.FC = () => {
       window.removeEventListener('resize', handleWindowSize);
     };
   }, []);
-
-  console.log('vola', volatilityItemsPerCategory);
 
   const _renderLeftSection = () => {
     return (
