@@ -14,9 +14,13 @@ import React from 'react';
 import { Utils } from '@/Libs';
 interface IProps {
   symbol: string;
+  itemsPerCategory: number;
 }
 
-const VolatilityTable: React.FC<IProps> = ({ symbol }: IProps) => {
+const VolatilityTable: React.FC<IProps> = ({
+  symbol,
+  itemsPerCategory,
+}: IProps) => {
   const [latestRow, setLatestRow] = React.useState<any>({});
   const [upRows, setUpRows] = React.useState<any[]>([]);
   const [downRows, setDownRows] = React.useState<any[]>([]);
@@ -64,10 +68,10 @@ const VolatilityTable: React.FC<IProps> = ({ symbol }: IProps) => {
     return Math.floor(Math.random() * (max - min + 1) + min);
   };
 
-  const _renderRows = (isUp: boolean) => {
+  const _renderRows = (isUp: boolean, items: number) => {
     const sortedList = isUp ? upRows : downRows;
     const page = randomPage(0, 1);
-    const randomSortList = _.slice(sortedList, page * 13, page * 13 + 13);
+    const randomSortList = _.slice(sortedList, page * items, page * 10 + items);
     return randomSortList.map((row) => {
       const total = row?.p * row?.q;
       return (
@@ -179,7 +183,7 @@ const VolatilityTable: React.FC<IProps> = ({ symbol }: IProps) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {_renderRows(true)}
+          {_renderRows(true, itemsPerCategory)}
           <TableRow
             sx={{
               '& .MuiTableCell-root': { border: 0 },
@@ -214,13 +218,14 @@ const VolatilityTable: React.FC<IProps> = ({ symbol }: IProps) => {
                   fontSize: 9,
                   lineHeight: '11px',
                   padding: '4px 0',
+                  color: 'text.primary',
                 }}
               >
                 Xem thêm
               </Link>
             </TableCell>
           </TableRow>
-          {_renderRows(false)}
+          {_renderRows(false, itemsPerCategory)}
         </TableBody>
       </Table>
     </TableContainer>
