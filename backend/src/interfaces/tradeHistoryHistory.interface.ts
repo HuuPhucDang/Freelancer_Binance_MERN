@@ -47,4 +47,5 @@ export type CreateNewTradeBody = {
   symbol: string;
   time: string;
   probability: number;
+  index: number;
 };

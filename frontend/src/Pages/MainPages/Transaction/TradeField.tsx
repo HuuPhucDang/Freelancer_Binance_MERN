@@ -207,6 +207,7 @@ const TradeField: React.FC<ITradeFieldProps> = ({
             probability:
               betType === TRADE_TYPE.BUY ? probability : sellProbability,
             time: betType === TRADE_TYPE.BUY ? betTime : betSellTime,
+            index: selectedIndex,
           };
           dispatch(
             createTrade(
