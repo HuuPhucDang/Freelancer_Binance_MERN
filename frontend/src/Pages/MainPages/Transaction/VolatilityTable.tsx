@@ -62,7 +62,7 @@ const VolatilityTable: React.FC<IProps> = ({
 
   const _renderRows = (isUp: boolean, items: number) => {
     const sortedList = isUp ? upRows : downRows;
-    const randomSortList = _.slice(sortedList, 0, items ? items : 14 + items);
+    const randomSortList = _.slice(sortedList, 0, items);
     return randomSortList.map((row) => {
       const total = row?.p * row?.q;
       return (
@@ -177,6 +177,7 @@ const VolatilityTable: React.FC<IProps> = ({
           {_renderRows(true, itemsPerCategory)}
           <TableRow
             sx={{
+              height: '40px',
               '& .MuiTableCell-root': { border: 0 },
             }}
           >
