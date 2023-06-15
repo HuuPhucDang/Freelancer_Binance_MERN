@@ -6,7 +6,7 @@ import { Box, Typography, Grid, Button, Stack } from '@mui/material';
 // Import local
 import { UserLayout } from '@/Components/DefaultLayout';
 import { Sidebar } from '@/Components/LayoutParts';
-import Assets from '@/Assets';
+// import Assets from '@/Assets';
 import {
   SystemInfoActions,
   TransactionActions,

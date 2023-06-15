@@ -242,14 +242,13 @@ export const cancelTransaction = async (
  * Deny Transaction
  */
 export const denyTransaction = async (
-  userId: mongoose.Types.ObjectId,
   transactionId: mongoose.Types.ObjectId
 ): Promise<ITransactionDoc | null> => {
-  const user = await User.findById(userId);
-  if (!user) throw new ApiError(httpStatus.NOT_FOUND, "User not found!");
   const transaction = await Transaction.findById(transactionId);
   if (!transaction)
     throw new ApiError(httpStatus.BAD_REQUEST, "Transaction not found!");
+  const user = await User.findById(transaction.userId);
+  if (!user) throw new ApiError(httpStatus.NOT_FOUND, "User not found!");
   if (transaction.status === ETransactionStatus.RESOLVED)
     throw new ApiError(httpStatus.BAD_REQUEST, "Transaction already resolved!");
   if (transaction.status === ETransactionStatus.CANCELED)
@@ -260,7 +259,7 @@ export const denyTransaction = async (
   user.wallet = userWallet.id;
   userWallet.balance = userWallet.balance + transaction.amount;
   await userWallet.save();
-
+  console.log(userWallet.balance, transaction.amount);
   transaction.status = ETransactionStatus.DENIED;
   transaction.balance = userWallet.balance;
   await transaction.save();
