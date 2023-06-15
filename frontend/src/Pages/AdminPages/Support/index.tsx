@@ -190,7 +190,7 @@ const Support = () => {
         <Grid
           container
           height="100%"
-          maxWidth="800px"
+          // maxWidth="800px"
           border="1px solid #BEBEBE"
         >
           <Grid item xs={5} md={3} borderRight="1px solid #BEBEBE">

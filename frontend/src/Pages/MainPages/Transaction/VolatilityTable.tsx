@@ -28,13 +28,13 @@ const VolatilityTable: React.FC<IProps> = ({
   const getAggregateData = (data: any) => {
     setDownRows((oldData) => {
       const filteredData = _.slice(data, 0, 38);
-      const newData = [...oldData, ...filteredData];
-      return newData.length > 60 ? newData.slice(-60) : newData;
+      const newData = [...filteredData, ...oldData];
+      return newData.length > 120 ? newData.slice(-60) : newData;
     });
     setUpRows((oldData) => {
       const filteredData = _.slice(data, 39, 79);
-      const newData = [...oldData, ...filteredData];
-      return newData.length > 60 ? newData.slice(-60) : newData;
+      const newData = [...filteredData, ...oldData];
+      return newData.length > 120 ? newData.slice(-60) : newData;
     });
     setLatestRow(_.last(data));
   };
@@ -51,27 +51,18 @@ const VolatilityTable: React.FC<IProps> = ({
       );
     }, 3000);
     Utils.WebSocket.on('updateAllCoinPriceNow', () => {
-      Utils.WebSocket.emit(
-        'getAggregateTradeList',
-        { symbol, limit: 1 },
-        (data: any) => {
-          getAggregateData(data);
-        }
-      );
+      Utils.WebSocket.emit('getAggregateTradeList', { symbol }, (data: any) => {
+        getAggregateData(data);
+      });
     });
     return () => {
       clearInterval(intervalAggeList);
     };
   }, [symbol]);
 
-  const randomPage = (min: number, max: number) => {
-    return Math.floor(Math.random() * (max - min + 1) + min);
-  };
-
   const _renderRows = (isUp: boolean, items: number) => {
     const sortedList = isUp ? upRows : downRows;
-    const page = randomPage(0, 1);
-    const randomSortList = _.slice(sortedList, page * items, page * 10 + items);
+    const randomSortList = _.slice(sortedList, 0, items ? items : 14 + items);
     return randomSortList.map((row) => {
       const total = row?.p * row?.q;
       return (
