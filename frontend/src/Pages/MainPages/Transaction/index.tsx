@@ -55,8 +55,6 @@ const Transaction: React.FC = () => {
     };
   }, []);
 
-  console.log('vola', volatilityItemsPerCategory);
-
   const _renderLeftSection = () => {
     return (
       <Stack direction="column" height="100%">
