@@ -1,5 +1,5 @@
 import React from 'react';
-import { Typography, Grid, Stack, Box } from '@mui/material';
+import { Typography, Grid, Stack, Box, useTheme, useMediaQuery } from '@mui/material';
 import { useLocation } from 'react-router-dom';
 import { UserLayout } from '@/Components/DefaultLayout';
 import { StocksChart } from '@/Components/LayoutParts';
@@ -12,21 +12,50 @@ import FooterCoin from './FooterCoin';
 import { ROUTERS } from '../../../Constants';
 import { Utils } from '@/Libs';
 
+const volatilityHeaderHeight = 33;
+const centerVolatilityRow = 31;
+const volatilityItemHeight = 19;
+const partElementHeight = 200;
+
 const Transaction: React.FC = () => {
   // Constructors
   const { search } = useLocation();
   const query = new URLSearchParams(search);
+  const theme = useTheme();
+  const isMd = useMediaQuery(theme.breakpoints.down('md'));
   const volatilityRef = React.useRef<HTMLDivElement | null>(null);
+  const [volatilityItemsPerCategory, setVolatilityItemsPerCategory] =
+    React.useState<number>(0);
 
   React.useEffect(() => {
     const symbol = query.get('symbol');
     if (!symbol) Utils.replace(`${ROUTERS.TRANSACTION}?symbol=BTCUSDT`);
+
+    const handleWindowSize = () => {
+      if (volatilityRef && volatilityRef.current) {
+        const clientHeight = isMd
+          ? 440
+          : window.innerHeight - partElementHeight;
+        const resolveHeight =
+          clientHeight - volatilityHeaderHeight - centerVolatilityRow;
+        const eachCategoryHeight = resolveHeight / 2;
+        const isLargeThanHalf = eachCategoryHeight % volatilityItemHeight > 0.5;
+        const itemPerCategory = isLargeThanHalf
+          ? Math.ceil(eachCategoryHeight / volatilityItemHeight)
+          : Math.floor(eachCategoryHeight / volatilityItemHeight);
+        setVolatilityItemsPerCategory(itemPerCategory);
+      }
+    };
+    window.addEventListener('load', handleWindowSize);
+    window.addEventListener('resize', handleWindowSize);
+
     return () => {
-      // clearInterval(intervalLatest24h);
+      window.removeEventListener('load', handleWindowSize);
+      window.removeEventListener('resize', handleWindowSize);
     };
   }, []);
 
-  // Renders
+  console.log('vola', volatilityItemsPerCategory);
 
   const _renderLeftSection = () => {
     return (
@@ -48,9 +77,11 @@ const Transaction: React.FC = () => {
               borderRight="1px solid #ccc"
               padding="0"
               ref={volatilityRef}
-              // sx={{ maxHeight: 'calc(100vh - 170px) !important' }}
             >
-              <VolatilityTable symbol={query.get('symbol') || 'BTCUSDT'} />
+              <VolatilityTable
+                itemsPerCategory={volatilityItemsPerCategory}
+                symbol={query.get('symbol') || 'BTCUSDT'}
+              />
             </Grid>
             <Grid item xs={12} md={9.5} order={{ md: 2, xs: 1 }}>
               <Stack direction="column" height="100%">
@@ -61,7 +92,7 @@ const Transaction: React.FC = () => {
                     flex: 1,
                     height: '100%',
                     background: '#000',
-                    minHeight: '350px'
+                    minHeight: '350px',
                   }}
                 >
                   <StocksChart />
