@@ -30,22 +30,16 @@ const Transaction: React.FC = () => {
 
   const _renderLeftSection = () => {
     return (
-      <Grid container>
-        <Grid
-          item
-          xs={12}
+      <Stack direction="column" height="100%">
+        <Box
           borderLeft="1px solid #BBAEAE"
           borderBottom="1px solid #BBAEAE"
+          height="67px"
         >
           <StaticHeader symbol={query.get('symbol') || 'BTCUSDT'} />
-        </Grid>
-        <Grid
-          item
-          xs={12}
-          padding="0 !important"
-          sx={{ borderLeft: '0.5px solid #BBAEAE' }}
-        >
-          <Grid container>
+        </Box>
+        <Stack flex={1} sx={{ borderLeft: '0.5px solid #BBAEAE' }}>
+          <Grid container height="100%">
             <Grid
               item
               xs={12}
@@ -54,24 +48,25 @@ const Transaction: React.FC = () => {
               borderRight="1px solid #ccc"
               padding="0"
               ref={volatilityRef}
-              sx={{ maxHeight: 'calc(100vh - 170px) !important' }}
+              // sx={{ maxHeight: 'calc(100vh - 170px) !important' }}
             >
               <VolatilityTable symbol={query.get('symbol') || 'BTCUSDT'} />
             </Grid>
             <Grid item xs={12} md={9.5} order={{ md: 2, xs: 1 }}>
-              <Stack direction="column">
+              <Stack direction="column" height="100%">
                 <Stack
                   sx={{
                     width: 1,
                     maxWidth: '100%',
-                    height: 'calc(100vh - 408px) !important',
+                    flex: 1,
+                    height: '100%',
                     background: '#000',
+                    minHeight: '350px'
                   }}
                 >
                   <StocksChart />
                 </Stack>
                 <Stack
-                  flex={1}
                   padding="5px"
                   sx={{
                     width: 1,
@@ -87,8 +82,8 @@ const Transaction: React.FC = () => {
               </Stack>
             </Grid>
           </Grid>
-        </Grid>
-      </Grid>
+        </Stack>
+      </Stack>
     );
   };
 
@@ -146,16 +141,32 @@ const Transaction: React.FC = () => {
           overflow: 'auto',
           overflowX: 'hidden',
           mx: 'auto',
+          height: '100%',
+          maxHeight: {
+            xs: 'auto',
+            md: 'calc(100vh - 70px)',
+          },
         }}
       >
         <Grid
           container
-          flex={1}
           display="flex"
           borderTop="1px solid #BBAEAE"
           borderBottom="1px solid #BBAEAE"
+          height={{
+            xs: 'auto',
+            md: 'calc(100% - 44px)',
+          }}
         >
-          <Grid item xs={12} md={10}>
+          <Grid
+            item
+            xs={12}
+            md={10}
+            height={{
+              xs: 'auto',
+              md: '100%',
+            }}
+          >
             {_renderLeftSection()}
           </Grid>
           <Grid
@@ -164,13 +175,15 @@ const Transaction: React.FC = () => {
             md={2}
             borderLeft="1px solid #BBAEAE"
             borderRight="1px solid #BBAEAE"
+            height={{
+              xs: 'auto',
+              md: '100%',
+            }}
           >
             {_renderRightSection()}
           </Grid>
         </Grid>
-        <Grid item xs={12}>
-          <FooterCoin />
-        </Grid>
+        <FooterCoin />
       </Box>
     );
   };
