@@ -10,7 +10,6 @@ import {
   CreateMessageBody,
   EChatBox,
 } from "../../interfaces/chatBox.interface";
-import { IUserDoc } from "../../interfaces/user.interfaces";
 
 export const getChatBoxes = async (
   userId: mongoose.Types.ObjectId
@@ -24,33 +23,32 @@ export const getChatBoxes = async (
       .populate("receiverId")
       .populate("messages.senderId")
       .populate("messages.receiverId");
-  else
+  else {
+    const admins = await User.find({ role: "admin" });
+    for (const admin of admins) {
+      const chatRoomWithAdmin = await ChatBox.find({
+        senderId: userId,
+        receiverId: admin.id,
+      })
+        .populate("messages")
+        .populate("senderId")
+        .populate("receiverId")
+        .populate("messages.senderId")
+        .populate("messages.receiverId");
+      if (!chatRoomWithAdmin) {
+        await ChatBox.create({
+          senderId: userId,
+          receiverId: admin.id,
+        });
+      }
+    }
     return await ChatBox.find({ senderId: userId })
       .populate("messages")
       .populate("senderId")
       .populate("receiverId")
       .populate("messages.senderId")
       .populate("messages.receiverId");
-};
-
-export const getAdminList = async (): Promise<IUserDoc[]> => {
-  return await User.find({ role: "admin" });
-};
-
-export const createChatRoomWithAdmin = async (
-  userId: mongoose.Types.ObjectId,
-  createBody: { adminId: string }
-): Promise<IChatBoxDoc | null> => {
-  const user = await User.findById(userId);
-  if (!user) throw new ApiError(httpStatus.NOT_FOUND, "User not found!");
-  const admin = await User.findById(
-    new mongoose.Types.ObjectId(createBody.adminId)
-  );
-  if (!admin) throw new ApiError(httpStatus.NOT_FOUND, "Admin not found!");
-  return await ChatBox.create({
-    senderId: user.id,
-    receiverId: admin.id,
-  });
+  }
 };
 
 export const getChatBoxById = async (
