@@ -102,6 +102,7 @@ const MyInvoiceTable = () => {
             </TableRow>
           )}
           {!isFetchLoading &&
+            allTrades.length > 0 &&
             allTrades.map((row: any, index: number) => (
               <TableRow
                 key={`row-${index}`}
@@ -147,6 +148,30 @@ const MyInvoiceTable = () => {
                 </TableCell>
               </TableRow>
             ))}
+          {!isFetchLoading && allTrades.length === 0 && (
+            <TableRow
+              sx={{
+                '& .MuiTableCell-root': { border: 0 },
+              }}
+            >
+              <TableCell
+                colSpan={3}
+                align="center"
+                scope="row"
+                sx={{ padding: 0 }}
+              >
+                <Typography
+                  sx={{
+                    fontSize: 9,
+                    lineHeight: '11px',
+                    padding: '4px 0',
+                  }}
+                >
+                  Không có dữ liệu
+                </Typography>
+              </TableCell>
+            </TableRow>
+          )}
         </TableBody>
       </Table>
     </TableContainer>

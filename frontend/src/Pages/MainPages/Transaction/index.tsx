@@ -1,5 +1,12 @@
 import React from 'react';
-import { Typography, Grid, Stack, Box, useTheme, useMediaQuery } from '@mui/material';
+import {
+  Typography,
+  Grid,
+  Stack,
+  Box,
+  useTheme,
+  useMediaQuery,
+} from '@mui/material';
 import { useLocation } from 'react-router-dom';
 import { UserLayout } from '@/Components/DefaultLayout';
 import { StocksChart } from '@/Components/LayoutParts';
@@ -96,6 +103,34 @@ const Transaction: React.FC = () => {
                   <StocksChart />
                 </Stack>
                 <Stack
+                  display={{
+                    xs: 'flex',
+                    md: 'none',
+                  }}
+                  direction="column"
+                  flex={1}
+                  minHeight="150px"
+                  maxHeight={{
+                    xs: 'calc(100vh - 484px)',
+                    md: 'calc(100vh - 480px)',
+                    lg: 'calc(100vh - 474px)',
+                  }}
+                  borderBottom="1px solid #ccc"
+                >
+                  <Typography
+                    sx={{
+                      fontSize: '11px',
+                      fontWeight: 500,
+                      textAlign: 'center',
+                      lineHeight: '13px',
+                      my: 1,
+                    }}
+                  >
+                    Giao dịch của tôi
+                  </Typography>
+                  <MyInvoiceTable />
+                </Stack>
+                <Stack
                   padding="5px"
                   sx={{
                     width: 1,
@@ -137,6 +172,10 @@ const Transaction: React.FC = () => {
           direction="column"
           flex={1}
           minHeight="300px"
+          display={{
+            xs: 'none',
+            md: 'flex',
+          }}
           maxHeight={{
             xs: 'calc(100vh - 484px)',
             md: 'calc(100vh - 480px)',

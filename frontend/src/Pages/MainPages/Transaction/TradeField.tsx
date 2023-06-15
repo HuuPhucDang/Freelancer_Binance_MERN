@@ -349,7 +349,15 @@ const TradeField: React.FC<ITradeFieldProps> = ({
 
   const _renderLeftSide = () => (
     <Grid item xs={6}>
-      <Typography sx={{ fontSize: '13px', lineHeight: '15px' }}>
+      <Typography
+        sx={{
+          fontSize: {
+            xs: '10px',
+            md: '13px',
+          },
+          lineHeight: '15px',
+        }}
+      >
         Số dư: {ballance} USDT
       </Typography>
       {_renderInputs(TRADE_TYPE.BUY)}
@@ -379,7 +387,10 @@ const TradeField: React.FC<ITradeFieldProps> = ({
     <Grid item xs={6}>
       <Typography
         sx={{
-          fontSize: '13px',
+          fontSize: {
+            xs: '10px',
+            md: '13px',
+          },
           lineHeight: '15px',
           color: isLimitTrade ? '#F21616' : '#408827',
         }}
