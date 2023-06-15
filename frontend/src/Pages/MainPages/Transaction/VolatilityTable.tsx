@@ -27,12 +27,12 @@ const VolatilityTable: React.FC<IProps> = ({
 
   const getAggregateData = (data: any) => {
     setDownRows((oldData) => {
-      const filteredData = _.filter(data, ['m', false]);
+      const filteredData = _.slice(data, 0, 38);
       const newData = [...oldData, ...filteredData];
       return newData.length > 60 ? newData.slice(-60) : newData;
     });
     setUpRows((oldData) => {
-      const filteredData = _.filter(data, ['m', true]);
+      const filteredData = _.slice(data, 39, 79);
       const newData = [...oldData, ...filteredData];
       return newData.length > 60 ? newData.slice(-60) : newData;
     });

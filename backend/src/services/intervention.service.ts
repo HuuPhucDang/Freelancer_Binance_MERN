@@ -205,7 +205,7 @@ const intiChartSocket = (socket: Socket) => {
     const coin = await Coin.findOne({ symbol: data?.symbol });
     if (coin) {
       const fetchUrl = `${AGGREGATE_URL}symbol=${data?.symbol}&limit=${
-        data?.limit || 200
+        data?.limit || 80
       }`;
       const response = await fetch(fetchUrl);
       const list: any = await response.json();
