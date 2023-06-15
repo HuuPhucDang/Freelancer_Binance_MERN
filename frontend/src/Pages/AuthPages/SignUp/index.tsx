@@ -9,6 +9,8 @@ import { AuthActions } from '@/Reducers/Actions';
 // import AuthLayout from '@/Components/DefaultLayout/AuthLayout';
 import { Helmet } from 'react-helmet-async';
 import React from 'react';
+import { Utils } from '../../../Libs';
+import { ROUTERS } from '../../../Constants';
 
 const schema = yup
   .object({
@@ -194,6 +196,21 @@ const SignUp = () => {
           >
             Đăng ký
           </Button>
+          <Typography
+            sx={{
+              fontSize: '14px',
+              textDecoration: 'underline',
+              textAlign: 'center',
+              color: 'text.primary',
+              marginTop: '2em',
+              ':hover': {
+                cursor: 'pointer',
+              },
+            }}
+            onClick={() => Utils.redirect(ROUTERS.SIGN_IN)}
+          >
+            Đăng nhập
+          </Typography>
         </Stack>
       </>
     );

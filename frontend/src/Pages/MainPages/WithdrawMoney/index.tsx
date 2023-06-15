@@ -9,11 +9,15 @@ import {
   InputLabel,
   Select,
   Typography,
-  InputAdornment,
   Box,
   MenuItem,
   TextField,
+  FormHelperText,
 } from '@mui/material';
+import { useForm, Controller } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
+import CurrencyInput from 'react-currency-input-field';
 
 // Import local
 import { UserLayout } from '@/Components/DefaultLayout';
@@ -25,6 +29,21 @@ import { Utils } from '@/Libs';
 const { getSelf } = UserActions;
 const { requestWithdraw, resetTransactionReducer } = TransactionActions;
 
+const schema = yup
+  .object({
+    withdrawPassword: yup
+      .string()
+      .trim()
+      .required('Withdraw password is a required field'),
+    amount: yup
+      .number()
+      .min(1, 'Amount must be greater than 0')
+      .required('Amount is a required field'),
+    bank: yup.string().trim().required('Bank is a required field'),
+  })
+  .required();
+type FormData = yup.InferType<typeof schema>;
+
 const WithdrawMoney: React.FC = () => {
   // Constructors
   const userData = Utils.getUserData();
@@ -32,11 +51,25 @@ const WithdrawMoney: React.FC = () => {
   const requestWithdrawSuccess = useSelector((state: RootState) =>
     _.get(state.TRANSACTION, 'requestWithdrawSuccess')
   );
-  const errMsg = 'Trường này là bắt buộc';
-  const [isErr, setIsErr] = React.useState<boolean>(false);
-  const [bank, setBank] = React.useState<string>('');
-  const [amount, setAmount] = React.useState<number>(0);
   const [enchangeRate, setEnchangeRate] = React.useState<number>(0);
+
+  const {
+    handleSubmit,
+    formState: { errors },
+    control,
+    reset,
+    setValue,
+    watch,
+  } = useForm<FormData>({
+    resolver: yupResolver(schema),
+    defaultValues: {
+      amount: 0,
+      bank: '',
+      withdrawPassword: '',
+    },
+  });
+
+  const amount = watch('amount');
 
   React.useEffect(() => {
     dispatch(getSelf());
@@ -51,17 +84,27 @@ const WithdrawMoney: React.FC = () => {
 
   React.useEffect(() => {
     if (requestWithdrawSuccess) {
-      setIsErr(false);
-      setBank('');
-      setAmount(0);
+      reset();
+      setValue('amount', 0);
+      setValue('bank', '');
+      setValue('withdrawPassword', '');
       dispatch(resetTransactionReducer());
     }
   }, [requestWithdrawSuccess]);
 
-  const onSubmit = async () => {
-    if (!bank || !amount) setIsErr(true);
-    else dispatch(requestWithdraw({ amount }));
+  const onSubmit = (data: any) => {
+    dispatch(
+      requestWithdraw({
+        amount: data.amount,
+        withdrawPassword: data.withdrawPassword,
+      })
+    );
   };
+
+  // const onSubmit = async () => {
+  //   if (!bank || !amount) setIsErr(true);
+  //   else dispatch(requestWithdraw({ amount }));
+  // };
 
   const withdrawMoneyType = React.useMemo(() => {
     const bank = userData?.bank;
@@ -116,48 +159,101 @@ const WithdrawMoney: React.FC = () => {
               >
                 Rút tiền
               </Typography>
-              <TextField
-                hiddenLabel
-                variant="outlined"
-                size="small"
-                placeholder="Số tiền muốn rút"
+              <Stack
+                direction="row"
                 sx={{
-                  ' .MuiInputBase-root': {
-                    background: '#ffffff',
-                  },
+                  alignItems: 'center',
+                  border: !Boolean(errors?.amount?.message)
+                    ? '1px solid rgba(0, 0, 0, 0.23)'
+                    : '1px solid #d32f2f',
+                  height: '59px',
+                  fontSize: '15px',
+                  padding: '0 34px',
+                  marginTop: '40px',
+                  backgroundColor: 'background.chargeInput',
+                  color: 'text.primary',
+                  borderRadius: '3px',
                 }}
-                type="number"
-                value={amount}
-                onChange={(e: any) => setAmount(e.target.value)}
-                InputProps={{
-                  sx: {
-                    height: '59px',
-                    fontSize: '15px',
-                    paddingLeft: '22px',
-                    marginTop: '40px',
-                    backgroundColor: 'background.chargeInput',
+              >
+                <Controller
+                  name="amount"
+                  control={control}
+                  render={({ field }) => (
+                    <CurrencyInput
+                      id="validation-example-2-field"
+                      placeholder="1,234,567 VNĐ"
+                      allowDecimals={false}
+                      className={`form-control`}
+                      onValueChange={(value: any) => field.onChange(value)}
+                      step={10}
+                      suffix=" VND"
+                      value={field.value}
+                      style={{
+                        flex: 1,
+                        height: '100%',
+                        border: 'none',
+                        outline: 'none',
+                        background: 'transparent',
+                        color: 'inherit',
+                      }}
+                    />
+                  )}
+                />
+                <Typography
+                  sx={{
+                    fontSize: '12px',
+                    marginLeft: '16px',
                     color: 'text.primary',
-                    borderRadius: '3px',
-                  },
-                  endAdornment: (
-                    <InputAdornment
-                      position="start"
-                      sx={{ marginRight: '14px' }}
-                    >
-                      <Typography
-                        sx={{
-                          fontSize: '12px',
-                          marginLeft: '16px',
-                          color: 'text.primary',
-                        }}
-                      >
-                        Tự quy đổi thành: {amount * enchangeRate} VND
-                      </Typography>
-                    </InputAdornment>
-                  ),
-                }}
-                error={isErr && !amount}
-                helperText={isErr ? errMsg : ''}
+                    userSelect: 'none',
+                  }}
+                >
+                  ~ {amount / enchangeRate} USDT
+                </Typography>
+              </Stack>
+              {errors?.amount?.message ? (
+                <FormHelperText sx={{ marginLeft: '16px', color: '#d32f2f' }}>
+                  {errors?.amount?.message}
+                </FormHelperText>
+              ) : null}
+              <Controller
+                name="withdrawPassword"
+                control={control}
+                render={({ field }) => (
+                  <TextField
+                    hiddenLabel
+                    variant="outlined"
+                    size="small"
+                    placeholder="Mật khẩu rút tiền"
+                    sx={{
+                      ' .MuiInputBase-root': {
+                        padding: '0',
+                        backgroundColor: 'background.chargeInput',
+                        color: 'text.primary',
+                      },
+                      input: {
+                        height: '59px',
+                        boxSizing: 'border-box',
+                        padding: '0 35px',
+                      },
+                    }}
+                    autoComplete="new-password"
+                    type="password"
+                    InputProps={{
+                      sx: {
+                        height: '59px',
+                        fontSize: '15px',
+                        paddingLeft: '22px',
+                        marginTop: '20px',
+                        backgroundColor: 'background.chargeInput',
+                        color: 'text.primary',
+                        borderRadius: '3px',
+                      },
+                    }}
+                    error={Boolean(errors?.withdrawPassword?.message)}
+                    helperText={errors?.withdrawPassword?.message}
+                    {...field}
+                  />
+                )}
               />
               <FormControl fullWidth sx={{ marginTop: '20px' }}>
                 <InputLabel
@@ -169,21 +265,35 @@ const WithdrawMoney: React.FC = () => {
                 >
                   Phương thức nhận tiền
                 </InputLabel>
-                <Select
-                  value={bank}
-                  onChange={(event: any) => setBank(event.target.value)}
-                  label="Phương thức nhận tiền"
-                  sx={{
-                    backgroundColor: 'background.chargeInput',
-                    color: 'text.primary',
-                    borderRadius: '3px',
-                    padding: '0 22px',
-                    ' >': { borderRadius: '3px' },
-                    border: 'none',
-                  }}
-                >
-                  {withdrawMoneyType}
-                </Select>
+                <Controller
+                  control={control}
+                  name="bank"
+                  render={({ field }) => (
+                    <FormControl
+                      error={Boolean(errors?.withdrawPassword?.message)}
+                    >
+                      <Select
+                        placeholder="Phương thức nhận tiền"
+                        sx={{
+                          backgroundColor: 'background.chargeInput',
+                          color: 'text.primary',
+                          borderRadius: '3px',
+                          padding: '0 22px',
+                          ' >': { borderRadius: '3px' },
+                          border: 'none',
+                        }}
+                        {...field}
+                      >
+                        {withdrawMoneyType}
+                      </Select>
+                      {errors?.withdrawPassword?.message ? (
+                        <FormHelperText>
+                          {errors?.withdrawPassword?.message}
+                        </FormHelperText>
+                      ) : null}
+                    </FormControl>
+                  )}
+                />
               </FormControl>
               <Button
                 sx={{
@@ -197,8 +307,8 @@ const WithdrawMoney: React.FC = () => {
                   marginTop: '22px',
                   alignSelf: 'center',
                 }}
-                disabled={!bank || !amount}
-                onClick={() => onSubmit()}
+                // disabled={!bank || !amount}
+                onClick={handleSubmit(onSubmit)}
               >
                 Rút tiền
               </Button>

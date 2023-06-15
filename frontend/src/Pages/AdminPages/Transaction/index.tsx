@@ -298,15 +298,15 @@ const Transaction: React.FC = () => {
                       />
                     </TableCell>
                     <TableCell align="center">
-                      {row.total.toLocaleString('en-US', {
+                      {row.total.toLocaleString('vi-VI', {
                         style: 'currency',
-                        currency: 'USD',
+                        currency: 'VND',
                       })}
                     </TableCell>
                     <TableCell align="center">
-                      {row.surplus.toLocaleString('en-US', {
+                      {row.surplus.toLocaleString('vi-VI', {
                         style: 'currency',
-                        currency: 'USD',
+                        currency: 'VND',
                       })}
                     </TableCell>
                     <TableCell align="center">{row.action}</TableCell>
