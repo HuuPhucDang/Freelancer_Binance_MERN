@@ -153,7 +153,7 @@ const Request = () => {
                   Vai trò
                 </TableCell>
                 <TableCell align="center" sx={{ fontWeight: 600 }}>
-                  Số dư
+                  Số dư (USDT)
                 </TableCell>
                 <TableCell align="center" sx={{ fontWeight: 600 }}>
                   Trạng thái
@@ -184,10 +184,7 @@ const Request = () => {
                       align="center"
                       // sx={{ textTransform: 'capitalize' }}
                     >
-                      {(row?.balance || 0).toLocaleString('en-US', {
-                        style: 'currency',
-                        currency: 'USD',
-                      })}
+                      {row?.balance || 0}
                     </TableCell>
                     <TableCell align="center">
                       <Chip

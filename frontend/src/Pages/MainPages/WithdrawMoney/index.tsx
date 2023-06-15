@@ -18,7 +18,7 @@ import {
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import CurrencyInput from 'react-currency-input-field';
+// import CurrencyInput from 'react-currency-input-field';
 
 // Import local
 import { UserLayout } from '@/Components/DefaultLayout';
@@ -76,7 +76,7 @@ const WithdrawMoney: React.FC = () => {
     dispatch(getSelf());
     Utils.WebSocket.emit(
       'exchangeCurrency',
-      { symbol: 'VNDUSDT' },
+      { symbol: 'USDTVND' },
       (data: any) => {
         setEnchangeRate(data || 0);
       }
@@ -192,8 +192,15 @@ const WithdrawMoney: React.FC = () => {
                         <InputAdornment position="start">
                           <Typography sx={{ fontSize: '13px' }}>
                             ~{' '}
-                            {!Number.isNaN(amount) ? amount * enchangeRate : 0}{' '}
-                            VND
+                            {!Number.isNaN(amount)
+                              ? (amount * enchangeRate).toLocaleString(
+                                  'vi-VI',
+                                  {
+                                    style: 'currency',
+                                    currency: 'VND',
+                                  }
+                                )
+                              : 0}{' '}
                           </Typography>
                         </InputAdornment>
                       ),

@@ -8,8 +8,6 @@ import {
   Grid,
   Button,
   Stack,
-  InputAdornment,
-  TextField,
 } from '@mui/material';
 // Import local
 import { UserLayout } from '@/Components/DefaultLayout';
@@ -36,8 +34,8 @@ const Recharge: React.FC = () => {
     _.get(state.TRANSACTION, 'requestRechargeSuccess')
   );
   const userData = Utils.getUserData();
-  const invalidTypeMsg = 'Số tiền muốn nạp phải có định dạng số';
-  const [isErr, setIsErr] = React.useState<boolean>(false);
+  // const invalidTypeMsg = 'Số tiền muốn nạp phải có định dạng số';
+  const [_isErr, setIsErr] = React.useState<boolean>(false);
   const [amount, setAmount] = React.useState<number>(0);
   const [enchangeRate, setEnchangeRate] = React.useState<number>(0);
 

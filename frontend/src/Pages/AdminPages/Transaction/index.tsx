@@ -249,10 +249,10 @@ const Transaction: React.FC = () => {
                   Trạng thái
                 </TableCell>
                 <TableCell align="center" sx={{ fontWeight: 600 }}>
-                  Số tiền
+                  Số tiền (USDT)
                 </TableCell>
                 <TableCell align="center" sx={{ fontWeight: 600 }}>
-                  Số dư
+                  Số dư (USDT)
                 </TableCell>
                 <TableCell align="center" sx={{ fontWeight: 600 }}>
                   Hành động
@@ -297,18 +297,8 @@ const Transaction: React.FC = () => {
                         variant="outlined"
                       />
                     </TableCell>
-                    <TableCell align="center">
-                      {row.total.toLocaleString('vi-VI', {
-                        style: 'currency',
-                        currency: 'VND',
-                      })}
-                    </TableCell>
-                    <TableCell align="center">
-                      {row.surplus.toLocaleString('vi-VI', {
-                        style: 'currency',
-                        currency: 'VND',
-                      })}
-                    </TableCell>
+                    <TableCell align="center">{row.total}</TableCell>
+                    <TableCell align="center">{row.surplus}</TableCell>
                     <TableCell align="center">{row.action}</TableCell>
                   </TableRow>
                 ))}

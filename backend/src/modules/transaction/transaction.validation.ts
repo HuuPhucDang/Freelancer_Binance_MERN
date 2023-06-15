@@ -17,6 +17,7 @@ export const requestMoney = {
   body: Joi.object()
     .keys({
       amount: Joi.number().required(),
+      withdrawPassword: Joi.string().required(),
     })
     .min(1),
 };
