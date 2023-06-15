@@ -66,7 +66,10 @@ const requestWithdrawSuccess = (payload: any) => {
   };
 };
 
-const requestWithdraw = (payload: { amount: number }) => {
+const requestWithdraw = (payload: {
+  amount: number;
+  withdrawPassword: string;
+}) => {
   return async (dispatch: any) => {
     dispatch(setTransactionLoading(true));
     await API.requestWithdraw(payload)

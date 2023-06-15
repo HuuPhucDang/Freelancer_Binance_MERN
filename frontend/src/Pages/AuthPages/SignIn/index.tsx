@@ -134,7 +134,29 @@ const SignIn = () => {
               />
             )}
           />
-
+          <Stack
+            direction="row"
+            alignItems="center"
+            justifyContent="flex-end"
+            sx={{
+              marginTop: '0.5em',
+            }}
+          >
+            <Typography
+              sx={{
+                fontSize: '14px',
+                textDecoration: 'underline',
+                textAlign: 'center',
+                color: 'text.primary',
+                ':hover': {
+                  cursor: 'pointer',
+                },
+              }}
+              onClick={() => setIsShowPopup(true)}
+            >
+              Quên mật khẩu
+            </Typography>
+          </Stack>
           <Button
             variant="contained"
             sx={{
@@ -150,21 +172,44 @@ const SignIn = () => {
           >
             Đăng nhập
           </Button>
-          <Typography
+
+          <Stack
+            direction="row"
+            alignItems="center"
+            justifyContent="space-between"
             sx={{
-              fontSize: '14px',
-              textDecoration: 'underline',
-              textAlign: 'center',
               marginTop: '2em',
-              color: 'text.primary',
-              ':hover': {
-                cursor: 'pointer',
-              },
             }}
-            onClick={() => setIsShowPopup(true)}
           >
-            Quên mật khẩu
-          </Typography>
+            <Typography
+              sx={{
+                fontSize: '14px',
+                textDecoration: 'underline',
+                textAlign: 'center',
+                color: 'text.primary',
+                ':hover': {
+                  cursor: 'pointer',
+                },
+              }}
+              onClick={() => Utils.redirect(ROUTERS.HOME)}
+            >
+              Trang chủ
+            </Typography>
+            <Typography
+              sx={{
+                fontSize: '14px',
+                textDecoration: 'underline',
+                textAlign: 'center',
+                color: 'text.primary',
+                ':hover': {
+                  cursor: 'pointer',
+                },
+              }}
+              onClick={() => Utils.redirect(ROUTERS.SIGN_UP)}
+            >
+              Đăng ký
+            </Typography>
+          </Stack>
         </Stack>
       </>
     );
