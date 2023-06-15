@@ -14,10 +14,10 @@ import { getUserById } from "../user/user.service";
 import moment from "moment";
 
 const LIMIT_BET = {
-  [EUserType.BEGINNER]: ["30s"],
-  [EUserType.INTERMEDIATE]: ["30s", "60s"],
-  [EUserType.ADVANCE]: ["30s", "60s", "120s"],
-  [EUserType.PROFESSINAL]: ["30s", "60s", "120s", "150s"],
+  [EUserType.BEGINNER]: [0],
+  [EUserType.INTERMEDIATE]: [0, 1],
+  [EUserType.ADVANCE]: [0, 1, 2],
+  [EUserType.PROFESSINAL]: [0, 1, 2, 3],
 };
 
 /**
@@ -38,7 +38,7 @@ export const createNewTrade = async (
       "Your balance is not enough to play!"
     );
   const userType = await UserType.findOne({ userId });
-  if (!userType || !LIMIT_BET[userType.type].includes(createBody.time))
+  if (!userType || !LIMIT_BET[userType.type].includes(createBody.index))
     throw new ApiError(httpStatus.BAD_REQUEST, "Your level lower bet level!");
   wallet.balance = wallet.balance - createBody.betAmount;
   await wallet.save();

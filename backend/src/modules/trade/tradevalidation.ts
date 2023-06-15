@@ -8,6 +8,7 @@ export const createNewTrade = {
     symbol: Joi.string().required(),
     time: Joi.string().required(),
     probability: Joi.number().required(),
+    index: Joi.number().required(),
   }),
 };
 

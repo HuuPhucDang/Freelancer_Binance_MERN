@@ -36,11 +36,14 @@ const VolatilityTable: React.FC<IProps> = ({
       const newData = [...filteredData, ...oldData];
       return newData.length > 120 ? newData.slice(-60) : newData;
     });
-    setLatestRow(_.last(data));
+    // setLatestRow(_.last(data));
   };
 
   React.useEffect(() => {
     Utils.WebSocket.emit('getAggregateTradeList', { symbol }, getAggregateData);
+    Utils.WebSocket.emit('getLatestCoinWithSymbol', { symbol }, (data: any) => {
+      setLatestRow(data);
+    });
     const intervalAggeList = setInterval(() => {
       Utils.WebSocket.emit(
         'getAggregateTradeList',
@@ -54,6 +57,13 @@ const VolatilityTable: React.FC<IProps> = ({
       Utils.WebSocket.emit('getAggregateTradeList', { symbol }, (data: any) => {
         getAggregateData(data);
       });
+      Utils.WebSocket.emit(
+        'getLatestCoinWithSymbol',
+        { symbol },
+        (data: any) => {
+          setLatestRow(data);
+        }
+      );
     });
     return () => {
       clearInterval(intervalAggeList);
@@ -189,7 +199,7 @@ const VolatilityTable: React.FC<IProps> = ({
                   textAlign: 'left',
                 }}
               >
-                {latestRow?.p}
+                {latestRow?.price}
               </Typography>
             </TableCell>
             <TableCell align="right" sx={{ p: 0 }}>
