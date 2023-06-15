@@ -26,6 +26,7 @@ import { Sidebar } from '@/Components/LayoutParts';
 import { RootState, useTypedDispatch } from '@/Reducers/store';
 import { TransactionActions, UserActions } from '@/Reducers/Actions';
 import { Utils } from '@/Libs';
+import Placeholder from 'react-select/dist/declarations/src/components/Placeholder';
 
 const { getSelf } = UserActions;
 const { requestWithdraw, resetTransactionReducer } = TransactionActions;
@@ -71,6 +72,7 @@ const WithdrawMoney: React.FC = () => {
   });
 
   const amount = watch('amount');
+  const bank = watch('bank');
 
   React.useEffect(() => {
     dispatch(getSelf());
@@ -205,8 +207,8 @@ const WithdrawMoney: React.FC = () => {
                         </InputAdornment>
                       ),
                     }}
-                    error={Boolean(errors?.withdrawPassword?.message)}
-                    helperText={errors?.withdrawPassword?.message}
+                    error={Boolean(errors?.amount?.message)}
+                    helperText={errors?.amount?.message}
                     {...field}
                   />
                 )}
@@ -252,21 +254,12 @@ const WithdrawMoney: React.FC = () => {
                 )}
               />
               <FormControl fullWidth sx={{ marginTop: '20px' }}>
-                <InputLabel
-                  sx={{
-                    paddingLeft: '22px',
-                    fontSize: '15px',
-                    color: 'text.primary',
-                  }}
-                >
-                  Phương thức nhận tiền
-                </InputLabel>
                 <Controller
                   control={control}
                   name="bank"
                   render={({ field }) => (
                     <FormControl
-                      error={Boolean(errors?.withdrawPassword?.message)}
+                      error={Boolean(errors?.bank?.message)}
                     >
                       <Select
                         placeholder="Phương thức nhận tiền"
@@ -278,13 +271,19 @@ const WithdrawMoney: React.FC = () => {
                           ' >': { borderRadius: '3px' },
                           border: 'none',
                         }}
+                        displayEmpty
+                        renderValue={
+                          bank !== ''
+                            ? undefined
+                            : () => <Typography>Phương thức nhận tiền</Typography>
+                        }
                         {...field}
                       >
                         {withdrawMoneyType}
                       </Select>
-                      {errors?.withdrawPassword?.message ? (
+                      {errors?.bank?.message ? (
                         <FormHelperText>
-                          {errors?.withdrawPassword?.message}
+                          {errors?.bank?.message}
                         </FormHelperText>
                       ) : null}
                     </FormControl>

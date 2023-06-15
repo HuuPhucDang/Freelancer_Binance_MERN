@@ -10,6 +10,10 @@ import {
   TextField,
   Divider,
   Avatar,
+  InputLabel,
+  FormControl,
+  Select,
+  MenuItem,
 } from '@mui/material';
 
 // Import local
@@ -33,6 +37,7 @@ const Support: React.FC = () => {
     roomId: '',
     receiverId: '',
   });
+  const [currentAdmin, setCurrentAdmin] = React.useState<string>('');
   const [, setCurrentPayload] = React.useState<any>([]);
   const valueRef = React.useRef<any>([]);
   const [message, setMessage] = React.useState<string>('');
@@ -50,8 +55,8 @@ const Support: React.FC = () => {
   };
 
   React.useEffect(() => {
-    if (userData?.role === 'admin') Utils.redirect(ROUTERS.OVERVIEW)
-  }, [])
+    if (userData?.role === 'admin') Utils.redirect(ROUTERS.OVERVIEW);
+  }, []);
 
   React.useEffect(() => {
     dispatch(fetchChatBox());
@@ -100,59 +105,27 @@ const Support: React.FC = () => {
     return senderId;
   };
 
-  const adminOptions = () => {
-    const result: any[] = [];
-    if (valueRef.current.length > 0) {
-      valueRef.current.forEach((item: any) => {
-        const { receiverId, messages } = item;
-        const lastMessage = messages[messages.length - 1];
-        const isActive = currentRoom?.roomId === item.id;
-        result.push(
-          <Stack
-            direction="row"
-            key={`user-${receiverId.id}`}
-            sx={{
-              padding: '10px',
-              background: isActive ? 'rgba(0,0,0,0.2)' : 'transparent',
-              ':hover': {
-                background: 'rgba(0,0,0,0.2)',
-                cursor: 'pointer',
-              },
-            }}
-            onClick={() => {
-              setCurrentRoom({ ...item, roomId: item.id });
-              scrollToBottom();
-
-              Utils.WebSocket.emit(
-                'joinRoom',
-                { userId: userData.id, roomId: item.id },
-                (data: any) => {
-                  console.log(data?.message);
-                }
-              );
-            }}
-          >
-            <Avatar src={receiverId.avatar} sx={{ marginRight: '10px' }} />
-            <Stack direction="column">
-              <Typography sx={{ fontSize: '15px', fontWeight: 500 }}>
-                {receiverId.nickname}
-              </Typography>
-              <Typography sx={{ fontSize: '12px', fontWeight: 400 }}>
-                {lastMessage ? lastMessage.message : '<Trống>'}
-              </Typography>
-            </Stack>
-          </Stack>
-        );
-      });
+  const onChangeAdmin = (id: string) => {
+    setCurrentAdmin(id);
+    const findRoomByAdmin = valueRef.current.find(
+      (item: any) => item.id === id
+    );
+    if (findRoomByAdmin) {
+      setCurrentRoom({ ...findRoomByAdmin, roomId: findRoomByAdmin.id });
+      scrollToBottom();
+      Utils.WebSocket.emit(
+        'joinRoom',
+        { userId: userData.id, roomId: findRoomByAdmin.id },
+        (data: any) => {
+          console.log(data?.message);
+        }
+      );
     }
-    return result;
   };
 
   const _renderEmptyRoom = () => {
     return (
-      <Typography sx={{ padding: '24px 30px', fontSize: '14px' }}>
-        Vui lòng chọn admin!
-      </Typography>
+      <Typography sx={{ fontSize: '14px' }}>Vui lòng chọn admin!</Typography>
     );
   };
 
@@ -162,7 +135,6 @@ const Support: React.FC = () => {
         direction="column"
         sx={{
           width: '100%',
-          padding: '20px 30px',
           height: '100%',
         }}
       >
@@ -301,35 +273,39 @@ const Support: React.FC = () => {
                   <AccountBoxIcon
                     sx={{ color: '#545454', marginRight: '10px' }}
                   />
-                  <Typography
-                    sx={{
-                      color: 'text.secondary',
-                      fontSize: '20px',
-                      fontWeight: 400,
-                    }}
-                  >
-                    Admin
-                  </Typography>
+                  <FormControl sx={{ m: 1, width: 300 }}>
+                    <InputLabel id="demo-multiple-name-label">Admin</InputLabel>
+                    <Select
+                      labelId="demo-multiple-name-label"
+                      id="demo-multiple-name"
+                      value={currentAdmin}
+                      onChange={(event) => {
+                        onChangeAdmin(event.target.value);
+                      }}
+                      label="admin"
+                    >
+                      {valueRef.current.length > 0
+                        ? valueRef.current.map((item: any) => {
+                            return (
+                              <MenuItem key={item.id} value={item.id}>
+                                {item.receiverId.nickname}
+                              </MenuItem>
+                            );
+                          })
+                        : null}
+                    </Select>
+                  </FormControl>
                 </Stack>
               </Stack>
-              <Grid
-                container
+              <Stack
                 sx={{
                   backgroundColor: 'background.mainContent',
                   minHeight: '250px',
+                  padding: '20px 60px',
                 }}
               >
-                <Grid item xs={3} sx={{ borderRight: '1px solid #ccc' }}>
-                  <Stack direction="column" sx={{ padding: '16px 0' }}>
-                    {adminOptions()}
-                  </Stack>
-                </Grid>
-                <Grid item xs={9}>
-                  {currentRoom.roomId
-                    ? _renderMessageBox()
-                    : _renderEmptyRoom()}
-                </Grid>
-              </Grid>
+                {currentRoom.roomId ? _renderMessageBox() : _renderEmptyRoom()}
+              </Stack>
             </Stack>
           </Grid>
         </Grid>
