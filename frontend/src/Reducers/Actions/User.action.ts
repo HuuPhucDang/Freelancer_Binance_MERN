@@ -182,6 +182,10 @@ const updatePassword = (payload: { userId: string; password: string }) => {
         const result = await Utils.resolveResponse(response);
         if (!result) await dispatch(updatePasswordFail());
         else {
+          const { message }: { message: string } = result as {
+            message: string;
+          };
+          pushNotification({ type: 'success', message });
           dispatch(updatePasswordSuccess(result));
         }
       })

@@ -1,6 +1,7 @@
 import { ACTION_TYPES } from '@/Constants';
 import API from '@/Apis';
 import { Utils } from '@libs';
+import { pushNotification } from '../../Libs/utils/Widget.utils';
 
 // SINGLE ACTIONS
 const setUserRequestLoading = (payload: boolean) => {
@@ -38,6 +39,10 @@ const requestForgotPassword = (payload: any) => {
         const results = await Utils.resolveResponse(response);
         if (!results) await dispatch(requestForgotPasswordFail());
         else {
+          const { message }: { message: string } = results as {
+            message: string;
+          };
+          pushNotification({ type: 'success', message });
           dispatch(requestForgotPasswordSuccess(results));
         }
       })
