@@ -67,7 +67,6 @@ export const denyTransaction = catchAsync(
   async (req: Request, res: Response) => {
     if (typeof req.params["transactionId"] === "string") {
       const transaction = await transactionService.denyTransaction(
-        req.user.id,
         new mongoose.Types.ObjectId(req.params["transactionId"])
       );
       res.send(
