@@ -81,7 +81,8 @@ const BankInformation = () => {
       setValue('fullname', systemInfo?.fullname);
       setValue('message', systemInfo?.message);
       setValue('accountNumber', systemInfo?.accountNumber);
-      setQRUrl(`data:image/*;base64,${systemInfo?.QRUrl}`);
+      if (systemInfo?.QRUrl)
+        setQRUrl(`data:image/*;base64,${systemInfo?.QRUrl}`);
     }
   }, [systemInfo]);
 
@@ -228,21 +229,23 @@ const BankInformation = () => {
           <Grid item xs={4}>
             <Stack direction="column">
               <input type="file" {...register('QRCode')} />
-              <Box
-                component="img"
-                src={
-                  QRUrl
-                    ? QRUrl
-                    : Assets.qrImage
-                }
-                sx={{
-                  width: '100%',
-                  height: 'auto',
-                  objectFit: 'cover',
-                  marginTop: '16px',
-                  aspectRatio: 1,
-                }}
-              />
+              {QRUrl ? (
+                <Box
+                  component="img"
+                  src={QRUrl ? QRUrl : Assets.qrImage}
+                  sx={{
+                    width: '100%',
+                    height: 'auto',
+                    objectFit: 'cover',
+                    marginTop: '16px',
+                    aspectRatio: 1,
+                  }}
+                />
+              ) : (
+                <Typography sx={{ fontSize: '14px', marginTop: '10px' }}>
+                  No image
+                </Typography>
+              )}
               {errors?.QRCode?.message ? (
                 <Typography color="error" sx={{ fontSize: '14px' }}>
                   {errors?.QRCode?.message}

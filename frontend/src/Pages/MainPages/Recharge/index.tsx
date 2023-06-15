@@ -2,13 +2,7 @@ import React from 'react';
 import _ from 'lodash';
 import { useSelector } from 'react-redux';
 import CurrencyInput from 'react-currency-input-field';
-import {
-  Box,
-  Typography,
-  Grid,
-  Button,
-  Stack,
-} from '@mui/material';
+import { Box, Typography, Grid, Button, Stack } from '@mui/material';
 // Import local
 import { UserLayout } from '@/Components/DefaultLayout';
 import { Sidebar } from '@/Components/LayoutParts';
@@ -127,16 +121,18 @@ const Recharge: React.FC = () => {
                   >
                     Nạp tiền qua hệ thống banking ngân hàng
                   </Typography>
-                  <Box
-                    component="img"
-                    src={Assets.qrImage}
-                    sx={{
-                      display: { xs: 'block', md: 'none' },
-                      width: '250px',
-                      height: 'auto',
-                      objectFit: 'contain',
-                    }}
-                  />
+                  {systemInfo?.QRUrl ? (
+                    <Box
+                      component="img"
+                      src={`data:image/*;base64,${systemInfo?.QRUrl}`}
+                      sx={{
+                        display: { xs: 'block', md: 'none' },
+                        width: '250px',
+                        height: 'auto',
+                        objectFit: 'contain',
+                      }}
+                    />
+                  ) : null}
                   <Stack direction="column" marginTop="24px">
                     <Box
                       sx={{
@@ -243,16 +239,18 @@ const Recharge: React.FC = () => {
                 </Stack>
               </Grid>
               <Grid item md={4.5} display={{ xs: 'none', md: 'flex' }}>
-                <Box
-                  component="img"
-                  src={`data:image/*;base64,${systemInfo?.QRUrl}`}
-                  sx={{
-                    width: '100%',
-                    height: 'auto',
-                    maxWidth: '300px',
-                    objectFit: 'contain',
-                  }}
-                />
+                {systemInfo?.QRUrl ? (
+                  <Box
+                    component="img"
+                    src={`data:image/*;base64,${systemInfo?.QRUrl}`}
+                    sx={{
+                      width: '100%',
+                      height: 'auto',
+                      maxWidth: '300px',
+                      objectFit: 'contain',
+                    }}
+                  />
+                ) : null}
               </Grid>
             </Grid>
           </Grid>

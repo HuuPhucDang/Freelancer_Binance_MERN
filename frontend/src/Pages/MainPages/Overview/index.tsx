@@ -352,7 +352,13 @@ const Overview: React.FC = () => {
                           marginLeft: '30px',
                         }}
                       >
-                        ~~ {userData?.wallet?.balance * enchangeRate} VND
+                        ~~{' '}
+                        {(
+                          userData?.wallet?.balance * enchangeRate
+                        ).toLocaleString('vi-VN', {
+                          style: 'currency',
+                          currency: 'VND',
+                        })}
                       </Typography>
                     </Stack>
                   </Box>

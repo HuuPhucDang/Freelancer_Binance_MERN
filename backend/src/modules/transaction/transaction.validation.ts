@@ -22,6 +22,14 @@ export const requestMoney = {
     .min(1),
 };
 
+export const rechargeMoney = {
+  body: Joi.object()
+    .keys({
+      amount: Joi.number().required(),
+    })
+    .min(1),
+};
+
 export const updateTransaction = {
   params: Joi.object().keys({
     transactionId: Joi.string().custom(objectId),

@@ -32,7 +32,7 @@ router.post(
 router.post(
   "/request/recharge",
   auth("requestMoney"),
-  validate(transactionValidation.requestMoney),
+  validate(transactionValidation.rechargeMoney),
   transactionController.requestRechangeMoney
 );
 
