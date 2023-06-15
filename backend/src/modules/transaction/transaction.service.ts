@@ -90,6 +90,7 @@ export const rechangeMoney = async (
   user.wallet = userWallet.id;
   await user.save();
   rechargeTransaction.status = ETransactionStatus.RESOLVED;
+  rechargeTransaction.balance = userWallet.balance;
   await rechargeTransaction.save();
   const savedUser = await getUserById(user.id);
   if (savedUser) return assignReturnUser(savedUser);
@@ -105,7 +106,7 @@ export const withdrawMoney = async (
 ): Promise<IUserDoc | null> => {
   const user = await User.findById(updateBody.userId);
   if (!user) throw new ApiError(httpStatus.NOT_FOUND, "User not found!");
-  // const userWallet = await getWallet(user.wallet, user.id);
+  const userWallet = await getWallet(user.wallet, user.id);
   // if (userWallet.balance < updateBody.amount)
   //   throw new ApiError(
   //     httpStatus.BAD_REQUEST,
@@ -127,6 +128,7 @@ export const withdrawMoney = async (
   // userWallet.balance = userWallet.balance - withdrawTransaction.amount;
   // await userWallet.save();
   withdrawTransaction.status = ETransactionStatus.RESOLVED;
+  withdrawTransaction.balance = userWallet?.balance;
   await withdrawTransaction.save();
 
   const savedUser = await getUserById(user.id);
@@ -231,6 +233,7 @@ export const cancelTransaction = async (
   await userWallet.save();
 
   transaction.status = ETransactionStatus.CANCELED;
+  transaction.balance = userWallet.balance;
   await transaction.save();
   return transaction;
 };
@@ -259,6 +262,7 @@ export const denyTransaction = async (
   await userWallet.save();
 
   transaction.status = ETransactionStatus.DENIED;
+  transaction.balance = userWallet.balance;
   await transaction.save();
   return transaction;
 };
