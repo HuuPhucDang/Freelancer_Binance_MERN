@@ -26,7 +26,7 @@ export const getChatBoxes = async (
   else {
     const admins = await User.find({ role: "admin" });
     for (const admin of admins) {
-      const chatRoomWithAdmin = await ChatBox.find({
+      const chatRoomWithAdmin = await ChatBox.findOne({
         senderId: userId,
         receiverId: admin.id,
       })

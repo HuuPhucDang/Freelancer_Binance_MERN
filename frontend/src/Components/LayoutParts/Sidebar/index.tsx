@@ -15,6 +15,7 @@ interface IMenu {
   icon: JSX.Element;
   label: string;
   path: string;
+  isOnlyUser: boolean;
 }
 
 const menu: IMenu[] = [
@@ -22,31 +23,37 @@ const menu: IMenu[] = [
     icon: <PersonIcon />,
     label: 'Tổng quan',
     path: ROUTERS.OVERVIEW,
+    isOnlyUser: false,
   },
   {
     icon: <AdminPanelSettingsIcon />,
     label: 'Bảo mật',
     path: ROUTERS.SECURITY,
+    isOnlyUser: false,
   },
   {
     icon: <GppGoodIcon />,
     label: 'Xác minh',
     path: ROUTERS.VERIFY,
+    isOnlyUser: false,
   },
   {
     icon: <AccountBalanceIcon />,
     label: 'Liên kết ngân hàng',
     path: ROUTERS.CONNECT_BANK,
+    isOnlyUser: false,
   },
   {
     icon: <AccountBalanceWalletOutlinedIcon />,
     label: 'Lịch sử nạp rút',
     path: ROUTERS.INVOICE,
+    isOnlyUser: false,
   },
   {
     icon: <RecordVoiceOverOutlinedIcon />,
     label: 'CSKH trực tuyến',
     path: ROUTERS.SUPPORT,
+    isOnlyUser: true,
   },
 ];
 
@@ -55,6 +62,7 @@ const { logout } = AuthActions;
 const Sidebar = () => {
   const dispatch = useTypedDispatch();
   const { pathname } = useLocation();
+  const userData = Utils.getUserData();
 
   const onSignOut = async () => {
     await dispatch(logout());
@@ -76,6 +84,7 @@ const Sidebar = () => {
       >
         {menu.map((item: IMenu) => {
           const isActive = item.path === pathname;
+          if (item.isOnlyUser && userData?.role === 'admin') return null;
           return (
             <Button
               key={item.path}

@@ -13,6 +13,7 @@ import {
   MenuItem,
   TextField,
   FormHelperText,
+  InputAdornment,
 } from '@mui/material';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -101,11 +102,6 @@ const WithdrawMoney: React.FC = () => {
     );
   };
 
-  // const onSubmit = async () => {
-  //   if (!bank || !amount) setIsErr(true);
-  //   else dispatch(requestWithdraw({ amount }));
-  // };
-
   const withdrawMoneyType = React.useMemo(() => {
     const bank = userData?.bank;
     if (bank)
@@ -159,62 +155,55 @@ const WithdrawMoney: React.FC = () => {
               >
                 Rút tiền
               </Typography>
-              <Stack
-                direction="row"
-                sx={{
-                  alignItems: 'center',
-                  border: !Boolean(errors?.amount?.message)
-                    ? '1px solid rgba(0, 0, 0, 0.23)'
-                    : '1px solid #d32f2f',
-                  height: '59px',
-                  fontSize: '15px',
-                  padding: '0 34px',
-                  marginTop: '40px',
-                  backgroundColor: 'background.chargeInput',
-                  color: 'text.primary',
-                  borderRadius: '3px',
-                }}
-              >
-                <Controller
-                  name="amount"
-                  control={control}
-                  render={({ field }) => (
-                    <CurrencyInput
-                      id="validation-example-2-field"
-                      placeholder="1,234,567 VNĐ"
-                      allowDecimals={false}
-                      className={`form-control`}
-                      onValueChange={(value: any) => field.onChange(value)}
-                      step={10}
-                      suffix=" VND"
-                      value={field.value}
-                      style={{
-                        flex: 1,
-                        height: '100%',
-                        border: 'none',
-                        outline: 'none',
-                        background: 'transparent',
-                        color: 'inherit',
-                      }}
-                    />
-                  )}
-                />
-                <Typography
-                  sx={{
-                    fontSize: '12px',
-                    marginLeft: '16px',
-                    color: 'text.primary',
-                    userSelect: 'none',
-                  }}
-                >
-                  ~ {amount / enchangeRate} USDT
-                </Typography>
-              </Stack>
-              {errors?.amount?.message ? (
-                <FormHelperText sx={{ marginLeft: '16px', color: '#d32f2f' }}>
-                  {errors?.amount?.message}
-                </FormHelperText>
-              ) : null}
+              <Controller
+                name="amount"
+                control={control}
+                render={({ field }) => (
+                  <TextField
+                    hiddenLabel
+                    variant="outlined"
+                    size="small"
+                    placeholder="USDT"
+                    sx={{
+                      ' .MuiInputBase-root': {
+                        padding: '0',
+                        backgroundColor: 'background.chargeInput',
+                        color: 'text.primary',
+                      },
+                      input: {
+                        height: '59px',
+                        boxSizing: 'border-box',
+                        padding: '0 35px',
+                      },
+                    }}
+                    autoComplete="new-password"
+                    type="number"
+                    InputProps={{
+                      sx: {
+                        height: '59px',
+                        fontSize: '15px',
+                        paddingLeft: '22px',
+                        marginTop: '20px',
+                        backgroundColor: 'background.chargeInput',
+                        color: 'text.primary',
+                        borderRadius: '3px',
+                      },
+                      endAdornment: (
+                        <InputAdornment position="start">
+                          <Typography sx={{ fontSize: '13px' }}>
+                            ~{' '}
+                            {!Number.isNaN(amount) ? amount * enchangeRate : 0}{' '}
+                            VND
+                          </Typography>
+                        </InputAdornment>
+                      ),
+                    }}
+                    error={Boolean(errors?.withdrawPassword?.message)}
+                    helperText={errors?.withdrawPassword?.message}
+                    {...field}
+                  />
+                )}
+              />
               <Controller
                 name="withdrawPassword"
                 control={control}
