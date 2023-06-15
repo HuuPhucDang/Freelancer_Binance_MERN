@@ -478,7 +478,10 @@ const Invoice: React.FC = () => {
                                 color: 'text.primary',
                               }}
                             >
-                              ${row.total}
+                              {row.total.toLocaleString('vi-VI', {
+                                style: 'currency',
+                                currency: 'VND',
+                              })}
                             </Typography>
                           </TableCell>
                           <TableCell align="center">
@@ -489,7 +492,10 @@ const Invoice: React.FC = () => {
                                 color: 'text.primary',
                               }}
                             >
-                              ${row.surplus}
+                              {row.surplus.toLocaleString('vi-VI', {
+                                style: 'currency',
+                                currency: 'VND',
+                              })}
                             </Typography>
                           </TableCell>
                           <TableCell align="center">

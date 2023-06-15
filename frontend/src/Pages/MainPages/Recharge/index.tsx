@@ -1,6 +1,7 @@
 import React from 'react';
 import _ from 'lodash';
 import { useSelector } from 'react-redux';
+import CurrencyInput from 'react-currency-input-field';
 import {
   Box,
   Typography,
@@ -180,49 +181,50 @@ const Recharge: React.FC = () => {
                         </b>
                       </Typography>
                     </Box>
-                    <TextField
-                      hiddenLabel
-                      variant="outlined"
-                      size="small"
-                      placeholder="Số tiền muốn nạp"
+                    <Stack
+                      direction="row"
                       sx={{
-                        ' .MuiInputBase-root': {
-                          background: '#ffffff',
-                        },
+                        height: '39px',
+                        fontSize: '12px',
+                        paddingLeft: '16px',
+                        paddingRight: '16px',
+                        marginTop: '30px',
+                        backgroundColor: 'background.chargeInput',
+                        color: 'text.primary',
+                        alignItems: 'center',
+                        borderRadius: '4px',
+                        border: '1px solid rgba(0, 0, 0, 0.23)',
                       }}
-                      type="number"
-                      value={amount}
-                      onChange={(e: any) => setAmount(e.target.value)}
-                      InputProps={{
-                        sx: {
-                          height: '39px',
+                    >
+                      <CurrencyInput
+                        id="validation-example-2-field"
+                        placeholder="1,234,567 VNĐ"
+                        allowDecimals={false}
+                        className={`form-control`}
+                        onValueChange={(value: any) => setAmount(value)}
+                        step={10}
+                        suffix=" VND"
+                        value={amount}
+                        style={{
+                          flex: 1,
+                          height: '100%',
+                          border: 'none',
+                          outline: 'none',
+                          background: 'transparent',
+                          color: 'inherit',
+                        }}
+                      />
+                      <Typography
+                        sx={{
                           fontSize: '12px',
-                          paddingLeft: '16px',
-                          marginTop: '30px',
-                          backgroundColor: 'background.chargeInput',
+                          marginLeft: '16px',
                           color: 'text.primary',
-                        },
-                        endAdornment: (
-                          <InputAdornment
-                            position="start"
-                            sx={{ marginRight: '14px' }}
-                          >
-                            <Typography
-                              sx={{
-                                fontSize: '12px',
-                                marginLeft: '16px',
-                                color: 'text.primary',
-                                userSelect: 'none',
-                              }}
-                            >
-                              ~ {amount / enchangeRate} USDT
-                            </Typography>
-                          </InputAdornment>
-                        ),
-                      }}
-                      error={isErr}
-                      helperText={isErr ? invalidTypeMsg : ''}
-                    />
+                          userSelect: 'none',
+                        }}
+                      >
+                        ~ {amount / enchangeRate} USDT
+                      </Typography>
+                    </Stack>
                     <Button
                       sx={{
                         backgroundColor: 'background.burntSienna',

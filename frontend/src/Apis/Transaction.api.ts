@@ -6,7 +6,10 @@ export const fetchTransactions = async (payload: any) => {
   return sendRequest(TRANSACTION.BASIC, 'GET', payload);
 };
 
-export const requestWithdraw = async (payload: { amount: number }) => {
+export const requestWithdraw = async (payload: {
+  amount: number;
+  withdrawPassword: string;
+}) => {
   return sendRequest(TRANSACTION.REQUEST_WITHDRAW, 'POST', payload);
 };
 

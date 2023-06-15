@@ -4,6 +4,7 @@ import React, { useEffect } from 'react';
 import { AdminLayout } from '../../../Components/DefaultLayout';
 
 import { Utils } from '@libs';
+import { pushAlert } from '../../../Libs/utils/Widget.utils';
 
 const types = [
   {
@@ -36,14 +37,16 @@ const Request: React.FC = () => {
     e.preventDefault();
     const time = e.target.time.value;
     const limitedTime = e.target.limitedTime.value;
-    const probability = e.target.probability.value;
+    const probability = Number.parseFloat(
+      (Number(e.target.probability.value) / 100).toString()
+    );
     if (time && limitedTime && probability && id) {
       Utils.WebSocket.emit(
         'updateMoonbot',
         { id, time, limitedTime, probability },
         () => {}
       );
-    }
+    } else pushAlert({ type: 'error', message: 'Please fill required field!' });
   };
 
   // Renders
@@ -96,17 +99,19 @@ const Request: React.FC = () => {
                   label="Rủi Ro"
                   name="probability"
                   key={`probability-${index}`}
-                  defaultValue={0 || item?.probability}
+                  defaultValue={0 || item?.probability * 100}
                   required
-                  inputProps={{ step: '0.1', max: '100', min: '0' }}
+                  inputProps={{ step: '1', max: '100', min: '0' }}
                   InputProps={{
-                    inputProps: { step: '0.1', max: '100', min: '0' },
+                    inputProps: { step: '1', max: '100', min: '0' },
                   }}
                   onBlur={(e: any) => {
                     if (e.target.value > 100) e.target.value = 100;
-                    else if (e.target.value > 0 && e.target.value < 100)
-                      e.target.value = e.target.value;
-                    else e.target.value = '';
+                    else if (e.target.value > 0 && e.target.value < 100) {
+                      const isNaN = Number.isNaN(Number(e.target.value));
+                      if (isNaN) e.target.value = 1;
+                      else e.target.value = Math.ceil(e.target.value);
+                    } else e.target.value = '';
                   }}
                 />
               </Grid>

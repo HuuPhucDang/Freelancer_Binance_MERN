@@ -153,6 +153,12 @@ const CoreTheme = createTheme({
   components: {
     MuiCssBaseline: {
       styleOverrides: {
+        root: {
+          '&:has(> input:-webkit-autofill)': {
+            backgroundColor: 'background.default',
+            WebkitTextFillColor: 'text.primary',
+          },
+        },
         body: {
           scrollbarColor: '#6b6b6b #2b2b2b',
           '&::-webkit-scrollbar, & *::-webkit-scrollbar': {
@@ -178,6 +184,13 @@ const CoreTheme = createTheme({
             margin: 0,
           },
           fontFamily: 'Inter',
+          input: {
+            color: 'text.primary',
+            '&:-webkit-autofill': {
+              WebkitBoxShadow: '0 0 0 1000px white inset',
+              WebkitTextFillColor: 'text.primary',
+            },
+          },
         },
       },
     },
