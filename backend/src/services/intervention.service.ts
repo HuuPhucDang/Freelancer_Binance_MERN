@@ -178,7 +178,7 @@ const intiChartSocket = (socket: Socket) => {
                 trade.symbol
               } khi kết thúc lệnh là <b>${
                 currentCoin.price
-              }</b> lúc ${moment().format("DD/MM/YYYY hh:mm:ss")}`,
+              }</b> lúc ${moment().format("DD/MM/YYYY HH:mm:ss")}`,
               time: trade.betTime,
             });
             global.io.emit("updateTradeListNow", {
@@ -188,6 +188,7 @@ const intiChartSocket = (socket: Socket) => {
             global.io.emit("updateNewNotification", {
               userId: trade.userId,
               notification,
+              trade,
             });
           }
         }

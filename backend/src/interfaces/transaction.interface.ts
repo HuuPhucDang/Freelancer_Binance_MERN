@@ -40,4 +40,5 @@ export type ActionMoneyBody = {
 
 export type RequestMoneyBody = {
   amount: number;
+  withdrawPassword: string;
 };

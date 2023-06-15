@@ -76,7 +76,7 @@ export const changeIDCardStatus = async (
   await Notification.create({
     userId: user.id,
     message: `Your ID cards has been ${status} at ${moment().format(
-      "DD/MM/YYYY hh:mm:ss"
+      "DD/MM/YYYY HH:mm:ss"
     )}!`,
   });
   findVerification.status = status;

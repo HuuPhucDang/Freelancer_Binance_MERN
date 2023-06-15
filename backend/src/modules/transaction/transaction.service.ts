@@ -4,6 +4,7 @@ import moment from "moment";
 import mongoose from "mongoose";
 import User from "../../models/user.model";
 import Transaction from "../../models/transaction.model";
+import Security from "../../models/security.model";
 import ApiError from "../../helper/errors/ApiError";
 import { assignReturnUser } from "../../utils";
 import { IUserDoc } from "../../interfaces/user.interfaces";
@@ -75,7 +76,7 @@ export const rechangeMoney = async (
     await Transaction.create({
       userId: findInviter.id,
       date: moment().format("YYYY-MM-DD"),
-      time: moment().format("hh:mm:ss"),
+      time: moment().format("HH:mm:ss"),
       balance: inviterWallet.balance,
       amount: benefit,
       type: ETransactionType.BONUS,
@@ -104,12 +105,12 @@ export const withdrawMoney = async (
 ): Promise<IUserDoc | null> => {
   const user = await User.findById(updateBody.userId);
   if (!user) throw new ApiError(httpStatus.NOT_FOUND, "User not found!");
-  const userWallet = await getWallet(user.wallet, user.id);
-  if (userWallet.balance < updateBody.amount)
-    throw new ApiError(
-      httpStatus.BAD_REQUEST,
-      "Can not withdraw more than current balance!"
-    );
+  // const userWallet = await getWallet(user.wallet, user.id);
+  // if (userWallet.balance < updateBody.amount)
+  //   throw new ApiError(
+  //     httpStatus.BAD_REQUEST,
+  //     "Can not withdraw more than current balance!"
+  //   );
   const withdrawTransaction = await Transaction.findOne({
     _id: transactionId,
     userId: user.id,
@@ -148,7 +149,7 @@ export const requestRechargeMoney = async (
   const transaction = await Transaction.create({
     userId,
     date: moment().format("YYYY-MM-DD"),
-    time: moment().format("hh:mm:ss"),
+    time: moment().format("HH:mm:ss"),
     balance: userWallet.balance,
     amount: updateBody.amount,
     type: ETransactionType.RECHARGE,
@@ -167,6 +168,18 @@ export const requestWithdrawMoney = async (
 ): Promise<ITransactionDoc | null> => {
   const user = await User.findById(userId);
   if (!user) throw new ApiError(httpStatus.NOT_FOUND, "User not found!");
+  const userSecurity = await Security.findOne({ userId });
+  if (!userSecurity || !userSecurity?.isVerified)
+    throw new ApiError(
+      httpStatus.BAD_REQUEST,
+      "Please complete all security informations!"
+    );
+  if (!userSecurity.isWithdrawPasswordMatch(updateBody.withdrawPassword))
+    throw new ApiError(
+      httpStatus.BAD_REQUEST,
+      "Withdraw password does not match!"
+    );
+
   const userWallet = await getWallet(user.wallet, user.id);
   user.wallet = userWallet.id;
   if (userWallet.balance < updateBody.amount)
@@ -181,7 +194,7 @@ export const requestWithdrawMoney = async (
   const transaction = await Transaction.create({
     userId,
     date: moment().format("YYYY-MM-DD"),
-    time: moment().format("hh:mm:ss"),
+    time: moment().format("HH:mm:ss"),
     balance: userWallet.balance,
     amount: updateBody.amount,
     type: ETransactionType.WITHDRAW,

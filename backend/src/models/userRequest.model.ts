@@ -23,7 +23,7 @@ const userRequestSchema = new mongoose.Schema<
     },
     time: {
       type: mongoose.Schema.Types.String,
-      default: moment().format("hh:mm:ss"),
+      default: moment().format("HH:mm:ss"),
     },
     type: {
       type: mongoose.Schema.Types.String,

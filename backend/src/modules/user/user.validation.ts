@@ -20,6 +20,7 @@ export const getUsers = {
     role: Joi.string(),
     sortBy: Joi.string(),
     projectBy: Joi.string(),
+    populate: Joi.string(),
     limit: Joi.number().integer(),
     page: Joi.number().integer(),
   }),

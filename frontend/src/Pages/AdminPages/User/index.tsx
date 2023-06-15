@@ -34,6 +34,7 @@ interface IUser {
   role: 'admin' | 'user';
   status: 'active' | 'inactive';
   username: string;
+  wallet?: any;
 }
 
 interface IPayload {
@@ -48,10 +49,11 @@ function createData(
   nickname: string,
   username: string,
   role: string,
+  balance: number,
   status: 'active' | 'inactive',
   action: React.ReactNode
 ) {
-  return { nickname, username, role, status, action };
+  return { nickname, username, role, balance, status, action };
 }
 
 const statusOptions: {
@@ -81,9 +83,10 @@ interface IFilterParam {
 }
 
 const initialFilterParams = {
-  sortBy: 'date:desc,time:desc',
+  sortBy: 'createdAt:desc',
   page: 1,
   limit: 15,
+  populate: 'wallet',
 };
 
 const { fetchUsers } = UserActions;
@@ -105,12 +108,13 @@ const Request = () => {
   const rows = React.useMemo(() => {
     const result: any[] = [];
     if (payload.results && payload.results.length > 0) {
-      payload.results.map((item: IUser) =>
+      payload.results.map((item: IUser) => {
         result.push(
           createData(
             item.nickname,
             item.username,
             item.role,
+            item.wallet?.balance,
             item.status,
             <IconButton
               size="small"
@@ -120,8 +124,8 @@ const Request = () => {
               <RemoveRedEyeOutlinedIcon />
             </IconButton>
           )
-        )
-      );
+        );
+      });
     }
     return result;
   }, [payload]);
@@ -149,6 +153,9 @@ const Request = () => {
                   Vai trò
                 </TableCell>
                 <TableCell align="center" sx={{ fontWeight: 600 }}>
+                  Số dư
+                </TableCell>
+                <TableCell align="center" sx={{ fontWeight: 600 }}>
                   Trạng thái
                 </TableCell>
                 <TableCell align="center" sx={{ fontWeight: 600 }}>
@@ -172,6 +179,15 @@ const Request = () => {
                       sx={{ textTransform: 'capitalize' }}
                     >
                       {row.role}
+                    </TableCell>
+                    <TableCell
+                      align="center"
+                      // sx={{ textTransform: 'capitalize' }}
+                    >
+                      {(row?.balance || 0).toLocaleString('en-US', {
+                        style: 'currency',
+                        currency: 'USD',
+                      })}
                     </TableCell>
                     <TableCell align="center">
                       <Chip

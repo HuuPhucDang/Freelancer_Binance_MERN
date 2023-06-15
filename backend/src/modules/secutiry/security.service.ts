@@ -53,7 +53,7 @@ export const verifyPhonenumber = async (
   await Notification.create({
     userId: user.id,
     message: `Your phone number has been changed at ${moment().format(
-      "DD/MM/YYYY hh:mm:ss"
+      "DD/MM/YYYY HH:mm:ss"
     )}!`,
   });
   Object.assign(findSecurity, updateBody);
@@ -108,7 +108,7 @@ export const changeUserEmail = async (
   await Notification.create({
     userId: user.id,
     message: `Your email has been changed at ${moment().format(
-      "DD/MM/YYYY hh:mm:ss"
+      "DD/MM/YYYY HH:mm:ss"
     )}!`,
   });
 
@@ -183,7 +183,7 @@ export const changeWithdrawPassword = async (
   await Notification.create({
     userId: user.id,
     message: `Your withdraw password has been changed at ${moment().format(
-      "DD/MM/YYYY hh:mm:ss"
+      "DD/MM/YYYY HH:mm:ss"
     )}!`,
   });
 
@@ -213,7 +213,7 @@ export const changeUserPassword = async (
   await Notification.create({
     userId: user.id,
     message: `Your login password has been changed at ${moment().format(
-      "DD/MM/YYYY hh:mm:ss"
+      "DD/MM/YYYY HH:mm:ss"
     )}!`,
   });
 

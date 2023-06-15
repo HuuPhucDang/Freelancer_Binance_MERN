@@ -8,6 +8,7 @@ import {
   Divider,
   Box,
 } from '@mui/material';
+import { useSnackbar } from 'notistack';
 import TapAndPlayIcon from '@mui/icons-material/TapAndPlay';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import MarkChatUnreadIcon from '@mui/icons-material/MarkChatUnread';
@@ -18,10 +19,12 @@ import _ from 'lodash';
 
 const FooterCoin: React.FC = () => {
   // Constructors
+  const { enqueueSnackbar } = useSnackbar();
   const [coinData, setCoinData] = React.useState<any>([]);
   const [isShowNotification, setIsShowNotification] =
     React.useState<boolean>(false);
   const [notification, setNotification] = React.useState<any[]>([]);
+  const [message, setMessage] = React.useState<any>(null);
   const userDetails = Utils.getUserData();
 
   React.useEffect(() => {
@@ -40,8 +43,22 @@ const FooterCoin: React.FC = () => {
         setNotification(data);
       }
     );
-    Utils.WebSocket.on('updateNewNotification', () => {
+    Utils.WebSocket.on('updateNewNotification', (data) => {
       // Set message
+      if (data?.userId === userDetails?.id) {
+        const newMessage =
+          data?.trade?.result === 'win'
+            ? `Bạn vừa thắng ${
+                data?.trade.betAmount * data?.trade.probability
+              }USDT!`
+            : `Bạn vừa thua ${
+                data?.trade.betAmount * data?.trade.probability
+              }USDT!`;
+        setMessage({
+          message: newMessage,
+          isWin: data?.trade?.result === 'win',
+        });
+      }
       Utils.WebSocket.emit(
         'getAllTradeNotification',
         { userId: userDetails?.id },
@@ -55,6 +72,25 @@ const FooterCoin: React.FC = () => {
       // clearInterval(intervalLatest24h);
     };
   }, []);
+
+  React.useEffect(() => {
+    if (message) {
+      console.log(message);
+      enqueueSnackbar(message?.message, {
+        variant: message?.isWin ? 'success' : 'error',
+        anchorOrigin: {
+          horizontal: 'right',
+          vertical: 'bottom',
+        },
+        onExited: () => {
+          setMessage(null);
+        },
+        action: () => {
+          return null;
+        },
+      });
+    }
+  }, [message]);
 
   const onShowNotificationDrawer = () => {
     setIsShowNotification(true);

@@ -12,6 +12,15 @@ router.get(
   chatBoxController.getChatBoxById
 );
 
+router.get("/adminList", auth("chatRoom"), chatBoxController.getAdminList);
+
+router.post(
+  "/",
+  auth("chatRoom"),
+  validate(chatBoxValidation.createRoomWithAdmin),
+  chatBoxController.createChatRoomWithAdmin
+);
+
 router.get("/", auth("chatRoom"), chatBoxController.getChatBoxes);
 
 export default router;

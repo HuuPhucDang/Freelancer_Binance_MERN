@@ -93,7 +93,7 @@ const Request: React.FC = () => {
                 <TextField
                   fullWidth
                   size="small"
-                  label="Xác suất"
+                  label="Rủi Ro"
                   name="probability"
                   key={`probability-${index}`}
                   defaultValue={0 || item?.probability}

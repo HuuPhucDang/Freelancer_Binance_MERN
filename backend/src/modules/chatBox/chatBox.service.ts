@@ -10,38 +10,47 @@ import {
   CreateMessageBody,
   EChatBox,
 } from "../../interfaces/chatBox.interface";
+import { IUserDoc } from "../../interfaces/user.interfaces";
 
 export const getChatBoxes = async (
   userId: mongoose.Types.ObjectId
 ): Promise<IChatBoxDoc[]> => {
   const user = await User.findById(userId);
   if (!user) throw new ApiError(httpStatus.NOT_FOUND, "User not found!");
-  let chatRooms: IChatBoxDoc[] = [];
-  if (user.role === "admin") {
-    chatRooms = await ChatBox.find({ receiverId: userId })
+  if (user.role === "admin")
+    return await ChatBox.find({ receiverId: userId })
       .populate("messages")
       .populate("senderId")
       .populate("receiverId")
       .populate("messages.senderId")
       .populate("messages.receiverId");
-  } else {
-    const userChatBox = await ChatBox.findOne({ senderId: userId })
+  else
+    return await ChatBox.find({ senderId: userId })
+      .populate("messages")
       .populate("senderId")
       .populate("receiverId")
-      .populate("messages")
       .populate("messages.senderId")
       .populate("messages.receiverId");
-    const admin = await User.findOne({ role: "admin" });
-    if (!admin) throw new ApiError(httpStatus.NOT_FOUND, "Admin not found!");
-    if (!userChatBox) {
-      const newChatBox = await ChatBox.create({
-        senderId: userId,
-        receiverId: admin.id,
-      });
-      chatRooms.push(newChatBox);
-    } else chatRooms.push(userChatBox);
-  }
-  return chatRooms;
+};
+
+export const getAdminList = async (): Promise<IUserDoc[]> => {
+  return await User.find({ role: "admin" });
+};
+
+export const createChatRoomWithAdmin = async (
+  userId: mongoose.Types.ObjectId,
+  createBody: { adminId: string }
+): Promise<IChatBoxDoc | null> => {
+  const user = await User.findById(userId);
+  if (!user) throw new ApiError(httpStatus.NOT_FOUND, "User not found!");
+  const admin = await User.findById(
+    new mongoose.Types.ObjectId(createBody.adminId)
+  );
+  if (!admin) throw new ApiError(httpStatus.NOT_FOUND, "Admin not found!");
+  return await ChatBox.create({
+    senderId: user.id,
+    receiverId: admin.id,
+  });
 };
 
 export const getChatBoxById = async (

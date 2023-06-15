@@ -19,6 +19,7 @@ export const getUsers = catchAsync(async (req: Request, res: Response) => {
     "limit",
     "page",
     "projectBy",
+    "populate",
   ]);
   const result = await userService.queryUsers(filter, options);
   res.send(responsePayload(true, "Fetch users successfully!", result));

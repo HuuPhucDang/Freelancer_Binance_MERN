@@ -6,3 +6,9 @@ export const getRoomById = {
     roomId: Joi.string().custom(objectId),
   }),
 };
+
+export const createRoomWithAdmin = {
+  body: Joi.object().keys({
+    adminId: Joi.string().custom(objectId),
+  }),
+};

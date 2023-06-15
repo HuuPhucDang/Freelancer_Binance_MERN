@@ -196,7 +196,7 @@ const TradeField: React.FC<ITradeFieldProps> = ({
         if (!amount) {
           confirm({
             title: '',
-            description: `Bạn nhập mức cược!`,
+            description: `Vui lòng nhập mức cược!`,
           }).then(() => {});
         } else {
           const payload = {

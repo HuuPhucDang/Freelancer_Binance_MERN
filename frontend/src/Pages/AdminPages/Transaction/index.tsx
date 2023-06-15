@@ -122,7 +122,7 @@ const initialFilterParam = {
   status: 'all',
   page: 1,
   limit: 15,
-  sortBy: 'date:desc,time:desc',
+  sortBy: 'date:desc,time:desc,status:desc',
   populate: 'userId',
 };
 const types = {

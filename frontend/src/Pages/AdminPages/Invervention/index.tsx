@@ -53,10 +53,14 @@ const Request: React.FC = () => {
   };
 
   const onIncreaseDegreeSymbol = (symbol: any, type: 'increase' | 'degree') => {
+    let checkType = newIntervention[symbol];
+    if (type === 'degree' && checkType > 0)
+      checkType = -newIntervention[symbol];
+    if (type === 'increase' && checkType < 0)
+      checkType = -newIntervention[symbol];
     Utils.WebSocket.emit('interventionCoin', {
       symbol,
-      intervention:
-        type === 'degree' ? -newIntervention[symbol] : newIntervention[symbol],
+      intervention: checkType,
     });
   };
 
