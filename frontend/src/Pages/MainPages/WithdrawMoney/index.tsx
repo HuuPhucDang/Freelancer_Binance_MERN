@@ -193,7 +193,7 @@ const WithdrawMoney: React.FC = () => {
                       endAdornment: (
                         <InputAdornment position="start">
                           <Typography sx={{ fontSize: '13px' }}>
-                            Số dư {userData?.wallet?.balance || 0} USDT
+                            Số dư {userData?.wallet?.balance.toFixed(2) || 0} USDT
                           </Typography>
                         </InputAdornment>
                       ),
