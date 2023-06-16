@@ -10,7 +10,7 @@ const EXCHANGE_CURRENCY = `https://www.okx.com/v3/c2c/tradingOrders/mostUsedPaym
 
 const initScheduledJobs = () => {
   const scheduledUpdateCoinPrice = CronJob.schedule(
-    "*/10 * * * * *",
+    "*/30 * * * * *",
     async () => {
       console.info("===RUN CRON UPDATE PRICE OF TOP 10===");
       const allCoins = Object.keys(
@@ -32,6 +32,7 @@ const initScheduledJobs = () => {
         }
       }
       const allSavedCoins = await Coin.find().sort({ price: -1 });
+      console.warn(allSavedCoins, "CRON");
       global.io.emit("updateAllCoinPriceNow", allSavedCoins);
     }
   );

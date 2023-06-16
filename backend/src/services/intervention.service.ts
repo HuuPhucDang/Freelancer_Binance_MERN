@@ -57,6 +57,7 @@ export const startmoonBootInterval = async () => {
         time: countDown,
         id: moonbot.id,
         isFrezze: frezzeTime < moonbot.limitedTime,
+        frezzeTime,
       });
     }, 1000);
   }
@@ -67,7 +68,7 @@ const intiChartSocket = (socket: Socket) => {
     const updateCoin = await Coin.findOne({ symbol: data?.symbol });
     if (updateCoin) {
       if (data?.intervention) {
-        updateCoin.intervention = data.intervention;
+        updateCoin.intervention = updateCoin.intervention + data.intervention;
         const newPrice = updateCoin.price + Number(data?.intervention);
         const newGrowth = ((newPrice - updateCoin.price) / newPrice) * 100;
         updateCoin.growth = parseFloat(newGrowth.toFixed(2));
@@ -114,12 +115,22 @@ const intiChartSocket = (socket: Socket) => {
       if (moonBootInterval[moonboot.id]) {
         clearInterval(moonBootInterval[moonboot.id]);
         let countDown = moonboot.time;
+        let frezzeTime = moonboot.limitedTime;
         moonBootInterval[moonboot.id] = setInterval(() => {
-          countDown -= 1;
-          if (countDown < 0) countDown = moonboot.time;
+          if (countDown === 0) {
+            frezzeTime -= 1;
+          } else {
+            countDown -= 1;
+          }
+          if (frezzeTime === 0) {
+            countDown = moonboot.time;
+            frezzeTime = moonboot.limitedTime;
+          }
           global.io.emit("updateCountDown", {
             time: countDown,
             id: moonboot.id,
+            isFrezze: frezzeTime < moonboot.limitedTime,
+            countDown,
           });
         }, 1000);
       }
