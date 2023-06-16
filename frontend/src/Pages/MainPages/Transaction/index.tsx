@@ -7,6 +7,7 @@ import {
   useTheme,
   useMediaQuery,
 } from '@mui/material';
+import { useWindowDimensions } from 'react-native';
 import { useLocation } from 'react-router-dom';
 import { UserLayout } from '@/Components/DefaultLayout';
 import { StocksChart } from '@/Components/LayoutParts';
@@ -33,6 +34,7 @@ const Transaction: React.FC = () => {
   const volatilityRef = React.useRef<HTMLDivElement | null>(null);
   const [volatilityItemsPerCategory, setVolatilityItemsPerCategory] =
     React.useState<number>(0);
+  const [isPortrait, setIsPortrait] = React.useState<boolean>(true);
 
   React.useEffect(() => {
     const symbol = query.get('symbol');
@@ -40,9 +42,9 @@ const Transaction: React.FC = () => {
 
     const handleWindowSize = () => {
       if (volatilityRef && volatilityRef.current) {
-        const clientHeight = isMd
-          ? 440
-          : window.innerHeight - partElementHeight;
+        const { innerWidth, innerHeight } = window;
+        setIsPortrait(innerWidth < innerHeight);
+        const clientHeight = isMd ? 440 : innerHeight - partElementHeight;
         const resolveHeight =
           clientHeight - volatilityHeaderHeight - centerVolatilityRow;
         const eachCategoryHeight = resolveHeight / 2;
@@ -214,7 +216,7 @@ const Transaction: React.FC = () => {
           height: '100%',
           maxHeight: {
             xs: 'auto',
-            md: 'calc(100vh - 70px)',
+            md: isPortrait ? 'calc(100vh - 70px)' : 'auto',
           },
         }}
       >
