@@ -87,7 +87,7 @@ const Dashboard: React.FC<IStock> = ({ symbol }: IStock) => {
           ]}
           autoWidth
           autoHeight
-          // height={320}
+          // height={window.innerHeight - 180}
         />
       )}
     </Box>

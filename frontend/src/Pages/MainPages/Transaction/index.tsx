@@ -94,13 +94,12 @@ const Transaction: React.FC = () => {
                   sx={{
                     width: 1,
                     maxWidth: '100%',
-                    flex: 1,
-                    height: '100%',
+                    // flex: 1,
                     background: '#000',
-                    minHeight: {
+                    height: {
                       xs: '350px',
-                      sm: 'auto'
-                    }
+                      sm: `${window.innerHeight - partElementHeight - 245}px`,
+                    },
                   }}
                 >
                   <StocksChart symbol={query.get('symbol') || 'BTCUSDT'} />
