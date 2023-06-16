@@ -89,11 +89,11 @@ const Transaction: React.FC = () => {
                     maxWidth: '100%',
                     flex: 1,
                     height: '100%',
-                    background: '#000',
+                    background: 'none',
                     minHeight: '350px',
                   }}
                 >
-                  <StocksChart />
+                  <StocksChart symbol={query.get('symbol') || 'BTCUSDT'} />
                 </Stack>
                 <Stack
                   padding="5px"

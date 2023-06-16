@@ -36,7 +36,6 @@ const VolatilityTable: React.FC<IProps> = ({
       const newData = [...filteredData, ...oldData];
       return newData.length > 120 ? newData.slice(-60) : newData;
     });
-    // setLatestRow(_.last(data));
   };
 
   React.useEffect(() => {
@@ -68,11 +67,11 @@ const VolatilityTable: React.FC<IProps> = ({
     return () => {
       clearInterval(intervalAggeList);
     };
-  }, [symbol]);
+  }, []);
 
   const _renderRows = (isUp: boolean, items: number) => {
     const sortedList = isUp ? upRows : downRows;
-    const randomSortList = _.slice(sortedList, 0, items);
+    const randomSortList = _.slice(sortedList, 0, items || 12);
     return randomSortList.map((row) => {
       const total = row?.p * row?.q;
       return (
@@ -116,7 +115,7 @@ const VolatilityTable: React.FC<IProps> = ({
                 padding: '4px 0',
               }}
             >
-              {total.toFixed(4)}
+              {total.toFixed(2)}
             </Typography>
           </TableCell>
         </TableRow>

@@ -146,11 +146,13 @@ const CoinValueTable = () => {
                       color: '#816A6A',
                       cursor: 'pointer',
                     }}
-                    onClick={() =>
-                      Utils.replace(
+                    onClick={() => {
+                      Utils.redirect(
                         `${ROUTERS.TRANSACTION}?symbol=${row?.symbol}`
-                      )
-                    }
+                      );
+                      // window.location.href = `${ROUTERS.TRANSACTION}?symbol=${row?.symbol}`;
+                      window.location.reload();
+                    }}
                   >
                     {row?.symbol}
                   </Typography>
