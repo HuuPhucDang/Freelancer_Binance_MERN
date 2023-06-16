@@ -40,6 +40,7 @@ const Request: React.FC = () => {
       setRenderKey(Math.random());
     });
     return () => {
+      Utils.WebSocket.off("updateAllCoinPriceNow");
       // Utils.WebSocket.disconnect();
     };
   }, []);

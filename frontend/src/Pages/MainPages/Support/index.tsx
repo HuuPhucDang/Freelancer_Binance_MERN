@@ -56,6 +56,9 @@ const Support: React.FC = () => {
 
   React.useEffect(() => {
     if (userData?.role === 'admin') Utils.redirect(ROUTERS.OVERVIEW);
+    return () => {
+      Utils.WebSocket.off('receiveMessage');
+    };
   }, []);
 
   React.useEffect(() => {

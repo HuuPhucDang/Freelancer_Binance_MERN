@@ -27,6 +27,7 @@ const CoinValueTable = () => {
       setCoinData(data);
     });
     return () => {
+      Utils.WebSocket.off('updateAllCoinPriceNow');
       // Utils.WebSocket.disconnect();
     };
   }, []);

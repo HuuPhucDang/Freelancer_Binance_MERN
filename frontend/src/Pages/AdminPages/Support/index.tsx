@@ -45,6 +45,9 @@ const Support = () => {
 
   React.useEffect(() => {
     dispatch(fetchChatBox());
+    return () => {
+      Utils.WebSocket.off('receiveMessage');
+    };
   }, []);
 
   React.useEffect(() => {
