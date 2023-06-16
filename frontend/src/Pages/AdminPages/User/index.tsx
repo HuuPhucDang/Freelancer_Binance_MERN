@@ -184,7 +184,7 @@ const Request = () => {
                       align="center"
                       // sx={{ textTransform: 'capitalize' }}
                     >
-                      {row?.balance || 0}
+                      {Number(row?.balance || '0').toFixed(2)}
                     </TableCell>
                     <TableCell align="center">
                       <Chip

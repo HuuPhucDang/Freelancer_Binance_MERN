@@ -72,7 +72,7 @@ const StaticHeader: React.FC<IStaticHeaderProp> = ({
       >
         <Stack direction="column">
           <Typography sx={{ fontSize: '12px' }}>
-            {Number(latest24h?.lastPrice).toFixed(4)}
+            {Number(latest24h?.lastPrice).toFixed(2)}
           </Typography>
           <Typography sx={{ fontSize: '12px' }}>
             {(enchangeRate * latest24h?.lastPrice || 0).toFixed(2)}
@@ -86,20 +86,20 @@ const StaticHeader: React.FC<IStaticHeaderProp> = ({
               color: Number(latest24h?.priceChange) < 0 ? '#C83535' : '#408827',
             }}
           >
-            {Number(latest24h?.priceChange).toFixed(4)}{' '}
+            {Number(latest24h?.priceChange).toFixed(2)}{' '}
             {latest24h?.priceChangePercent}%
           </Typography>
         </Stack>
         <Stack direction="column">
           <Typography sx={{ fontSize: 10 }}>Giá cao nhất 24h</Typography>
           <Typography sx={{ fontSize: 10 }}>
-            {Number(latest24h?.highPrice).toFixed(4)}
+            {Number(latest24h?.highPrice).toFixed(2)}
           </Typography>
         </Stack>
         <Stack direction="column">
           <Typography sx={{ fontSize: 10 }}>Giá thấp nhất 24h</Typography>
           <Typography sx={{ fontSize: 10 }}>
-            {Number(latest24h?.lowPrice).toFixed(4)}
+            {Number(latest24h?.lowPrice).toFixed(2)}
           </Typography>
         </Stack>
         <Stack direction="column">

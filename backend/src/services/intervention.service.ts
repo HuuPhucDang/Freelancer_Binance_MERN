@@ -14,7 +14,7 @@ import TradeNotification from "../models/tradeNotification.model";
 import ExchangeCurrency from "../models/exchangeCurrency.model";
 import moment from "moment";
 
-const KLINE_URL = `https://api.binance.com/api/v3/klines?`;
+const KLINE_URL = `https://api.binance.com/api/v3/uiKlines?`;
 const AGGREGATE_URL = `https://api.binance.com/api/v3/aggTrades?`;
 const GET_TICKER_24H = `https://api.binance.com/api/v3/ticker/24hr?`;
 const GET_PRICE_URL = `https://api.binance.com/api/v3/avgPrice?symbol=`;
@@ -42,12 +42,21 @@ export const startmoonBootInterval = async () => {
   const moonbots = await Moonboot.find();
   for (const moonbot of moonbots) {
     let countDown = moonbot.time;
+    let frezzeTime = moonbot.limitedTime;
     moonBootInterval[moonbot.id] = setInterval(() => {
-      countDown -= 1;
-      if (countDown < 0) countDown = moonbot.time;
+      if (countDown === 0) {
+        frezzeTime -= 1;
+      } else {
+        countDown -= 1;
+      }
+      if (frezzeTime === 0) {
+        countDown = moonbot.time;
+        frezzeTime = moonbot.limitedTime;
+      }
       global.io.emit("updateCountDown", {
         time: countDown,
         id: moonbot.id,
+        isFrezze: frezzeTime < moonbot.limitedTime,
       });
     }, 1000);
   }
@@ -220,32 +229,33 @@ const intiChartSocket = (socket: Socket) => {
   socket.on("getChartTradeList", async (data: any, callback: any) => {
     const coin = await Coin.findOne({ symbol: data?.symbol });
     if (coin) {
-      const fetchUrl = `${KLINE_URL}symbol=${data?.symbol}&interval=${data?.interval}&limit=500`;
+      const fetchUrl = `${KLINE_URL}symbol=${data?.symbol}&interval=${
+        data?.interval
+      }&limit=${data?.limit || 500}`;
       const response = await fetch(fetchUrl);
       const list: any = await response.json();
-      list[499][1] = String(parseFloat(list[499][1]) + coin.intervention);
-      list[499][2] = String(parseFloat(list[499][2]) + coin.intervention);
-      list[499][3] = String(parseFloat(list[499][3]) + coin.intervention);
-      list[499][4] = String(parseFloat(list[499][4]) + coin.intervention);
-      callback(list);
+      const result: any = [];
+      for (const item of list) {
+        if (!result.length)
+          result.push({
+            open: coin.price,
+            high: coin.price,
+            low: coin.price,
+            close: coin.price,
+            time: item[0],
+          });
+        else
+          result.push({
+            open: parseFloat(item[1]) + coin.intervention,
+            high: parseFloat(item[2]) + coin.intervention,
+            low: parseFloat(item[3]) + coin.intervention,
+            close: parseFloat(item[4]) + coin.intervention,
+            time: item[0],
+          });
+      }
+      callback(result);
     }
   });
-  socket.on(
-    "getOneCandleTradeListWithInterval",
-    async (data: any, callback: any) => {
-      const coin = await Coin.findOne({ symbol: data?.symbol });
-      if (coin) {
-        const fetchUrl = `${KLINE_URL}symbol=${data?.symbol}&interval=${data?.interval}&limit=1`;
-        const response = await fetch(fetchUrl);
-        const list: any = await response.json();
-        list[0][1] = String(parseFloat(list[0][1]) + coin.intervention);
-        list[0][2] = String(parseFloat(list[0][2]) + coin.intervention);
-        list[0][3] = String(parseFloat(list[0][3]) + coin.intervention);
-        list[0][4] = String(parseFloat(list[0][4]) + coin.intervention);
-        callback(list);
-      }
-    }
-  );
 };
 
 export default intiChartSocket;

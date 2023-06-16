@@ -297,8 +297,8 @@ const Transaction: React.FC = () => {
                         variant="outlined"
                       />
                     </TableCell>
-                    <TableCell align="center">{row.total}</TableCell>
-                    <TableCell align="center">{row.surplus}</TableCell>
+                    <TableCell align="center">{row.total.toFixed(2)}</TableCell>
+                    <TableCell align="center">{row.surplus.toFixed(2)}</TableCell>
                     <TableCell align="center">{row.action}</TableCell>
                   </TableRow>
                 ))}

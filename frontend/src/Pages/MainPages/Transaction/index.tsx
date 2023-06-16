@@ -103,7 +103,7 @@ const Transaction: React.FC = () => {
                     }
                   }}
                 >
-                  <StocksChart />
+                  <StocksChart symbol={query.get('symbol') || 'BTCUSDT'} />
                 </Stack>
                 <Stack
                   display={{
