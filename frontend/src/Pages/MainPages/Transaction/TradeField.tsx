@@ -68,12 +68,10 @@ const TradeField: React.FC<ITradeFieldProps> = ({
   const isLogged = useSelector((state: RootState) =>
     _.get(state.AUTH, 'isLogged')
   );
-  // const userDetails = useSelector((state: RootState) =>
-  //   _.get(state.USER, 'details')
-  // );
-  const [userType, setUserType] = React.useState<string>(
-    ENUMS.EUserType.BEGINNER
+  const userDetails = useSelector((state: RootState) =>
+    _.get(state.USER, 'details')
   );
+  const [userType, setUserType] = React.useState<string>('');
   const [betTime, setBetTime] = React.useState<string>('30s');
   const [betSellTime, setBetSellTime] = React.useState<string>('30s');
   const [probability, setProbability] = React.useState<number>(0);
@@ -89,7 +87,7 @@ const TradeField: React.FC<ITradeFieldProps> = ({
   const [isLimitTrade, setIsLimitTrade] = React.useState<boolean>(false);
   const [selectedIndex, setSelectedIndex] = React.useState<number>(0);
   const [selectedMoonBot, setSelectedMoonBot] = React.useState<string>('');
-  // const [isStopTrade, setIsStopTrade] = React.useState<boolean>(false);
+  const [stopWatch, setStopWatch] = React.useState<number>(0);
   const userDetailWallet = Utils.getUserData();
 
   React.useEffect(() => {
@@ -114,6 +112,14 @@ const TradeField: React.FC<ITradeFieldProps> = ({
     Utils.WebSocket.on('updateTradeListNow', (data) => {
       if (data?.userId === userDetailWallet?.id) setBallance(data?.balance);
     });
+    Utils.WebSocket.on('updateUserTypeNow', (data) => {
+      if (data?.userId === userDetailWallet?.id) dispatch(getSelf());
+    });
+    const getUserType =
+      _.get(userDetailWallet, 'userType.type') || ENUMS.EUserType.BEGINNER;
+    const getBanlance = _.get(userDetailWallet, 'wallet.balance') || 0;
+    setUserType(getUserType);
+    setBallance(getBanlance);
     const updateCoinPriceInterval = setInterval(() => {
       Utils.WebSocket.emit('getCoinWithSymbol', { symbol }, (data: any) => {
         setCoinPrice(data?.price);
@@ -121,6 +127,10 @@ const TradeField: React.FC<ITradeFieldProps> = ({
     }, 3000);
     return () => {
       clearInterval(updateCoinPriceInterval);
+      Utils.WebSocket.off('updateCountDown');
+      Utils.WebSocket.off('updateTradeListNow');
+      Utils.WebSocket.off('updateAllMoonbotNow');
+      Utils.WebSocket.off('updateUserTypeNow');
     };
   }, [symbol]);
 
@@ -130,6 +140,7 @@ const TradeField: React.FC<ITradeFieldProps> = ({
       if (selectedMoonBot === data?.id) {
         setServerTime(data?.time);
         setIsLimitTrade(data?.isFrezze);
+        setStopWatch(data?.frezzeTime);
       }
     });
   }, [selectedMoonBot]);
@@ -148,11 +159,9 @@ const TradeField: React.FC<ITradeFieldProps> = ({
 
   React.useEffect(() => {
     const getUserType =
-      _.get(userDetailWallet, 'userType.type') || ENUMS.EUserType.BEGINNER;
-    const getBanlance = _.get(userDetailWallet, 'wallet.balance') || 0;
-    setUserType(getUserType);
-    setBallance(getBanlance);
-  }, []);
+      _.get(userDetails, 'userType.type') || ENUMS.EUserType.BEGINNER;
+    if (getUserType !== userType) setUserType(getUserType);
+  }, [userDetails]);
 
   // React.useEffect(() => {
   //   if (serverTime <= limitedTimes) setIsLimitTrade(true);
@@ -398,8 +407,8 @@ const TradeField: React.FC<ITradeFieldProps> = ({
           color: isLimitTrade ? '#F21616' : '#408827',
         }}
       >
-        Thời gian: {serverTime}s
-        {isLimitTrade && `(Quá thời gian giao dịch)`}
+        Thời gian: {isLimitTrade ? stopWatch : serverTime}s
+        {isLimitTrade && `(Thời gian khoá giao dịch)`}
       </Typography>
       {_renderInputs(TRADE_TYPE.SELL)}
       <Grid container spacing={0.5} marginTop="5px">

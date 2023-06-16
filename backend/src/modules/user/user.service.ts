@@ -179,7 +179,7 @@ export const updateUserType = async (
   userType.type = updateBody.userType;
   userType.name = updateBody.userType;
   await userType.save();
-
+  global.io.emit("updateUserTypeNow", { userId });
   return await getUserById(userId);
 };
 

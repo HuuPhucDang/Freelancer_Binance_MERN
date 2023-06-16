@@ -22,6 +22,7 @@ const Request: React.FC = () => {
   useState<boolean>(false);
   const [coinData, setCoinData] = useState<any>([]);
   const [newIntervention, setNewIntervention] = useState<any>({});
+  const [intervention, setIntervention] = useState<any>({});
   const [renderKey, setRenderKey] = useState<number>(Math.random());
 
   useEffect(() => {
@@ -31,6 +32,7 @@ const Request: React.FC = () => {
       _.forEach(data, (item) => (newInter[item?.symbol] = item?.intervention));
       setNewIntervention(newInter);
       setRenderKey(Math.random());
+      setIntervention(newInter);
     });
     Utils.WebSocket.on('updateAllCoinPriceNow', (data) => {
       setCoinData(data);
@@ -40,6 +42,7 @@ const Request: React.FC = () => {
       setRenderKey(Math.random());
     });
     return () => {
+      Utils.WebSocket.off('updateAllCoinPriceNow');
       Utils.WebSocket.off("updateAllCoinPriceNow");
       // Utils.WebSocket.disconnect();
     };
@@ -54,15 +57,18 @@ const Request: React.FC = () => {
   };
 
   const onIncreaseDegreeSymbol = (symbol: any, type: 'increase' | 'degree') => {
-    let checkType = newIntervention[symbol];
-    if (type === 'degree' && checkType > 0)
-      checkType = -newIntervention[symbol];
-    if (type === 'increase' && checkType < 0)
-      checkType = -newIntervention[symbol];
+    const value =
+      type === 'increase'
+        ? Math.abs(intervention[symbol])
+        : -Math.abs(intervention[symbol]);
     Utils.WebSocket.emit('interventionCoin', {
       symbol,
-      intervention: checkType,
+      intervention: value,
     });
+    // setIntervention({
+    //   ...intervention,
+    //   [symbol]: value,
+    // });
   };
 
   // Renders
@@ -87,7 +93,11 @@ const Request: React.FC = () => {
                 )}
               </Typography>
             }
-            subheader={<Typography fontSize={12}>{item?.price}</Typography>}
+            subheader={
+              <Typography fontSize={12}>
+                {item?.price} ({newIntervention[item?.symbol]})
+              </Typography>
+            }
           />
           <CardContent>
             <Grid
@@ -113,14 +123,14 @@ const Request: React.FC = () => {
                   type="number"
                   size="small"
                   key={`${item?.symbol}${renderKey}`}
-                  defaultValue={newIntervention[item?.symbol] || '0.000'}
+                  defaultValue={intervention[item?.symbol] || '0.000'}
                   onChange={(e) =>
-                    setNewIntervention({
-                      ...newIntervention,
+                    setIntervention({
+                      ...intervention,
                       [item?.symbol]: parseFloat(e.target.value),
                     })
                   }
-                  inputProps={{ step: '0.0001' }}
+                  inputProps={{ step: '0.0001', min: 0 }}
                 />
               </Grid>
               <Grid item xs={3}>
@@ -139,7 +149,7 @@ const Request: React.FC = () => {
             </Grid>
           </CardContent>
           <CardActions disableSpacing>
-            {item?.intervention !== 0 && (
+            {intervention?.[item?.symbol] !== 0 && item?.intervention !== 0 && (
               <Button
                 color="error"
                 onClick={() => onInteracIntervention(item?.symbol)}
