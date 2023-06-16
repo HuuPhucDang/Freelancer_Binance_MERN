@@ -333,7 +333,7 @@ const Overview: React.FC = () => {
                           lineHeight: '30px',
                         }}
                       >
-                        {userData?.wallet?.balance} USDT
+                        {Number(userData?.wallet?.balance).toFixed(2)} USDT
                       </Typography>
                       {/* <Box
                         component="img"

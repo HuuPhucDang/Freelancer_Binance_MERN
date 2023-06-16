@@ -236,13 +236,22 @@ const intiChartSocket = (socket: Socket) => {
       const list: any = await response.json();
       const result: any = [];
       for (const item of list) {
-        result.push({
-          open: parseFloat(item[1]) + coin.intervention,
-          high: parseFloat(item[2]) + coin.intervention,
-          low: parseFloat(item[3]) + coin.intervention,
-          close: parseFloat(item[4]) + coin.intervention,
-          time: item[0],
-        });
+        if (!result.length)
+          result.push({
+            open: coin.price,
+            high: coin.price,
+            low: coin.price,
+            close: coin.price,
+            time: item[0],
+          });
+        else
+          result.push({
+            open: parseFloat(item[1]) + coin.intervention,
+            high: parseFloat(item[2]) + coin.intervention,
+            low: parseFloat(item[3]) + coin.intervention,
+            close: parseFloat(item[4]) + coin.intervention,
+            time: item[0],
+          });
       }
       callback(result);
     }

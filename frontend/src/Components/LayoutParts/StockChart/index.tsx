@@ -21,7 +21,7 @@ const Dashboard: React.FC<IStock> = ({ symbol }: IStock) => {
         setChartData(data);
       }
     );
-    const updateCoinPriceInterval = setInterval(() => {
+    Utils.WebSocket.on('updateAllCoinPriceNow', () => {
       Utils.WebSocket.emit(
         'getChartTradeList',
         { symbol, interval: '1m', limit: 1 },
@@ -29,9 +29,19 @@ const Dashboard: React.FC<IStock> = ({ symbol }: IStock) => {
           setChartData((oldData) => [...oldData, ...data]);
         }
       );
-    }, 10000);
+    });
+
+    // const updateCoinPriceInterval = setInterval(() => {
+    //   Utils.WebSocket.emit(
+    //     'getChartTradeList',
+    //     { symbol, interval: '1m', limit: 1 },
+    //     (data: any) => {
+    //       setChartData((oldData) => [...oldData, ...data]);
+    //     }
+    //   );
+    // }, 10000);
     return () => {
-      clearInterval(updateCoinPriceInterval);
+      // clearInterval(updateCoinPriceInterval);
     };
   }, []);
 
@@ -67,9 +77,8 @@ const Dashboard: React.FC<IStock> = ({ symbol }: IStock) => {
             autoSize: true,
             localization: {
               locale: 'vi-VN',
-              dateFormat: 'dd.MM.yy'
+              dateFormat: 'dd.MM.yy',
             },
-
           }}
           candlestickSeries={[
             {

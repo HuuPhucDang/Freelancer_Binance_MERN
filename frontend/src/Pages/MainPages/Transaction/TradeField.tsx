@@ -361,7 +361,7 @@ const TradeField: React.FC<ITradeFieldProps> = ({
           lineHeight: '15px',
         }}
       >
-        Số dư: {ballance} USDT
+        Số dư: {ballance.toFixed(2)} USDT
       </Typography>
       {_renderInputs(TRADE_TYPE.BUY)}
       <Grid container spacing={0.5} marginTop="5px">
