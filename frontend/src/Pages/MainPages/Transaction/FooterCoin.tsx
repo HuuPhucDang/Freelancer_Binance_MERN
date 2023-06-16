@@ -69,6 +69,8 @@ const FooterCoin: React.FC = () => {
       );
     });
     return () => {
+      Utils.WebSocket.off('updateNewNotification');
+      Utils.WebSocket.off('updateAllCoinPriceNow');
       // clearInterval(intervalLatest24h);
     };
   }, []);

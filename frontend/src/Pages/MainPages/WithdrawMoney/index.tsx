@@ -53,7 +53,7 @@ const WithdrawMoney: React.FC = () => {
   const requestWithdrawSuccess = useSelector((state: RootState) =>
     _.get(state.TRANSACTION, 'requestWithdrawSuccess')
   );
-  const [enchangeRate, setEnchangeRate] = React.useState<number>(0);
+  // const [enchangeRate, setEnchangeRate] = React.useState<number>(0);
 
   const {
     handleSubmit,
@@ -76,13 +76,13 @@ const WithdrawMoney: React.FC = () => {
 
   React.useEffect(() => {
     dispatch(getSelf());
-    Utils.WebSocket.emit(
-      'exchangeCurrency',
-      { symbol: 'USDTVND' },
-      (data: any) => {
-        setEnchangeRate(data || 0);
-      }
-    );
+    // Utils.WebSocket.emit(
+    //   'exchangeCurrency',
+    //   { symbol: 'USDTVND' },
+    //   (data: any) => {
+    //     setEnchangeRate(data || 0);
+    //   }
+    // );
   }, []);
 
   React.useEffect(() => {
@@ -193,16 +193,7 @@ const WithdrawMoney: React.FC = () => {
                       endAdornment: (
                         <InputAdornment position="start">
                           <Typography sx={{ fontSize: '13px' }}>
-                            ~{' '}
-                            {!Number.isNaN(amount)
-                              ? (amount * enchangeRate).toLocaleString(
-                                  'vi-VI',
-                                  {
-                                    style: 'currency',
-                                    currency: 'VND',
-                                  }
-                                )
-                              : 0}{' '}
+                            Số dư {userData?.wallet?.balance || 0} USDT
                           </Typography>
                         </InputAdornment>
                       ),
@@ -210,6 +201,16 @@ const WithdrawMoney: React.FC = () => {
                     error={Boolean(errors?.amount?.message)}
                     helperText={errors?.amount?.message}
                     {...field}
+                    onBlur={(event: any) => {
+                      let resolveValue = 0;
+                      if (!event.target.value) resolveValue = 0;
+                      else if (
+                        !Number.isNaN(event.target.value) &&
+                        event.target.value > userData?.wallet?.balance
+                      )
+                        resolveValue = userData?.wallet?.balance;
+                      field.onChange(resolveValue);
+                    }}
                   />
                 )}
               />
@@ -258,9 +259,7 @@ const WithdrawMoney: React.FC = () => {
                   control={control}
                   name="bank"
                   render={({ field }) => (
-                    <FormControl
-                      error={Boolean(errors?.bank?.message)}
-                    >
+                    <FormControl error={Boolean(errors?.bank?.message)}>
                       <Select
                         placeholder="Phương thức nhận tiền"
                         sx={{
@@ -275,16 +274,16 @@ const WithdrawMoney: React.FC = () => {
                         renderValue={
                           bank !== ''
                             ? undefined
-                            : () => <Typography>Phương thức nhận tiền</Typography>
+                            : () => (
+                                <Typography>Phương thức nhận tiền</Typography>
+                              )
                         }
                         {...field}
                       >
                         {withdrawMoneyType}
                       </Select>
                       {errors?.bank?.message ? (
-                        <FormHelperText>
-                          {errors?.bank?.message}
-                        </FormHelperText>
+                        <FormHelperText>{errors?.bank?.message}</FormHelperText>
                       ) : null}
                     </FormControl>
                   )}

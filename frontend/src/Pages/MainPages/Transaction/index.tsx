@@ -97,7 +97,10 @@ const Transaction: React.FC = () => {
                     flex: 1,
                     height: '100%',
                     background: '#000',
-                    minHeight: '350px',
+                    minHeight: {
+                      xs: '350px',
+                      sm: 'auto'
+                    }
                   }}
                 >
                   <StocksChart />

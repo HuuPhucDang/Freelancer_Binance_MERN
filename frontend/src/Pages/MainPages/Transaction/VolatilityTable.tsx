@@ -66,6 +66,7 @@ const VolatilityTable: React.FC<IProps> = ({
       );
     });
     return () => {
+      Utils.WebSocket.off('updateAllCoinPriceNow');
       clearInterval(intervalAggeList);
     };
   }, [symbol]);

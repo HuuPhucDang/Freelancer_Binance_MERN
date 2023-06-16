@@ -83,6 +83,7 @@ const AppBarComponent: React.FC = () => {
       setSliderItems(_.map(data, (el) => `${el?.symbol} ${el?.price}`));
     });
     return () => {
+      Utils.WebSocket.off("updateAllCoinPriceNow");
       // Utils.WebSocket.disconnect();
     };
   }, []);
