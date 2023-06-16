@@ -7,7 +7,7 @@ import {
   useTheme,
   useMediaQuery,
 } from '@mui/material';
-import { useWindowDimensions } from 'react-native';
+// import { useWindowDimensions } from 'react-native';
 import { useLocation } from 'react-router-dom';
 import { UserLayout } from '@/Components/DefaultLayout';
 import { StocksChart } from '@/Components/LayoutParts';

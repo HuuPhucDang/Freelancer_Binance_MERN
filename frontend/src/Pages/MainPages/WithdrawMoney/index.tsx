@@ -71,7 +71,7 @@ const WithdrawMoney: React.FC = () => {
     },
   });
 
-  const amount = watch('amount');
+  // const amount = watch('amount');
   const bank = watch('bank');
 
   React.useEffect(() => {
