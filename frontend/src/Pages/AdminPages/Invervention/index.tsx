@@ -43,6 +43,8 @@ const Request: React.FC = () => {
     });
     return () => {
       Utils.WebSocket.off('updateAllCoinPriceNow');
+      Utils.WebSocket.off("updateAllCoinPriceNow");
+      // Utils.WebSocket.disconnect();
     };
   }, []);
 

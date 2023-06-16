@@ -77,6 +77,7 @@ const Overview: React.FC = () => {
     );
     dispatch(getSelf());
     return () => {
+      Utils.WebSocket.off('updateAllCoinPriceNow');
       // Utils.WebSocket.disconnect();
     };
   }, []);

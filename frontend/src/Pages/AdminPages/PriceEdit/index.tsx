@@ -28,6 +28,7 @@ const Request: React.FC = () => {
       setButtons(data);
     });
     return () => {
+      Utils.WebSocket.off('updateAllMoonbotNow');
       // Utils.WebSocket.disconnect();
     };
   }, []);

@@ -364,7 +364,7 @@ const TradeField: React.FC<ITradeFieldProps> = ({
       <Typography
         sx={{
           fontSize: {
-            xs: '10px',
+            xs: '9px',
             md: '13px',
           },
           lineHeight: '15px',
@@ -400,7 +400,7 @@ const TradeField: React.FC<ITradeFieldProps> = ({
       <Typography
         sx={{
           fontSize: {
-            xs: '10px',
+            xs: '9px',
             md: '13px',
           },
           lineHeight: '15px',
