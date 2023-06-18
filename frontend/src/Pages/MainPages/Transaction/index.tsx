@@ -7,7 +7,6 @@ import {
   useTheme,
   useMediaQuery,
 } from '@mui/material';
-import { useWindowDimensions } from 'react-native';
 import { useLocation } from 'react-router-dom';
 import { UserLayout } from '@/Components/DefaultLayout';
 import { StocksChart } from '@/Components/LayoutParts';
@@ -23,7 +22,7 @@ import { Utils } from '@/Libs';
 const volatilityHeaderHeight = 33;
 const centerVolatilityRow = 40;
 const volatilityItemHeight = 19;
-const partElementHeight = 180;
+const partElementHeight = 147;
 
 const Transaction: React.FC = () => {
   // Constructors
@@ -35,12 +34,16 @@ const Transaction: React.FC = () => {
   const [volatilityItemsPerCategory, setVolatilityItemsPerCategory] =
     React.useState<number>(0);
   const [isPortrait, setIsPortrait] = React.useState<boolean>(true);
+  const [clientHeight, setClientHeight] = React.useState<number>(0);
+
+  const token = Utils.getAccessToken();
 
   React.useEffect(() => {
     const symbol = query.get('symbol');
     if (!symbol) Utils.replace(`${ROUTERS.TRANSACTION}?symbol=BTCUSDT`);
 
     const handleWindowSize = () => {
+      setClientHeight(window.innerHeight - 10);
       if (volatilityRef && volatilityRef.current) {
         const { innerWidth, innerHeight } = window;
         setIsPortrait(innerWidth < innerHeight);
@@ -57,12 +60,14 @@ const Transaction: React.FC = () => {
     };
     window.addEventListener('load', handleWindowSize);
     window.addEventListener('resize', handleWindowSize);
-
+    handleWindowSize();
     return () => {
       window.removeEventListener('load', handleWindowSize);
       window.removeEventListener('resize', handleWindowSize);
     };
   }, []);
+
+  console.log(clientHeight);
 
   const _renderLeftSection = () => {
     return (
@@ -79,7 +84,7 @@ const Transaction: React.FC = () => {
             <Grid
               item
               xs={12}
-              md={2.5}
+              md={3.1}
               order={{ md: 1, xs: 2 }}
               borderRight="1px solid #ccc"
               padding="0"
@@ -90,7 +95,7 @@ const Transaction: React.FC = () => {
                 symbol={query.get('symbol') || 'BTCUSDT'}
               />
             </Grid>
-            <Grid item xs={12} md={9.5} order={{ md: 2, xs: 1 }}>
+            <Grid item xs={12} md={8.9} order={{ md: 2, xs: 1 }}>
               <Stack direction="column" height="100%">
                 <Stack
                   sx={{
@@ -99,8 +104,10 @@ const Transaction: React.FC = () => {
                     // flex: 1,
                     background: '#000',
                     height: {
-                      xs: '350px',
-                      sm: `${window.innerHeight - partElementHeight - 245}px`,
+                      xs: token ? '350px' : 'calc(350px + 244px)',
+                      sm: token
+                        ? `${clientHeight - partElementHeight - 245}px`
+                        : `${clientHeight - partElementHeight - 35}px`,
                     },
                   }}
                 >
@@ -115,9 +122,9 @@ const Transaction: React.FC = () => {
                   flex={1}
                   minHeight="150px"
                   maxHeight={{
-                    xs: 'calc(100vh - 484px)',
-                    md: 'calc(100vh - 480px)',
-                    lg: 'calc(100vh - 474px)',
+                    xs: token ? 'calc(100vh - 484px)' : 'calc(100vh - 275px)',
+                    md: token ? 'calc(100vh - 480px)' : 'calc(100vh - 271px)',
+                    lg: token ? 'calc(100vh - 474px)' : 'calc(100vh - 265px)',
                   }}
                   borderBottom="1px solid #ccc"
                 >
@@ -212,12 +219,18 @@ const Transaction: React.FC = () => {
           flexDirection: 'column',
           overflow: 'auto',
           overflowX: 'hidden',
+          // overflowY: 'hidden',
           mx: 'auto',
           height: '100%',
           maxHeight: {
-            xs: 'auto',
-            md: isPortrait ? 'calc(100vh - 70px)' : 'auto',
+            xs: '100%',
+            md: isPortrait ? 'calc(100vh - 40px)' : '100%',
           },
+          overflowY: {
+            xs: 'auto',
+            md: 'hidden',
+          },
+          maxWidth: '971px',
         }}
       >
         <Grid
@@ -227,13 +240,13 @@ const Transaction: React.FC = () => {
           borderBottom="1px solid #BBAEAE"
           height={{
             xs: 'auto',
-            md: 'calc(100% - 44px)',
+            md: 'calc(100vh - 84px)',
           }}
         >
           <Grid
             item
             xs={12}
-            md={10}
+            md={9.2}
             height={{
               xs: 'auto',
               md: '100%',
@@ -244,7 +257,7 @@ const Transaction: React.FC = () => {
           <Grid
             item
             xs={12}
-            md={2}
+            md={2.8}
             borderLeft="1px solid #BBAEAE"
             borderRight="1px solid #BBAEAE"
             height={{

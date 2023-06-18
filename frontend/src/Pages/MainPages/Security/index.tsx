@@ -58,9 +58,10 @@ const Security: React.FC = () => {
           minHeight: 'calc(100vh - 94px)',
           padding: {
             xs: 0,
-            md: '1em 0',
+            // md: '1em 0',
           },
           mx: 'auto',
+          maxWidth: '971px',
         }}
       >
         <ChangePassword
@@ -87,11 +88,11 @@ const Security: React.FC = () => {
           open={security?.isVerified && isShowChangeWithdrawPassword}
           onClose={() => setIsShowChangeWithdrawPassword(false)}
         />
-        <Grid container columnSpacing={4}>
+        <Grid container>
           <Grid
             item
             xs={12}
-            md={2.5}
+            md={2}
             sx={{
               position: {
                 xs: 'sticky',
@@ -104,16 +105,14 @@ const Security: React.FC = () => {
           >
             <Sidebar />
           </Grid>
-          <Grid item xs={12} md={9.5} borderLeft="1px solid #949494">
-            <Stack
-              direction="column"
-              sx={{
-                padding: {
-                  xs: '10px',
-                  md: '0 50px 0 0 ',
-                },
-              }}
-            >
+          <Grid
+            item
+            xs={12}
+            md={10}
+            borderLeft="1px solid #949494"
+            padding="19px 32px 19px 32px"
+          >
+            <Stack direction="column">
               <Stack direction="row" justifyContent="space-between">
                 <Typography
                   sx={{ fontSize: '24px', lineHeight: '34px', fontWeight: 600 }}

@@ -117,7 +117,7 @@ const StaticHeader: React.FC<IStaticHeaderProp> = ({
     const getUSDT = symbol.substring(symbol.length - 4);
     return (
       <Grid container height="max-content">
-        <Grid item xs={4} md={2.5}>
+        <Grid item xs={4} md={2.8}>
           <Stack
             direction="row"
             sx={{ pr: 1, height: '66px', padding: '10px 4px' }}
@@ -144,7 +144,7 @@ const StaticHeader: React.FC<IStaticHeaderProp> = ({
             </Stack>
           </Stack>
         </Grid>
-        <Grid item xs={8} md={9.5}>
+        <Grid item xs={8} md={9.2}>
           {isSm ? (
             <Stack
               height="100%"

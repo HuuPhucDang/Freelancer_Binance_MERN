@@ -461,7 +461,7 @@ const TradeField: React.FC<ITradeFieldProps> = ({
     return (
       <Stack
         flex={1}
-        padding="5px"
+        padding="5px 10px"
         sx={{
           width: 1,
           '& .MuiInputBase-root:before': {

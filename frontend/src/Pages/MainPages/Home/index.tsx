@@ -1032,8 +1032,12 @@ const Home: React.FC = () => {
       <Box
         component="main"
         // maxWidth="md"
-        padding="0 24px"
-        sx={{ my: { xs: '3em', textAlign: '-webkit-center' } }}
+        padding="24px"
+        sx={{
+          maxWidth: '881px',
+          my: { xs: '1em', textAlign: '-webkit-center' },
+          mx: 'auto'
+        }}
       >
         <Grow in timeout={500}>
           {_renderHero()}

@@ -68,16 +68,17 @@ const Recharge: React.FC = () => {
           minHeight: 'calc(100vh - 94px)',
           padding: {
             xs: 0,
-            md: '1em 0',
+            // md: '1em 0',
           },
           mx: 'auto',
+          maxWidth: '971px',
         }}
       >
-        <Grid container columnSpacing={4} height="100%">
+        <Grid container height="100%">
           <Grid
             item
             xs={12}
-            md={2.5}
+            md={2}
             width="100%"
             sx={{
               position: {
@@ -91,14 +92,17 @@ const Recharge: React.FC = () => {
           >
             <Sidebar />
           </Grid>
-          <Grid item xs={12} md={9.5} borderLeft="1px solid #949494">
+          <Grid
+            item
+            xs={12}
+            md={10}
+            borderLeft="1px solid #949494"
+            padding="19px 32px 19px 32px"
+          >
             <Grid
               container
               columnSpacing={3}
-              padding={{
-                xs: '10px',
-                md: 0,
-              }}
+              padding={0}
             >
               <Grid item xs={12} md={7.5}>
                 <Stack direction="column">
