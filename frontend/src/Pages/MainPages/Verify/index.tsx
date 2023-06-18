@@ -122,7 +122,7 @@ const Verify: React.FC = () => {
               Danh tính của bạn đã được xác minh danh tính. Bạn có thể bắt đầu{' '}
               <Link
                 href={ROUTERS.TRANSACTION}
-                sx={{ textDecoration: 'underline' }}
+                sx={{ textDecoration: 'underline', color: "text.primary" }}
               >
                 giao dịch trên Binance
               </Link>
@@ -144,9 +144,10 @@ const Verify: React.FC = () => {
           minHeight: 'calc(100vh - 94px)',
           padding: {
             xs: 0,
-            md: '1em 0',
+            // md: '1em 0',
           },
           mx: 'auto',
+          maxWidth: '971px',
         }}
       >
         <UploadIDCard
@@ -157,11 +158,11 @@ const Verify: React.FC = () => {
           open={isShowAvatarPopup}
           onClose={() => setIsShowAvatarPopup(false)}
         />
-        <Grid container columnSpacing={4}>
+        <Grid container>
           <Grid
             item
             xs={12}
-            md={2.5}
+            md={2}
             sx={{
               position: {
                 xs: 'sticky',
@@ -174,8 +175,8 @@ const Verify: React.FC = () => {
           >
             <Sidebar />
           </Grid>
-          <Grid item xs={12} md={9.5} borderLeft="1px solid #949494">
-            <Stack direction="column" padding={{ xs: '10px', md: 0 }}>
+          <Grid item xs={12} md={10} borderLeft="1px solid #949494" padding="19px 50px 9px 32px">
+            <Stack direction="column">
               <Typography
                 sx={{ fontSize: '24px', lineHeight: '34px', fontWeight: 600 }}
               >

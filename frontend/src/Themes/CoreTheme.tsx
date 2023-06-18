@@ -28,6 +28,18 @@ declare module '@mui/material/styles' {
   interface PaletteOptions extends CustomPalette {}
 }
 
+declare module '@mui/material/styles' {
+  interface BreakpointOverrides {
+    xs: true; // removes the `xs` breakpoint
+    sm: true;
+    md: true;
+    lg: true;
+    xl: true;
+    mxs: true;
+    msm: true;
+  }
+}
+
 declare module '@mui/material/Button' {
   interface ButtonPropsColorOverrides {
     burntSienna: true;
@@ -77,7 +89,9 @@ const CoreTheme = createTheme({
   breakpoints: {
     values: {
       xs: 0,
+      mxs: 450,
       sm: 600,
+      msm: 790,
       md: 933,
       lg: 1200,
       xl: 1536,

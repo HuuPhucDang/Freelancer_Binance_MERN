@@ -83,7 +83,7 @@ const AppBarComponent: React.FC = () => {
       setSliderItems(_.map(data, (el) => `${el?.symbol} ${el?.price}`));
     });
     return () => {
-      Utils.WebSocket.off("updateAllCoinPriceNow");
+      Utils.WebSocket.off('updateAllCoinPriceNow');
       // Utils.WebSocket.disconnect();
     };
   }, []);
@@ -111,7 +111,7 @@ const AppBarComponent: React.FC = () => {
       notifications.forEach((item: { message: string }) =>
         result.push(item.message)
       );
-    else result.push("Hiện tại không có thông báo nào!")
+    else result.push('Hiện tại không có thông báo nào!');
     return result;
   }, [notifications]);
 
@@ -127,7 +127,7 @@ const AppBarComponent: React.FC = () => {
           md: 0,
         }}
       >
-        <Grid item xs={2} sm={2.5} md={1} lg={2}>
+        <Grid item xs={2} sm={0.9} msm={0.9} md={1} lg={1}>
           <Stack direction="row" alignItems="center">
             <Link
               href={ROUTERS.HOME}
@@ -147,23 +147,9 @@ const AppBarComponent: React.FC = () => {
                 sx={{ width: 150, height: '100%', objectFit: 'contain' }}
               />
             </Link>
-            <Link
-              href={ROUTERS.TRANSACTION}
-              sx={{
-                display: { xs: 'none', lg: 'flex' },
-                alignItems: 'center',
-                marginLeft: '10px',
-              }}
-            >
-              <Box
-                component="img"
-                src={Assets.transactionDarkIcon}
-                sx={{ width: '33px', height: '26px' }}
-              />
-            </Link>
           </Stack>
         </Grid>
-        <Grid item xs={8} sm={7} md={6} lg={6}>
+        <Grid item xs={8} sm={3.5} msm={6} md={6} lg={5}>
           <Stack
             direction="row"
             display="flex"
@@ -177,10 +163,6 @@ const AppBarComponent: React.FC = () => {
             <Link
               href={ROUTERS.TRANSACTION}
               sx={{
-                display: {
-                  xs: 'flex',
-                  lg: 'none',
-                },
                 alignItems: 'center',
               }}
             >
@@ -214,12 +196,12 @@ const AppBarComponent: React.FC = () => {
             </Stack>
           </Stack>
         </Grid>
-        <Grid item xs={2} sm={2.5} md={5} lg={4}>
+        <Grid item xs={2} sm={5.5} msm={5} md={5} lg={5}>
           <Stack
             direction="row"
             alignItems="center"
             justifyContent="flex-end"
-            display={{ xs: 'none', md: 'flex' }}
+            display={{ xs: 'none', sm: 'flex' }}
           >
             {isLogged ? (
               <>
@@ -373,7 +355,7 @@ const AppBarComponent: React.FC = () => {
             direction="row"
             alignItems="center"
             justifyContent="flex-end"
-            display={{ xs: 'flex', md: 'none' }}
+            display={{ xs: 'flex', sm: 'none' }}
           >
             <IconButton
               size="small"
@@ -450,6 +432,8 @@ const AppBarComponent: React.FC = () => {
           sx={{
             padding: '0 10px !important',
             minHeight: '40px !important',
+            maxWidth: '875px',
+            mx: 'auto',
           }}
         >
           {_renderMainBar()}
@@ -617,7 +601,7 @@ const AppBarComponent: React.FC = () => {
           </List>
         </Drawer>
       </Box>
-      {_renderSubHeader()}
+      {pathname !== ROUTERS.TRANSACTION && _renderSubHeader()}
     </AppBar>
   );
 };

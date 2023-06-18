@@ -387,7 +387,6 @@ const ConnectBank: React.FC = () => {
             {userData?.bank?.bankName}
           </Typography>
         </Stack>
-
       </Box>
     );
   };
@@ -400,16 +399,17 @@ const ConnectBank: React.FC = () => {
           minHeight: 'calc(100vh - 94px)',
           padding: {
             xs: 0,
-            md: '1em 0',
+            // md: '1em 0',
           },
           mx: 'auto',
+          maxWidth: '971px',
         }}
       >
-        <Grid container columnSpacing={2} height="100%">
+        <Grid container height="100%">
           <Grid
             item
             xs={12}
-            md={2.5}
+            md={2}
             width="100%"
             sx={{
               position: {
@@ -423,7 +423,7 @@ const ConnectBank: React.FC = () => {
           >
             <Sidebar />
           </Grid>
-          <Grid item xs={12} md={9.5} borderLeft="1px solid #949494">
+          <Grid item xs={12} md={10} borderLeft="1px solid #949494" padding="19px 50px 9px 32px">
             <Stack
               component="form"
               direction="column"

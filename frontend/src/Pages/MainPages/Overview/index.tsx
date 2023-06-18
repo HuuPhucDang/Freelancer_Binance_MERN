@@ -210,9 +210,10 @@ const Overview: React.FC = () => {
           minHeight: 'calc(100vh - 94px)',
           padding: {
             xs: '0',
-            md: '1em 0',
+            // md: '1em 0',
           },
           mx: 'auto',
+          maxWidth: '971px',
         }}
       >
         <EditAvatar
@@ -223,11 +224,11 @@ const Overview: React.FC = () => {
           open={isShowNamePopup}
           onClose={() => setIsShowNamePopup(false)}
         />
-        <Grid container columnSpacing={2} height="100%">
+        <Grid container height="100%">
           <Grid
             item
             xs={12}
-            md={2.5}
+            md={2}
             width="100%"
             sx={{
               position: {
@@ -244,13 +245,13 @@ const Overview: React.FC = () => {
           <Grid
             item
             xs={12}
-            md={9.5}
+            md={10}
             borderLeft="1px solid #949494"
-            padding={{ xs: '10px 0', md: '0' }}
+            padding="9px 32px 9px 18px"
           >
             <Grid
               container
-              columnSpacing={2}
+              columnSpacing={1}
               rowSpacing={3.5}
               padding={{ xs: '10px', md: 0 }}
             >

@@ -40,13 +40,19 @@ const Slider: React.FC<IProps> = ({
         breakpoints={{
           // when window width is >= 640px
           320: {
-            slidesPerView: 1,
+            slidesPerView: 2,
           },
           480: {
-            slidesPerView: 2,
+            slidesPerView: 1,
+          },
+          600: {
+            slidesPerView: 1,
           },
           // when window width is >= 768px
           768: {
+            slidesPerView: 2,
+          },
+          832: {
             slidesPerView: slidersPerView,
           },
         }}
