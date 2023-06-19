@@ -92,7 +92,7 @@ const CoreTheme = createTheme({
       mxs: 450,
       sm: 600,
       msm: 790,
-      md: 933,
+      md: 923,
       lg: 1200,
       xl: 1536,
     },
