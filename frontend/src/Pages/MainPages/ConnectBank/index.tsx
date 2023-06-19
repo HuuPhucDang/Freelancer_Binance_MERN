@@ -402,7 +402,7 @@ const ConnectBank: React.FC = () => {
             // md: '1em 0',
           },
           mx: 'auto',
-          maxWidth: '971px',
+          // maxWidth: '971px',
         }}
       >
         <Grid container height="100%">
