@@ -40,10 +40,13 @@ const Slider: React.FC<IProps> = ({
         breakpoints={{
           // when window width is >= 640px
           320: {
+            slidesPerView: 1,
+          },
+          400: {
             slidesPerView: 2,
           },
           480: {
-            slidesPerView: 1,
+            slidesPerView: 2,
           },
           600: {
             slidesPerView: 1,
@@ -55,7 +58,32 @@ const Slider: React.FC<IProps> = ({
           832: {
             slidesPerView: slidersPerView,
           },
+          1100: {
+            slidesPerView: slidersPerView + 1,
+          },
+          1300: {
+            slidesPerView: slidersPerView + 2,
+          },
+          1500: {
+            slidesPerView: slidersPerView + 3,
+          },
+          1700: {
+            slidesPerView: slidersPerView + 4,
+          },
+          1900: {
+            slidesPerView: slidersPerView + 5,
+          },
+          2100: {
+            slidesPerView: slidersPerView + 6,
+          },
+          2300: {
+            slidesPerView: slidersPerView + 7,
+          },
+          2500: {
+            slidesPerView: slidersPerView + 8,
+          },
         }}
+        style={{maxWidth: '100%'}}
       >
         {items.map((item: string, index: number) => (
           <SwiperSlide key={`item-${index}-${item}`}>
