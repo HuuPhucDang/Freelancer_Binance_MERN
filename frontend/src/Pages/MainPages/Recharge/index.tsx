@@ -71,7 +71,7 @@ const Recharge: React.FC = () => {
             // md: '1em 0',
           },
           mx: 'auto',
-          maxWidth: '971px',
+          // maxWidth: '971px',
         }}
       >
         <Grid container height="100%">
@@ -104,7 +104,7 @@ const Recharge: React.FC = () => {
               columnSpacing={3}
               padding={0}
             >
-              <Grid item xs={12} md={7.5}>
+              <Grid item xs={12}>
                 <Stack direction="column">
                   <Typography
                     sx={{
