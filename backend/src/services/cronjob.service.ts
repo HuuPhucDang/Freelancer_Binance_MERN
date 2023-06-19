@@ -32,7 +32,6 @@ const initScheduledJobs = () => {
         }
       }
       const allSavedCoins = await Coin.find().sort({ price: -1 });
-      console.warn(allSavedCoins, "CRON");
       global.io.emit("updateAllCoinPriceNow", allSavedCoins);
     }
   );
