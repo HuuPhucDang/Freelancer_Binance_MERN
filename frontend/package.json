@@ -2,11 +2,6 @@
   "name": "hey_life",
   "private": true,
   "version": "0.0.1",
-  "author": "Phuc Luffy",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/HuuPhucDang"
-  },
   "homepage": ".",
   "scripts": {
     "build": "tsc && vite build --mode prod",
