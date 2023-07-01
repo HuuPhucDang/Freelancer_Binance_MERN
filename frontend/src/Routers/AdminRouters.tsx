@@ -37,6 +37,10 @@ const AdminRouters = {
       path: ROUTERS.EDIT_PRICE,
       element: <AdminPages.PriceEdit />,
     },
+    {
+      path: ROUTERS.BONUS,
+      element: <AdminPages.Bonus />,
+    },
   ],
 };
 

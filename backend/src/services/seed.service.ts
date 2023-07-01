@@ -3,6 +3,7 @@ import User from "../models/user.model";
 import Wallet from "../models/wallet.model";
 import Coin from "../models/coin.model";
 import Moonbot from "../models/moonbot.model";
+import Bonus from "../models/rechageBonus.model";
 import {
   ECoinCoupleTrade,
   ETradeType,
@@ -109,7 +110,7 @@ export const createSeedMoonbots = async (): Promise<void> => {
   }
   for (const name of MOONBOT_SELL_NAMES) {
     const index = MOONBOT_SELL_NAMES.indexOf(name);
-    const isExistMoonbot = await Moonbot.findOne({ name });;
+    const isExistMoonbot = await Moonbot.findOne({ name });
     if (!isExistMoonbot)
       await Moonbot.create({
         name,
@@ -118,5 +119,49 @@ export const createSeedMoonbots = async (): Promise<void> => {
         probability: MOONBOT_PROBABILITY[index],
         type: ETradeType.SELL,
       });
+  }
+};
+
+const BONUS_SEED = [
+  {
+    name: "1",
+    amount: 2500,
+    bonus: 1250,
+  },
+  {
+    name: "2",
+    amount: 2500,
+    bonus: 1250,
+  },
+  {
+    name: "3",
+    amount: 2500,
+    bonus: 1250,
+  },
+  {
+    name: "4",
+    amount: 2500,
+    bonus: 1250,
+  },
+  {
+    name: "5",
+    amount: 2500,
+    bonus: 1250,
+  },
+  {
+    name: "6",
+    amount: 2500,
+    bonus: 1250,
+  },
+];
+
+/**
+ * Create a Bonus
+ * @returns {Promise<void>}
+ */
+export const createSeedBonus = async (): Promise<void> => {
+  for (const bonus of BONUS_SEED) {
+    const isExistbonus = await Bonus.findOne({ name: bonus.name });
+    if (!isExistbonus) await Bonus.create(bonus);
   }
 };

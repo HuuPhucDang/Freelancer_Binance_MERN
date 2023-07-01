@@ -10,6 +10,7 @@ import systemInforRoute from "./systemInfor.route";
 import chatBoxRoute from "./chatBox.route";
 import tradeRoute from "./trade.route";
 import notificationRoute from "./notification.route";
+import bonusRoute from "./bonus.route";
 
 const router = express.Router();
 
@@ -62,6 +63,10 @@ const defaultIRoute: IRoute[] = [
   {
     path: "/notification",
     route: notificationRoute,
+  },
+  {
+    path: "/bonus",
+    route: bonusRoute,
   },
 ];
 

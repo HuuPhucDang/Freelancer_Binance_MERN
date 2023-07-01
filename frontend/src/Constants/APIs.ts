@@ -52,4 +52,7 @@ export default {
   NOTIFICATION: {
     BASIC: '/notification',
   },
+  BONUS: {
+    BASIC: '/bonus',
+  },
 };

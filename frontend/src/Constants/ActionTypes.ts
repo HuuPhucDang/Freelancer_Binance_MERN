@@ -41,6 +41,7 @@ const _loadingActions: ActionTypes = generateLoadingActions([
   'USER_REQUEST',
   'TRADE',
   'NOTIFICATION',
+  'BONUS',
 ]);
 
 const _asyncActions: ActionTypes = generateSyncActions([
@@ -89,6 +90,8 @@ const _asyncActions: ActionTypes = generateSyncActions([
   'CREATE_TRADE',
   'UPDATE_USER',
   'FETCH_NOTIFICATION',
+  'FETCH_BONUS',
+  'UPDATE_BONUS',
 ]);
 
 const _singleActions: ActionTypes = {

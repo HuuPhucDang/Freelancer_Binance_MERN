@@ -9,6 +9,7 @@ import * as TransactionAPI from './Transaction.api';
 import * as UserRequestAPI from './UserRequest.api';
 import * as TradeAPI from './Trade.api';
 import * as NotificationAPI from './Notification.api';
+import * as BonusAPI from './Bonus.api';
 
 export default {
   ...AuthAPI,
@@ -22,4 +23,5 @@ export default {
   ...UserRequestAPI,
   ...TradeAPI,
   ...NotificationAPI,
+  ...BonusAPI,
 };

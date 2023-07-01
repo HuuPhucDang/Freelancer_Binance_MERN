@@ -6,6 +6,7 @@ import Transaction from './Transaction';
 import Intervention from './Invervention';
 import Verify from './Verify';
 import PriceEdit from './PriceEdit';
+import Bonus from './Bonus';
 
 export {
   BankInformation,
@@ -16,4 +17,5 @@ export {
   Transaction,
   Verify,
   PriceEdit,
+  Bonus,
 };

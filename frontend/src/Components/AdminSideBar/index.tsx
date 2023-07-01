@@ -46,13 +46,16 @@ const navigationItems = [
   {
     label: 'Chỉnh sửa Moonbot',
     path: ROUTERS.EDIT_PRICE,
-    icon: (
-      <TuneIcon sx={{ fontSize: '16px', marginRight: '5px' }} />
-    ),
+    icon: <TuneIcon sx={{ fontSize: '16px', marginRight: '5px' }} />,
   },
   {
     label: 'Thông tin ngân hàng',
     path: ROUTERS.BANK_INFORMATION,
+    icon: <AccountBalanceIcon sx={{ fontSize: '16px', marginRight: '5px' }} />,
+  },
+  {
+    label: 'Thông tin nạp thưởng',
+    path: ROUTERS.BONUS,
     icon: <AccountBalanceIcon sx={{ fontSize: '16px', marginRight: '5px' }} />,
   },
   {
