@@ -196,7 +196,7 @@ const Support = () => {
           // maxWidth="800px"
           border="1px solid #BEBEBE"
         >
-          <Grid item xs={5} md={3} borderRight="1px solid #BEBEBE">
+          <Grid item xs={12} md={3} borderRight="1px solid #BEBEBE">
             <Stack direction="column">
               {valueRef.current.length > 0
                 ? valueRef.current.map((item: any) => {
@@ -262,7 +262,7 @@ const Support = () => {
               ) : null}
             </Stack>
           </Grid>
-          <Grid item xs={7} md={9}>
+          <Grid item xs={12} md={9}>
             {currentRoom?.roomId ? _renderMsg() : _renderRequiredUser()}
           </Grid>
         </Grid>

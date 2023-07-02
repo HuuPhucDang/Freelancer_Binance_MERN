@@ -114,7 +114,7 @@ const BankInformation = () => {
           Thông tin ngân hàng
         </Typography>
         <Grid container maxWidth="800px" spacing={4}>
-          <Grid item xs={8}>
+          <Grid item xs={12} md={8}>
             <Stack component="form" direction="column" spacing={2}>
               <FormControl>
                 <Controller
@@ -226,7 +226,7 @@ const BankInformation = () => {
               </FormControl>
             </Stack>
           </Grid>
-          <Grid item xs={4}>
+          <Grid item xs={12} md={4}>
             <Stack direction="column">
               <input type="file" {...register('QRCode')} />
               {QRUrl ? (

@@ -90,7 +90,7 @@ const SideBar = () => {
               backgroundColor: isActive
                 ? 'background.primary'
                 : 'background.default',
-              fontSize: '14px',
+              fontSize: { md: '14px', xs: '5px' },
               height: '40px',
               display: 'flex',
               alignItems: 'center',
@@ -115,7 +115,13 @@ const SideBar = () => {
       direction="column"
       sx={{ height: '100%', borderRight: '1px solid #BEBEBE' }}
     >
-      <Typography sx={{ padding: '10px', fontSize: '16px', fontWeight: 600 }}>
+      <Typography
+        sx={{
+          padding: '10px',
+          fontSize: { md: '16px', xs: '6px' },
+          fontWeight: 600,
+        }}
+      >
         Trang quản lý
       </Typography>
       <Stack direction="column" flex={1} padding="16px 0">
@@ -124,7 +130,7 @@ const SideBar = () => {
           sx={{
             color: 'text.primary',
             backgroundColor: 'background.default',
-            fontSize: '14px',
+            fontSize: { md: '14px', xs: '7px' },
             height: '40px',
             display: 'flex',
             alignItems: 'center',

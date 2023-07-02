@@ -38,10 +38,10 @@ const AdminLayout: React.FC<SectionProps> = (props: SectionProps) => {
 
   return (
     <Grid container sx={{ background: 'background.default', height: '100vh' }}>
-      <Grid item xs={2}>
+      <Grid item xs={3} md={2}>
         <AdminSideBar />
       </Grid>
-      <Grid item xs={10}>
+      <Grid item xs={9} md={10}>
         <Container
           maxWidth="lg"
           sx={{ height: '100%', maxHeight: '100vh', overflow: 'auto' }}

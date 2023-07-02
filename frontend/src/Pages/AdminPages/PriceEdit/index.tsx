@@ -67,7 +67,7 @@ const Request: React.FC = () => {
               component="form"
               onSubmit={(e: any) => onSave(e, item.id)}
             >
-              <Grid item xs={3}>
+              <Grid item xs={4} md={3}>
                 <TextField
                   fullWidth
                   type="number"
@@ -80,7 +80,7 @@ const Request: React.FC = () => {
                   inputProps={{ step: '1' }}
                 />
               </Grid>
-              <Grid item xs={3}>
+              <Grid item xs={4} md={3}>
                 <TextField
                   fullWidth
                   type="number"
@@ -93,7 +93,7 @@ const Request: React.FC = () => {
                   inputProps={{ step: '1' }}
                 />
               </Grid>
-              <Grid item xs={3}>
+              <Grid item xs={4}>
                 <TextField
                   fullWidth
                   size="small"
@@ -116,7 +116,7 @@ const Request: React.FC = () => {
                   }}
                 />
               </Grid>
-              <Grid item xs={3}>
+              <Grid item xs={12} md={3}>
                 <Button
                   color="success"
                   variant="contained"

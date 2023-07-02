@@ -43,7 +43,7 @@ const Request: React.FC = () => {
     });
     return () => {
       Utils.WebSocket.off('updateAllCoinPriceNow');
-      Utils.WebSocket.off("updateAllCoinPriceNow");
+      Utils.WebSocket.off('updateAllCoinPriceNow');
       // Utils.WebSocket.disconnect();
     };
   }, []);
@@ -74,7 +74,7 @@ const Request: React.FC = () => {
   // Renders
   const _renderCards = () =>
     _.map(coinData, (item, index) => (
-      <Grid item xs={4} key={index}>
+      <Grid item xs={12} md={4} key={index}>
         <Card sx={{ maxWidth: 1 }}>
           <CardHeader
             avatar={
@@ -106,7 +106,7 @@ const Request: React.FC = () => {
               justifyContent="space-between"
               alignItems="center"
             >
-              <Grid item xs={3}>
+              <Grid item xs={12} md={3}>
                 <Button
                   color="error"
                   variant="contained"
@@ -117,7 +117,7 @@ const Request: React.FC = () => {
                   Giảm
                 </Button>
               </Grid>
-              <Grid item xs={4}>
+              <Grid item xs={12} md={4}>
                 <TextField
                   fullWidth
                   type="number"
@@ -133,7 +133,7 @@ const Request: React.FC = () => {
                   inputProps={{ step: '0.0001', min: 0 }}
                 />
               </Grid>
-              <Grid item xs={3}>
+              <Grid item xs={12} md={3}>
                 <Button
                   color="success"
                   variant="contained"
@@ -174,6 +174,7 @@ const Request: React.FC = () => {
           container
           marginTop="20px"
           spacing={2}
+          flexWrap="wrap"
           justifyContent="space-between"
         >
           {_renderCards()}
