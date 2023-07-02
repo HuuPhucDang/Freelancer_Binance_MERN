@@ -54,6 +54,7 @@ import frontIDCard from './front_id_card.png';
 import backIDCard from './back_id_card.png';
 import successSecurityImage from './success_security.png';
 import logoImage from './logo.jpg';
+import persionMobile from './persion_mobile.png';
 
 export default {
   darkIconDarkTheme,
@@ -105,5 +106,6 @@ export default {
   frontIDCard,
   backIDCard,
   successSecurityImage,
-  logoImage
+  logoImage,
+  persionMobile,
 };

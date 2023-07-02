@@ -93,7 +93,7 @@ const Request: React.FC = () => {
                   inputProps={{ step: '1' }}
                 />
               </Grid>
-              <Grid item xs={4}>
+              <Grid item xs={4} md={3}>
                 <TextField
                   fullWidth
                   size="small"

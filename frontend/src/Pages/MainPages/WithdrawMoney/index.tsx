@@ -14,6 +14,7 @@ import {
   TextField,
   FormHelperText,
   InputAdornment,
+  Avatar,
 } from '@mui/material';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -23,10 +24,11 @@ import * as yup from 'yup';
 // Import local
 import { UserLayout } from '@/Components/DefaultLayout';
 import { Sidebar } from '@/Components/LayoutParts';
+import { CommonStyles } from '@/Components/Common';
 import { RootState, useTypedDispatch } from '@/Reducers/store';
 import { TransactionActions, UserActions } from '@/Reducers/Actions';
 import { Utils } from '@/Libs';
-// import Placeholder from 'react-select/dist/declarations/src/components/Placeholder';
+import Assets from '@/Assets';
 
 const { getSelf } = UserActions;
 const { requestWithdraw, resetTransactionReducer } = TransactionActions;
@@ -53,8 +55,6 @@ const WithdrawMoney: React.FC = () => {
   const requestWithdrawSuccess = useSelector((state: RootState) =>
     _.get(state.TRANSACTION, 'requestWithdrawSuccess')
   );
-  // const [enchangeRate, setEnchangeRate] = React.useState<number>(0);
-
   const {
     handleSubmit,
     formState: { errors },
@@ -66,7 +66,7 @@ const WithdrawMoney: React.FC = () => {
     resolver: yupResolver(schema),
     defaultValues: {
       amount: 0,
-      bank: '',
+      bank: userData?.bank?.id || '',
       withdrawPassword: '',
     },
   });
@@ -115,202 +115,341 @@ const WithdrawMoney: React.FC = () => {
     return <MenuItem disabled>Không có phương thức nhận tiền</MenuItem>;
   }, [userData]);
 
-  const renderMain = () => {
+  const _renderCard = () => {
     return (
       <Box
-        component="main"
         sx={{
-          minHeight: 'calc(100vh - 94px)',
-          padding: {
-            xs: '0',
-            // md: '1em 0',
-          },
-          mx: 'auto',
-          // maxWidth: '971px',
+          position: 'relative',
+          width: 'max-content',
+          maxHeight: 'max-content',
         }}
       >
-        <Grid container>
-          <Grid
-            item
-            xs={12}
-            md={2}
-            width="100%"
+        <Box
+          src={Assets.bankCardImage}
+          component="img"
+          sx={{ width: 1, maxWidth: 400 }}
+        />
+        <Stack
+          direction="column"
+          sx={{
+            position: 'absolute',
+            top: '13%',
+            left: '30%',
+            userSelect: 'none',
+          }}
+        >
+          <Typography
             sx={{
-              position: {
-                xs: 'sticky',
-                md: 'unset',
-              },
-              top: '70px',
-              backgroundColor: 'background.default',
-              zIndex: 1,
+              fontSize: '20px',
+              textTransform: 'uppercase',
+              color: 'text.burntSienna',
+              fontWeight: 500,
             }}
           >
-            <Sidebar />
-          </Grid>
-          <Grid item xs={12} md={10} borderLeft="1px solid #949494" padding="19px 32px 19px 32px">
-            <Stack direction="column" sx={{ p: 0 }}>
-              <Typography
-                sx={{
-                  fontSize: '24px',
-                  lineHeight: '34px',
-                  fontWeight: 600,
-                }}
-              >
-                Rút tiền
-              </Typography>
-              <Controller
-                name="amount"
-                control={control}
-                render={({ field }) => (
-                  <TextField
-                    hiddenLabel
-                    variant="outlined"
-                    size="small"
-                    placeholder="USDT"
-                    sx={{
-                      ' .MuiInputBase-root': {
-                        padding: '0',
-                        backgroundColor: 'background.chargeInput',
-                        color: 'text.primary',
-                      },
-                      input: {
-                        height: '59px',
-                        boxSizing: 'border-box',
-                        padding: '0 35px',
-                      },
-                    }}
-                    autoComplete="new-password"
-                    type="number"
-                    InputProps={{
-                      sx: {
-                        height: '59px',
-                        fontSize: '15px',
-                        paddingLeft: '22px',
-                        marginTop: '20px',
-                        backgroundColor: 'background.chargeInput',
-                        color: 'text.primary',
-                        borderRadius: '3px',
-                      },
-                      endAdornment: (
-                        <InputAdornment position="start">
-                          <Typography sx={{ fontSize: '13px' }}>
-                            Số dư {userData?.wallet?.balance.toFixed(2) || 0} USDT
-                          </Typography>
-                        </InputAdornment>
-                      ),
-                    }}
-                    error={Boolean(errors?.amount?.message)}
-                    helperText={errors?.amount?.message}
-                    {...field}
-                    onBlur={(event: any) => {
-                      let resolveValue = 0;
-                      if (!event.target.value) resolveValue = 0;
-                      else if (
-                        !Number.isNaN(event.target.value) &&
-                        event.target.value > userData?.wallet?.balance
-                      )
-                        resolveValue = userData?.wallet?.balance;
-                      field.onChange(resolveValue);
-                    }}
-                  />
-                )}
-              />
-              <Controller
-                name="withdrawPassword"
-                control={control}
-                render={({ field }) => (
-                  <TextField
-                    hiddenLabel
-                    variant="outlined"
-                    size="small"
-                    placeholder="Mật khẩu rút tiền"
-                    sx={{
-                      ' .MuiInputBase-root': {
-                        padding: '0',
-                        backgroundColor: 'background.chargeInput',
-                        color: 'text.primary',
-                      },
-                      input: {
-                        height: '59px',
-                        boxSizing: 'border-box',
-                        padding: '0 35px',
-                      },
-                    }}
-                    autoComplete="new-password"
-                    type="password"
-                    InputProps={{
-                      sx: {
-                        height: '59px',
-                        fontSize: '15px',
-                        paddingLeft: '22px',
-                        marginTop: '20px',
-                        backgroundColor: 'background.chargeInput',
-                        color: 'text.primary',
-                        borderRadius: '3px',
-                      },
-                    }}
-                    error={Boolean(errors?.withdrawPassword?.message)}
-                    helperText={errors?.withdrawPassword?.message}
-                    {...field}
-                  />
-                )}
-              />
-              <FormControl fullWidth sx={{ marginTop: '20px' }}>
-                <Controller
-                  control={control}
-                  name="bank"
-                  render={({ field }) => (
-                    <FormControl error={Boolean(errors?.bank?.message)}>
-                      <Select
-                        placeholder="Phương thức nhận tiền"
-                        sx={{
-                          backgroundColor: 'background.chargeInput',
-                          color: 'text.primary',
-                          borderRadius: '3px',
-                          padding: '0 22px',
-                          ' >': { borderRadius: '3px' },
-                          border: 'none',
-                        }}
-                        displayEmpty
-                        renderValue={
-                          bank !== ''
-                            ? undefined
-                            : () => (
-                                <Typography>Phương thức nhận tiền</Typography>
-                              )
-                        }
-                        {...field}
-                      >
-                        {withdrawMoneyType}
-                      </Select>
-                      {errors?.bank?.message ? (
-                        <FormHelperText>{errors?.bank?.message}</FormHelperText>
-                      ) : null}
-                    </FormControl>
-                  )}
-                />
-              </FormControl>
-              <Button
-                sx={{
-                  backgroundColor: 'background.burntSienna',
-                  color: 'text.secondary',
-                  textTransform: 'unset',
-                  height: '43px',
-                  width: '265px',
-                  fontWeight: 500,
-                  fontSize: '15px',
-                  marginTop: '22px',
-                  alignSelf: 'center',
-                }}
-                // disabled={!bank || !amount}
-                onClick={handleSubmit(onSubmit)}
-              >
-                Rút tiền
-              </Button>
-            </Stack>
-          </Grid>
-        </Grid>
+            {userData?.bank?.fullname}
+          </Typography>
+        </Stack>
+        <Stack
+          direction="column"
+          sx={{
+            position: 'absolute',
+            top: '44%',
+            left: '30%',
+            userSelect: 'none',
+          }}
+        >
+          <Typography
+            sx={{
+              fontSize: '20px',
+              textTransform: 'uppercase',
+              color: 'text.burntSienna',
+              fontWeight: 500,
+            }}
+          >
+            {userData?.bank?.accountNumber}
+          </Typography>
+        </Stack>
+        <Stack
+          direction="column"
+          sx={{
+            position: 'absolute',
+            bottom: '24%',
+            left: '30%',
+            userSelect: 'none',
+          }}
+        >
+          <Typography
+            sx={{
+              fontSize: '20px',
+              textTransform: 'uppercase',
+              color: 'text.burntSienna',
+              fontWeight: 500,
+            }}
+          >
+            {userData?.wallet?.balance || 0} USDT
+          </Typography>
+        </Stack>
+        <Stack
+          direction="column"
+          sx={{
+            position: 'absolute',
+            bottom: '10%',
+            left: '13%',
+            userSelect: 'none',
+          }}
+        >
+          <Typography
+            sx={{
+              fontSize: '20px',
+              textTransform: 'uppercase',
+              color: 'text.burntSienna',
+              fontWeight: 500,
+            }}
+          >
+            {userData?.bank?.bankName}
+          </Typography>
+        </Stack>
       </Box>
+    );
+  };
+
+  const _renderForm = () => (
+    <>
+      <Controller
+        name="amount"
+        control={control}
+        render={({ field }) => (
+          <TextField
+            hiddenLabel
+            variant="outlined"
+            size="small"
+            placeholder="USDT"
+            sx={{
+              ' .MuiInputBase-root': {
+                padding: '0',
+                backgroundColor: 'background.chargeInput',
+                color: 'text.primary',
+              },
+              input: {
+                height: '59px',
+                boxSizing: 'border-box',
+                padding: '0 35px',
+              },
+            }}
+            autoComplete="new-password"
+            type="number"
+            InputProps={{
+              sx: {
+                height: '59px',
+                fontSize: '15px',
+                paddingLeft: '22px',
+                marginTop: '20px',
+                backgroundColor: 'background.chargeInput',
+                color: 'text.primary',
+                borderRadius: '3px',
+              },
+              endAdornment: (
+                <InputAdornment position="start">
+                  <Typography
+                    sx={{ fontSize: '13px', ...CommonStyles.displayInDesktop }}
+                  >
+                    Số dư ${userData?.wallet?.balance.toFixed(2) || 0} USDT
+                  </Typography>
+                  <Typography
+                    sx={{ fontSize: '13px', ...CommonStyles.displayInMobile }}
+                  >
+                    Nhập số tiền muốn rút
+                  </Typography>
+                </InputAdornment>
+              ),
+            }}
+            error={Boolean(errors?.amount?.message)}
+            helperText={errors?.amount?.message}
+            {...field}
+            onBlur={(event: any) => {
+              let resolveValue = 0;
+              if (!event.target.value) resolveValue = 0;
+              else if (
+                !Number.isNaN(event.target.value) &&
+                event.target.value > userData?.wallet?.balance
+              )
+                resolveValue = userData?.wallet?.balance;
+              field.onChange(resolveValue);
+            }}
+          />
+        )}
+      />
+      <Controller
+        name="withdrawPassword"
+        control={control}
+        render={({ field }) => (
+          <TextField
+            hiddenLabel
+            variant="outlined"
+            size="small"
+            placeholder="Mật khẩu rút tiền"
+            sx={{
+              ' .MuiInputBase-root': {
+                padding: '0',
+                backgroundColor: 'background.chargeInput',
+                color: 'text.primary',
+              },
+              input: {
+                height: '59px',
+                boxSizing: 'border-box',
+                padding: '0 35px',
+              },
+            }}
+            autoComplete="new-password"
+            type="password"
+            InputProps={{
+              sx: {
+                height: '59px',
+                fontSize: '15px',
+                paddingLeft: '22px',
+                marginTop: '20px',
+                backgroundColor: 'background.chargeInput',
+                color: 'text.primary',
+                borderRadius: '3px',
+              },
+            }}
+            error={Boolean(errors?.withdrawPassword?.message)}
+            helperText={errors?.withdrawPassword?.message}
+            {...field}
+          />
+        )}
+      />
+      <FormControl
+        fullWidth
+        sx={{ marginTop: '20px', display: { xs: 'none', md: 'flex' } }}
+      >
+        <Controller
+          control={control}
+          name="bank"
+          render={({ field }) => (
+            <FormControl error={Boolean(errors?.bank?.message)}>
+              <Select
+                placeholder="Phương thức nhận tiền"
+                sx={{
+                  backgroundColor: 'background.chargeInput',
+                  color: 'text.primary',
+                  borderRadius: '3px',
+                  padding: '0 22px',
+                  ' >': { borderRadius: '3px' },
+                  border: 'none',
+                }}
+                displayEmpty
+                renderValue={
+                  bank !== ''
+                    ? undefined
+                    : () => <Typography>Phương thức nhận tiền</Typography>
+                }
+                {...field}
+              >
+                {withdrawMoneyType}
+              </Select>
+              {errors?.bank?.message ? (
+                <FormHelperText>{errors?.bank?.message}</FormHelperText>
+              ) : null}
+            </FormControl>
+          )}
+        />
+      </FormControl>
+      <Button
+        sx={{
+          backgroundColor: 'background.burntSienna',
+          color: 'text.secondary',
+          textTransform: 'unset',
+          height: { sm: '43px', xs: 60 },
+          width: { sm: '265px', xs: 143 },
+          fontWeight: 500,
+          fontSize: '15px',
+          marginTop: '22px',
+          alignSelf: 'center',
+        }}
+        // disabled={!bank || !amount}
+        onClick={handleSubmit(onSubmit)}
+      >
+        Rút tiền
+      </Button>
+    </>
+  );
+
+  const _renderMobile = () => (
+    <Stack
+      direction="column"
+      sx={{
+        ...CommonStyles.displayInMobile,
+        padding: 2,
+      }}
+    >
+      <Typography
+        sx={{ textAlign: 'center', fontWeight: 'bold', fontSize: 24 }}
+      >
+        Rút Tiền
+      </Typography>
+      <Stack direction="row" alignItems="center" px={2}>
+        <Avatar src={userData?.avatar || Assets.persionMobile} sx={{ width: 92, height: 92 }} />
+        <Typography
+          sx={{ textAlign: 'center', fontWeight: 'bold', fontSize: 18 }}
+        >
+          {userData.nickname}
+        </Typography>
+      </Stack>
+      {_renderCard()}
+      {_renderForm()}
+    </Stack>
+  );
+
+  const renderMain = () => {
+    return (
+      <>
+        {_renderMobile()}
+        <Box
+          component="main"
+          sx={{
+            minHeight: 'calc(100vh - 94px)',
+            padding: {
+              xs: '0',
+              // md: '1em 0',
+            },
+            mx: 'auto',
+            // maxWidth: '971px',
+            ...CommonStyles.displayInDesktop,
+          }}
+        >
+          <Grid container>
+            <Grid
+              item
+              xs={12}
+              md={2}
+              width="100%"
+              sx={{
+                position: {
+                  xs: 'sticky',
+                  md: 'unset',
+                },
+                top: '70px',
+                backgroundColor: 'background.default',
+                zIndex: 1,
+              }}
+            >
+              <Sidebar />
+            </Grid>
+            <Grid
+              item
+              xs={12}
+              md={10}
+              borderLeft="1px solid #949494"
+              padding="19px 32px 19px 32px"
+            >
+              <Stack direction="column" sx={{ p: 0 }}>
+                {_renderForm()}
+              </Stack>
+            </Grid>
+          </Grid>
+        </Box>
+      </>
     );
   };
   return <UserLayout content={renderMain()} screenTitle="Rút tiền" />;
