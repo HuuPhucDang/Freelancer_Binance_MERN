@@ -63,7 +63,7 @@ const UserLayout: React.FC<SectionProps> = (props: SectionProps) => {
           height:
             pathname === ROUTERS.TRANSACTION
               ? 'calc(100vh - 40px)'
-              : 'calc(100vh - 70px)',
+              : 'calc(100vh - 180px)',
         }}
       >
         <Helmet>

@@ -36,8 +36,8 @@ const AuthLayout: React.FC<SectionProps> = () => {
             width: '100vw',
             height: '100vh',
             display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
+            // alignItems: 'center',
+            // justifyContent: 'center',
           }}
         >
           <Outlet />

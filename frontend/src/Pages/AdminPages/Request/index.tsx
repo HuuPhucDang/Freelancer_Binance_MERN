@@ -134,24 +134,42 @@ const Request: React.FC = () => {
             setCurrentUser(null);
           }}
         />
-        <Typography sx={{ fontSize: '17px', fontWeight: 600 }}>
+        <Typography
+          sx={{ fontSize: { xs: '17px', pc: '30px' }, fontWeight: 700 }}
+        >
           Yêu cầu
         </Typography>
         <TableContainer component={Paper} sx={{ marginTop: '30px' }}>
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
             <TableHead>
               <TableRow>
-                <TableCell sx={{ fontWeight: 600 }}>Người dùng</TableCell>
-                <TableCell align="center" sx={{ fontWeight: 600 }}>
+                <TableCell
+                  sx={{ fontWeight: 600, fontSize: { xs: '14px', pc: '20px' } }}
+                >
+                  Người dùng
+                </TableCell>
+                <TableCell
+                  align="center"
+                  sx={{ fontWeight: 600, fontSize: { xs: '14px', pc: '20px' } }}
+                >
                   Loại yêu cầu
                 </TableCell>
-                <TableCell align="center" sx={{ fontWeight: 600 }}>
+                <TableCell
+                  align="center"
+                  sx={{ fontWeight: 600, fontSize: { xs: '14px', pc: '20px' } }}
+                >
                   Tin nhắn
                 </TableCell>
-                <TableCell align="center" sx={{ fontWeight: 600 }}>
+                <TableCell
+                  align="center"
+                  sx={{ fontWeight: 600, fontSize: { xs: '14px', pc: '20px' } }}
+                >
                   Thời gian
                 </TableCell>
-                <TableCell align="center" sx={{ fontWeight: 600 }}>
+                <TableCell
+                  align="center"
+                  sx={{ fontWeight: 600, fontSize: { xs: '14px', pc: '20px' } }}
+                >
                   Hành động
                 </TableCell>
               </TableRow>
@@ -163,20 +181,32 @@ const Request: React.FC = () => {
                     key={`row-${index}`}
                     sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                   >
-                    <TableCell component="th" scope="row">
+                    <TableCell
+                      component="th"
+                      scope="row"
+                      sx={{ fontSize: { pc: '20px' } }}
+                    >
                       {row.name}
                     </TableCell>
-                    <TableCell align="center">{types[row.type]}</TableCell>
-                    <TableCell align="center">{row.message}</TableCell>
-                    <TableCell align="center">{row.createdAt}</TableCell>
-                    <TableCell align="center">{row.action}</TableCell>
+                    <TableCell align="center" sx={{ fontSize: { pc: '20px' } }}>
+                      {types[row.type]}
+                    </TableCell>
+                    <TableCell align="center" sx={{ fontSize: { pc: '20px' } }}>
+                      {row.message}
+                    </TableCell>
+                    <TableCell align="center" sx={{ fontSize: { pc: '20px' } }}>
+                      {row.createdAt}
+                    </TableCell>
+                    <TableCell align="center" sx={{ fontSize: { pc: '20px' } }}>
+                      {row.action}
+                    </TableCell>
                   </TableRow>
                 ))}
               {rows.length === 0 && (
                 <TableRow
                   sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                 >
-                  <TableCell component="th" scope="row">
+                  <TableCell component="th" scope="row" sx={{ fontSize: { pc: '20px' } }}>
                     Không có dữ liệu
                   </TableCell>
                 </TableRow>

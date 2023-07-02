@@ -226,7 +226,9 @@ const Transaction: React.FC = () => {
             setCurrentUser(null);
           }}
         />
-        <Typography sx={{ fontSize: '17px', fontWeight: 600 }}>
+        <Typography
+          sx={{ fontSize: { xs: '17px', pc: '30px' }, fontWeight: 700 }}
+        >
           Giao dịch
         </Typography>
         <TableContainer
@@ -238,23 +240,45 @@ const Transaction: React.FC = () => {
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
             <TableHead>
               <TableRow>
-                <TableCell sx={{ fontWeight: 600 }}>Người dùng</TableCell>
-                <TableCell align="center" sx={{ fontWeight: 600 }}>
+                <TableCell
+                  sx={{ fontWeight: 600, fontSize: { xs: '14px', pc: '20px' } }}
+                >
+                  Người dùng
+                </TableCell>
+                <TableCell
+                  align="center"
+                  sx={{ fontWeight: 600, fontSize: { xs: '14px', pc: '20px' } }}
+                >
                   Thời gian
                 </TableCell>
-                <TableCell align="center" sx={{ fontWeight: 600 }}>
+                <TableCell
+                  align="center"
+                  sx={{ fontWeight: 600, fontSize: { xs: '14px', pc: '20px' } }}
+                >
                   Loại
                 </TableCell>
-                <TableCell align="center" sx={{ fontWeight: 600 }}>
+                <TableCell
+                  align="center"
+                  sx={{ fontWeight: 600, fontSize: { xs: '14px', pc: '20px' } }}
+                >
                   Trạng thái
                 </TableCell>
-                <TableCell align="center" sx={{ fontWeight: 600 }}>
+                <TableCell
+                  align="center"
+                  sx={{ fontWeight: 600, fontSize: { xs: '14px', pc: '20px' } }}
+                >
                   Số tiền (USDT)
                 </TableCell>
-                <TableCell align="center" sx={{ fontWeight: 600 }}>
+                <TableCell
+                  align="center"
+                  sx={{ fontWeight: 600, fontSize: { xs: '14px', pc: '20px' } }}
+                >
                   Số dư (USDT)
                 </TableCell>
-                <TableCell align="center" sx={{ fontWeight: 600 }}>
+                <TableCell
+                  align="center"
+                  sx={{ fontWeight: 600, fontSize: { xs: '14px', pc: '20px' } }}
+                >
                   Hành động
                 </TableCell>
               </TableRow>
@@ -271,18 +295,22 @@ const Transaction: React.FC = () => {
                     <TableCell
                       component="th"
                       scope="row"
-                      sx={{ padding: '15px' }}
+                      sx={{ padding: '15px', fontSize: { pc: '20px' } }}
                     >
                       {row.user?.username}
                     </TableCell>
-                    <TableCell align="center">
+                    <TableCell align="center" sx={{ fontSize: { pc: '20px' } }}>
                       {row.date}, {row.time}
                     </TableCell>
                     <TableCell align="center">
                       <Chip
                         label={types[row?.type]}
-                        sx={{ textTransform: 'capitalize', width: '100px' }}
-                        color="info"
+                        sx={{
+                          textTransform: 'capitalize',
+                          width: '100px',
+                          fontSize: { pc: '20px' },
+                          backgroundColor: "#3215DF"
+                        }}
                       />
                     </TableCell>
                     <TableCell align="center">
@@ -293,12 +321,17 @@ const Transaction: React.FC = () => {
                           width: '130px',
                           borderRadius: '5px',
                           fontWeight: 600,
+                          fontSize: { pc: '20px' },
                         }}
                         variant="outlined"
                       />
                     </TableCell>
-                    <TableCell align="center">{row.total.toFixed(2)}</TableCell>
-                    <TableCell align="center">{row.surplus.toFixed(2)}</TableCell>
+                    <TableCell align="center" sx={{ fontSize: { pc: '20px' } }}>
+                      {row.total.toFixed(2)}
+                    </TableCell>
+                    <TableCell align="center" sx={{ fontSize: { pc: '20px' } }}>
+                      {row.surplus.toFixed(2)}
+                    </TableCell>
                     <TableCell align="center">{row.action}</TableCell>
                   </TableRow>
                 ))}
@@ -306,7 +339,11 @@ const Transaction: React.FC = () => {
                 <TableRow
                   sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                 >
-                  <TableCell component="th" scope="row">
+                  <TableCell
+                    component="th"
+                    scope="row"
+                    sx={{ fontSize: { pc: '20px' } }}
+                  >
                     Không có dữ liệu
                   </TableCell>
                 </TableRow>

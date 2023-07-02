@@ -117,16 +117,16 @@ const AppBarComponent: React.FC = () => {
 
   const _renderMainBar = () => {
     return (
-      <Stack direction="row" sx={{ width: '100%', maxWidth: "100vw" }}>
-        <Stack direction="row" alignItems="center" sx={{ marginRight: '10px' }}>
+      <Stack direction="row" sx={{ width: '100%', maxWidth: '100vw' }}>
+        <Stack direction="row" sx={{ marginRight: '80px' }}>
           <Link
             href={ROUTERS.HOME}
             sx={{
               color: 'text.secondary',
               fontSize: '12px',
               display: 'inline-flex',
-              height: '28px',
-              width: '58px',
+              height: '62px',
+              width: '124px',
               alignItems: 'center',
               padding: '0 6px',
             }}
@@ -138,14 +138,14 @@ const AppBarComponent: React.FC = () => {
             />
           </Link>
         </Stack>
-        <Stack direction="row" sx={{ flex: 1, marginLeft: "10px " }}>
+        <Stack direction="row" sx={{ marginLeft: '10px ' }}>
           <Stack
             direction="row"
             display="flex"
             alignItems="center"
             justifyContent={{
               xs: 'center',
-              md: 'flex-end',
+              // md: 'flex-end',
             }}
             width="100%"
           >
@@ -158,7 +158,7 @@ const AppBarComponent: React.FC = () => {
               <Box
                 component="img"
                 src={Assets.transactionDarkIcon}
-                sx={{ width: '33px', height: '26px' }}
+                sx={{ width: '72px', height: '54px' }}
               />
             </Link>
             <Stack
@@ -168,18 +168,19 @@ const AppBarComponent: React.FC = () => {
               sx={{
                 flex: 1,
                 backgroundColor: 'background.newsHeader',
-                height: '25px',
+                height: '53px',
                 margin: '0 6px',
                 maxWidth: {
                   xs: 'calc(100vw - 185px)',
                   sm: 'calc(100vw - 508px)',
+                  pc: '769px',
                 },
               }}
             >
               <Slider
                 items={sliderItems}
                 itemSx={{
-                  fontSize: '12px',
+                  fontSize: '20px',
                   color: '#000',
                   textAlign: 'center',
                 }}
@@ -202,14 +203,15 @@ const AppBarComponent: React.FC = () => {
                   size="small"
                   href={ROUTERS.RECHARGE}
                   sx={{
-                    fontSize: '12px',
+                    fontSize: '20px',
+                    marginRight: '17px',
                     paddingX: '8px',
                     textTransform: 'unset',
-                    backgroundColor: 'background.burntSienna',
+                    backgroundColor: 'background.newsHeader',
                     color: 'text.secondary',
-                    marginRight: '10px',
-                    height: '26px',
-                    minWidth: '59px',
+                    height: '54px',
+                    minWidth: '156px',
+                    marginLeft: '40px',
                   }}
                 >
                   Nạp
@@ -219,14 +221,14 @@ const AppBarComponent: React.FC = () => {
                   size="small"
                   href={ROUTERS.WITHDRAW_MONEY}
                   sx={{
-                    fontSize: '12px',
+                    fontSize: '20px',
                     paddingX: '8px',
                     textTransform: 'unset',
-                    backgroundColor: 'background.lightSilver',
+                    backgroundColor: 'background.burntSienna',
                     color: 'text.secondary',
-                    marginRight: '10px',
-                    height: '26px',
-                    minWidth: '59px',
+                    height: '54px',
+                    minWidth: '190px',
+                    marginRight: '20px',
                   }}
                 >
                   Rút
@@ -235,10 +237,19 @@ const AppBarComponent: React.FC = () => {
                   onClick={(e: any) => {
                     setAnchorMenu(e.currentTarget);
                   }}
-                  size="small"
-                  sx={{ padding: 0, marginRight: '10px' }}
+                  sx={{
+                    padding: 0,
+                    marginRight: '20px',
+                  }}
                 >
-                  <AccountCircleIcon sx={{ fontSize: '28px' }} />
+                  <AccountCircleIcon
+                    sx={{
+                      fontSize: {
+                        xs: '28px',
+                        pc: '50px',
+                      },
+                    }}
+                  />
                 </IconButton>
                 <Menu
                   id="basic-menu"
@@ -267,32 +278,35 @@ const AppBarComponent: React.FC = () => {
                   size="small"
                   href={ROUTERS.SIGN_IN}
                   sx={{
-                    fontSize: '12px',
-                    marginRight: '10px',
+                    fontSize: '20px',
+                    marginRight: '17px',
                     paddingX: '8px',
                     textTransform: 'unset',
                     backgroundColor: 'background.newsHeader',
                     color: 'text.secondary',
-                    height: '26px',
+                    height: '54px',
+                    minWidth: '156px',
+                    marginLeft: '40px',
                   }}
                 >
                   Đăng nhập
                 </Button>
                 <Button
                   startIcon={
-                    <PersonIcon sx={{ fontSize: '14px !important' }} />
+                    <PersonIcon sx={{ fontSize: '40px !important' }} />
                   }
                   variant="text"
                   size="small"
                   href={ROUTERS.SIGN_UP}
                   sx={{
-                    fontSize: '12px',
+                    fontSize: '20px',
                     paddingX: '8px',
                     textTransform: 'unset',
                     backgroundColor: 'background.burntSienna',
                     color: 'text.secondary',
-                    height: '26px',
-                    marginRight: '10px',
+                    height: '54px',
+                    minWidth: '190px',
+                    marginRight: '40px',
                   }}
                 >
                   Đăng ký
@@ -312,7 +326,6 @@ const AppBarComponent: React.FC = () => {
                 }
               }}
               disabled={!isDarkMode}
-              size="small"
               sx={{
                 padding: 0,
                 marginRight: '10px',
@@ -333,7 +346,6 @@ const AppBarComponent: React.FC = () => {
                 }
               }}
               disabled={isDarkMode}
-              size="small"
               sx={{ padding: 0 }}
             >
               {isDarkMode ? (
@@ -363,262 +375,8 @@ const AppBarComponent: React.FC = () => {
         </Stack>
       </Stack>
     );
-    return (
-      <Grid
-        container
-        justifyContent="space-between"
-        alignItems="center"
-        columnSpacing={0}
-        spacing={{
-          xs: 1,
-          md: 0,
-        }}
-      >
-        <Grid item xs={2} sm={0.9} msm={0.9} md={1} lg={1}>
-          <Stack direction="row" alignItems="center">
-            <Link
-              href={ROUTERS.HOME}
-              sx={{
-                color: 'text.secondary',
-                fontSize: '12px',
-                display: 'inline-flex',
-                height: '28px',
-                width: '58px',
-                alignItems: 'center',
-                padding: '0 6px',
-              }}
-            >
-              <Box
-                component="img"
-                src={Assets.logoImage}
-                sx={{ width: 150, height: '100%', objectFit: 'contain' }}
-              />
-            </Link>
-          </Stack>
-        </Grid>
-        <Grid item xs={8} sm={3} msm={5.5} md={5.5} lg={5.5}>
-          <Stack
-            direction="row"
-            display="flex"
-            alignItems="center"
-            justifyContent={{
-              xs: 'center',
-              md: 'flex-end',
-            }}
-            width="100%"
-          >
-            <Link
-              href={ROUTERS.TRANSACTION}
-              sx={{
-                alignItems: 'center',
-              }}
-            >
-              <Box
-                component="img"
-                src={Assets.transactionDarkIcon}
-                sx={{ width: '33px', height: '26px' }}
-              />
-            </Link>
-            <Stack
-              flexDirection="row"
-              alignItems="center"
-              justifyContent="flex-end"
-              sx={{
-                flex: 1,
-                backgroundColor: 'background.newsHeader',
-                height: '25px',
-                margin: '0 6px',
-                maxWidth: '80%',
-              }}
-            >
-              <Slider
-                items={sliderItems}
-                itemSx={{
-                  fontSize: '12px',
-                  color: '#000',
-                  textAlign: 'center',
-                }}
-                slidersPerView={3}
-              />
-            </Stack>
-          </Stack>
-        </Grid>
-        <Grid item xs={2} sm={7} msm={5.5} md={5.5} lg={5.5}>
-          <Stack
-            direction="row"
-            alignItems="center"
-            justifyContent="flex-end"
-            display={{ xs: 'none', sm: 'flex' }}
-          >
-            {isLogged ? (
-              <>
-                <Button
-                  variant="text"
-                  size="small"
-                  href={ROUTERS.RECHARGE}
-                  sx={{
-                    fontSize: '12px',
-                    paddingX: '8px',
-                    textTransform: 'unset',
-                    backgroundColor: 'background.burntSienna',
-                    color: 'text.secondary',
-                    marginRight: '10px',
-                    height: '26px',
-                    minWidth: '59px',
-                  }}
-                >
-                  Nạp
-                </Button>
-                <Button
-                  variant="text"
-                  size="small"
-                  href={ROUTERS.WITHDRAW_MONEY}
-                  sx={{
-                    fontSize: '12px',
-                    paddingX: '8px',
-                    textTransform: 'unset',
-                    backgroundColor: 'background.lightSilver',
-                    color: 'text.secondary',
-                    marginRight: '10px',
-                    height: '26px',
-                    minWidth: '59px',
-                  }}
-                >
-                  Rút
-                </Button>
-                <IconButton
-                  onClick={(e: any) => {
-                    setAnchorMenu(e.currentTarget);
-                  }}
-                  size="small"
-                  sx={{ padding: 0, marginRight: '10px' }}
-                >
-                  <AccountCircleIcon sx={{ fontSize: '28px' }} />
-                </IconButton>
-                <Menu
-                  id="basic-menu"
-                  anchorEl={anchorMenu}
-                  open={openMenu}
-                  onClose={handleClose}
-                  MenuListProps={{
-                    'aria-labelledby': 'basic-button',
-                  }}
-                >
-                  <MenuItem onClick={() => Utils.redirect(ROUTERS.OVERVIEW)}>
-                    Tổng quan
-                  </MenuItem>
-                  {userData?.role === 'admin' ? (
-                    <MenuItem onClick={() => Utils.redirect(ROUTERS.REQUEST)}>
-                      Quản lý
-                    </MenuItem>
-                  ) : null}
-                  <MenuItem onClick={() => onSignOut()}>Đăng xuất</MenuItem>
-                </Menu>
-              </>
-            ) : (
-              <>
-                <Button
-                  variant="text"
-                  size="small"
-                  href={ROUTERS.SIGN_IN}
-                  sx={{
-                    fontSize: '12px',
-                    marginRight: '10px',
-                    paddingX: '8px',
-                    textTransform: 'unset',
-                    backgroundColor: 'background.newsHeader',
-                    color: 'text.secondary',
-                    height: '26px',
-                  }}
-                >
-                  Đăng nhập
-                </Button>
-                <Button
-                  startIcon={
-                    <PersonIcon sx={{ fontSize: '14px !important' }} />
-                  }
-                  variant="text"
-                  size="small"
-                  href={ROUTERS.SIGN_UP}
-                  sx={{
-                    fontSize: '12px',
-                    paddingX: '8px',
-                    textTransform: 'unset',
-                    backgroundColor: 'background.burntSienna',
-                    color: 'text.secondary',
-                    height: '26px',
-                    marginRight: '10px',
-                  }}
-                >
-                  Đăng ký
-                </Button>
-              </>
-            )}
-            <LanguageSelect
-              selected=""
-              onSelect={(newValue: string) => console.log(newValue)}
-            />
-            <IconButton
-              focusRipple
-              onClick={() => {
-                if (isDarkMode) {
-                  Utils.saveThemeMode('light');
-                  window.location.reload();
-                }
-              }}
-              disabled={!isDarkMode}
-              size="small"
-              sx={{
-                padding: 0,
-                marginRight: '10px',
-                marginLeft: '10px',
-              }}
-            >
-              {isDarkMode ? (
-                <Box component="img" src={Assets.lightIconDarkTheme} />
-              ) : (
-                <Box component="img" src={Assets.lightIconLightTheme} />
-              )}
-            </IconButton>
-            <IconButton
-              onClick={() => {
-                if (!isDarkMode) {
-                  Utils.saveThemeMode('dark');
-                  window.location.reload();
-                }
-              }}
-              disabled={isDarkMode}
-              size="small"
-              sx={{ padding: 0 }}
-            >
-              {isDarkMode ? (
-                <Box component="img" src={Assets.darkIconDarkTheme} />
-              ) : (
-                <Box component="img" src={Assets.darkIconLightTheme} />
-              )}
-            </IconButton>
-          </Stack>
-          <Stack
-            direction="row"
-            alignItems="center"
-            justifyContent="flex-end"
-            display={{ xs: 'flex', sm: 'none' }}
-          >
-            <IconButton
-              size="small"
-              aria-controls={open ? 'basic-menu' : undefined}
-              aria-haspopup="true"
-              aria-expanded={open ? 'true' : undefined}
-              onClick={handleClick}
-              sx={{ marginLeft: '10px' }}
-            >
-              <MenuIcon />
-            </IconButton>
-          </Stack>
-        </Grid>
-      </Grid>
-    );
   };
+
   const _renderSubHeader = () => {
     return (
       <Stack
@@ -627,7 +385,7 @@ const AppBarComponent: React.FC = () => {
           justifyContent: 'center',
           width: '100%',
           alignItems: 'center',
-          minHeight: '30px',
+          minHeight: '80px',
           background: 'palegoldenrod',
         }}
       >
@@ -643,7 +401,7 @@ const AppBarComponent: React.FC = () => {
             <Slider
               items={notificationItems}
               itemSx={{
-                fontSize: '10px',
+                fontSize: '20px',
                 color: '#000000',
                 textAlign: 'center',
               }}
@@ -657,9 +415,11 @@ const AppBarComponent: React.FC = () => {
               justifyContent="center"
               width="100%"
             >
-              <PersonIcon sx={{ color: 'text.burntSienna', mr: '6px' }} />
+              <PersonIcon
+                sx={{ color: 'text.burntSienna', mr: '6px', fontSize: '50px' }}
+              />
               <Typography
-                sx={{ color: '#000000', fontSize: '10px', textAlign: 'center' }}
+                sx={{ color: '#000000', fontSize: '20px', textAlign: 'center' }}
               >
                 <Link href={ROUTERS.SIGN_UP}>Đăng kí ngay</Link> - Nhận chiết
                 khấu giao dịch lên tới 100 USD khi đăng ký thành công với mã mời
@@ -678,7 +438,7 @@ const AppBarComponent: React.FC = () => {
         <Toolbar
           sx={{
             padding: '0 10px !important',
-            minHeight: '40px !important',
+            minHeight: '80px !important',
             // maxWidth: '875px',
             mx: 'auto',
           }}

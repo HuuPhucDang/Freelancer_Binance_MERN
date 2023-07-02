@@ -43,7 +43,7 @@ import mailVerifyIcon from './mail_verify.png';
 import passwordIcon from './password.png';
 import otpIcon from './otp.png';
 import qrImage from './qr.png';
-import transactionIcon from './transaction.jpg';
+import transactionIcon from './transaction.png';
 import transactionDarkIcon from './transaction_dark.png';
 import filterTypeImage from './filter_type.png';
 import excelIcon from './excel.png';
@@ -54,6 +54,8 @@ import frontIDCard from './front_id_card.png';
 import backIDCard from './back_id_card.png';
 import successSecurityImage from './success_security.png';
 import logoImage from './logo.jpg';
+import moneyTransactionIcon from './money.png';
+import rightIcon from './right_icon.png';
 
 export default {
   darkIconDarkTheme,
@@ -105,5 +107,7 @@ export default {
   frontIDCard,
   backIDCard,
   successSecurityImage,
-  logoImage
+  logoImage,
+  moneyTransactionIcon,
+  rightIcon
 };

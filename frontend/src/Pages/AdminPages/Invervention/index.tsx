@@ -43,7 +43,7 @@ const Request: React.FC = () => {
     });
     return () => {
       Utils.WebSocket.off('updateAllCoinPriceNow');
-      Utils.WebSocket.off("updateAllCoinPriceNow");
+      Utils.WebSocket.off('updateAllCoinPriceNow');
       // Utils.WebSocket.disconnect();
     };
   }, []);
@@ -75,7 +75,7 @@ const Request: React.FC = () => {
   const _renderCards = () =>
     _.map(coinData, (item, index) => (
       <Grid item xs={4} key={index}>
-        <Card sx={{ maxWidth: 1 }}>
+        <Card sx={{ maxWidth: 1, borderRadius: '0px' }}>
           <CardHeader
             avatar={
               <Avatar aria-label="recipe" src={item?.icon}>
@@ -83,7 +83,7 @@ const Request: React.FC = () => {
               </Avatar>
             }
             title={
-              <Typography fontSize={14} fontWeight="bold">
+              <Typography fontSize={{ xs: 14, pc: 20 }} fontWeight="bold">
                 {item?.symbol}
                 {item?.intervention < 0 && (
                   <KeyboardDoubleArrowDownIcon color="error" sx={{ ml: 2 }} />
@@ -94,7 +94,7 @@ const Request: React.FC = () => {
               </Typography>
             }
             subheader={
-              <Typography fontSize={12}>
+              <Typography fontSize={{ xs: 12, pc: 14 }}>
                 {item?.price} ({newIntervention[item?.symbol]})
               </Typography>
             }
@@ -106,13 +106,14 @@ const Request: React.FC = () => {
               justifyContent="space-between"
               alignItems="center"
             >
-              <Grid item xs={3}>
+              <Grid item xs={4}>
                 <Button
                   color="error"
                   variant="contained"
                   fullWidth
                   size="small"
                   onClick={() => onIncreaseDegreeSymbol(item?.symbol, 'degree')}
+                  sx={{ borderRadius: '0px', height: '45px', textTransform: 'unset' }}
                 >
                   Giảm
                 </Button>
@@ -130,10 +131,15 @@ const Request: React.FC = () => {
                       [item?.symbol]: parseFloat(e.target.value),
                     })
                   }
+                  sx={{
+                    input: {
+                      height: '30px',
+                    },
+                  }}
                   inputProps={{ step: '0.0001', min: 0 }}
                 />
               </Grid>
-              <Grid item xs={3}>
+              <Grid item xs={4}>
                 <Button
                   color="success"
                   variant="contained"
@@ -142,6 +148,7 @@ const Request: React.FC = () => {
                   onClick={() =>
                     onIncreaseDegreeSymbol(item?.symbol, 'increase')
                   }
+                  sx={{ borderRadius: '0px', height: '45px', textTransform: 'unset' }}
                 >
                   Tăng
                 </Button>
@@ -167,13 +174,16 @@ const Request: React.FC = () => {
   const _renderMain = () => {
     return (
       <Stack sx={{ padding: '20px' }} direction="column">
-        <Typography sx={{ fontSize: '17px', fontWeight: 600 }}>
+        <Typography
+          sx={{ fontSize: { xs: '17px', pc: '30px' }, fontWeight: 700 }}
+        >
           Can Thiệp
         </Typography>
         <Grid
           container
           marginTop="20px"
-          spacing={2}
+          columnSpacing={10}
+          rowSpacing={3}
           justifyContent="space-between"
         >
           {_renderCards()}

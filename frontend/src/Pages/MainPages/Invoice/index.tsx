@@ -168,16 +168,15 @@ const Invoice: React.FC = () => {
       <Box
         component="main"
         sx={{
-          minHeight: 'calc(100vh - 94px)',
+          display: 'flex',
+          minHeight: 'calc(100vh - 180px)',
           padding: {
-            xs: 0,
-            // md: '1em 0',
+            xs: '0',
           },
-          mx: 'auto',
-          // maxWidth: '971px',
+          margin: '20px auto 0px auto',
         }}
       >
-        <Grid container >
+        <Grid container>
           <Grid
             item
             xs={12}
@@ -192,10 +191,21 @@ const Invoice: React.FC = () => {
               backgroundColor: 'background.default',
               zIndex: 1,
             }}
+            borderTop="1px solid rgba(187, 174, 174, 0.9)"
           >
             <Sidebar />
           </Grid>
-          <Grid item xs={12} md={10} borderLeft="1px solid #949494" padding="19px 32px 19px 32px">
+          <Grid
+            item
+            xs={12}
+            md={10}
+            borderLeft="1px solid #949494"
+            borderTop="1px solid rgba(187, 174, 174, 0.9)"
+            padding={{
+              xs: '19px 32px 19px 32px',
+              pc: '60px 71px',
+            }}
+          >
             <Stack
               direction="column"
               padding={{
@@ -204,19 +214,25 @@ const Invoice: React.FC = () => {
               }}
             >
               <Typography
-                sx={{ fontSize: '24px', lineHeight: '34px', fontWeight: 600 }}
+                sx={{
+                  fontSize: {
+                    xs: '24px',
+                    pc: '64px',
+                  },
+                  lineHeight: {
+                    xs: '34px',
+                    pc: '70px',
+                  },
+                  fontWeight: 600,
+                  marginBottom: '20px',
+                }}
               >
                 Lịch sử nạp rút
               </Typography>
-              <Divider
-                sx={{
-                  marginTop: '4px',
-                  marginBottom: '40px',
-                  marginRight: '50px',
-                }}
-              />
               <Stack direction="row" justifyContent="space-between">
-                <Typography sx={{ fontSize: '22px' }}>Giao dịch</Typography>
+                <Typography sx={{ fontSize: { xs: '22px', pc: '32px' } }}>
+                  Giao dịch
+                </Typography>
                 <Stack direction="row">
                   <Select
                     placeholder="Loại"
@@ -238,7 +254,7 @@ const Invoice: React.FC = () => {
                     }
                     sx={{
                       marginRight: '10px',
-                      backgroundColor: 'background.invoiceDropdown',
+                      // backgroundColor: 'background.invoiceDropdown',
                     }}
                   />
                   <Select
@@ -270,9 +286,11 @@ const Invoice: React.FC = () => {
                         | ENUMS.ETransactionStatus.PENDING
                         | ENUMS.ETransactionStatus.RESOLVED
                     ) => setFilterParams({ ...filterParams, status: newValue })}
-                    sx={{
-                      backgroundColor: 'background.invoiceDropdown',
-                    }}
+                    sx={
+                      {
+                        // backgroundColor: 'background.invoiceDropdown',
+                      }
+                    }
                   />
                 </Stack>
               </Stack>
@@ -298,7 +316,10 @@ const Invoice: React.FC = () => {
                       <TableCell
                         sx={{
                           width: '110px',
-                          fontSize: '14px',
+                          fontSize: {
+                            xs: '14px',
+                            pc: '20px',
+                          },
                           padding: {
                             xs: '15px 5px',
                             md: '15px',
@@ -310,7 +331,10 @@ const Invoice: React.FC = () => {
                       <TableCell
                         align="center"
                         sx={{
-                          fontSize: '14px',
+                          fontSize: {
+                            xs: '14px',
+                            pc: '20px',
+                          },
                           padding: {
                             xs: '15px 5px',
                             md: '15px',
@@ -323,7 +347,10 @@ const Invoice: React.FC = () => {
                       <TableCell
                         align="center"
                         sx={{
-                          fontSize: '14px',
+                          fontSize: {
+                            xs: '14px',
+                            pc: '20px',
+                          },
                           padding: {
                             xs: '15px 5px',
                             md: '15px',
@@ -336,7 +363,10 @@ const Invoice: React.FC = () => {
                       <TableCell
                         align="center"
                         sx={{
-                          fontSize: '14px',
+                          fontSize: {
+                            xs: '14px',
+                            pc: '20px',
+                          },
                           padding: {
                             xs: '15px 5px',
                             md: '15px',
@@ -349,7 +379,10 @@ const Invoice: React.FC = () => {
                       <TableCell
                         align="center"
                         sx={{
-                          fontSize: '14px',
+                          fontSize: {
+                            xs: '14px',
+                            pc: '20px',
+                          },
                           padding: {
                             xs: '15px 5px',
                             md: '15px',
@@ -362,7 +395,10 @@ const Invoice: React.FC = () => {
                       <TableCell
                         align="center"
                         sx={{
-                          fontSize: '14px',
+                          fontSize: {
+                            xs: '14px',
+                            pc: '20px',
+                          },
                           padding: {
                             xs: '15px 5px',
                             md: '15px',
@@ -375,7 +411,10 @@ const Invoice: React.FC = () => {
                       <TableCell
                         align="center"
                         sx={{
-                          fontSize: '14px',
+                          fontSize: {
+                            xs: '14px',
+                            pc: '20px',
+                          },
                           padding: {
                             xs: '15px 5px',
                             md: '15px',
@@ -402,7 +441,10 @@ const Invoice: React.FC = () => {
                         >
                           <Typography
                             sx={{
-                              fontSize: '13px',
+                              fontSize: {
+                                xs: '13px',
+                                pc: '20px',
+                              },
                               lineHeight: '24px',
                               color: 'text.primary',
                               fontWeight: 600,
@@ -428,7 +470,7 @@ const Invoice: React.FC = () => {
                           >
                             <Typography
                               sx={{
-                                fontSize: '13px',
+                                fontSize: { xs: '13px', pc: '20px' },
                                 lineHeight: '24px',
                                 color: 'text.primary',
                               }}
@@ -439,7 +481,7 @@ const Invoice: React.FC = () => {
                           <TableCell align="center">
                             <Typography
                               sx={{
-                                fontSize: '13px',
+                                fontSize: { xs: '13px', pc: '20px' },
                                 lineHeight: '24px',
                                 color: 'text.primary',
                               }}
@@ -450,7 +492,7 @@ const Invoice: React.FC = () => {
                           <TableCell align="center">
                             <Typography
                               sx={{
-                                fontSize: '13px',
+                                fontSize: { xs: '13px', pc: '20px' },
                                 lineHeight: '24px',
                                 color: 'text.primary',
                                 fontWeight: 600,
@@ -462,7 +504,7 @@ const Invoice: React.FC = () => {
                           <TableCell align="center">
                             <Typography
                               sx={{
-                                fontSize: '13px',
+                                fontSize: { xs: '13px', pc: '20px' },
                                 lineHeight: '24px',
                                 color: 'text.primary',
                                 fontWeight: 600,
@@ -474,7 +516,7 @@ const Invoice: React.FC = () => {
                           <TableCell align="center">
                             <Typography
                               sx={{
-                                fontSize: '13px',
+                                fontSize: { xs: '13px', pc: '20px' },
                                 lineHeight: '24px',
                                 color: 'text.primary',
                               }}
@@ -485,7 +527,7 @@ const Invoice: React.FC = () => {
                           <TableCell align="center">
                             <Typography
                               sx={{
-                                fontSize: '13px',
+                                fontSize: { xs: '13px', pc: '20px' },
                                 lineHeight: '24px',
                                 color: 'text.primary',
                               }}
@@ -496,7 +538,7 @@ const Invoice: React.FC = () => {
                           <TableCell align="center">
                             <Typography
                               sx={{
-                                fontSize: '13px',
+                                fontSize: { xs: '13px', pc: '20px' },
                                 lineHeight: '24px',
                                 color: 'text.primary',
                                 opacity: row.status === 'pending' ? 1 : 0.5,

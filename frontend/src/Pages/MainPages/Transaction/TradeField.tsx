@@ -19,20 +19,27 @@ import { ROUTERS, ENUMS } from '@/Constants';
 import { UserActions, TradeActions } from '@/Reducers/Actions';
 
 const styleBox = {
-  height: '24px',
+  height: '37px',
   width: '100%',
-  marginTop: '10px',
+  marginTop: {
+    xs: '10px',
+    pc: '24px',
+  },
   backgroundColor: 'background.secondary',
   padding: '10px',
   borderRadius: '5px',
   display: 'flex',
   alignItems: 'center',
 };
+
 const styleInput = {
   flex: 1,
   input: {
     padding: '6px 12px 6px 4px',
-    fontSize: '8px',
+    fontSize: {
+      xs: '8px',
+      pc: '14px',
+    },
   },
   '> ::before': {
     borderBottom: 'none',
@@ -239,7 +246,10 @@ const TradeField: React.FC<ITradeFieldProps> = ({
         <Button
           variant="contained"
           sx={{
-            fontSize: 9,
+            fontSize: {
+              xs: '9px',
+              pc: '20px',
+            },
             lineHeight: '11px',
             textTransform: 'unset',
             backgroundColor:
@@ -248,6 +258,7 @@ const TradeField: React.FC<ITradeFieldProps> = ({
             width: '100%',
             paddingX: '0',
             minWidth: 'unset',
+            height: '36px',
           }}
           onClick={() => {
             if (!_.includes(LIMIT_BET[userType], index)) {
@@ -290,7 +301,16 @@ const TradeField: React.FC<ITradeFieldProps> = ({
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">
-                  <Typography sx={{ fontSize: '8px' }}>USDT</Typography>
+                  <Typography
+                    sx={{
+                      fontSize: {
+                        xs: '8px',
+                        pc: '14px',
+                      },
+                    }}
+                  >
+                    USDT
+                  </Typography>
                 </InputAdornment>
               ),
             }}
@@ -307,7 +327,16 @@ const TradeField: React.FC<ITradeFieldProps> = ({
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">
-                  <Typography sx={{ fontSize: '8px' }}>USDT</Typography>
+                  <Typography
+                    sx={{
+                      fontSize: {
+                        xs: '8px',
+                        pc: '14px',
+                      },
+                    }}
+                  >
+                    USDT
+                  </Typography>
                 </InputAdornment>
               ),
             }}
@@ -328,7 +357,16 @@ const TradeField: React.FC<ITradeFieldProps> = ({
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">
-                  <Typography sx={{ fontSize: '8px' }}>USDT</Typography>
+                  <Typography
+                    sx={{
+                      fontSize: {
+                        xs: '8px',
+                        pc: '14px',
+                      },
+                    }}
+                  >
+                    USDT
+                  </Typography>
                 </InputAdornment>
               ),
             }}
@@ -349,7 +387,16 @@ const TradeField: React.FC<ITradeFieldProps> = ({
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">
-                  <Typography sx={{ fontSize: '8px' }}>USDT</Typography>
+                  <Typography
+                    sx={{
+                      fontSize: {
+                        xs: '8px',
+                        pc: '14px',
+                      },
+                    }}
+                  >
+                    USDT
+                  </Typography>
                 </InputAdornment>
               ),
             }}
@@ -366,6 +413,7 @@ const TradeField: React.FC<ITradeFieldProps> = ({
           fontSize: {
             xs: '9px',
             md: '13px',
+            pc: '20px',
           },
           lineHeight: '15px',
         }}
@@ -373,7 +421,20 @@ const TradeField: React.FC<ITradeFieldProps> = ({
         Số dư: {ballance.toFixed(2)} USDT
       </Typography>
       {_renderInputs(TRADE_TYPE.BUY)}
-      <Grid container spacing={0.5} marginTop="5px">
+      <Grid
+        container
+        spacing={0.5}
+        columnSpacing={{
+          xs: 0,
+          pc: '30px',
+        }}
+        sx={{
+          marginTop: {
+            xs: 0,
+            pc: '24px',
+          },
+        }}
+      >
         {_renderMoonBot(TRADE_TYPE.BUY)}
       </Grid>
       <Button
@@ -383,7 +444,10 @@ const TradeField: React.FC<ITradeFieldProps> = ({
         size="small"
         sx={{
           marginTop: '10px',
-          fontSize: 12,
+          fontSize: {
+            xs: '12px',
+            pc: '20px',
+          },
           fontWeight: 900,
           background: '#2EBD85',
         }}
@@ -402,6 +466,7 @@ const TradeField: React.FC<ITradeFieldProps> = ({
           fontSize: {
             xs: '9px',
             md: '13px',
+            pc: '20px',
           },
           lineHeight: '15px',
           color: isLimitTrade ? '#F21616' : '#408827',
@@ -411,7 +476,20 @@ const TradeField: React.FC<ITradeFieldProps> = ({
         {isLimitTrade && `(Thời gian khoá giao dịch)`}
       </Typography>
       {_renderInputs(TRADE_TYPE.SELL)}
-      <Grid container spacing={0.5} marginTop="5px">
+      <Grid
+        container
+        spacing={0.5}
+        columnSpacing={{
+          xs: 0,
+          pc: '30px',
+        }}
+        sx={{
+          marginTop: {
+            xs: 0,
+            pc: '24px',
+          },
+        }}
+      >
         {_renderMoonBot(TRADE_TYPE.SELL)}
       </Grid>
       <Button
@@ -421,7 +499,10 @@ const TradeField: React.FC<ITradeFieldProps> = ({
         size="small"
         sx={{
           marginTop: '10px',
-          fontSize: 12,
+          fontSize: {
+            xs: '12px',
+            pc: '20px',
+          },
           fontWeight: 900,
           background: '#F03030',
         }}
@@ -436,7 +517,11 @@ const TradeField: React.FC<ITradeFieldProps> = ({
   const _renderRequireLogin = () => (
     <Grid item xs={12}>
       <Typography
-        sx={{ fontSize: '13px', lineHeight: '15px', textAlign: 'center' }}
+        sx={{
+          fontSize: { xs: '13px', pc: '20px' },
+          lineHeight: '15px',
+          textAlign: 'center',
+        }}
       >
         Vui lòng{' '}
         <Link
@@ -472,7 +557,13 @@ const TradeField: React.FC<ITradeFieldProps> = ({
           },
         }}
       >
-        <Grid container columnSpacing={1}>
+        <Grid
+          container
+          columnSpacing={{
+            xs: '0',
+            pc: '31px',
+          }}
+        >
           {!isLogged && _renderRequireLogin()}
           {isLogged && _renderLeftSide()}
           {isLogged && _renderRightSide()}

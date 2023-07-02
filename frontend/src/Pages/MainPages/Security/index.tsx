@@ -55,13 +55,12 @@ const Security: React.FC = () => {
       <Box
         component="main"
         sx={{
-          minHeight: 'calc(100vh - 94px)',
+          display: 'flex',
+          minHeight: 'calc(100vh - 180px)',
           padding: {
-            xs: 0,
-            // md: '1em 0',
+            xs: '0',
           },
-          mx: 'auto',
-          // maxWidth: '971px',
+          margin: '20px auto 0px auto',
         }}
       >
         <ChangePassword
@@ -102,6 +101,7 @@ const Security: React.FC = () => {
               backgroundColor: 'background.default',
               zIndex: 1,
             }}
+            borderTop="1px solid rgba(187, 174, 174, 0.9)"
           >
             <Sidebar />
           </Grid>
@@ -110,12 +110,26 @@ const Security: React.FC = () => {
             xs={12}
             md={10}
             borderLeft="1px solid #949494"
-            padding="19px 32px 19px 32px"
+            padding={{
+              xs: '19px 32px 19px 32px',
+              pc: '60px 71px',
+            }}
+            borderTop="1px solid rgba(187, 174, 174, 0.9)"
           >
             <Stack direction="column">
               <Stack direction="row" justifyContent="space-between">
                 <Typography
-                  sx={{ fontSize: '24px', lineHeight: '34px', fontWeight: 600 }}
+                  sx={{
+                    fontSize: {
+                      xs: '24px',
+                      pc: '64px',
+                    },
+                    lineHeight: {
+                      xs: '34px',
+                      pc: '70px',
+                    },
+                    fontWeight: 600,
+                  }}
                 >
                   Bảo mật
                 </Typography>
@@ -126,20 +140,30 @@ const Security: React.FC = () => {
                       ? Assets.successSecurityImage
                       : Assets.securityIcon
                   }
+                  sx={{ width: '134px' }}
                 />
               </Stack>
               <Box
                 sx={{
                   backgroundColor: 'background.securityNotification',
-                  padding: '10px 14px',
+                  padding: {
+                    xs: '10px 14px',
+                    pc: '10px 30px',
+                  },
                   marginTop: '11px ',
-                  minHeight: '45px',
+                  minHeight: {
+                    xs: '45px',
+                    pc: '79px',
+                  },
                   borderRadius: '5px',
                 }}
               >
                 <Typography
                   sx={{
-                    fontSize: '12px',
+                    fontSize: {
+                      xs: '12px',
+                      pc: '20px',
+                    },
                     fontWeight: 400,
                     lineHeight: '24px',
                     color: 'text.primary',
@@ -151,7 +175,10 @@ const Security: React.FC = () => {
               </Box>
               <Typography
                 sx={{
-                  fontSize: '16px',
+                  fontSize: {
+                    xs: '16px',
+                    pc: '20px',
+                  },
                   fontWeight: 600,
                   lineHeight: '28px',
                   marginTop: '30px',
@@ -205,9 +232,12 @@ const Security: React.FC = () => {
                           >
                             <Typography
                               sx={{
-                                fontSize: '12px',
+                                fontSize: {
+                                  xs: '12px',
+                                  pc: '24px',
+                                },
                                 lienHeight: '20px',
-                                fontWeight: 600,
+                                fontWeight: 500,
                                 color: 'text.primary',
                               }}
                             >
@@ -215,7 +245,10 @@ const Security: React.FC = () => {
                             </Typography>
                             <Typography
                               sx={{
-                                fontSize: '11px',
+                                fontSize: {
+                                  xs: '11px',
+                                  pc: '20px',
+                                },
                                 lienHeight: '20px',
                                 fontWeight: 400,
                               }}
@@ -238,12 +271,21 @@ const Security: React.FC = () => {
                       <TableCell align="right" sx={{ padding: '24px 0' }}>
                         <Button
                           sx={{
-                            fontSize: '11px',
+                            fontSize: {
+                              xs: '11px',
+                              pc: '20px',
+                            },
                             textTransform: 'unset',
                             backgroundColor: 'background.lightSilver',
                             color: 'text.secondary',
-                            width: '73px',
-                            minHeight: '23px',
+                            width: {
+                              xs: '73px',
+                              pc: '153px',
+                            },
+                            minHeight: {
+                              xs: '23px',
+                              pc: '38px',
+                            },
                             padding: '0',
                           }}
                           onClick={() => setIsShowChangePassword(true)}
@@ -285,9 +327,12 @@ const Security: React.FC = () => {
                           >
                             <Typography
                               sx={{
-                                fontSize: '12px',
+                                fontSize: {
+                                  xs: '12px',
+                                  pc: '24px',
+                                },
                                 lienHeight: '20px',
-                                fontWeight: 600,
+                                fontWeight: 500,
                                 color: 'text.primary',
                               }}
                             >
@@ -295,7 +340,10 @@ const Security: React.FC = () => {
                             </Typography>
                             <Typography
                               sx={{
-                                fontSize: '11px',
+                                fontSize: {
+                                  xs: '11px',
+                                  pc: '20px',
+                                },
                                 lienHeight: '20px',
                                 fontWeight: 400,
                               }}
@@ -320,7 +368,10 @@ const Security: React.FC = () => {
                                 sx={{ fontSize: '18px' }}
                               />
                               <Typography
-                                sx={{ fontSize: '10px', marginLeft: '5px' }}
+                                sx={{
+                                  fontSize: { xs: '10px', pc: '16px' },
+                                  marginLeft: '5px',
+                                }}
                               >
                                 {userData?.security?.phonenumber}
                               </Typography>
@@ -332,7 +383,10 @@ const Security: React.FC = () => {
                                 sx={{ fontSize: '18px' }}
                               />
                               <Typography
-                                sx={{ fontSize: '10px', marginLeft: '5px' }}
+                                sx={{
+                                  fontSize: { xs: '10px', pc: '16px' },
+                                  marginLeft: '5px',
+                                }}
                               >
                                 Chưa liên kết
                               </Typography>
@@ -343,12 +397,21 @@ const Security: React.FC = () => {
                       <TableCell align="right" sx={{ padding: '24px 0' }}>
                         <Button
                           sx={{
-                            fontSize: '11px',
+                            fontSize: {
+                              xs: '11px',
+                              pc: '20px',
+                            },
                             textTransform: 'unset',
                             backgroundColor: 'background.lightSilver',
                             color: 'text.secondary',
-                            width: '73px',
-                            minHeight: '23px',
+                            width: {
+                              xs: '73px',
+                              pc: '153px',
+                            },
+                            minHeight: {
+                              xs: '23px',
+                              pc: '38px',
+                            },
                             padding: '0',
                           }}
                           onClick={() => setIsShowChangePhoneNumber(true)}
@@ -392,9 +455,12 @@ const Security: React.FC = () => {
                           >
                             <Typography
                               sx={{
-                                fontSize: '12px',
+                                fontSize: {
+                                  xs: '12px',
+                                  pc: '24px',
+                                },
                                 lienHeight: '20px',
-                                fontWeight: 600,
+                                fontWeight: 500,
                                 color: 'text.primary',
                               }}
                             >
@@ -402,7 +468,10 @@ const Security: React.FC = () => {
                             </Typography>
                             <Typography
                               sx={{
-                                fontSize: '11px',
+                                fontSize: {
+                                  xs: '11px',
+                                  pc: '20px',
+                                },
                                 lienHeight: '20px',
                                 fontWeight: 400,
                               }}
@@ -427,7 +496,10 @@ const Security: React.FC = () => {
                                 sx={{ fontSize: '18px' }}
                               />
                               <Typography
-                                sx={{ fontSize: '10px', marginLeft: '5px' }}
+                                sx={{
+                                  fontSize: { xs: '10px', pc: '16px' },
+                                  marginLeft: '5px',
+                                }}
                               >
                                 {userData?.security?.email}
                               </Typography>
@@ -439,7 +511,10 @@ const Security: React.FC = () => {
                                 sx={{ fontSize: '18px' }}
                               />
                               <Typography
-                                sx={{ fontSize: '10px', marginLeft: '5px' }}
+                                sx={{
+                                  fontSize: { xs: '10px', pc: '16px' },
+                                  marginLeft: '5px',
+                                }}
                               >
                                 Chưa liên kết
                               </Typography>
@@ -450,12 +525,21 @@ const Security: React.FC = () => {
                       <TableCell align="right" sx={{ padding: '24px 0' }}>
                         <Button
                           sx={{
-                            fontSize: '11px',
+                            fontSize: {
+                              xs: '11px',
+                              pc: '20px',
+                            },
                             textTransform: 'unset',
                             backgroundColor: 'background.lightSilver',
                             color: 'text.secondary',
-                            width: '73px',
-                            minHeight: '23px',
+                            width: {
+                              xs: '73px',
+                              pc: '153px',
+                            },
+                            minHeight: {
+                              xs: '23px',
+                              pc: '38px',
+                            },
                             padding: '0',
                           }}
                           onClick={() => setIsShowChangeEmail(true)}
@@ -497,9 +581,12 @@ const Security: React.FC = () => {
                           >
                             <Typography
                               sx={{
-                                fontSize: '12px',
+                                fontSize: {
+                                  xs: '12px',
+                                  pc: '24px',
+                                },
                                 lienHeight: '20px',
-                                fontWeight: 600,
+                                fontWeight: 500,
                                 color: 'text.primary',
                               }}
                             >
@@ -507,7 +594,10 @@ const Security: React.FC = () => {
                             </Typography>
                             <Typography
                               sx={{
-                                fontSize: '11px',
+                                fontSize: {
+                                  xs: '11px',
+                                  pc: '20px',
+                                },
                                 lienHeight: '20px',
                                 fontWeight: 400,
                               }}
@@ -533,7 +623,10 @@ const Security: React.FC = () => {
                                 sx={{ fontSize: '18px' }}
                               />
                               <Typography
-                                sx={{ fontSize: '10px', marginLeft: '5px' }}
+                                sx={{
+                                  fontSize: { xs: '10px', pc: '16px' },
+                                  marginLeft: '5px',
+                                }}
                               >
                                 Đã kích hoạt
                               </Typography>
@@ -545,7 +638,10 @@ const Security: React.FC = () => {
                                 sx={{ fontSize: '18px' }}
                               />
                               <Typography
-                                sx={{ fontSize: '10px', marginLeft: '5px' }}
+                                sx={{
+                                  fontSize: { xs: '10px', pc: '16px' },
+                                  marginLeft: '5px',
+                                }}
                               >
                                 Chưa kích hoạt
                               </Typography>
@@ -556,12 +652,21 @@ const Security: React.FC = () => {
                       <TableCell align="right" sx={{ padding: '24px 0' }}>
                         <Button
                           sx={{
-                            fontSize: '11px',
+                            fontSize: {
+                              xs: '11px',
+                              pc: '20px',
+                            },
                             textTransform: 'unset',
                             backgroundColor: 'background.lightSilver',
                             color: 'text.secondary',
-                            width: '73px',
-                            minHeight: '23px',
+                            width: {
+                              xs: '73px',
+                              pc: '153px',
+                            },
+                            minHeight: {
+                              xs: '23px',
+                              pc: '38px',
+                            },
                             padding: '0',
                           }}
                           onClick={() => setIsShowChangeWithdrawPassword(true)}

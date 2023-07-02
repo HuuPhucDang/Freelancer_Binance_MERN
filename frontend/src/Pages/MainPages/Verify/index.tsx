@@ -43,7 +43,11 @@ const Verify: React.FC = () => {
       <Stack direction="column">
         <Typography
           sx={{
-            fontSize: '16px',
+            marginTop: '30px',
+            fontSize: {
+              xs: '16px',
+              pc: '24px',
+            },
             lineHeight: '28px',
             fontWeight: 400,
           }}
@@ -59,18 +63,34 @@ const Verify: React.FC = () => {
                   : 'Xác minh danh tính của bạn để mua và giao dịch trên Binance.'
               }`}
         </Typography>
-        <Stack direction="row" marginTop="20px">
+        <Stack
+          direction="row"
+          marginTop={{
+            xs: '20px',
+            pc: '40px',
+          }}
+          marginBottom={{
+            xs: '20px',
+            pc: '40px',
+          }}
+        >
           <Button
             size="small"
             sx={{
-              fontSize: '10px',
+              fontSize: {
+                xs: '10px',
+                pc: '18px',
+              },
               textTransform: 'unset',
               backgroundColor: 'background.burntSienna',
               color: 'text.secondary',
-              height: '30px',
+              height: { xs: '30px', pc: '63px' },
               padding: '0 15px',
               marginRight: '20px',
-              width: '187px',
+              width: {
+                xs: '187px',
+                pc: '341px',
+              },
               fontWeight: 400,
             }}
             disabled={
@@ -85,13 +105,19 @@ const Verify: React.FC = () => {
           <Button
             size="small"
             sx={{
-              fontSize: '10px',
+              fontSize: {
+                xs: '10px',
+                pc: '18px',
+              },
               textTransform: 'unset',
               backgroundColor: 'background.burntSienna',
               color: 'text.secondary',
-              height: '30px',
+              height: { xs: '30px', pc: '63px' },
               padding: '0 15px',
-              width: '187px',
+              width: {
+                xs: '187px',
+                pc: '341px',
+              },
               fontWeight: 400,
             }}
             onClick={() => setIsShowAvatarPopup(true)}
@@ -122,7 +148,7 @@ const Verify: React.FC = () => {
               Danh tính của bạn đã được xác minh danh tính. Bạn có thể bắt đầu{' '}
               <Link
                 href={ROUTERS.TRANSACTION}
-                sx={{ textDecoration: 'underline', color: "text.primary" }}
+                sx={{ textDecoration: 'underline', color: 'text.primary' }}
               >
                 giao dịch trên Binance
               </Link>
@@ -141,13 +167,12 @@ const Verify: React.FC = () => {
       <Box
         component="main"
         sx={{
-          minHeight: 'calc(100vh - 94px)',
+          display: 'flex',
+          minHeight: 'calc(100vh - 180px)',
           padding: {
-            xs: 0,
-            // md: '1em 0',
+            xs: '0',
           },
-          mx: 'auto',
-          // maxWidth: '971px',
+          margin: '20px auto 0px auto',
         }}
       >
         <UploadIDCard
@@ -172,25 +197,53 @@ const Verify: React.FC = () => {
               backgroundColor: 'background.default',
               zIndex: 1,
             }}
+            borderTop="1px solid rgba(187, 174, 174, 0.9)"
           >
             <Sidebar />
           </Grid>
-          <Grid item xs={12} md={10} borderLeft="1px solid #949494" padding="19px 50px 9px 32px">
+          <Grid
+            item
+            xs={12}
+            md={10}
+            borderLeft="1px solid #949494"
+            padding={{
+              xs: '19px 32px 19px 32px',
+              pc: '60px 71px',
+            }}
+            borderTop="1px solid rgba(187, 174, 174, 0.9)"
+          >
             <Stack direction="column">
               <Typography
-                sx={{ fontSize: '24px', lineHeight: '34px', fontWeight: 600 }}
+                sx={{
+                  fontSize: {
+                    xs: '24px',
+                    pc: '64px',
+                  },
+                  lineHeight: {
+                    xs: '34px',
+                    pc: '70px',
+                  },
+                  fontWeight: 600,
+                }}
               >
                 Xác minh
               </Typography>
-              <Stack direction="row" marginTop="40px">
+              <Stack direction="row" alignItems="center" marginTop="40px">
                 <Avatar
                   src={userData.avatar}
-                  sx={{ width: '60px', height: '60px', marginRight: '20px' }}
+                  sx={{
+                    width: { xs: '60px', pc: '93px' },
+                    height: { xs: '60px', pc: '93px' },
+                    marginRight: '20px',
+                  }}
                 />
                 <Typography
                   sx={{
                     marginRight: '16px',
-                    fontSize: '17px',
+                    fontSize: {
+                      xs: '17px',
+                      pc: '25px',
+                    },
                     fontWeight: 600,
                   }}
                 >
@@ -224,7 +277,10 @@ const Verify: React.FC = () => {
                       <Stack justifyContent="flex-end">
                         <Typography
                           sx={{
-                            fontSize: '16px',
+                            fontSize: {
+                              xs: '16px',
+                              pc: '20px',
+                            },
                             lineHeight: '28px',
                             fontWeight: 400,
                           }}
@@ -233,7 +289,11 @@ const Verify: React.FC = () => {
                         </Typography>
                         <Link
                           sx={{
-                            fontSize: '10px',
+                            fontSize: {
+                              xs: '10px',
+                              pc: '20px',
+                            },
+                            marginTop: '10px',
                             lineHeight: '14px',
                             fontWeight: 400,
                             color: '#7D6F6F',

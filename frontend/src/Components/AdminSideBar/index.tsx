@@ -19,46 +19,74 @@ const navigationItems = [
   {
     label: 'Can Thiệp Giá',
     path: ROUTERS.INTERVENTION,
-    icon: <MonetizationOnIcon sx={{ fontSize: '16px', marginRight: '5px' }} />,
+    icon: (
+      <MonetizationOnIcon
+        sx={{ fontSize: { xs: '16px', pc: '37px' }, marginRight: '5px' }}
+      />
+    ),
   },
   {
     label: 'Người dùng',
     path: ROUTERS.USERS,
-    icon: <PeopleIcon sx={{ fontSize: '16px', marginRight: '5px' }} />,
+    icon: (
+      <PeopleIcon
+        sx={{ fontSize: { xs: '16px', pc: '37px' }, marginRight: '5px' }}
+      />
+    ),
   },
   {
     label: 'Yêu cầu',
     path: ROUTERS.REQUEST,
-    icon: <SyncIcon sx={{ fontSize: '16px', marginRight: '5px' }} />,
+    icon: (
+      <SyncIcon
+        sx={{ fontSize: { xs: '16px', pc: '37px' }, marginRight: '5px' }}
+      />
+    ),
   },
   {
     label: 'Xác minh',
     path: ROUTERS.ADMIN_VERIFY,
-    icon: <GppGoodIcon sx={{ fontSize: '16px', marginRight: '5px' }} />,
+    icon: (
+      <GppGoodIcon
+        sx={{ fontSize: { xs: '16px', pc: '37px' }, marginRight: '5px' }}
+      />
+    ),
   },
   {
     label: 'Giao dịch',
     path: ROUTERS.ADMIN_TRANSACTION,
     icon: (
-      <StackedLineChartIcon sx={{ fontSize: '16px', marginRight: '5px' }} />
+      <StackedLineChartIcon
+        sx={{ fontSize: { xs: '16px', pc: '37px' }, marginRight: '5px' }}
+      />
     ),
   },
   {
     label: 'Chỉnh sửa Moonbot',
     path: ROUTERS.EDIT_PRICE,
     icon: (
-      <TuneIcon sx={{ fontSize: '16px', marginRight: '5px' }} />
+      <TuneIcon
+        sx={{ fontSize: { xs: '16px', pc: '37px' }, marginRight: '5px' }}
+      />
     ),
   },
   {
     label: 'Thông tin ngân hàng',
     path: ROUTERS.BANK_INFORMATION,
-    icon: <AccountBalanceIcon sx={{ fontSize: '16px', marginRight: '5px' }} />,
+    icon: (
+      <AccountBalanceIcon
+        sx={{ fontSize: { xs: '16px', pc: '37px' }, marginRight: '5px' }}
+      />
+    ),
   },
   {
     label: 'Hỗ trợ',
     path: ROUTERS.ADMIN_SUPPORT,
-    icon: <ChatIcon sx={{ fontSize: '16px', marginRight: '5px' }} />,
+    icon: (
+      <ChatIcon
+        sx={{ fontSize: { xs: '16px', pc: '37px' }, marginRight: '5px' }}
+      />
+    ),
   },
 ];
 
@@ -87,8 +115,11 @@ const SideBar = () => {
               backgroundColor: isActive
                 ? 'background.primary'
                 : 'background.default',
-              fontSize: '14px',
-              height: '40px',
+              fontSize: {
+                xs: '14px',
+                pc: '24px',
+              },
+              height: { xs: '40px', pc: '70px' },
               display: 'flex',
               alignItems: 'center',
               padding: '0 12px',
@@ -112,7 +143,17 @@ const SideBar = () => {
       direction="column"
       sx={{ height: '100%', borderRight: '1px solid #BEBEBE' }}
     >
-      <Typography sx={{ padding: '10px', fontSize: '16px', fontWeight: 600 }}>
+      <Typography
+        sx={{
+          padding: '45px 10px 10px 30px',
+          fontSize: {
+            xs: '16px',
+            pc: '40px',
+          },
+          fontWeight: 600,
+          borderBottom: '1px solid #BEBEBE',
+        }}
+      >
         Trang quản lý
       </Typography>
       <Stack direction="column" flex={1} padding="16px 0">
@@ -121,8 +162,11 @@ const SideBar = () => {
           sx={{
             color: 'text.primary',
             backgroundColor: 'background.default',
-            fontSize: '14px',
-            height: '40px',
+            fontSize: {
+              xs: '14px',
+              pc: '24px',
+            },
+            height: { xs: '40px', pc: '70px' },
             display: 'flex',
             alignItems: 'center',
             padding: '0 12px',
@@ -133,7 +177,9 @@ const SideBar = () => {
           }}
           onClick={() => onSignOut()}
         >
-          <LogoutIcon sx={{ fontSize: '16px', marginRight: '5px' }} />
+          <LogoutIcon
+            sx={{ fontSize: { xs: '16px', pc: '40px' }, marginRight: '5px' }}
+          />
           Đăng xuất
         </Typography>
       </Stack>

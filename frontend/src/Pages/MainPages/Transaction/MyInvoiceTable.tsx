@@ -64,7 +64,10 @@ const MyInvoiceTable = () => {
             <TableCell
               align="center"
               sx={{
-                fontSize: '10px',
+                fontSize: {
+                  xs: '10px',
+                  pc: '20px',
+                },
                 fontWeight: 400,
                 padding: '4px 0',
               }}
@@ -74,7 +77,10 @@ const MyInvoiceTable = () => {
             <TableCell
               align="right"
               sx={{
-                fontSize: '10px',
+                fontSize: {
+                  xs: '10px',
+                  pc: '20px',
+                },
                 fontWeight: 400,
                 padding: '4px 0',
               }}
@@ -84,7 +90,10 @@ const MyInvoiceTable = () => {
             <TableCell
               align="right"
               sx={{
-                fontSize: '10px',
+                fontSize: {
+                  xs: '10px',
+                  pc: '20px',
+                },
                 fontWeight: 400,
                 padding: '4px 0',
               }}
@@ -113,8 +122,14 @@ const MyInvoiceTable = () => {
                 <TableCell align="center" scope="row" sx={{ padding: 0 }}>
                   <Typography
                     sx={{
-                      fontSize: 9,
-                      lineHeight: '11px',
+                      fontSize: {
+                        xs: '9px',
+                        pc: '20px',
+                      },
+                      lineHeight: {
+                        xs: '11px',
+                        pc: '24px',
+                      },
                       color: row.type === 'buy' ? '#408827' : '#F21616',
                       padding: '4px 0',
                     }}
@@ -125,8 +140,14 @@ const MyInvoiceTable = () => {
                 <TableCell align="right" sx={{ padding: 0 }}>
                   <Typography
                     sx={{
-                      fontSize: 9,
-                      lineHeight: '11px',
+                      fontSize: {
+                        xs: '9px',
+                        pc: '20px',
+                      },
+                      lineHeight: {
+                        xs: '11px',
+                        pc: '24px',
+                      },
                       padding: '4px 0',
                     }}
                   >
@@ -136,8 +157,14 @@ const MyInvoiceTable = () => {
                 <TableCell align="right" sx={{ padding: 0 }}>
                   <Typography
                     sx={{
-                      fontSize: 9,
-                      lineHeight: '11px',
+                      fontSize: {
+                        xs: '9px',
+                        pc: '20px',
+                      },
+                      lineHeight: {
+                        xs: '11px',
+                        pc: '24px',
+                      },
                       padding: '4px 0',
                       color: '#816A6A',
                     }}
@@ -162,8 +189,14 @@ const MyInvoiceTable = () => {
               >
                 <Typography
                   sx={{
-                    fontSize: 9,
-                    lineHeight: '11px',
+                    fontSize: {
+                      xs: '9px',
+                      pc: '20px',
+                    },
+                    lineHeight: {
+                      xs: '11px',
+                      pc: '24px',
+                    },
                     padding: '4px 0',
                   }}
                 >

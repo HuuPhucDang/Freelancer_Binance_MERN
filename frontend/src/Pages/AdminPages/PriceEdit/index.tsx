@@ -56,7 +56,7 @@ const Request: React.FC = () => {
       (item: { type: string }) => item.type === type
     );
     return (
-      <Grid container columnSpacing={2} rowSpacing={2}>
+      <Grid container columnSpacing={2} rowSpacing={2} marginBottom="20px">
         {_.map(buttonsType, (item, index) => (
           <Grid item xs={12} key={index}>
             <Grid
@@ -78,6 +78,7 @@ const Request: React.FC = () => {
                   defaultValue={0 || item?.time}
                   required
                   inputProps={{ step: '1' }}
+                  sx={{ input: { height: '43px' } }}
                 />
               </Grid>
               <Grid item xs={3}>
@@ -91,6 +92,7 @@ const Request: React.FC = () => {
                   defaultValue={0 || item?.limitedTime}
                   required
                   inputProps={{ step: '1' }}
+                  sx={{ input: { height: '43px' } }}
                 />
               </Grid>
               <Grid item xs={3}>
@@ -114,6 +116,7 @@ const Request: React.FC = () => {
                       else e.target.value = Math.ceil(e.target.value);
                     } else e.target.value = '';
                   }}
+                  sx={{ input: { height: '43px' } }}
                 />
               </Grid>
               <Grid item xs={3}>
@@ -124,6 +127,11 @@ const Request: React.FC = () => {
                   size="small"
                   // onClick={() => onSave()}
                   type="submit"
+                  sx={{
+                    height: '60px',
+                    borderRadius: '0px',
+                    fontSize: ' 15px',
+                  }}
                 >
                   Lưu
                 </Button>
@@ -138,7 +146,9 @@ const Request: React.FC = () => {
   const _renderMain = () => {
     return (
       <Stack sx={{ padding: '20px' }} direction="column">
-        <Typography sx={{ fontSize: '17px', fontWeight: 600 }}>
+        <Typography
+          sx={{ fontSize: { xs: '17px', pc: '30px' }, fontWeight: 700 }}
+        >
           Chỉnh sửa giá
         </Typography>
         <Grid
@@ -150,7 +160,13 @@ const Request: React.FC = () => {
           {types.map((item: { label: string; value: string }) => {
             return (
               <Grid item xs={12} key={`item-${item.value}`}>
-                <Typography sx={{ fontWeight: 600, mb: '10px' }}>
+                <Typography
+                  sx={{
+                    fontWeight: 600,
+                    mb: { xs: '10px', pc: '30px' },
+                    fontSize: { pc: '20px' },
+                  }}
+                >
                   {item.label}
                 </Typography>
                 {_renderCards(item.value)}

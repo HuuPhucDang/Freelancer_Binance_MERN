@@ -71,18 +71,44 @@ const StaticHeader: React.FC<IStaticHeaderProp> = ({
         spacing={isSm ? '10px' : '0'}
       >
         <Stack direction="column">
-          <Typography sx={{ fontSize: '12px' }}>
+          <Typography
+            sx={{
+              fontSize: {
+                xs: '12px',
+                pc: '20px',
+              },
+            }}
+          >
             {Number(latest24h?.lastPrice).toFixed(2)}
           </Typography>
-          <Typography sx={{ fontSize: '12px' }}>
+          <Typography
+            sx={{
+              fontSize: {
+                xs: '12px',
+                pc: '20px',
+              },
+            }}
+          >
             {(enchangeRate * latest24h?.lastPrice || 0).toFixed(2)}
           </Typography>
         </Stack>
         <Stack direction="column">
-          <Typography sx={{ fontSize: 10 }}>Biến động giá 24h</Typography>
           <Typography
             sx={{
-              fontSize: 10,
+              fontSize: {
+                xs: '10px',
+                pc: '20px',
+              },
+            }}
+          >
+            Biến động giá 24h
+          </Typography>
+          <Typography
+            sx={{
+              fontSize: {
+                xs: '10px',
+                pc: '20px',
+              },
               color: Number(latest24h?.priceChange) < 0 ? '#C83535' : '#408827',
             }}
           >
@@ -91,20 +117,68 @@ const StaticHeader: React.FC<IStaticHeaderProp> = ({
           </Typography>
         </Stack>
         <Stack direction="column">
-          <Typography sx={{ fontSize: 10 }}>Giá cao nhất 24h</Typography>
-          <Typography sx={{ fontSize: 10 }}>
+          <Typography
+            sx={{
+              fontSize: {
+                xs: '10px',
+                pc: '20px',
+              },
+            }}
+          >
+            Giá cao nhất 24h
+          </Typography>
+          <Typography
+            sx={{
+              fontSize: {
+                xs: '10px',
+                pc: '20px',
+              },
+            }}
+          >
             {Number(latest24h?.highPrice).toFixed(2)}
           </Typography>
         </Stack>
         <Stack direction="column">
-          <Typography sx={{ fontSize: 10 }}>Giá thấp nhất 24h</Typography>
-          <Typography sx={{ fontSize: 10 }}>
+          <Typography
+            sx={{
+              fontSize: {
+                xs: '10px',
+                pc: '20px',
+              },
+            }}
+          >
+            Giá thấp nhất 24h
+          </Typography>
+          <Typography
+            sx={{
+              fontSize: {
+                xs: '10px',
+                pc: '20px',
+              },
+            }}
+          >
             {Number(latest24h?.lowPrice).toFixed(2)}
           </Typography>
         </Stack>
         <Stack direction="column">
-          <Typography sx={{ fontSize: 10 }}>KL 24h(EDU)</Typography>
-          <Typography sx={{ fontSize: 10 }}>
+          <Typography
+            sx={{
+              fontSize: {
+                xs: '10px',
+                pc: '20px',
+              },
+            }}
+          >
+            KL 24h(EDU)
+          </Typography>
+          <Typography
+            sx={{
+              fontSize: {
+                xs: '10px',
+                pc: '20px',
+              },
+            }}
+          >
             {Number(latest24h?.volume).toFixed(4)}
           </Typography>
         </Stack>
@@ -132,7 +206,10 @@ const StaticHeader: React.FC<IStaticHeaderProp> = ({
             >
               <Typography
                 sx={{
-                  fontSize: '15px',
+                  fontSize: {
+                    xs: '15px',
+                    pc: '25px',
+                  },
                   fontWeight: 600,
                   marginRight: '4px',
                   lineHeight: '18px',

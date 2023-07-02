@@ -155,7 +155,7 @@ const Verify: React.FC = () => {
               onClick={() => setCurrentItem(item)}
               disabled={item.status === 'denied'}
             >
-              <RemoveRedEyeOutlinedIcon />
+              <RemoveRedEyeOutlinedIcon sx={{ fontSize: { pc: '40px' } }} />
             </IconButton>,
             <Stack direction="row" justifyContent="center">
               <Tooltip title="Chấp nhận">
@@ -167,7 +167,7 @@ const Verify: React.FC = () => {
                     }
                     disabled={item.status !== 'pending'}
                   >
-                    <CheckCircleOutlineIcon />
+                    <CheckCircleOutlineIcon sx={{ fontSize: { pc: '40px' } }} />
                   </IconButton>
                 </span>
               </Tooltip>
@@ -180,7 +180,7 @@ const Verify: React.FC = () => {
                     }
                     disabled={item.status !== 'pending'}
                   >
-                    <DoDisturbIcon />
+                    <DoDisturbIcon sx={{ fontSize: { pc: '40px' } }} />
                   </IconButton>
                 </span>
               </Tooltip>
@@ -202,7 +202,9 @@ const Verify: React.FC = () => {
             setCurrentItem(null);
           }}
         />
-        <Typography sx={{ fontSize: '17px', fontWeight: 600 }}>
+        <Typography
+          sx={{ fontSize: { xs: '17px', pc: '30px' }, fontWeight: 700 }}
+        >
           Xác minh
         </Typography>
         <TableContainer
@@ -214,14 +216,27 @@ const Verify: React.FC = () => {
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
             <TableHead>
               <TableRow>
-                <TableCell sx={{ fontWeight: 600 }}>Người dùng</TableCell>
-                <TableCell align="center" sx={{ fontWeight: 600 }}>
+                <TableCell
+                  sx={{ fontWeight: 600, fontSize: { xs: '14px', pc: '20px' } }}
+                >
+                  Người dùng
+                </TableCell>
+                <TableCell
+                  align="center"
+                  sx={{ fontWeight: 600, fontSize: { xs: '14px', pc: '20px' } }}
+                >
                   Trạng thái
                 </TableCell>
-                <TableCell align="center" sx={{ fontWeight: 600 }}>
+                <TableCell
+                  align="center"
+                  sx={{ fontWeight: 600, fontSize: { xs: '14px', pc: '20px' } }}
+                >
                   Xem
                 </TableCell>
-                <TableCell align="center" sx={{ fontWeight: 600 }}>
+                <TableCell
+                  align="center"
+                  sx={{ fontWeight: 600, fontSize: { xs: '14px', pc: '20px' } }}
+                >
                   Hành động
                 </TableCell>
               </TableRow>
@@ -238,7 +253,10 @@ const Verify: React.FC = () => {
                     <TableCell
                       component="th"
                       scope="row"
-                      sx={{ padding: '15px' }}
+                      sx={{
+                        padding: '15px',
+                        fontSize: { xs: '14px', pc: '20px' },
+                      }}
                     >
                       {row.user?.nickname}
                     </TableCell>
@@ -247,22 +265,34 @@ const Verify: React.FC = () => {
                         color={statusOptions[row.status]?.color}
                         label={statusOptions[row.status]?.label}
                         sx={{
-                          width: '130px',
-                          borderRadius: '5px',
+                          width: '188px',
+                          height: '56px',
+                          borderRadius: '0px',
                           fontWeight: 600,
+                          fontSize: { pc: '20px' },
                         }}
                         variant="outlined"
                       />
                     </TableCell>
-                    <TableCell align="center">{row.view}</TableCell>
-                    <TableCell align="center">{row.action}</TableCell>
+                    <TableCell align="center" sx={{ fontSize: { pc: '20px' } }}>
+                      {row.view}
+                    </TableCell>
+                    <TableCell align="center" sx={{ fontSize: { pc: '20px' } }}>
+                      {row.action}
+                    </TableCell>
                   </TableRow>
                 ))}
               {rows.length === 0 && (
                 <TableRow
-                  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                  sx={{
+                    '&:last-child td, &:last-child th': { border: 0 },
+                  }}
                 >
-                  <TableCell component="th" scope="row">
+                  <TableCell
+                    component="th"
+                    scope="row"
+                    sx={{ fontSize: { pc: '20px' } }}
+                  >
                     Không có dữ liệu
                   </TableCell>
                 </TableRow>

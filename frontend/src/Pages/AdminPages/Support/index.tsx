@@ -186,7 +186,11 @@ const Support = () => {
     return (
       <Stack sx={{ padding: '20px', height: '100%' }} direction="column">
         <Typography
-          sx={{ fontSize: '17px', fontWeight: 600, marginBottom: '16px' }}
+          sx={{
+            fontSize: { xs: '17px', pc: '30px' },
+            fontWeight: 700,
+            marginBottom: '20px',
+          }}
         >
           Hỗ trợ trực tuyến
         </Typography>

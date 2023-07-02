@@ -63,7 +63,15 @@ const CoinValueTable = () => {
                 justifyContent="start"
                 sx={{ pt: 2 }}
               >
-                <Typography sx={{ fontSize: 11, fontWeight: 400 }}>
+                <Typography
+                  sx={{
+                    fontSize: {
+                      xs: '11px',
+                      pc: '20px',
+                    },
+                    fontWeight: 400,
+                  }}
+                >
                   Cặp
                 </Typography>
                 <Box position="relative" sx={{ ml: '3px' }}>
@@ -86,20 +94,31 @@ const CoinValueTable = () => {
                 </Box>
               </Stack>
             </TableCell>
-            <TableCell align="right">
+            <TableCell align="center">
               <Stack
                 direction="row"
                 alignItems="center"
                 justifyContent="end"
                 sx={{ pt: 2 }}
               >
-                <Typography sx={{ fontSize: 11, fontWeight: 400 }}>
+                <Typography
+                  sx={{
+                    fontSize: {
+                      xs: '11px',
+                      pc: '20px',
+                    },
+                    fontWeight: 400,
+                  }}
+                >
                   Giá
                 </Typography>
-                <Box position="relative" sx={{ ml: '3px' }}>
+                <Box position="relative" sx={{ ml: '3px', mr: '5px' }}>
                   <ArrowDropUpIcon
                     sx={{
-                      fontSize: 16,
+                      fontSize: {
+                        xs: '16px',
+                        pc: '20px',
+                      },
                       position: 'absolute',
                       bottom: -5,
                       color: '#BBAEAE',
@@ -107,7 +126,10 @@ const CoinValueTable = () => {
                   />
                   <ArrowDropDownIcon
                     sx={{
-                      fontSize: 16,
+                      fontSize: {
+                        xs: '16px',
+                        pc: '20px',
+                      },
                       position: 'absolute',
                       top: -5,
                       color: '#BBAEAE',
@@ -134,7 +156,10 @@ const CoinValueTable = () => {
                 >
                   <StarIcon
                     sx={{
-                      fontSize: '16px',
+                      fontSize: {
+                        xs: '16px',
+                        pc: '24px',
+                      },
                       marginRight: '6px',
                       color: '#816A6A',
                     }}
@@ -142,7 +167,10 @@ const CoinValueTable = () => {
 
                   <Typography
                     sx={{
-                      fontSize: 9,
+                      fontSize: {
+                        xs: '9px',
+                        pc: '20px',
+                      },
                       lineHeight: '11px',
                       color: '#816A6A',
                       cursor: 'pointer',
@@ -151,7 +179,6 @@ const CoinValueTable = () => {
                       Utils.redirect(
                         `${ROUTERS.TRANSACTION}?symbol=${row?.symbol}`
                       );
-                      // window.location.href = `${ROUTERS.TRANSACTION}?symbol=${row?.symbol}`;
                       window.location.reload();
                     }}
                   >
@@ -162,7 +189,10 @@ const CoinValueTable = () => {
               <TableCell align="right" sx={{ p: 1, color: '#816A6A' }}>
                 <Typography
                   sx={{
-                    fontSize: 9,
+                    fontSize: {
+                      xs: '9px',
+                      pc: '20px',
+                    },
                     lineHeight: '11px',
                     color: '#816A6A',
                   }}

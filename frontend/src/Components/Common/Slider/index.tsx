@@ -59,28 +59,28 @@ const Slider: React.FC<IProps> = ({
             slidesPerView: slidersPerView,
           },
           1100: {
-            slidesPerView: slidersPerView + 1,
+            slidesPerView: slidersPerView,
           },
           1300: {
-            slidesPerView: slidersPerView + 2,
+            slidesPerView: slidersPerView,
           },
           1500: {
-            slidesPerView: slidersPerView + 3,
+            slidesPerView: slidersPerView,
           },
           1700: {
-            slidesPerView: slidersPerView + 4,
+            slidesPerView: slidersPerView,
           },
           1900: {
-            slidesPerView: slidersPerView + 5,
+            slidesPerView: slidersPerView,
           },
           2100: {
-            slidesPerView: slidersPerView + 6,
+            slidesPerView: slidersPerView,
           },
           2300: {
-            slidesPerView: slidersPerView + 7,
+            slidesPerView: slidersPerView,
           },
           2500: {
-            slidesPerView: slidersPerView + 8,
+            slidesPerView: slidersPerView,
           },
         }}
         style={{maxWidth: '100%'}}

@@ -67,8 +67,6 @@ const Transaction: React.FC = () => {
     };
   }, []);
 
-  console.log(clientHeight);
-
   const _renderLeftSection = () => {
     return (
       <Stack direction="column" height="100%">
@@ -103,12 +101,16 @@ const Transaction: React.FC = () => {
                     maxWidth: '100%',
                     // flex: 1,
                     background: '#000',
-                    height: {
-                      xs: token ? '350px' : 'calc(350px + 244px)',
-                      sm: token
-                        ? `${clientHeight - partElementHeight - 245}px`
-                        : `${clientHeight - partElementHeight - 35}px`,
-                    },
+                    // height: {
+                    //   xs: token ? '350px' : 'calc(350px + 244px)',
+                    //   sm: token
+                    //     ? `${clientHeight - partElementHeight - 245}px`
+                    //     : `${clientHeight - partElementHeight - 35}px`,
+                    //   pc: token
+                    //     ? `${clientHeight - partElementHeight - 245}px`
+                    //     : `${clientHeight - partElementHeight - 35}px`,
+                    // },
+                    aspectRatio: 919 / 501
                   }}
                 >
                   <StocksChart symbol={query.get('symbol') || 'BTCUSDT'} />
@@ -195,7 +197,10 @@ const Transaction: React.FC = () => {
         >
           <Typography
             sx={{
-              fontSize: '11px',
+              fontSize: {
+                xs: '11px',
+                pc: '20px',
+              },
               fontWeight: 500,
               textAlign: 'center',
               lineHeight: '13px',
@@ -230,7 +235,7 @@ const Transaction: React.FC = () => {
             xs: 'auto',
             md: 'hidden',
           },
-          maxWidth: '971px',
+          maxWidth: '1830px',
         }}
       >
         <Grid

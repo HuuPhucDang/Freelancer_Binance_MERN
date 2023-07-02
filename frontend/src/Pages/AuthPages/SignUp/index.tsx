@@ -69,7 +69,10 @@ const SignUp = () => {
 
   const _renderMain = () => {
     return (
-      <>
+      <Stack
+        padding={{ xs: '0', pc: '0' }}
+        sx={{ width: '100%', maxWidth: '432px', margin: 'auto' }}
+      >
         <Helmet>
           <title>Đăng ký</title>
         </Helmet>
@@ -78,12 +81,17 @@ const SignUp = () => {
           sx={{
             border: '1px solid #ccc',
             borderRadius: '8px',
-            padding: '30px 15px',
+            padding: '30px 15px 60px 15px',
             minWidth: '300px',
           }}
         >
           <Typography
-            sx={{ fontSize: '16px', fontWeight: 600, marginBottom: '20px' }}
+            sx={{
+              fontSize: { xs: '16px', pc: '40px' },
+              fontWeight: 700,
+              lineHeight: '40px',
+              marginBottom: '20px',
+            }}
           >
             Đăng ký
           </Typography>
@@ -101,6 +109,7 @@ const SignUp = () => {
                   color: 'text.secondary',
                   ' .MuiInputBase-root': {
                     backgroundColor: 'background.secondary',
+                    height: { xs: '32px', pc: '42px' },
                   },
                 }}
                 onKeyUp={onEnter}
@@ -125,6 +134,7 @@ const SignUp = () => {
                   color: 'text.secondary',
                   ' .MuiInputBase-root': {
                     backgroundColor: 'background.secondary',
+                    height: { xs: '32px', pc: '42px' },
                   },
                 }}
                 onKeyUp={onEnter}
@@ -149,6 +159,7 @@ const SignUp = () => {
                   color: 'text.secondary',
                   ' .MuiInputBase-root': {
                     backgroundColor: 'background.secondary',
+                    height: { xs: '32px', pc: '42px' },
                   },
                 }}
                 onKeyUp={onEnter}
@@ -172,6 +183,7 @@ const SignUp = () => {
                   color: 'text.secondary',
                   ' .MuiInputBase-root': {
                     backgroundColor: 'background.secondary',
+                    height: { xs: '32px', pc: '42px' },
                   },
                 }}
                 onKeyUp={onEnter}
@@ -212,7 +224,7 @@ const SignUp = () => {
             Đăng nhập
           </Typography>
         </Stack>
-      </>
+      </Stack>
     );
   };
 

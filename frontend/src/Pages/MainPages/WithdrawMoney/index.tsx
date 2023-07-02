@@ -120,13 +120,12 @@ const WithdrawMoney: React.FC = () => {
       <Box
         component="main"
         sx={{
-          minHeight: 'calc(100vh - 94px)',
+          display: 'flex',
+          minHeight: 'calc(100vh - 180px)',
           padding: {
             xs: '0',
-            // md: '1em 0',
           },
-          mx: 'auto',
-          // maxWidth: '971px',
+          margin: '20px auto 0px auto',
         }}
       >
         <Grid container>
@@ -144,15 +143,32 @@ const WithdrawMoney: React.FC = () => {
               backgroundColor: 'background.default',
               zIndex: 1,
             }}
+            borderTop="1px solid rgba(187, 174, 174, 0.9)"
           >
             <Sidebar />
           </Grid>
-          <Grid item xs={12} md={10} borderLeft="1px solid #949494" padding="19px 32px 19px 32px">
+          <Grid
+            item
+            xs={12}
+            md={10}
+            borderLeft="1px solid #949494"
+            padding={{
+              xs: '19px 32px 19px 32px',
+              pc: '60px 71px',
+            }}
+            borderTop="1px solid rgba(187, 174, 174, 0.9)"
+          >
             <Stack direction="column" sx={{ p: 0 }}>
               <Typography
                 sx={{
-                  fontSize: '24px',
-                  lineHeight: '34px',
+                  fontSize: {
+                    xs: '24px',
+                    pc: '64px',
+                  },
+                  lineHeight: {
+                    xs: '34px',
+                    pc: '70px',
+                  },
                   fontWeight: 600,
                 }}
               >
@@ -174,7 +190,7 @@ const WithdrawMoney: React.FC = () => {
                         color: 'text.primary',
                       },
                       input: {
-                        height: '59px',
+                        height: { xs: '59px', pc: '82px' },
                         boxSizing: 'border-box',
                         padding: '0 35px',
                       },
@@ -183,8 +199,8 @@ const WithdrawMoney: React.FC = () => {
                     type="number"
                     InputProps={{
                       sx: {
-                        height: '59px',
-                        fontSize: '15px',
+                        height: { xs: '59px', pc: '82px' },
+                        fontSize: { xs: '15px', pc: '20px' },
                         paddingLeft: '22px',
                         marginTop: '20px',
                         backgroundColor: 'background.chargeInput',
@@ -194,7 +210,8 @@ const WithdrawMoney: React.FC = () => {
                       endAdornment: (
                         <InputAdornment position="start">
                           <Typography sx={{ fontSize: '13px' }}>
-                            Số dư {userData?.wallet?.balance.toFixed(2) || 0} USDT
+                            Số dư {userData?.wallet?.balance.toFixed(2) || 0}{' '}
+                            USDT
                           </Typography>
                         </InputAdornment>
                       ),
@@ -231,7 +248,7 @@ const WithdrawMoney: React.FC = () => {
                         color: 'text.primary',
                       },
                       input: {
-                        height: '59px',
+                        height: { xs: '59px', pc: '82px' },
                         boxSizing: 'border-box',
                         padding: '0 35px',
                       },
@@ -240,8 +257,8 @@ const WithdrawMoney: React.FC = () => {
                     type="password"
                     InputProps={{
                       sx: {
-                        height: '59px',
-                        fontSize: '15px',
+                        height: { xs: '59px', pc: '82px' },
+                        fontSize: { xs: '15px', pc: '20px' },
                         paddingLeft: '22px',
                         marginTop: '20px',
                         backgroundColor: 'background.chargeInput',
@@ -270,6 +287,7 @@ const WithdrawMoney: React.FC = () => {
                           padding: '0 22px',
                           ' >': { borderRadius: '3px' },
                           border: 'none',
+                          height: { xs: '59px', pc: '82px' },
                         }}
                         displayEmpty
                         renderValue={
@@ -295,10 +313,16 @@ const WithdrawMoney: React.FC = () => {
                   backgroundColor: 'background.burntSienna',
                   color: 'text.secondary',
                   textTransform: 'unset',
-                  height: '43px',
-                  width: '265px',
+                  height: {
+                    xs: '43px',
+                    pc: '62px',
+                  },
+                  width: {
+                    xs: '265px',
+                    pc: '542px',
+                  },
                   fontWeight: 500,
-                  fontSize: '15px',
+                  fontSize: { xs: '15px', pc: '20px' },
                   marginTop: '22px',
                   alignSelf: 'center',
                 }}

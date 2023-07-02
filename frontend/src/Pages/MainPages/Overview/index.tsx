@@ -18,7 +18,6 @@ import {
 } from '@mui/material';
 import ModeEditOutlineOutlinedIcon from '@mui/icons-material/ModeEditOutlineOutlined';
 import RemoveRedEyeOutlinedIcon from '@mui/icons-material/RemoveRedEyeOutlined';
-import ArrowCircleRightOutlinedIcon from '@mui/icons-material/ArrowCircleRightOutlined';
 
 // Import local
 import { UserLayout } from '@/Components/DefaultLayout';
@@ -28,6 +27,7 @@ import { ENUMS, ROUTERS } from '@/Constants';
 import { Utils } from '@/Libs';
 import { UserActions } from '@/Reducers/Actions';
 import { useTypedDispatch } from '@/Reducers/store';
+import Assets from '../../../Assets';
 
 const userTypes = [
   {
@@ -98,7 +98,6 @@ const Overview: React.FC = () => {
     <TableContainer
       component={Paper}
       sx={{
-        marginTop: '20px',
         boxShadow: 'none',
         borderRadius: '0px',
       }}
@@ -134,13 +133,21 @@ const Overview: React.FC = () => {
                 '&:last-child td, &:last-child th': { border: 0 },
               }}
             >
-              <TableCell component="th" scope="row" sx={{ padding: '4px' }}>
+              <TableCell
+                component="th"
+                scope="row"
+                sx={{ padding: { xs: '4px', pc: '8px' } }}
+              >
                 <Stack direction="row" alignItems="center">
                   <Box
                     component="img"
                     src={item?.icon}
                     sx={{
-                      width: '22px',
+                      width: {
+                        xs: '22px',
+                        pc: '36px',
+                      },
+                      borderRadius: '50px',
                       height: 'auto',
                       objectFit: 'contain',
                       marginRight: '10px',
@@ -148,7 +155,10 @@ const Overview: React.FC = () => {
                   />
                   <Typography
                     sx={{
-                      fontSize: '13px',
+                      fontSize: {
+                        xs: '13px',
+                        pc: '20px',
+                      },
                       lienHeight: '20px',
                       fontWeight: 600,
                       color: 'text.primary',
@@ -158,10 +168,16 @@ const Overview: React.FC = () => {
                   </Typography>
                 </Stack>
               </TableCell>
-              <TableCell align="right" sx={{ padding: '4px' }}>
+              <TableCell
+                align="right"
+                sx={{ padding: { xs: '4px', pc: '8px' } }}
+              >
                 <Typography
                   sx={{
-                    fontSize: '10px',
+                    fontSize: {
+                      xs: '10px',
+                      pc: '20px',
+                    },
                     lineHeight: '24px',
                     color: 'text.primary',
                   }}
@@ -169,10 +185,16 @@ const Overview: React.FC = () => {
                   {item?.price}
                 </Typography>
               </TableCell>
-              <TableCell align="right" sx={{ padding: '4px' }}>
+              <TableCell
+                align="right"
+                sx={{ padding: { xs: '4px', pc: '8px' } }}
+              >
                 <Typography
                   sx={{
-                    fontSize: '10px',
+                    fontSize: {
+                      xs: '10px',
+                      pc: '20px',
+                    },
                     lineHeight: '24px',
                     color: item?.growth < 0 ? '#F03030' : '#23631D',
                   }}
@@ -180,10 +202,16 @@ const Overview: React.FC = () => {
                   {item?.growth}%
                 </Typography>
               </TableCell>
-              <TableCell align="right" sx={{ padding: '4px' }}>
+              <TableCell
+                align="right"
+                sx={{ padding: { xs: '4px', pc: '8px' } }}
+              >
                 <Link
                   sx={{
-                    fontSize: '10px',
+                    fontSize: {
+                      xs: '10px',
+                      pc: '20px',
+                    },
                     lineHeight: '14px',
                     fontWeight: 400,
                     color: 'text.burntSienna',
@@ -207,13 +235,12 @@ const Overview: React.FC = () => {
       <Box
         component="main"
         sx={{
-          minHeight: 'calc(100vh - 94px)',
+          display: 'flex',
+          minHeight: 'calc(100vh - 180px)',
           padding: {
             xs: '0',
-            // md: '1em 0',
           },
-          mx: 'auto',
-          // maxWidth: '971px',
+          margin: '20px auto 0px auto',
         }}
       >
         <EditAvatar
@@ -224,7 +251,7 @@ const Overview: React.FC = () => {
           open={isShowNamePopup}
           onClose={() => setIsShowNamePopup(false)}
         />
-        <Grid container height="100%">
+        <Grid container flex={1}>
           <Grid
             item
             xs={12}
@@ -239,19 +266,21 @@ const Overview: React.FC = () => {
               backgroundColor: 'background.default',
               zIndex: 1,
             }}
+            borderTop="1px solid rgba(187, 174, 174, 0.9)"
           >
             <Sidebar />
           </Grid>
           <Grid
             item
             xs={12}
-            md={10}
-            borderLeft="1px solid #949494"
-            padding="9px 32px 9px 18px"
+            md={9.5}
+            borderLeft="1px solid rgba(187, 174, 174, 0.9)"
+            padding="32px 32px 9px 26px"
+            borderTop="1px solid rgba(187, 174, 174, 0.9)"
           >
             <Grid
               container
-              columnSpacing={1}
+              columnSpacing="24px"
               rowSpacing={3.5}
               padding={{ xs: '10px', md: 0 }}
             >
@@ -265,7 +294,11 @@ const Overview: React.FC = () => {
                 >
                   <Avatar
                     src={userData.avatar || ''}
-                    sx={{ width: '70px', height: '70px', marginRight: '20px' }}
+                    sx={{
+                      width: { xs: '70px', pc: '94px' },
+                      height: { xs: '70px', pc: '94px' },
+                      marginRight: '20px',
+                    }}
                   />
                   <Stack direction="column">
                     <Stack
@@ -273,7 +306,15 @@ const Overview: React.FC = () => {
                       alignItems="center"
                       marginBottom="16px"
                     >
-                      <Typography sx={{ marginRight: '16px' }}>
+                      <Typography
+                        sx={{
+                          marginRight: '16px',
+                          fontSize: {
+                            xs: '14px',
+                            pc: '24px',
+                          },
+                        }}
+                      >
                         {userData
                           ? userData?.nickname
                           : 'Anonymous-User-b5b47p'}
@@ -297,18 +338,48 @@ const Overview: React.FC = () => {
                       <Box
                         sx={{ marginRight: '20px', minWidth: 'max-content' }}
                       >
-                        <Typography sx={{ fontSize: '12px', fontWeight: 600 }}>
+                        <Typography
+                          sx={{
+                            fontSize: {
+                              xs: '12px',
+                              pc: '20px',
+                            },
+                            fontWeight: 600,
+                          }}
+                        >
                           ID người dùng
                         </Typography>
-                        <Typography sx={{ fontSize: '12px' }}>
+                        <Typography
+                          sx={{
+                            fontSize: {
+                              xs: '12px',
+                              pc: '20px',
+                            },
+                          }}
+                        >
                           {userData?.id}
                         </Typography>
                       </Box>
                       <Box sx={{ minWidth: 'max-content' }}>
-                        <Typography sx={{ fontSize: '12px', fontWeight: 600 }}>
+                        <Typography
+                          sx={{
+                            fontSize: {
+                              xs: '12px',
+                              pc: '20px',
+                            },
+                            fontWeight: 600,
+                          }}
+                        >
                           Loại người dùng
                         </Typography>
-                        <Typography sx={{ fontSize: '12px' }}>
+                        <Typography
+                          sx={{
+                            fontSize: {
+                              xs: '12px',
+                              pc: '20px',
+                            },
+                          }}
+                        >
                           {userType}
                         </Typography>
                       </Box>
@@ -320,7 +391,10 @@ const Overview: React.FC = () => {
                 <Box
                   sx={{
                     backgroundColor: 'background.mainContent',
-                    padding: '20px',
+                    padding: {
+                      xs: '20px',
+                      pc: '31px 60px',
+                    },
                   }}
                 >
                   <Box>
@@ -330,25 +404,22 @@ const Overview: React.FC = () => {
                     <Stack direction="row" alignItems="center" marginTop="30px">
                       <Typography
                         sx={{
-                          fontSize: '16px',
+                          fontSize: {
+                            xs: '16px',
+                            pc: '24px',
+                          },
                           fontWeight: 600,
                           lineHeight: '30px',
                         }}
                       >
-                        {Number(userData?.wallet?.balance).toFixed(2)} USDT
+                        {Number(userData?.wallet?.balance || 0).toFixed(2)} USDT
                       </Typography>
-                      {/* <Box
-                        component="img"
-                        src={Assets.downArrowIcon}
-                        sx={{
-                          width: '19px',
-                          height: '19px',
-                          margin: '0 20px 0 10px',
-                        }}
-                      /> */}
                       <Typography
                         sx={{
-                          fontSize: '16px',
+                          fontSize: {
+                            xs: '16px',
+                            pc: '24px',
+                          },
                           fontWeight: 600,
                           lineHeight: '30px',
                           marginLeft: '30px',
@@ -356,7 +427,7 @@ const Overview: React.FC = () => {
                       >
                         ~~{' '}
                         {(
-                          userData?.wallet?.balance * enchangeRate
+                          userData?.wallet?.balance * enchangeRate || 0
                         ).toLocaleString('vi-VN', {
                           style: 'currency',
                           currency: 'VND',
@@ -364,16 +435,35 @@ const Overview: React.FC = () => {
                       </Typography>
                     </Stack>
                   </Box>
-                  <Stack direction="row" marginTop="10px">
+                  <Stack
+                    direction="row"
+                    marginTop={{
+                      xs: '10px',
+                      pc: '50px',
+                    }}
+                  >
                     <Button
                       sx={{
-                        fontSize: '16px',
+                        fontSize: {
+                          xs: '16px',
+                          pc: '20px',
+                        },
                         fontWeigh: 500,
                         textTransform: 'unset',
                         backgroundColor: 'background.burntSienna',
                         color: 'text.secondary',
-                        width: '110px',
-                        marginRight: ' 10px',
+                        width: {
+                          xs: '110px',
+                          pc: '256px',
+                        },
+                        height: {
+                          xs: '32px',
+                          pc: '64px',
+                        },
+                        marginRight: {
+                          xs: '10px',
+                          pc: '30px',
+                        },
                         borderRadius: '0px',
                       }}
                       onClick={() => Utils.redirect(ROUTERS.RECHARGE)}
@@ -382,12 +472,22 @@ const Overview: React.FC = () => {
                     </Button>
                     <Button
                       sx={{
-                        fontSize: '16px',
+                        fontSize: {
+                          xs: '16px',
+                          pc: '20px',
+                        },
                         fontWeigh: 500,
                         textTransform: 'unset',
                         backgroundColor: 'background.lightSilver',
                         color: 'text.secondary',
-                        width: '110px',
+                        width: {
+                          xs: '110px',
+                          pc: '256px',
+                        },
+                        height: {
+                          xs: '32px',
+                          pc: '64px',
+                        },
                         borderRadius: '0px',
                       }}
                       onClick={() => Utils.redirect(ROUTERS.WITHDRAW_MONEY)}
@@ -399,7 +499,10 @@ const Overview: React.FC = () => {
                 <Box sx={{ marginTop: '20px' }}>
                   <Typography
                     sx={{
-                      fontSize: '20px',
+                      fontSize: {
+                        xs: '20px',
+                        pc: '24px',
+                      },
                       lineHeight: '24px',
                       fontWeight: 600,
                     }}
@@ -408,7 +511,10 @@ const Overview: React.FC = () => {
                   </Typography>
                   <Typography
                     sx={{
-                      fontSize: '11px',
+                      fontSize: {
+                        xs: '11px',
+                        pc: '16px',
+                      },
                       lineHeight: '13px',
                       color: '#7D6F6F',
                       marginTop: '6px',
@@ -418,8 +524,14 @@ const Overview: React.FC = () => {
                   </Typography>
                   <Typography
                     sx={{
-                      fontSize: '15px',
-                      lineHeight: '18px',
+                      fontSize: {
+                        xs: '15px',
+                        pc: '20px',
+                      },
+                      lineHeight: {
+                        xs: '18px',
+                        pc: '24px',
+                      },
                       marginTop: '12px',
                     }}
                   >
@@ -431,23 +543,30 @@ const Overview: React.FC = () => {
                   </Typography>
                 </Box>
               </Grid>
-              <Grid item md={6}>
+              <Grid item md={5.5}>
                 <Stack
                   direction="column"
                   sx={{
                     backgroundColor: 'background.mainContent',
-                    padding: '12px',
+                    padding: '24px',
                   }}
                 >
                   <Stack direction="row" alignItems="center">
                     <Typography sx={{ fontSize: '24px', fontWeight: 600 }}>
                       Thị trường
                     </Typography>
-                    <IconButton href={ROUTERS.TRANSACTION}>
-                      <ArrowCircleRightOutlinedIcon />
+                    <IconButton
+                      href={ROUTERS.TRANSACTION}
+                      sx={{ marginLeft: '30px' }}
+                    >
+                      <Box
+                        component="img"
+                        src={Assets.rightIcon}
+                        sx={{ width: '34px' }}
+                      />
                     </IconButton>
                   </Stack>
-                  {_renderTable()}
+                  <Stack sx={{ padding: '10px' }}>{_renderTable()}</Stack>
                 </Stack>
               </Grid>
             </Grid>

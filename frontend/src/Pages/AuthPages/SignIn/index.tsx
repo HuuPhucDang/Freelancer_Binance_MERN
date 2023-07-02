@@ -62,7 +62,10 @@ const SignIn = () => {
 
   const _renderMain = () => {
     return (
-      <>
+      <Stack
+        padding={{ xs: '0', pc: '0' }}
+        sx={{ width: '100%', maxWidth: '420px', margin: '120px auto' }}
+      >
         <Helmet>
           <title>Đăng nhập</title>
         </Helmet>
@@ -78,10 +81,17 @@ const SignIn = () => {
             borderRadius: '8px',
             padding: '30px 15px',
             minWidth: '300px',
+            backgroundColor: 'background.authBackground',
           }}
         >
           <Typography
-            sx={{ fontSize: '16px', fontWeight: 600, marginBottom: '20px' }}
+            sx={{
+              fontSize: { xs: '16px', pc: '40px' },
+              fontWeight: 700,
+              lineHeight: '40px',
+              marginBottom: '20px',
+              color: '#000000',
+            }}
           >
             Đăng nhập
           </Typography>
@@ -97,9 +107,19 @@ const SignIn = () => {
                 autoComplete="username"
                 sx={{
                   marginTop: '10px',
-                  color: 'text.secondary',
+                  color: '#BBAEAE',
+                  // height: { xs: '32px', pc: '42px' },
                   ' .MuiInputBase-root': {
-                    backgroundColor: 'background.secondary',
+                    backgroundColor: 'rgba(217, 217, 217, 0.32)',
+                    color: '#BBAEAE',
+                    borderColor: '#999288',
+                    // height: { xs: '32px', pc: '42px' },
+                  },
+                  input: {
+                    height: { xs: '32px', pc: '42px' },
+                  },
+                  fieldset: {
+                    borderColor: '#999288 !important',
                   },
                 }}
                 onKeyUp={onEnter}
@@ -121,10 +141,21 @@ const SignIn = () => {
                 type="password"
                 autoComplete="current-password"
                 sx={{
-                  marginTop: '10px',
-                  color: 'text.secondary',
+                  marginTop: {
+                    xs: '10px',
+                    pc: '24px',
+                  },
+                  color: '#BBAEAE',
                   ' .MuiInputBase-root': {
-                    backgroundColor: 'background.secondary',
+                    backgroundColor: 'rgba(217, 217, 217, 0.32)',
+                    color: '#BBAEAE',
+                    // height: { xs: '32px', pc: '42px' },
+                  },
+                  input: {
+                    height: { xs: '32px', pc: '42px' },
+                  },
+                  fieldset: {
+                    borderColor: '#999288 !important',
                   },
                 }}
                 onKeyUp={onEnter}
@@ -137,7 +168,7 @@ const SignIn = () => {
           <Stack
             direction="row"
             alignItems="center"
-            justifyContent="flex-end"
+            justifyContent="center"
             sx={{
               marginTop: '0.5em',
             }}
@@ -160,7 +191,10 @@ const SignIn = () => {
           <Button
             variant="contained"
             sx={{
-              marginTop: '10px',
+              marginTop: {
+                xs: '10px',
+                pc: '30px',
+              },
               backgroundColor: 'background.burntSienna',
               ':hover': {
                 backgroundColor: 'background.burntSienna',
@@ -176,7 +210,8 @@ const SignIn = () => {
           <Stack
             direction="row"
             alignItems="center"
-            justifyContent="space-between"
+            justifyContent="space-evenly"
+            spacing="40px"
             sx={{
               marginTop: '2em',
             }}
@@ -211,7 +246,7 @@ const SignIn = () => {
             </Typography>
           </Stack>
         </Stack>
-      </>
+      </Stack>
     );
   };
 

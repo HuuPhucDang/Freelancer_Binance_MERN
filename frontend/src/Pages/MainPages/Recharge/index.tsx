@@ -65,16 +65,15 @@ const Recharge: React.FC = () => {
       <Box
         component="main"
         sx={{
-          minHeight: 'calc(100vh - 94px)',
+          display: 'flex',
+          minHeight: 'calc(100vh - 180px)',
           padding: {
-            xs: 0,
-            // md: '1em 0',
+            xs: '0',
           },
-          mx: 'auto',
-          // maxWidth: '971px',
+          margin: '20px auto 0px auto',
         }}
       >
-        <Grid container height="100%">
+        <Grid container>
           <Grid
             item
             xs={12}
@@ -89,6 +88,7 @@ const Recharge: React.FC = () => {
               backgroundColor: 'background.default',
               zIndex: 1,
             }}
+            borderTop="1px solid rgba(187, 174, 174, 0.9)"
           >
             <Sidebar />
           </Grid>
@@ -97,19 +97,22 @@ const Recharge: React.FC = () => {
             xs={12}
             md={10}
             borderLeft="1px solid #949494"
-            padding="19px 32px 19px 32px"
+            padding="19px 32px 19px 55px"
+            borderTop="1px solid rgba(187, 174, 174, 0.9)"
           >
-            <Grid
-              container
-              columnSpacing={3}
-              padding={0}
-            >
+            <Grid container columnSpacing={3} padding={0}>
               <Grid item xs={12}>
                 <Stack direction="column">
                   <Typography
                     sx={{
-                      fontSize: '24px',
-                      lineHeight: '34px',
+                      fontSize: {
+                        xs: '24px',
+                        pc: '64px',
+                      },
+                      lineHeight: {
+                        xs: '34px',
+                        pc: '70px',
+                      },
                       fontWeight: 600,
                     }}
                   >
@@ -117,7 +120,10 @@ const Recharge: React.FC = () => {
                   </Typography>
                   <Typography
                     sx={{
-                      fontSize: '12px',
+                      fontSize: {
+                        xs: '12px',
+                        pc: '20px',
+                      },
                       lineHeight: '24px',
                       fontWeight: 400,
                       marginTop: '6px',
@@ -140,18 +146,23 @@ const Recharge: React.FC = () => {
                   <Stack direction="column" marginTop="24px">
                     <Box
                       sx={{
-                        padding: '10px 16px',
+                        padding: '16px 24px 40px 24px',
                         backgroundColor: 'background.bankCardInformation',
                         borderRadius: '3px',
                       }}
                     >
-                      <Typography sx={{ fontWeight: 500, fontSize: '12px' }}>
+                      <Typography
+                        sx={{
+                          fontWeight: 500,
+                          fontSize: { xs: '12px', pc: '20px' },
+                        }}
+                      >
                         Họ và tên người nhận: <b>{systemInfo?.fullname}</b>
                       </Typography>
                       <Typography
                         sx={{
                           fontWeight: 500,
-                          fontSize: '12px',
+                          fontSize: { xs: '12px', pc: '20px' },
                           marginTop: '2px',
                         }}
                       >
@@ -160,7 +171,7 @@ const Recharge: React.FC = () => {
                       <Typography
                         sx={{
                           fontWeight: 500,
-                          fontSize: '12px',
+                          fontSize: { xs: '12px', pc: '20px' },
                           marginTop: '2px',
                         }}
                       >
@@ -169,7 +180,7 @@ const Recharge: React.FC = () => {
                       <Typography
                         sx={{
                           fontWeight: 500,
-                          fontSize: '12px',
+                          fontSize: { xs: '12px', pc: '20px' },
                           marginTop: '2px',
                         }}
                       >
@@ -182,11 +193,20 @@ const Recharge: React.FC = () => {
                     <Stack
                       direction="row"
                       sx={{
-                        height: '39px',
-                        fontSize: '12px',
+                        height: {
+                          xs: '39px',
+                          pc: '87px',
+                        },
+                        fontSize: {
+                          xs: '12px',
+                          pc: '20px',
+                        },
                         paddingLeft: '16px',
                         paddingRight: '16px',
-                        marginTop: '30px',
+                        marginTop: {
+                          xs: '30px',
+                          pc: '70px',
+                        },
                         backgroundColor: 'background.chargeInput',
                         color: 'text.primary',
                         alignItems: 'center',
@@ -210,11 +230,12 @@ const Recharge: React.FC = () => {
                           outline: 'none',
                           background: 'transparent',
                           color: 'inherit',
+                          fontSize: 'inherit',
                         }}
                       />
                       <Typography
                         sx={{
-                          fontSize: '12px',
+                          fontSize: 'inherit',
                           marginLeft: '16px',
                           color: 'text.primary',
                           userSelect: 'none',
@@ -228,10 +249,19 @@ const Recharge: React.FC = () => {
                         backgroundColor: 'background.burntSienna',
                         color: 'text.secondary',
                         textTransform: 'unset',
-                        height: '26px',
-                        width: '120px',
+                        height: {
+                          xs: '26px',
+                          pc: '60px',
+                        },
+                        width: {
+                          xs: '120px',
+                          pc: '266px',
+                        },
                         fontWeight: 400,
-                        fontSize: '14px',
+                        fontSize: {
+                          xs: '14px',
+                          pc: '20px',
+                        },
                         marginTop: '20px',
                         alignSelf: 'center',
                       }}
