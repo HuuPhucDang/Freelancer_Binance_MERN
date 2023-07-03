@@ -577,7 +577,9 @@ const TradeField: React.FC<ITradeFieldProps> = ({
         <Stack direction="row" alignItems="center" spacing={2} marginTop="10px">
           <Stack flex={1}>
             <Grid container spacing={1}>
-              {currentFocus === TRADE_TYPE.BUY ? _renderMoonBot(TRADE_TYPE.BUY) : _renderMoonBot(TRADE_TYPE.SELL)}
+              {currentFocus === TRADE_TYPE.BUY
+                ? _renderMoonBot(TRADE_TYPE.BUY)
+                : _renderMoonBot(TRADE_TYPE.SELL)}
             </Grid>
           </Stack>
           <Button
@@ -588,7 +590,7 @@ const TradeField: React.FC<ITradeFieldProps> = ({
             sx={{
               marginTop: '10px',
               height: '47px',
-              width: '116px',
+              width: { android: '80px', xs: '116px' },
               fontSize: '20px',
               fontWeight: 900,
               background: '#2EBD85',
@@ -604,7 +606,7 @@ const TradeField: React.FC<ITradeFieldProps> = ({
             fullWidth
             size="small"
             sx={{
-              width: '116px',
+              width: { android: '80px', xs: '116px' },
               height: '47px',
               marginTop: '10px',
               fontSize: '20px',

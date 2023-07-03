@@ -34,7 +34,7 @@ const Transaction: React.FC = () => {
   const [volatilityItemsPerCategory, setVolatilityItemsPerCategory] =
     React.useState<number>(0);
   const [isPortrait, setIsPortrait] = React.useState<boolean>(true);
-  const [clientHeight, setClientHeight] = React.useState<number>(0);
+  const [, setClientHeight] = React.useState<number>(0);
 
   const token = Utils.getAccessToken();
 

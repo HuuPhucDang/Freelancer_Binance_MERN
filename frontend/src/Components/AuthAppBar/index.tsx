@@ -8,7 +8,7 @@ const AuthAppBar = () => {
   const { pathname } = useLocation();
   return (
     <Stack direction="row">
-      <Stack direction="row" sx={{ marginRight: '80px', height: 'inherit' }}>
+      <Stack direction="row" sx={{ marginRight: '56px', height: 'inherit' }}>
         <Link
           href={ROUTERS.HOME}
           sx={{

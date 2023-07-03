@@ -217,7 +217,7 @@ const StaticHeader: React.FC<IStaticHeaderProp> = ({
             {symbol.replace(getUSDT, '/')}
             {getUSDT}
           </Typography>
-          <IconButton>
+          <IconButton onClick={() => Utils.redirect(ROUTERS.OVERVIEW)}>
             <MenuIcon sx={{ color: '#000000' }} />
           </IconButton>
         </Stack>

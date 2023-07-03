@@ -20,7 +20,7 @@ import {
 } from '@mui/material';
 import ModeEditOutlineOutlinedIcon from '@mui/icons-material/ModeEditOutlineOutlined';
 import RemoveRedEyeOutlinedIcon from '@mui/icons-material/RemoveRedEyeOutlined';
-import PersonIcon from '@mui/icons-material/Person';
+// import PersonIcon from '@mui/icons-material/Person';
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 import GppGoodIcon from '@mui/icons-material/GppGood';
 import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
@@ -317,8 +317,6 @@ const Overview: React.FC = () => {
       </Table>
     </TableContainer>
   );
-
-  console.log(userData);
 
   const _renderMobile = () => {
     return (

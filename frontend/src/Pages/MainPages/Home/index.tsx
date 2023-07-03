@@ -87,6 +87,7 @@ const Home: React.FC = () => {
                 md: 'unset',
               }}
               marginY={{
+                android: '5px',
                 xs: '30px',
                 ip13: '0',
                 md: 'unset',
@@ -100,6 +101,7 @@ const Home: React.FC = () => {
                   justifyContent: 'center',
                   marginBottom: '12px',
                   marginLeft: {
+                    android: '-80px',
                     ip13: '-50px',
                     md: 'unset',
                   },
@@ -139,13 +141,15 @@ const Home: React.FC = () => {
                   alignItems: 'center',
                   backgroundColor: 'background.primary',
                   height: {
+                    android: '52px',
                     xs: '27px',
                     ip13: '52px',
                     pc: '57px',
                   },
                   width: {
+                    android: 1,
                     ip13: '100%',
-                    md: 'max-content',
+                    md: 1,
                   },
                   justifySelf: 'center',
                   alignSelf: 'center',
@@ -352,12 +356,13 @@ const Home: React.FC = () => {
   const _renderNumber = () => {
     return (
       <Grid container sx={{ marginTop: '40px' }} spacing={2}>
-        <Grid item xs={12} ip13={6} sm={4} md={4}>
+        <Grid item xs={12} android={6} ip13={6} sm={4} md={4}>
           <Stack direction="column" padding="20px 10px">
             <Typography
               sx={{
                 fontSize: {
                   xs: '32px',
+                  android: '23px',
                   ip13: '25px',
                   pc: '64px',
                 },
@@ -378,6 +383,7 @@ const Home: React.FC = () => {
                 fontSize: {
                   xs: '13px',
                   ip13: '20px',
+                  android: '18px',
                   pc: '20px',
                 },
                 fontWeight: 400,
@@ -398,13 +404,14 @@ const Home: React.FC = () => {
           </Stack>
         </Grid>
         {isMd ? (
-          <Grid item xs={12} ip13={6} sm={4} md={4}>
+          <Grid item xs={12} android={6} ip13={6} sm={4} md={4}>
             <Stack direction="column" padding="20px 10px">
               <Typography
                 sx={{
                   fontSize: {
                     xs: '32px',
                     ip13: '25px',
+                    android: '23px',
                     pc: '64px',
                   },
                   lineHeight: {
@@ -424,6 +431,7 @@ const Home: React.FC = () => {
                   fontSize: {
                     xs: '13px',
                     ip13: '20px',
+                    android: '18px',
                     pc: '20px',
                   },
                   fontWeight: 400,
@@ -444,13 +452,14 @@ const Home: React.FC = () => {
             </Stack>
           </Grid>
         ) : null}
-        <Grid item xs={12} ip13={6} sm={4} md={4}>
+        <Grid item xs={12} android={6} ip13={6} sm={4} md={4}>
           <Stack direction="column" padding="20px 10px">
             <Typography
               sx={{
                 fontSize: {
                   xs: '32px',
                   ip13: '25px',
+                  android: '23px',
                   pc: '64px',
                 },
                 lineHeight: {
@@ -471,6 +480,7 @@ const Home: React.FC = () => {
                   xs: '13px',
                   ip13: '20px',
                   pc: '20px',
+                  android: '18px',
                 },
                 fontWeight: 400,
                 lineHeight: {
@@ -485,7 +495,7 @@ const Home: React.FC = () => {
             </Typography>
           </Stack>
         </Grid>
-        <Grid item xs={12} ip13={6} sm={4} md={4}>
+        <Grid item xs={12} android={6} ip13={6} sm={4} md={4}>
           <Stack direction="column" padding="20px 10px">
             <Typography
               sx={{
@@ -493,6 +503,7 @@ const Home: React.FC = () => {
                   xs: '32px',
                   ip13: '25px',
                   pc: '64px',
+                  android: '23px',
                 },
                 lineHeight: {
                   xs: '39px',
@@ -513,6 +524,7 @@ const Home: React.FC = () => {
                   xs: '13px',
                   ip13: '20px',
                   pc: '20px',
+                  android: '18px',
                 },
                 fontWeight: 400,
                 lineHeight: {
@@ -1731,6 +1743,7 @@ const Home: React.FC = () => {
             item
             xs={12}
             ip13={6}
+            android={6}
             md={6}
             display="flex"
             justifyContent={{ xs: 'center', md: 'flex-end' }}
@@ -1788,6 +1801,7 @@ const Home: React.FC = () => {
           <Grid
             item
             xs={12}
+            android={6}
             ip13={6}
             md={6}
             display="flex"

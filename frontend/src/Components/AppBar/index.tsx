@@ -2,7 +2,6 @@ import React from 'react';
 import _ from 'lodash';
 import {
   Toolbar,
-  Grid,
   IconButton,
   Box,
   Drawer,
@@ -18,10 +17,6 @@ import {
   MenuItem,
   useTheme,
   useMediaQuery,
-  ListItemIcon,
-  ListItemButton,
-  ListItemText,
-  Avatar,
 } from '@mui/material';
 // Import local
 import { appBarStyles, AppBar } from './AppBar.styles';
@@ -55,7 +50,7 @@ const AppBarComponent: React.FC = () => {
   const notifications: { message: string }[] = useSelector((state: RootState) =>
     _.get(state.NOTIFICATION, 'payload')
   );
-  const [, setIsOpenMobileDrawer] = React.useState<boolean>(false);
+  // const [, setIsOpenMobileDrawer] = React.useState<boolean>(false);
   const theme = useTheme();
   const isMd = useMediaQuery(theme.breakpoints.down('md'));
 
@@ -126,7 +121,7 @@ const AppBarComponent: React.FC = () => {
         direction="row"
         sx={{ width: '100%', maxWidth: '100vw', height: 'inherit' }}
       >
-        <Stack direction="row" sx={{ marginRight: '80px', height: 'inherit' }}>
+        <Stack direction="row" sx={{ marginRight: '56px', height: 'inherit' }}>
           <Link
             href={ROUTERS.HOME}
             sx={{
@@ -462,9 +457,7 @@ const AppBarComponent: React.FC = () => {
             )}
 
             <IconButton
-              onClick={(e: any) => {
-                setIsOpenMobileDrawer(true);
-              }}
+              onClick={handleClick}
               sx={{
                 padding: 0,
               }}

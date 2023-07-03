@@ -345,7 +345,7 @@ const ConnectBank: React.FC = () => {
         <Box
           src={Assets.bankCardImage}
           component="img"
-          sx={{ width: '100%', maxWidth: '450px' }}
+          sx={{ width: '100%', maxWidth: {md: '450px', xs: 380} }}
         />
         <Stack
           direction="column"

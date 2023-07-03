@@ -39,7 +39,7 @@ const UserLayout: React.FC<SectionProps> = (props: SectionProps) => {
   const theme = useTheme();
   const isMd = useMediaQuery(theme.breakpoints.down('md'));
   const { pathname } = useLocation();
-  const { content, screenTitle, isShowAppBar } = props;
+  const { content, screenTitle } = props;
 
   React.useEffect(() => {
     const isAuthRouters = authRoutes.includes(pathname);
@@ -62,7 +62,7 @@ const UserLayout: React.FC<SectionProps> = (props: SectionProps) => {
       sx={{
         width: '100vw',
         overflow: 'hidden',
-        height: '100%',
+        height: '100vh',
         // maxHeight: '100vh',
       }}
     >

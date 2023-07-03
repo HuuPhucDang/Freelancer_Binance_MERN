@@ -136,7 +136,6 @@ const Invoice: React.FC = () => {
   );
   const [filterParams, setFilterParams] =
     React.useState<IFilterParam>(initialFilterParam);
-  const userData = Utils.getUserData();
   const themeMode = Utils.getThemeMode();
 
   const fetchPayload = async () => {
@@ -771,8 +770,8 @@ const Invoice: React.FC = () => {
               )}
             </Stack>
           </Grid>
-        </Box>
-      </>
+        </Grid>
+      </Box>
     );
   };
   return <UserLayout content={renderMain()} screenTitle="Lịch sử nạp rút" />;

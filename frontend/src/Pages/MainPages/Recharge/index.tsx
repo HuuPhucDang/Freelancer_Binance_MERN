@@ -13,7 +13,6 @@ import {
   MenuItem,
   useTheme,
   useMediaQuery,
-  Avatar,
 } from '@mui/material';
 // Import local
 import { UserLayout } from '@/Components/DefaultLayout';
@@ -27,8 +26,6 @@ import {
 } from '@/Reducers/Actions';
 import { RootState, useTypedDispatch } from '@/Reducers/store';
 import { Utils } from '@/Libs';
-import { CommonStyles } from '@/Components/Common';
-import Assets from '../../../Assets';
 
 const { getSelf } = UserActions;
 const { getSystemInfo } = SystemInfoActions;
@@ -81,7 +78,12 @@ const Recharge: React.FC = () => {
   const onSubmit = async () => {
     const isNumber = !Number.isNaN(amount);
     if (!isNumber || !amount) setIsErr(true);
-    else dispatch(requestRecharge({ amount: amount / enchangeRate }));
+    else
+      dispatch(
+        requestRecharge({
+          amount: currentType === 'USDT' ? amount : amount / enchangeRate,
+        })
+      );
   };
 
   const _renderDesktop = () => {
@@ -243,237 +245,169 @@ const Recharge: React.FC = () => {
     );
   };
 
+  const _renderCard = () => {
+    return (
+      <Box
+        sx={{
+          position: 'relative',
+          width: 'max-content',
+          maxHeight: 'max-content',
+        }}
+      >
+        <Box
+          src={Assets.bankCardImage}
+          component="img"
+          sx={{ width: 1, maxWidth: { android: 350, ip13: 400 } }}
+        />
+        <Stack
+          direction="column"
+          sx={{
+            position: 'absolute',
+            top: '13%',
+            left: '30%',
+            userSelect: 'none',
+          }}
+        >
+          <Typography
+            sx={{
+              fontSize: '20px',
+              textTransform: 'uppercase',
+              color: 'text.burntSienna',
+              fontWeight: 500,
+            }}
+          >
+            {systemInfo?.fullname}
+          </Typography>
+        </Stack>
+        <Stack
+          direction="column"
+          sx={{
+            position: 'absolute',
+            top: '44%',
+            left: '30%',
+            userSelect: 'none',
+          }}
+        >
+          <Typography
+            sx={{
+              fontSize: '20px',
+              textTransform: 'uppercase',
+              color: 'text.burntSienna',
+              fontWeight: 500,
+            }}
+          >
+            {systemInfo?.accountNumber}
+          </Typography>
+        </Stack>
+        <Stack
+          direction="column"
+          sx={{
+            position: 'absolute',
+            bottom: '24%',
+            left: '30%',
+            userSelect: 'none',
+          }}
+        >
+          <Typography
+            sx={{
+              fontSize: '20px',
+              textTransform: 'uppercase',
+              color: 'text.burntSienna',
+              fontWeight: 500,
+            }}
+          >
+            {systemInfo?.bankName}
+          </Typography>
+        </Stack>
+        <Stack
+          direction="column"
+          sx={{
+            position: 'absolute',
+            bottom: '10%',
+            left: '13%',
+            userSelect: 'none',
+          }}
+        >
+          <Typography
+            sx={{
+              fontSize: '15px',
+              textTransform: 'uppercase',
+              color: 'text.burntSienna',
+              fontWeight: 500,
+            }}
+          >
+            tk:{userData?.username} {systemInfo?.message}
+          </Typography>
+        </Stack>
+      </Box>
+    );
+  };
+
   const _renderMobile = () => {
     return (
       <Stack direction="column">
         <Grid container columnSpacing="16px" rowSpacing="24px">
-          <Grid item xs={6}>
-            <Button
-              variant="contained"
-              color="info"
-              fullWidth
-              sx={{
-                display: 'flex',
-                flexDirection: 'column',
-                backgroundColor: '#D9D9D9',
-                boxShadow: 'unset',
-                padding: '0',
-                textTransform: 'unset',
-              }}
-            >
-              <Typography sx={{ fontSize: '20px', color: '#000000' }}>
-                $2500
-              </Typography>
-              <Typography
+          {_.map(bonusItems, (item) => (
+            <Grid item xs={6}>
+              <Button
+                variant="contained"
+                color="info"
+                fullWidth
                 sx={{
-                  fontSize: '20px',
-                  color: '#816A6A',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  backgroundColor: '#D9D9D9',
+                  boxShadow: 'unset',
+                  padding: '0',
                   textTransform: 'unset',
                 }}
               >
-                + $1250 thưởng
-              </Typography>
-            </Button>
+                <Typography sx={{ fontSize: '20px', color: '#000000' }}>
+                  ${item?.amount}
+                </Typography>
+                <Typography
+                  sx={{
+                    fontSize: '20px',
+                    color: '#816A6A',
+                    textTransform: 'unset',
+                  }}
+                >
+                  + ${item?.bonus} thưởng
+                </Typography>
+              </Button>
+            </Grid>
+          ))}
+          <Grid item xs={4}>
+            <TextField
+              select
+              defaultValue={currentType}
+              fullWidth
+              onChange={(e) => setCurrentType(e.target.value)}
+            >
+              <MenuItem value="USDT">$USDT</MenuItem>
+              <MenuItem value="VND">VND</MenuItem>
+            </TextField>
           </Grid>
-          <Grid item xs={6}>
-            <Button
-              variant="contained"
+          <Grid item xs={8}>
+            <TextField
               fullWidth
-              color="info"
-              sx={{
-                display: 'flex',
-                flexDirection: 'column',
-                backgroundColor: '#D9D9D9',
-                boxShadow: 'unset',
-                padding: '0',
-                textTransform: 'unset',
-              }}
-            >
-              <Typography sx={{ fontSize: '20px', color: '#000000' }}>
-                $2500
-              </Typography>
-              <Typography
-                sx={{
-                  fontSize: '20px',
-                  color: '#816A6A',
-                  textTransform: 'unset',
-                }}
-              >
-                + $1250 thưởng
-              </Typography>
-            </Button>
-          </Grid>
-          <Grid item xs={6}>
-            <Button
-              variant="contained"
-              fullWidth
-              color="info"
-              sx={{
-                display: 'flex',
-                flexDirection: 'column',
-                backgroundColor: '#D9D9D9',
-                boxShadow: 'unset',
-                padding: '0',
-                textTransform: 'unset',
-              }}
-            >
-              <Typography sx={{ fontSize: '20px', color: '#000000' }}>
-                $2500
-              </Typography>
-              <Typography
-                sx={{
-                  fontSize: '20px',
-                  color: '#816A6A',
-                  textTransform: 'unset',
-                }}
-              >
-                + $1250 thưởng
-              </Typography>
-            </Button>
-          </Grid>
-          <Grid item xs={6}>
-            <Button
-              variant="contained"
-              fullWidth
-              color="info"
-              sx={{
-                display: 'flex',
-                flexDirection: 'column',
-                backgroundColor: '#D9D9D9',
-                boxShadow: 'unset',
-                padding: '0',
-                textTransform: 'unset',
-              }}
-            >
-              <Typography sx={{ fontSize: '20px', color: '#000000' }}>
-                $2500
-              </Typography>
-              <Typography
-                sx={{
-                  fontSize: '20px',
-                  color: '#816A6A',
-                  textTransform: 'unset',
-                }}
-              >
-                + $1250 thưởng
-              </Typography>
-            </Button>
-          </Grid>
-          <Grid item xs={6}>
-            <Button
-              variant="contained"
-              fullWidth
-              color="info"
-              sx={{
-                display: 'flex',
-                flexDirection: 'column',
-                backgroundColor: '#D9D9D9',
-                boxShadow: 'unset',
-                padding: '0',
-                textTransform: 'unset',
-              }}
-            >
-              <Typography sx={{ fontSize: '20px', color: '#000000' }}>
-                $2500
-              </Typography>
-              <Typography
-                sx={{
-                  fontSize: '20px',
-                  color: '#816A6A',
-                  textTransform: 'unset',
-                }}
-              >
-                + $1250 thưởng
-              </Typography>
-            </Button>
-          </Grid>
-          <Grid item xs={6}>
-            <Button
-              variant="contained"
-              fullWidth
-              color="info"
-              sx={{
-                display: 'flex',
-                flexDirection: 'column',
-                backgroundColor: '#D9D9D9',
-                boxShadow: 'unset',
-                padding: '0',
-                textTransform: 'unset',
-              }}
-            >
-              <Typography sx={{ fontSize: '20px', color: '#000000' }}>
-                $2500
-              </Typography>
-              <Typography
-                sx={{
-                  fontSize: '20px',
-                  color: '#816A6A',
-                  textTransform: 'unset',
-                }}
-              >
-                + $1250 thưởng
-              </Typography>
-            </Button>
+              type="number"
+              helperText={
+                <Box
+                  sx={{
+                    color: themeMode === 'dark' ? 'white!important' : 'black',
+                  }}
+                >
+                  {currentType === 'VND'
+                    ? `~ ${amount ? amount / enchangeRate : 0} USDT`
+                    : `${amount || 0} USDT`}
+                </Box>
+              }
+              error={_isErr}
+              onChange={(e) => setAmount(parseFloat(e.target.value))}
+            />
           </Grid>
         </Grid>
-        <Stack direction="row" spacing="16px" marginTop="16px">
-          <Button
-            variant="outlined"
-            sx={{
-              borderColor: '#000000',
-              color: '#000000',
-              fontWeight: 500,
-              fontSize: '20px',
-            }}
-          >
-            $ USD
-          </Button>
-          <Stack
-            direction="row"
-            sx={{
-              height: {
-                xs: '64px',
-                pc: '87px',
-              },
-              fontSize: {
-                xs: '20px',
-                pc: '20px',
-              },
-              paddingLeft: '16px',
-              paddingRight: '16px',
-              marginTop: {
-                xs: '30px',
-                pc: '70px',
-              },
-              flex: 1,
-              backgroundColor: 'background.chargeInput',
-              color: 'text.primary',
-              alignItems: 'center',
-              borderRadius: '4px',
-              border: '1px solid #000000',
-            }}
-          >
-            <CurrencyInput
-              id="validation-example-2-field"
-              placeholder="1,234,567 VNĐ"
-              allowDecimals={false}
-              className={`form-control`}
-              onValueChange={(value: any) => setAmount(value)}
-              step={10}
-              // suffix=" VND"
-              value={amount}
-              style={{
-                flex: 1,
-                height: '100%',
-                border: 'none',
-                outline: 'none',
-                background: 'transparent',
-                color: 'inherit',
-                fontSize: 'inherit',
-              }}
-            />
-          </Stack>
-        </Stack>
         <Button
           sx={{
             backgroundColor: 'background.burntSienna',
@@ -560,6 +494,7 @@ const Recharge: React.FC = () => {
                         pc: '70px',
                       },
                       fontWeight: 600,
+                      textAlign: 'center',
                     }}
                   >
                     Nạp tiền
@@ -693,7 +628,14 @@ const Recharge: React.FC = () => {
                       ) : null}
                     </>
                   ) : null}
-                  {isMd ? _renderMobile() : _renderDesktop()}
+                  {isMd ? (
+                    <>
+                      {_renderCard()}
+                      {_renderMobile()}
+                    </>
+                  ) : (
+                    _renderDesktop()
+                  )}
                 </Stack>
               </Grid>
               <Grid item md={4.5} display={{ xs: 'none', md: 'flex' }}>
@@ -712,8 +654,8 @@ const Recharge: React.FC = () => {
               </Grid>
             </Grid>
           </Grid>
-        </Box>
-      </>
+        </Grid>
+      </Box>
     );
   };
   return <UserLayout content={renderMain()} screenTitle="Nạp tiền" />;
