@@ -23,7 +23,7 @@ import {
 // Import local
 import { UserLayout } from '@/Components/DefaultLayout';
 import { Sidebar } from '@/Components/LayoutParts';
-import { CommonStyles } from '@/Components/Common';
+// import { CommonStyles } from '@/Components/Common';
 import { Select } from '@/Components/Common';
 import { TransactionActions } from '@/Reducers/Actions';
 import { RootState, useTypedDispatch } from '@/Reducers/store';
@@ -136,7 +136,7 @@ const Invoice: React.FC = () => {
   );
   const [filterParams, setFilterParams] =
     React.useState<IFilterParam>(initialFilterParam);
-  const themeMode = Utils.getThemeMode();
+  // const themeMode = Utils.getThemeMode();
 
   const fetchPayload = async () => {
     const resolveFilters = Utils.resolveFilter(filterParams);

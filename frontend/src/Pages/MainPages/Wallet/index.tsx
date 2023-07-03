@@ -18,111 +18,111 @@ import {
   TextField,
   InputAdornment,
 } from '@mui/material';
-import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
-import GppGoodIcon from '@mui/icons-material/GppGood';
-import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
-import AccountBalanceWalletOutlinedIcon from '@mui/icons-material/AccountBalanceWalletOutlined';
-import RecordVoiceOverOutlinedIcon from '@mui/icons-material/RecordVoiceOverOutlined';
+// import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
+// import GppGoodIcon from '@mui/icons-material/GppGood';
+// import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
+// import AccountBalanceWalletOutlinedIcon from '@mui/icons-material/AccountBalanceWalletOutlined';
+// import RecordVoiceOverOutlinedIcon from '@mui/icons-material/RecordVoiceOverOutlined';
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 // Import local
 import { UserLayout } from '@/Components/DefaultLayout';
 import { EditAvatar, EditName } from '@/Components/Popup';
-import { ENUMS, ROUTERS } from '@/Constants';
+import { ROUTERS } from '@/Constants';
 import { Utils } from '@/Libs';
-import { AuthActions, UserActions } from '@/Reducers/Actions';
+import { UserActions } from '@/Reducers/Actions';
 import { useTypedDispatch } from '@/Reducers/store';
 
-import { useLocation } from 'react-router';
-interface IMenu {
-  icon: JSX.Element;
-  label: string;
-  path: string;
-  isOnlyUser: boolean;
-}
-const menu: IMenu[] = [
-  {
-    icon: (
-      <AdminPanelSettingsIcon
-        sx={{
-          fontSize: '35px !important',
-        }}
-      />
-    ),
-    label: 'Bảo mật',
-    path: ROUTERS.SECURITY,
-    isOnlyUser: false,
-  },
-  {
-    icon: (
-      <GppGoodIcon
-        sx={{
-          fontSize: '35px !important',
-        }}
-      />
-    ),
-    label: 'Xác minh',
-    path: ROUTERS.VERIFY,
-    isOnlyUser: false,
-  },
-  {
-    icon: (
-      <AccountBalanceIcon
-        sx={{
-          fontSize: '35px !important',
-        }}
-      />
-    ),
-    label: 'Liên kết ngân hàng',
-    path: ROUTERS.CONNECT_BANK,
-    isOnlyUser: false,
-  },
-  {
-    icon: (
-      <AccountBalanceWalletOutlinedIcon
-        sx={{
-          fontSize: '35px !important',
-        }}
-      />
-    ),
-    label: 'Lịch sử nạp rút',
-    path: ROUTERS.INVOICE,
-    isOnlyUser: false,
-  },
-  {
-    icon: (
-      <RecordVoiceOverOutlinedIcon
-        sx={{
-          fontSize: '35px !important',
-        }}
-      />
-    ),
-    label: 'CSKH trực tuyến',
-    path: ROUTERS.SUPPORT,
-    isOnlyUser: true,
-  },
-];
+// import { useLocation } from 'react-router';
+// interface IMenu {
+//   icon: JSX.Element;
+//   label: string;
+//   path: string;
+//   isOnlyUser: boolean;
+// }
+// const menu: IMenu[] = [
+//   {
+//     icon: (
+//       <AdminPanelSettingsIcon
+//         sx={{
+//           fontSize: '35px !important',
+//         }}
+//       />
+//     ),
+//     label: 'Bảo mật',
+//     path: ROUTERS.SECURITY,
+//     isOnlyUser: false,
+//   },
+//   {
+//     icon: (
+//       <GppGoodIcon
+//         sx={{
+//           fontSize: '35px !important',
+//         }}
+//       />
+//     ),
+//     label: 'Xác minh',
+//     path: ROUTERS.VERIFY,
+//     isOnlyUser: false,
+//   },
+//   {
+//     icon: (
+//       <AccountBalanceIcon
+//         sx={{
+//           fontSize: '35px !important',
+//         }}
+//       />
+//     ),
+//     label: 'Liên kết ngân hàng',
+//     path: ROUTERS.CONNECT_BANK,
+//     isOnlyUser: false,
+//   },
+//   {
+//     icon: (
+//       <AccountBalanceWalletOutlinedIcon
+//         sx={{
+//           fontSize: '35px !important',
+//         }}
+//       />
+//     ),
+//     label: 'Lịch sử nạp rút',
+//     path: ROUTERS.INVOICE,
+//     isOnlyUser: false,
+//   },
+//   {
+//     icon: (
+//       <RecordVoiceOverOutlinedIcon
+//         sx={{
+//           fontSize: '35px !important',
+//         }}
+//       />
+//     ),
+//     label: 'CSKH trực tuyến',
+//     path: ROUTERS.SUPPORT,
+//     isOnlyUser: true,
+//   },
+// ];
 
-const userTypes = [
-  {
-    label: 'Sơ cấp',
-    value: ENUMS.EUserType.BEGINNER,
-  },
-  {
-    label: 'Trung cấp',
-    value: ENUMS.EUserType.INTERMEDIATE,
-  },
-  {
-    label: 'Nâng cao',
-    value: ENUMS.EUserType.ADVANCE,
-  },
-  {
-    label: 'Chuyên nghiệp',
-    value: ENUMS.EUserType.PROFESSINAL,
-  },
-];
+// const userTypes = [
+//   {
+//     label: 'Sơ cấp',
+//     value: ENUMS.EUserType.BEGINNER,
+//   },
+//   {
+//     label: 'Trung cấp',
+//     value: ENUMS.EUserType.INTERMEDIATE,
+//   },
+//   {
+//     label: 'Nâng cao',
+//     value: ENUMS.EUserType.ADVANCE,
+//   },
+//   {
+//     label: 'Chuyên nghiệp',
+//     value: ENUMS.EUserType.PROFESSINAL,
+//   },
+// ];
 
 const { getSelf } = UserActions;
-const { logout } = AuthActions;
+// const { logout } = AuthActions;
 
 const Overview: React.FC = () => {
   // Constructors
