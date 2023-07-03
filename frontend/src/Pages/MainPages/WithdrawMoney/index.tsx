@@ -14,6 +14,9 @@ import {
   TextField,
   FormHelperText,
   InputAdornment,
+  useTheme,
+  useMediaQuery,
+  Avatar,
 } from '@mui/material';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -26,6 +29,7 @@ import { Sidebar } from '@/Components/LayoutParts';
 import { RootState, useTypedDispatch } from '@/Reducers/store';
 import { TransactionActions, UserActions } from '@/Reducers/Actions';
 import { Utils } from '@/Libs';
+import Assets from '../../../Assets';
 // import Placeholder from 'react-select/dist/declarations/src/components/Placeholder';
 
 const { getSelf } = UserActions;
@@ -48,6 +52,8 @@ type FormData = yup.InferType<typeof schema>;
 
 const WithdrawMoney: React.FC = () => {
   // Constructors
+  const theme = useTheme();
+  const isMd = useMediaQuery(theme.breakpoints.down('md'));
   const userData = Utils.getUserData();
   const dispatch = useTypedDispatch();
   const requestWithdrawSuccess = useSelector((state: RootState) =>
@@ -86,6 +92,12 @@ const WithdrawMoney: React.FC = () => {
   }, []);
 
   React.useEffect(() => {
+    if (isMd) {
+      setValue('bank', userData?.bank?.id || '');
+    }
+  }, [isMd]);
+
+  React.useEffect(() => {
     if (requestWithdrawSuccess) {
       reset();
       setValue('amount', 0);
@@ -121,32 +133,40 @@ const WithdrawMoney: React.FC = () => {
         component="main"
         sx={{
           display: 'flex',
-          minHeight: 'calc(100vh - 180px)',
+          minHeight: {
+            xs: 'calc(100vh - 70px)',
+            md: 'calc(100vh - 180px)',
+          },
           padding: {
             xs: '0',
           },
-          margin: '20px auto 0px auto',
+          margin: {
+            xs: '0',
+            md: '20px auto 0px auto',
+          },
         }}
       >
         <Grid container>
-          <Grid
-            item
-            xs={12}
-            md={2}
-            width="100%"
-            sx={{
-              position: {
-                xs: 'sticky',
-                md: 'unset',
-              },
-              top: '70px',
-              backgroundColor: 'background.default',
-              zIndex: 1,
-            }}
-            borderTop="1px solid rgba(187, 174, 174, 0.9)"
-          >
-            <Sidebar />
-          </Grid>
+          {isMd ? null : (
+            <Grid
+              item
+              xs={12}
+              md={2}
+              width="100%"
+              sx={{
+                position: {
+                  xs: 'sticky',
+                  md: 'unset',
+                },
+                top: '70px',
+                backgroundColor: 'background.default',
+                zIndex: 1,
+              }}
+              borderTop="1px solid rgba(187, 174, 174, 0.9)"
+            >
+              <Sidebar />
+            </Grid>
+          )}
           <Grid
             item
             xs={12}
@@ -170,10 +190,143 @@ const WithdrawMoney: React.FC = () => {
                     pc: '70px',
                   },
                   fontWeight: 600,
+                  alignSelf: {
+                    xs: 'center',
+                    md: 'unset',
+                  },
                 }}
               >
                 Rút tiền
               </Typography>
+              {isMd ? (
+                <>
+                  <Stack
+                    direction="row"
+                    alignItems="center"
+                    marginTop="10px"
+                    marginBottom="10px"
+                    padding={{ xs: '0', md: 0 }}
+                  >
+                    <Avatar
+                      src={userData.avatar}
+                      sx={{
+                        width: { xs: '60px', pc: '93px' },
+                        height: { xs: '60px', pc: '93px' },
+                        marginRight: '20px',
+                      }}
+                    />
+                    <Typography
+                      sx={{
+                        marginRight: '16px',
+                        fontSize: {
+                          xs: '24px',
+                          pc: '25px',
+                        },
+                        fontWeight: 600,
+                      }}
+                    >
+                      {userData.nickname}
+                    </Typography>
+                  </Stack>
+                  {userData?.bank ? (
+                    <Stack direction="column" marginBottom="30px">
+                      <Box
+                        sx={{
+                          position: 'relative',
+                          width: '100%',
+                          maxHeight: 'max-content',
+                        }}
+                      >
+                        <Box
+                          src={Assets.bankCardImage}
+                          component="img"
+                          sx={{ width: '100%' }}
+                        />
+                        <Stack
+                          direction="column"
+                          sx={{
+                            position: 'absolute',
+                            top: '13%',
+                            left: '30%',
+                            userSelect: 'none',
+                          }}
+                        >
+                          <Typography
+                            sx={{
+                              fontSize: '20px',
+                              textTransform: 'uppercase',
+                              color: 'text.burntSienna',
+                              fontWeight: 500,
+                            }}
+                          >
+                            {userData?.bank?.fullname}
+                          </Typography>
+                        </Stack>
+                        <Stack
+                          direction="column"
+                          sx={{
+                            position: 'absolute',
+                            top: '44%',
+                            left: '30%',
+                            userSelect: 'none',
+                          }}
+                        >
+                          <Typography
+                            sx={{
+                              fontSize: '20px',
+                              textTransform: 'uppercase',
+                              color: 'text.burntSienna',
+                              fontWeight: 500,
+                            }}
+                          >
+                            {userData?.bank?.accountNumber}
+                          </Typography>
+                        </Stack>
+                        <Stack
+                          direction="column"
+                          sx={{
+                            position: 'absolute',
+                            bottom: '24%',
+                            left: '30%',
+                            userSelect: 'none',
+                          }}
+                        >
+                          <Typography
+                            sx={{
+                              fontSize: '20px',
+                              textTransform: 'uppercase',
+                              color: 'text.burntSienna',
+                              fontWeight: 500,
+                            }}
+                          >
+                            {userData?.wallet?.balance || 0} USDT
+                          </Typography>
+                        </Stack>
+                        <Stack
+                          direction="column"
+                          sx={{
+                            position: 'absolute',
+                            bottom: '10%',
+                            left: '13%',
+                            userSelect: 'none',
+                          }}
+                        >
+                          <Typography
+                            sx={{
+                              fontSize: '20px',
+                              textTransform: 'uppercase',
+                              color: 'text.burntSienna',
+                              fontWeight: 500,
+                            }}
+                          >
+                            {userData?.bank?.bankName}
+                          </Typography>
+                        </Stack>
+                      </Box>
+                    </Stack>
+                  ) : null}
+                </>
+              ) : null}
               <Controller
                 name="amount"
                 control={control}
@@ -272,42 +425,46 @@ const WithdrawMoney: React.FC = () => {
                   />
                 )}
               />
-              <FormControl fullWidth sx={{ marginTop: '20px' }}>
-                <Controller
-                  control={control}
-                  name="bank"
-                  render={({ field }) => (
-                    <FormControl error={Boolean(errors?.bank?.message)}>
-                      <Select
-                        placeholder="Phương thức nhận tiền"
-                        sx={{
-                          backgroundColor: 'background.chargeInput',
-                          color: 'text.primary',
-                          borderRadius: '3px',
-                          padding: '0 22px',
-                          ' >': { borderRadius: '3px' },
-                          border: 'none',
-                          height: { xs: '59px', pc: '82px' },
-                        }}
-                        displayEmpty
-                        renderValue={
-                          bank !== ''
-                            ? undefined
-                            : () => (
-                                <Typography>Phương thức nhận tiền</Typography>
-                              )
-                        }
-                        {...field}
-                      >
-                        {withdrawMoneyType}
-                      </Select>
-                      {errors?.bank?.message ? (
-                        <FormHelperText>{errors?.bank?.message}</FormHelperText>
-                      ) : null}
-                    </FormControl>
-                  )}
-                />
-              </FormControl>
+              {isMd ? null : (
+                <FormControl fullWidth sx={{ marginTop: '20px' }}>
+                  <Controller
+                    control={control}
+                    name="bank"
+                    render={({ field }) => (
+                      <FormControl error={Boolean(errors?.bank?.message)}>
+                        <Select
+                          placeholder="Phương thức nhận tiền"
+                          sx={{
+                            backgroundColor: 'background.chargeInput',
+                            color: 'text.primary',
+                            borderRadius: '3px',
+                            padding: '0 22px',
+                            ' >': { borderRadius: '3px' },
+                            border: 'none',
+                            height: { xs: '59px', pc: '82px' },
+                          }}
+                          displayEmpty
+                          renderValue={
+                            bank !== ''
+                              ? undefined
+                              : () => (
+                                  <Typography>Phương thức nhận tiền</Typography>
+                                )
+                          }
+                          {...field}
+                        >
+                          {withdrawMoneyType}
+                        </Select>
+                        {errors?.bank?.message ? (
+                          <FormHelperText>
+                            {errors?.bank?.message}
+                          </FormHelperText>
+                        ) : null}
+                      </FormControl>
+                    )}
+                  />
+                </FormControl>
+              )}
               <Button
                 sx={{
                   backgroundColor: 'background.burntSienna',

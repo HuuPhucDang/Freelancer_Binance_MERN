@@ -9,6 +9,7 @@ import Support from './Support';
 import Verify from './Verify';
 import WithdrawMoney from './WithdrawMoney';
 import Transaction from './Transaction';
+import Wallet from './Wallet';
 export {
   Home,
   NotFound,
@@ -21,4 +22,5 @@ export {
   Verify,
   WithdrawMoney,
   Transaction,
+  Wallet
 };

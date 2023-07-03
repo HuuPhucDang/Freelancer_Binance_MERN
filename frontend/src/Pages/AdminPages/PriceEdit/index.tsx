@@ -78,7 +78,28 @@ const Request: React.FC = () => {
                   defaultValue={0 || item?.time}
                   required
                   inputProps={{ step: '1' }}
-                  sx={{ input: { height: '43px' } }}
+                  sx={{
+                    label: {
+                      fontSize: {
+                        xs: '4px',
+                        md: '16px',
+                      },
+                      top: {
+                        xs: '8px',
+                        md: '0px',
+                      },
+                    },
+                    input: {
+                      fontSize: {
+                        xs: '4px',
+                        md: '16px',
+                      },
+                      height: {
+                        xs: '0px',
+                        md: '43px',
+                      },
+                    },
+                  }}
                 />
               </Grid>
               <Grid item xs={3}>
@@ -92,7 +113,28 @@ const Request: React.FC = () => {
                   defaultValue={0 || item?.limitedTime}
                   required
                   inputProps={{ step: '1' }}
-                  sx={{ input: { height: '43px' } }}
+                  sx={{
+                    label: {
+                      fontSize: {
+                        xs: '4px',
+                        md: '16px',
+                      },
+                      top: {
+                        xs: '8px',
+                        md: '0px',
+                      },
+                    },
+                    input: {
+                      fontSize: {
+                        xs: '4px',
+                        md: '16px',
+                      },
+                      height: {
+                        xs: '0px',
+                        md: '43px',
+                      },
+                    },
+                  }}
                 />
               </Grid>
               <Grid item xs={3}>
@@ -116,7 +158,29 @@ const Request: React.FC = () => {
                       else e.target.value = Math.ceil(e.target.value);
                     } else e.target.value = '';
                   }}
-                  sx={{ input: { height: '43px' } }}
+                  sx={{
+                    label: {
+                      fontSize: {
+                        xs: '4px',
+                        md: '16px',
+                      },
+                      top: {
+                        xs: '8px',
+                        md: '0px',
+                      },
+                    },
+                    input: {
+                      padding: 0,
+                      fontSize: {
+                        xs: '4px',
+                        md: '16px',
+                      },
+                      height: {
+                        xs: '0px',
+                        md: '43px',
+                      },
+                    },
+                  }}
                 />
               </Grid>
               <Grid item xs={3}>
@@ -125,12 +189,25 @@ const Request: React.FC = () => {
                   variant="contained"
                   fullWidth
                   size="small"
-                  // onClick={() => onSave()}
+                  onClick={(e) => onSave(e, item?.id)}
                   type="submit"
                   sx={{
-                    height: '60px',
-                    borderRadius: '0px',
-                    fontSize: ' 15px',
+                    height: {
+                      xs: '16px',
+                      md: '60px',
+                    },
+                    borderRadius: {
+                      xs: '4px',
+                      md: '0px',
+                    },
+                    fontSize: {
+                      xs: '4px',
+                      md: '15px',
+                    },
+                    transform: {
+                      xs: 'translateY(-5px)',
+                      md: 'unset',
+                    },
                   }}
                 >
                   Lưu
@@ -145,9 +222,17 @@ const Request: React.FC = () => {
 
   const _renderMain = () => {
     return (
-      <Stack sx={{ padding: '20px' }} direction="column">
+      <Stack
+        sx={{
+          padding: {
+            xs: '0px',
+            md: '20px',
+          },
+        }}
+        direction="column"
+      >
         <Typography
-          sx={{ fontSize: { xs: '17px', pc: '30px' }, fontWeight: 700 }}
+          sx={{ fontSize: { xs: '10px', pc: '30px' }, fontWeight: 700 }}
         >
           Chỉnh sửa giá
         </Typography>
@@ -164,7 +249,7 @@ const Request: React.FC = () => {
                   sx={{
                     fontWeight: 600,
                     mb: { xs: '10px', pc: '30px' },
-                    fontSize: { pc: '20px' },
+                    fontSize: { xs: '8px', pc: '20px' },
                   }}
                 >
                   {item.label}

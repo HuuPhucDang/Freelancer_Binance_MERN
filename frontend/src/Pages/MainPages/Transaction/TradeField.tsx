@@ -8,6 +8,9 @@ import {
   InputAdornment,
   Box,
   Link,
+  useTheme,
+  useMediaQuery,
+  Divider,
 } from '@mui/material';
 import _ from 'lodash';
 import { useSelector } from 'react-redux';
@@ -78,6 +81,9 @@ const TradeField: React.FC<ITradeFieldProps> = ({
   const userDetails = useSelector((state: RootState) =>
     _.get(state.USER, 'details')
   );
+  const theme = useTheme();
+  const isMd = useMediaQuery(theme.breakpoints.down('md'));
+  const [currentFocus, setCurrentFocus] = React.useState<string>('');
   const [userType, setUserType] = React.useState<string>('');
   const [betTime, setBetTime] = React.useState<string>('30s');
   const [betSellTime, setBetSellTime] = React.useState<string>('30s');
@@ -242,7 +248,7 @@ const TradeField: React.FC<ITradeFieldProps> = ({
   // Renders
   const _renderMoonBot = (type: TRADE_TYPE) =>
     _.map(_.filter(moonbotButtons, ['type', type]), (item, index) => (
-      <Grid item xs={6} sm={3} md={3} key={`${item?.id}`}>
+      <Grid item xs={3} sm={3} md={3} key={`${item?.id}`}>
         <Button
           variant="contained"
           sx={{
@@ -294,6 +300,7 @@ const TradeField: React.FC<ITradeFieldProps> = ({
             inputProps={{
               step: 0.01,
             }}
+            onFocus={() => setCurrentFocus(type)}
             onChange={(e) => {
               if (type === TRADE_TYPE.BUY) setBetAmount(Number(e.target.value));
               else setBetSellAmount(Number(e.target.value));
@@ -542,6 +549,78 @@ const TradeField: React.FC<ITradeFieldProps> = ({
     </Grid>
   );
 
+  const _renderMobileFeature = () => {
+    return (
+      <Stack direction="column">
+        <Typography
+          sx={{
+            padding: '10px 0',
+            fontSize: '20px',
+            lineHeight: '15px',
+            textTransform: 'uppercase',
+            color: isLimitTrade ? '#EE2C2C' : '#408827',
+            fontWeight: 700,
+          }}
+        >
+          Thời gian: {isLimitTrade ? stopWatch : serverTime}s
+          {isLimitTrade && ` (Sẽ khoá giao dịch)`}
+        </Typography>
+        <Divider />
+        <Stack direction="row" spacing={2}>
+          <Stack direction="column" flex={1}>
+            {_renderInputs(TRADE_TYPE.BUY)}
+          </Stack>
+          <Stack direction="column" flex={1}>
+            {_renderInputs(TRADE_TYPE.SELL)}
+          </Stack>
+        </Stack>
+        <Stack direction="row" alignItems="center" spacing={2} marginTop="10px">
+          <Stack flex={1}>
+            <Grid container spacing={1}>
+              {currentFocus === TRADE_TYPE.BUY ? _renderMoonBot(TRADE_TYPE.BUY) : _renderMoonBot(TRADE_TYPE.SELL)}
+            </Grid>
+          </Stack>
+          <Button
+            color="success"
+            variant="contained"
+            fullWidth
+            size="small"
+            sx={{
+              marginTop: '10px',
+              height: '47px',
+              width: '116px',
+              fontSize: '20px',
+              fontWeight: 900,
+              background: '#2EBD85',
+            }}
+            disabled={currentFocus !== TRADE_TYPE.BUY}
+            onClick={() => createNewTrade(TRADE_TYPE.BUY)}
+          >
+            Mua
+          </Button>
+          <Button
+            color="error"
+            variant="contained"
+            fullWidth
+            size="small"
+            sx={{
+              width: '116px',
+              height: '47px',
+              marginTop: '10px',
+              fontSize: '20px',
+              fontWeight: 900,
+              background: '#F03030',
+            }}
+            disabled={currentFocus !== TRADE_TYPE.SELL}
+            onClick={() => createNewTrade(TRADE_TYPE.SELL)}
+          >
+            Bán
+          </Button>
+        </Stack>
+      </Stack>
+    );
+  };
+
   const renderMain = () => {
     return (
       <Stack
@@ -557,17 +636,21 @@ const TradeField: React.FC<ITradeFieldProps> = ({
           },
         }}
       >
-        <Grid
-          container
-          columnSpacing={{
-            xs: '0',
-            pc: '31px',
-          }}
-        >
-          {!isLogged && _renderRequireLogin()}
-          {isLogged && _renderLeftSide()}
-          {isLogged && _renderRightSide()}
-        </Grid>
+        {isMd ? (
+          _renderMobileFeature()
+        ) : (
+          <Grid
+            container
+            columnSpacing={{
+              xs: '0',
+              pc: '31px',
+            }}
+          >
+            {!isLogged && _renderRequireLogin()}
+            {isLogged && _renderLeftSide()}
+            {isLogged && _renderRightSide()}
+          </Grid>
+        )}
       </Stack>
     );
   };

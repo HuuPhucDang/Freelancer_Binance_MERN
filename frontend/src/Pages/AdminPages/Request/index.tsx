@@ -114,7 +114,11 @@ const Request: React.FC = () => {
                 setIsShowResetPassword(true);
               }}
             >
-              <SyncLockIcon />
+              <SyncLockIcon
+                sx={{
+                  fontSize: { xs: '10px', pc: '40px' },
+                }}
+              />
             </IconButton>
           )
         )
@@ -125,7 +129,15 @@ const Request: React.FC = () => {
 
   const _renderMain = () => {
     return (
-      <Stack sx={{ padding: '20px' }} direction="column">
+      <Stack
+        sx={{
+          padding: {
+            xs: '0px',
+            md: '20px',
+          },
+        }}
+        direction="column"
+      >
         <ResetPassword
           user={currentUser}
           open={isShowResetPassword}
@@ -135,40 +147,86 @@ const Request: React.FC = () => {
           }}
         />
         <Typography
-          sx={{ fontSize: { xs: '17px', pc: '30px' }, fontWeight: 700 }}
+          sx={{ fontSize: { xs: '10px', pc: '30px' }, fontWeight: 700 }}
         >
           Yêu cầu
         </Typography>
-        <TableContainer component={Paper} sx={{ marginTop: '30px' }}>
-          <Table sx={{ minWidth: 650 }} aria-label="simple table">
+        <TableContainer
+          component={Paper}
+          sx={{
+            marginTop: {
+              xs: '4px',
+              md: '30px',
+            },
+          }}
+        >
+          <Table
+            sx={{
+              minWidth: {
+                xs: '100%',
+                md: 650,
+              },
+            }}
+            aria-label="simple table"
+          >
             <TableHead>
               <TableRow>
                 <TableCell
-                  sx={{ fontWeight: 600, fontSize: { xs: '14px', pc: '20px' } }}
+                  sx={{
+                    fontWeight: 600,
+                    fontSize: { xs: '5px', md: '14px', pc: '20px' },
+                    padding: {
+                      xs: '4px',
+                    },
+                  }}
                 >
                   Người dùng
                 </TableCell>
                 <TableCell
                   align="center"
-                  sx={{ fontWeight: 600, fontSize: { xs: '14px', pc: '20px' } }}
+                  sx={{
+                    fontWeight: 600,
+                    fontSize: { xs: '5px', md: '14px', pc: '20px' },
+                    padding: {
+                      xs: '4px',
+                    },
+                  }}
                 >
                   Loại yêu cầu
                 </TableCell>
                 <TableCell
                   align="center"
-                  sx={{ fontWeight: 600, fontSize: { xs: '14px', pc: '20px' } }}
+                  sx={{
+                    fontWeight: 600,
+                    fontSize: { xs: '5px', md: '14px', pc: '20px' },
+                    padding: {
+                      xs: '4px',
+                    },
+                  }}
                 >
                   Tin nhắn
                 </TableCell>
                 <TableCell
                   align="center"
-                  sx={{ fontWeight: 600, fontSize: { xs: '14px', pc: '20px' } }}
+                  sx={{
+                    fontWeight: 600,
+                    fontSize: { xs: '5px', md: '14px', pc: '20px' },
+                    padding: {
+                      xs: '4px',
+                    },
+                  }}
                 >
                   Thời gian
                 </TableCell>
                 <TableCell
                   align="center"
-                  sx={{ fontWeight: 600, fontSize: { xs: '14px', pc: '20px' } }}
+                  sx={{
+                    fontWeight: 600,
+                    fontSize: { xs: '5px', md: '14px', pc: '20px' },
+                    padding: {
+                      xs: '4px',
+                    },
+                  }}
                 >
                   Hành động
                 </TableCell>
@@ -184,20 +242,57 @@ const Request: React.FC = () => {
                     <TableCell
                       component="th"
                       scope="row"
-                      sx={{ fontSize: { pc: '20px' } }}
+                      sx={{
+                        fontSize: { xs: '5px', md: '14px', pc: '20px' },
+                        padding: {
+                          xs: '4px',
+                        },
+                      }}
                     >
                       {row.name}
                     </TableCell>
-                    <TableCell align="center" sx={{ fontSize: { pc: '20px' } }}>
+                    <TableCell
+                      align="center"
+                      sx={{
+                        fontSize: { xs: '5px', md: '14px', pc: '20px' },
+                        padding: {
+                          xs: '4px',
+                        },
+                      }}
+                    >
                       {types[row.type]}
                     </TableCell>
-                    <TableCell align="center" sx={{ fontSize: { pc: '20px' } }}>
+                    <TableCell
+                      align="center"
+                      sx={{
+                        fontSize: { xs: '5px', md: '14px', pc: '20px' },
+                        padding: {
+                          xs: '4px',
+                        },
+                      }}
+                    >
                       {row.message}
                     </TableCell>
-                    <TableCell align="center" sx={{ fontSize: { pc: '20px' } }}>
+                    <TableCell
+                      align="center"
+                      sx={{
+                        fontSize: { xs: '5px', md: '14px', pc: '20px' },
+                        padding: {
+                          xs: '4px',
+                        },
+                      }}
+                    >
                       {row.createdAt}
                     </TableCell>
-                    <TableCell align="center" sx={{ fontSize: { pc: '20px' } }}>
+                    <TableCell
+                      align="center"
+                      sx={{
+                        fontSize: { xs: '5px', md: '14px', pc: '20px' },
+                        padding: {
+                          xs: '4px',
+                        },
+                      }}
+                    >
                       {row.action}
                     </TableCell>
                   </TableRow>
@@ -206,7 +301,17 @@ const Request: React.FC = () => {
                 <TableRow
                   sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                 >
-                  <TableCell component="th" scope="row" sx={{ fontSize: { pc: '20px' } }}>
+                  <TableCell
+                    component="th"
+                    scope="row"
+                    sx={{
+                      fontSize: { xs: '5px', pc: '20px' },
+                      padding: {
+                        xs: '4px',
+                        md: '16px',
+                      },
+                    }}
+                  >
                     Không có dữ liệu
                   </TableCell>
                 </TableRow>

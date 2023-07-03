@@ -116,13 +116,16 @@ const SideBar = () => {
                 ? 'background.primary'
                 : 'background.default',
               fontSize: {
-                xs: '14px',
+                xs: '8px',
                 pc: '24px',
               },
-              height: { xs: '40px', pc: '70px' },
+              height: { xs: '21px', pc: '70px' },
               display: 'flex',
               alignItems: 'center',
-              padding: '0 12px',
+              padding: {
+                xs: '0 4px',
+                md: '0 12px',
+              },
               ':hover': {
                 backgroundColor: isActive
                   ? 'background.primary'
@@ -145,9 +148,12 @@ const SideBar = () => {
     >
       <Typography
         sx={{
-          padding: '45px 10px 10px 30px',
+          padding: {
+            xs: '10px 10px 4px',
+            md: '45px 10px 10px 30px',
+          },
           fontSize: {
-            xs: '16px',
+            xs: '10px',
             pc: '40px',
           },
           fontWeight: 600,
@@ -156,20 +162,27 @@ const SideBar = () => {
       >
         Trang quản lý
       </Typography>
-      <Stack direction="column" flex={1} padding="16px 0">
+      <Stack
+        direction="column"
+        flex={1}
+        padding={{ xs: '4px 0', md: '16px 0' }}
+      >
         {_renderNavBar()}
         <Typography
           sx={{
             color: 'text.primary',
             backgroundColor: 'background.default',
             fontSize: {
-              xs: '14px',
+              xs: '8px',
               pc: '24px',
             },
-            height: { xs: '40px', pc: '70px' },
+            height: { xs: '21px', pc: '70px' },
             display: 'flex',
             alignItems: 'center',
-            padding: '0 12px',
+            padding: {
+              xs: '0 4px',
+              md: '0 12px',
+            },
             ':hover': {
               backgroundColor: 'background.lightSilver',
               color: 'text.secondary',

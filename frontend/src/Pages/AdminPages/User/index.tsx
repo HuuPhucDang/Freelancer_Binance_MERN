@@ -120,7 +120,11 @@ const Request = () => {
               onClick={() => setCurrentUser(item.id)}
               // disabled={item.role === 'admin'}
             >
-              <RemoveRedEyeOutlinedIcon sx={{ fontSize: { pc: '40px' } }} />
+              <RemoveRedEyeOutlinedIcon
+                sx={{
+                  fontSize: { xs: '10px', pc: '40px' },
+                }}
+              />
             </IconButton>
           )
         );
@@ -131,53 +135,113 @@ const Request = () => {
 
   const _renderMain = () => {
     return (
-      <Stack sx={{ padding: '20px' }} direction="column">
+      <Stack
+        sx={{
+          padding: {
+            xs: '0px',
+            md: '20px',
+          },
+        }}
+        direction="column"
+      >
         <UserDetails
           open={Boolean(currentUser)}
           onClose={() => setCurrentUser('')}
           currentUser={currentUser}
         />
         <Typography
-          sx={{ fontSize: { xs: '17px', pc: '30px' }, fontWeight: 700 }}
+          sx={{ fontSize: { xs: '10px', pc: '30px' }, fontWeight: 700 }}
         >
           Người dùng
         </Typography>
-        <TableContainer component={Paper} sx={{ marginTop: '30px' }}>
-          <Table sx={{ minWidth: 650 }} aria-label="simple table">
+        <TableContainer
+          component={Paper}
+          sx={{
+            marginTop: {
+              xs: '4px',
+              md: '30px',
+            },
+          }}
+        >
+          <Table
+            sx={{
+              minWidth: {
+                xs: '100%',
+                md: 650,
+              },
+            }}
+            aria-label="simple table"
+          >
             <TableHead>
               <TableRow>
                 <TableCell
-                  sx={{ fontWeight: 600, fontSize: { xs: '14px', pc: '20px' } }}
+                  sx={{
+                    fontWeight: 600,
+                    fontSize: { xs: '5px', md: '14px', pc: '20px' },
+                    padding: {
+                      xs: '4px',
+                    },
+                  }}
                 >
                   Tên người dùng
                 </TableCell>
                 <TableCell
                   align="left"
-                  sx={{ fontWeight: 600, fontSize: { xs: '14px', pc: '20px' } }}
+                  sx={{
+                    fontWeight: 600,
+                    fontSize: { xs: '5px', md: '14px', pc: '20px' },
+                    padding: {
+                      xs: '4px',
+                    },
+                  }}
                 >
                   Tên đăng nhập
                 </TableCell>
                 <TableCell
                   align="center"
-                  sx={{ fontWeight: 600, fontSize: { xs: '14px', pc: '20px' } }}
+                  sx={{
+                    fontWeight: 600,
+                    fontSize: { xs: '5px', md: '14px', pc: '20px' },
+                    padding: {
+                      xs: '4px',
+                    },
+                  }}
                 >
                   Vai trò
                 </TableCell>
                 <TableCell
                   align="center"
-                  sx={{ fontWeight: 600, fontSize: { xs: '14px', pc: '20px' } }}
+                  sx={{
+                    fontWeight: 600,
+                    fontSize: { xs: '5px', md: '14px', pc: '20px' },
+                    padding: {
+                      xs: '4px',
+                    },
+                  }}
                 >
                   Số dư (USDT)
                 </TableCell>
                 <TableCell
                   align="center"
-                  sx={{ fontWeight: 600, fontSize: { xs: '14px', pc: '20px' } }}
+                  sx={{
+                    fontWeight: 600,
+                    fontSize: { xs: '5px', md: '14px', pc: '20px' },
+                    padding: {
+                      xs: '4px',
+                    },
+                  }}
                 >
                   Trạng thái
                 </TableCell>
                 <TableCell
                   align="center"
-                  sx={{ fontWeight: 600, fontSize: { xs: '14px', pc: '20px' } }}
+                  sx={{
+                    fontWeight: 600,
+                    fontSize: { xs: '5px', md: '14px', pc: '20px' },
+                    padding: {
+                      xs: '4px',
+                    },
+                  }}
                 >
                   Hành động
                 </TableCell>
@@ -193,18 +257,37 @@ const Request = () => {
                     <TableCell
                       component="th"
                       scope="row"
-                      sx={{ fontSize: { pc: '20px' } }}
+                      sx={{
+                        fontSize: { xs: '5px', md: '14px', pc: '20px' },
+                        padding: {
+                          xs: '4px',
+                          md: '15px',
+                        },
+                      }}
                     >
                       {row.nickname}
                     </TableCell>
-                    <TableCell align="left" sx={{ fontSize: { pc: '20px' } }}>
+                    <TableCell
+                      align="left"
+                      sx={{
+                        fontSize: { xs: '5px', md: '14px', pc: '20px' },
+                        padding: {
+                          xs: '4px',
+                          md: '15px',
+                        },
+                      }}
+                    >
                       {row.username}
                     </TableCell>
                     <TableCell
                       align="center"
                       sx={{
                         textTransform: 'capitalize',
-                        fontSize: { pc: '20px' },
+                        fontSize: { xs: '5px', md: '14px', pc: '20px' },
+                        padding: {
+                          xs: '4px',
+                          md: '15px',
+                        },
                       }}
                     >
                       {row.role}
@@ -212,24 +295,62 @@ const Request = () => {
                     <TableCell
                       align="center"
                       // sx={{ textTransform: 'capitalize' }}
-                      sx={{ fontSize: { pc: '20px' } }}
+                      sx={{
+                        fontSize: { xs: '5px', md: '14px', pc: '20px' },
+                        padding: {
+                          xs: '4px',
+                          md: '15px',
+                        },
+                      }}
                     >
                       {Number(row?.balance || '0').toFixed(2)}
                     </TableCell>
-                    <TableCell align="center" sx={{ fontSize: { pc: '20px' } }}>
+                    <TableCell
+                      align="center"
+                      sx={{
+                        fontSize: { xs: '5px', md: '14px', pc: '20px' },
+                        padding: {
+                          xs: '4px',
+                          md: '15px',
+                        },
+                      }}
+                    >
                       <Chip
                         color={statusOptions[row.status]?.color}
                         label={statusOptions[row.status]?.label}
                         sx={{
-                          width: '188px',
-                          height: '56px',
-                          borderRadius: '0px',
-                          fontSize: { pc: '20px' },
+                          width: {
+                            xs: '40px',
+                            md: '188px',
+                          },
+                          height: {
+                            xs: '12px',
+                            md: '56px',
+                          },
+                          borderRadius: '4px',
+                          fontSize: { xs: '5px', md: '14px', pc: '20px' },
+                          padding: {
+                            xs: '4px',
+                            md: '15px',
+                          },
+                          span: {
+                            padding: 0,
+                          },
                         }}
                         variant="outlined"
                       />
                     </TableCell>
-                    <TableCell align="center">{row.action}</TableCell>
+                    <TableCell
+                      align="center"
+                      sx={{
+                        padding: {
+                          xs: '4px',
+                          md: '16px',
+                        },
+                      }}
+                    >
+                      {row.action}
+                    </TableCell>
                   </TableRow>
                 ))}
               {rows.length === 0 && (
@@ -239,7 +360,7 @@ const Request = () => {
                   <TableCell
                     component="th"
                     scope="row"
-                    sx={{ fontSize: { pc: '20px' } }}
+                    sx={{ fontSize: { xs: '5px', md: '14px', pc: '20px' } }}
                   >
                     Không có dữ liệu
                   </TableCell>

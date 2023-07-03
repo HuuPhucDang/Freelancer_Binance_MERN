@@ -8,6 +8,8 @@ import {
   Avatar,
   Divider,
   Box,
+  useTheme,
+  useMediaQuery,
 } from '@mui/material';
 // Import local
 import { UserLayout } from '@/Components/DefaultLayout';
@@ -24,6 +26,8 @@ const { getSelf } = UserActions;
 
 const Verify: React.FC = () => {
   // Constructors
+  const theme = useTheme();
+  const isMd = useMediaQuery(theme.breakpoints.down('md'));
   const dispatch = useTypedDispatch();
   const userData = Utils.getUserData();
   const details = useSelector((state: RootState) =>
@@ -43,9 +47,12 @@ const Verify: React.FC = () => {
       <Stack direction="column">
         <Typography
           sx={{
-            marginTop: '30px',
+            marginTop: {
+              xs: '8px',
+              md: '30px',
+            },
             fontSize: {
-              xs: '16px',
+              xs: '22px',
               pc: '24px',
             },
             lineHeight: '28px',
@@ -64,7 +71,10 @@ const Verify: React.FC = () => {
               }`}
         </Typography>
         <Stack
-          direction="row"
+          direction={{
+            xs: 'column',
+            md: 'row',
+          }}
           marginTop={{
             xs: '20px',
             pc: '40px',
@@ -73,22 +83,26 @@ const Verify: React.FC = () => {
             xs: '20px',
             pc: '40px',
           }}
+          spacing={{
+            xs: '20px',
+            md: 'unset',
+          }}
         >
           <Button
             size="small"
             sx={{
               fontSize: {
-                xs: '10px',
+                xs: '20px',
                 pc: '18px',
               },
               textTransform: 'unset',
               backgroundColor: 'background.burntSienna',
               color: 'text.secondary',
-              height: { xs: '30px', pc: '63px' },
+              height: { xs: '44px', pc: '63px' },
               padding: '0 15px',
               marginRight: '20px',
               width: {
-                xs: '187px',
+                xs: '100%',
                 pc: '341px',
               },
               fontWeight: 400,
@@ -106,16 +120,16 @@ const Verify: React.FC = () => {
             size="small"
             sx={{
               fontSize: {
-                xs: '10px',
+                xs: '20px',
                 pc: '18px',
               },
               textTransform: 'unset',
               backgroundColor: 'background.burntSienna',
               color: 'text.secondary',
-              height: { xs: '30px', pc: '63px' },
+              height: { xs: '44px', pc: '63px' },
               padding: '0 15px',
               width: {
-                xs: '187px',
+                xs: '100%',
                 pc: '341px',
               },
               fontWeight: 400,
@@ -162,17 +176,135 @@ const Verify: React.FC = () => {
     );
   };
 
+  const _renderDesktopSection = () => {
+    return (
+      <Stack padding="0 10px">
+        <Stack
+          sx={{
+            padding: '20px',
+            backgroundColor: 'background.mainContent',
+          }}
+        >
+          <Grid container>
+            <Grid item xs={10}>
+              {userData?.verification?.status === 'pending' ||
+              userData?.verification?.status === 'denied' ||
+              !userData?.verification
+                ? _renderUnverifyField
+                : _renderVerifiedField()}
+            </Grid>
+            <Grid
+              item
+              xs={2}
+              marginTop={{
+                xs: '20px',
+                md: 0,
+              }}
+            >
+              <Stack justifyContent="flex-end">
+                <Typography
+                  sx={{
+                    fontSize: {
+                      xs: '16px',
+                      pc: '20px',
+                    },
+                    lineHeight: '28px',
+                    fontWeight: 400,
+                  }}
+                >
+                  FAQ
+                </Typography>
+                <Link
+                  sx={{
+                    fontSize: {
+                      xs: '10px',
+                      pc: '20px',
+                    },
+                    marginTop: '10px',
+                    lineHeight: '14px',
+                    fontWeight: 400,
+                    color: '#7D6F6F',
+                    textAlign: 'left',
+                    textDecoration: 'underline',
+                  }}
+                >
+                  Xác minh danh tính
+                </Link>
+              </Stack>
+            </Grid>
+          </Grid>
+        </Stack>
+      </Stack>
+    );
+  };
+
+  const _renderMobileSection = () => {
+    return (
+      <Stack padding="0 30px">
+        <Stack>
+          <Grid container>
+            <Grid
+              item
+              xs={12}
+              marginTop={{
+                xs: '0',
+                md: 0,
+              }}
+            >
+              <Stack justifyContent="flex-end">
+                <Typography
+                  sx={{
+                    fontSize: '20px',
+                    lineHeight: '28px',
+                    fontWeight: 400,
+                  }}
+                >
+                  FAQ
+                </Typography>
+                <Link
+                  sx={{
+                    fontSize: '16px',
+                    lineHeight: '14px',
+                    fontWeight: 400,
+                    color: '#7D6F6F',
+                    textAlign: 'left',
+                    textDecoration: 'underline',
+                  }}
+                >
+                  Xác minh danh tính
+                </Link>
+              </Stack>
+            </Grid>
+            <Grid item xs={12}>
+              {userData?.verification?.status === 'pending' ||
+              userData?.verification?.status === 'denied' ||
+              !userData?.verification
+                ? _renderUnverifyField
+                : _renderVerifiedField()}
+            </Grid>
+          </Grid>
+        </Stack>
+      </Stack>
+    );
+  };
+
   const renderMain = () => {
     return (
       <Box
         component="main"
         sx={{
           display: 'flex',
-          minHeight: 'calc(100vh - 180px)',
+          minHeight: {
+            xs: 'calc(100vh - 70px)',
+            md: 'calc(100vh - 180px)',
+          },
           padding: {
             xs: '0',
           },
-          margin: '20px auto 0px auto',
+          margin: {
+            xs: 0,
+            md: '20px auto 0px auto',
+          },
         }}
       >
         <UploadIDCard
@@ -184,30 +316,32 @@ const Verify: React.FC = () => {
           onClose={() => setIsShowAvatarPopup(false)}
         />
         <Grid container>
-          <Grid
-            item
-            xs={12}
-            md={2}
-            sx={{
-              position: {
-                xs: 'sticky',
-                md: 'unset',
-              },
-              top: '70px',
-              backgroundColor: 'background.default',
-              zIndex: 1,
-            }}
-            borderTop="1px solid rgba(187, 174, 174, 0.9)"
-          >
-            <Sidebar />
-          </Grid>
+          {isMd ? null : (
+            <Grid
+              item
+              xs={12}
+              md={2}
+              sx={{
+                position: {
+                  xs: 'sticky',
+                  md: 'unset',
+                },
+                top: '70px',
+                backgroundColor: 'background.default',
+                zIndex: 1,
+              }}
+              borderTop="1px solid rgba(187, 174, 174, 0.9)"
+            >
+              <Sidebar />
+            </Grid>
+          )}
           <Grid
             item
             xs={12}
             md={10}
             borderLeft="1px solid #949494"
             padding={{
-              xs: '19px 32px 19px 32px',
+              xs: '10px',
               pc: '60px 71px',
             }}
             borderTop="1px solid rgba(187, 174, 174, 0.9)"
@@ -224,11 +358,20 @@ const Verify: React.FC = () => {
                     pc: '70px',
                   },
                   fontWeight: 600,
+                  alignSelf: {
+                    xs: 'center',
+                    md: 'unset',
+                  },
                 }}
               >
                 Xác minh
               </Typography>
-              <Stack direction="row" alignItems="center" marginTop="40px">
+              <Stack
+                direction="row"
+                alignItems="center"
+                marginTop="40px"
+                padding={{ xs: '0 20px', md: 0 }}
+              >
                 <Avatar
                   src={userData.avatar}
                   sx={{
@@ -241,7 +384,7 @@ const Verify: React.FC = () => {
                   sx={{
                     marginRight: '16px',
                     fontSize: {
-                      xs: '17px',
+                      xs: '24px',
                       pc: '25px',
                     },
                     fontWeight: 600,
@@ -250,64 +393,15 @@ const Verify: React.FC = () => {
                   {userData.nickname}
                 </Typography>
               </Stack>
-              <Divider sx={{ margin: '25px 0 5px 0' }} />
-              <Stack padding="0 10px">
-                <Stack
-                  sx={{
-                    padding: '20px',
-                    backgroundColor: 'background.mainContent',
-                  }}
-                >
-                  <Grid container>
-                    <Grid item xs={10}>
-                      {userData?.verification?.status === 'pending' ||
-                      userData?.verification?.status === 'denied' ||
-                      !userData?.verification
-                        ? _renderUnverifyField
-                        : _renderVerifiedField()}
-                    </Grid>
-                    <Grid
-                      item
-                      xs={2}
-                      marginTop={{
-                        xs: '20px',
-                        md: 0,
-                      }}
-                    >
-                      <Stack justifyContent="flex-end">
-                        <Typography
-                          sx={{
-                            fontSize: {
-                              xs: '16px',
-                              pc: '20px',
-                            },
-                            lineHeight: '28px',
-                            fontWeight: 400,
-                          }}
-                        >
-                          FAQ
-                        </Typography>
-                        <Link
-                          sx={{
-                            fontSize: {
-                              xs: '10px',
-                              pc: '20px',
-                            },
-                            marginTop: '10px',
-                            lineHeight: '14px',
-                            fontWeight: 400,
-                            color: '#7D6F6F',
-                            textAlign: 'left',
-                            textDecoration: 'underline',
-                          }}
-                        >
-                          Xác minh danh tính
-                        </Link>
-                      </Stack>
-                    </Grid>
-                  </Grid>
-                </Stack>
-              </Stack>
+              <Divider
+                sx={{
+                  margin: {
+                    xs: '4px 0 20px 0',
+                    md: '25px 0 5px 0',
+                  },
+                }}
+              />
+              {isMd ? _renderMobileSection() : _renderDesktopSection()}
             </Stack>
           </Grid>
         </Grid>

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useLocation } from 'react-router';
-import { Box, Stack } from '@mui/material';
+import { Box, Stack, useMediaQuery, useTheme } from '@mui/material';
 import _ from 'lodash';
 
 import Widgets from '../Widgets';
@@ -10,11 +10,13 @@ import AppBarComponent from '../AppBar';
 import { ROUTERS } from '@/Constants';
 import { useTypedDispatch } from '@/Reducers/store';
 import { AuthActions } from '@/Reducers/Actions';
+import NavigationBar from '../NavigationBar';
 
 interface SectionProps {
   content: JSX.Element;
   currentPage?: string;
   screenTitle?: string;
+  isShowAppBar?: boolean;
 }
 
 const { logout } = AuthActions;
@@ -34,8 +36,10 @@ const UserLayout: React.FC<SectionProps> = (props: SectionProps) => {
     ROUTERS.VERIFY,
     ROUTERS.WITHDRAW_MONEY,
   ];
+  const theme = useTheme();
+  const isMd = useMediaQuery(theme.breakpoints.down('md'));
   const { pathname } = useLocation();
-  const { content, screenTitle } = props;
+  const { content, screenTitle, isShowAppBar } = props;
 
   React.useEffect(() => {
     const isAuthRouters = authRoutes.includes(pathname);
@@ -53,17 +57,30 @@ const UserLayout: React.FC<SectionProps> = (props: SectionProps) => {
   }, []);
 
   return (
-    <Stack direction="column">
-      <AppBarComponent />
+    <Stack
+      direction="column"
+      sx={{
+        width: '100vw',
+        overflow: 'hidden',
+        height: '100%',
+        // maxHeight: '100vh',
+      }}
+    >
+      {(isMd && pathname === ROUTERS.TRANSACTION) ? null : (
+        <AppBarComponent />
+      )}
       <Widgets.Notification />
       <Widgets.Alert />
       <Box
         sx={{
           background: 'background.default',
-          height:
-            pathname === ROUTERS.TRANSACTION
-              ? 'calc(100vh - 40px)'
-              : 'calc(100vh - 180px)',
+          height: 'auto',
+          flex: 1,
+          overflow: 'auto',
+          // maxHeight:
+          //   pathname === ROUTERS.TRANSACTION
+          //     ? 'calc(100vh - 40px)'
+          //     : 'calc(100vh - 180px)',
         }}
       >
         <Helmet>
@@ -71,6 +88,7 @@ const UserLayout: React.FC<SectionProps> = (props: SectionProps) => {
         </Helmet>
         {content}
       </Box>
+      <NavigationBar />
     </Stack>
   );
 };

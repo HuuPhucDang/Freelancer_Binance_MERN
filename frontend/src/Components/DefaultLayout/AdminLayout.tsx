@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Container, Grid } from '@mui/material';
+import { Box, Grid } from '@mui/material';
 
 import Widgets from '../Widgets';
 import { useLocation } from 'react-router';
@@ -43,8 +43,15 @@ const AdminLayout: React.FC<SectionProps> = (props: SectionProps) => {
       </Grid>
       <Grid item xs={9}>
         <Box
-          // maxWidth="lg"
-          sx={{ height: '100%', maxHeight: '100vh', overflow: 'auto', padding: '76px 113px' }}
+          sx={{
+            height: '100%',
+            maxHeight: '100vh',
+            overflow: 'auto',
+            padding: {
+              xs: '24px 21px',
+              md: '76px 113px',
+            },
+          }}
         >
           {content}
         </Box>

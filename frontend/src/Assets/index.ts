@@ -53,9 +53,18 @@ import bankCardImage from './blockbit_card.png';
 import frontIDCard from './front_id_card.png';
 import backIDCard from './back_id_card.png';
 import successSecurityImage from './success_security.png';
-import logoImage from './logo.jpg';
+import logoImage from './logo.png';
 import moneyTransactionIcon from './money.png';
 import rightIcon from './right_icon.png';
+
+import homeDarkIcon from './home_dark_icon.png';
+import homeLightIcon from './home_light_icon.png';
+import circleDarkIcon from './transaction_dark_icon.png';
+import circleLightIcon from './transaction_light_icon.png';
+import walletDarkIcon from './wallet_dark_icon.png';
+import walletLightIcon from './wallet_light_icon.png';
+import profileDarkIcon from './profile_dark_icon.png';
+import profileLightIcon from './profile_light_icon.png';
 
 export default {
   darkIconDarkTheme,
@@ -109,5 +118,13 @@ export default {
   successSecurityImage,
   logoImage,
   moneyTransactionIcon,
-  rightIcon
+  rightIcon,
+  homeDarkIcon,
+  homeLightIcon,
+  circleDarkIcon,
+  circleLightIcon,
+  walletDarkIcon,
+  walletLightIcon,
+  profileDarkIcon,
+  profileLightIcon,
 };

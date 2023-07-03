@@ -7,10 +7,11 @@ import {
   Stack,
   Link,
   Grow,
+  useTheme,
+  useMediaQuery,
 } from '@mui/material';
 import PersonIcon from '@mui/icons-material/Person';
 import { Fade } from 'react-reveal';
-import LocalAtmIcon from '@mui/icons-material/LocalAtm';
 // Import local
 import { UserLayout } from '@/Components/DefaultLayout';
 import Assets from '@/Assets';
@@ -20,7 +21,8 @@ import { Utils } from '@/Libs';
 const Home: React.FC = () => {
   // Constructors
   const userData = Utils.getUserData();
-  console.log(userData);
+  const theme = useTheme();
+  const isMd = useMediaQuery(theme.breakpoints.down('md'));
 
   // Renders
   const _renderHero = () => {
@@ -42,17 +44,30 @@ const Home: React.FC = () => {
             >
               <Typography
                 sx={{
+                  padding: {
+                    md: '50px',
+                    pc: 'unset',
+                  },
                   fontSize: {
                     xs: '34px',
+                    ip13: '40px',
+                    md: '64px',
                     pc: '80px',
                   },
                   fontWeight: 700,
                   lineHeight: {
                     xs: '41px',
+                    ip13: '48px',
+                    md: '74px',
                     pc: '95px',
                   },
                   flex: 1,
                   textAlign: 'left',
+                  maxWidth: {
+                    ip13: '350px',
+                    md: '100%',
+                    pc: '100%',
+                  },
                 }}
               >
                 Giao dịch cả khi đang di chuyển. Mọi lúc, mọi nơi.
@@ -63,14 +78,17 @@ const Home: React.FC = () => {
               width="100%"
               maxWidth={{
                 xs: '300px',
+                ip13: '100%',
                 pc: '605px',
               }}
               marginX={{
                 xs: 'auto',
+                ip13: 'unset',
                 md: 'unset',
               }}
               marginY={{
                 xs: '30px',
+                ip13: '0',
                 md: 'unset',
                 lg: '40px',
               }}
@@ -81,6 +99,10 @@ const Home: React.FC = () => {
                   alignItems: 'center',
                   justifyContent: 'center',
                   marginBottom: '12px',
+                  marginLeft: {
+                    ip13: '-50px',
+                    md: 'unset',
+                  },
                 }}
               >
                 <Box
@@ -89,6 +111,7 @@ const Home: React.FC = () => {
                   sx={{
                     width: {
                       xs: '34px',
+                      ip13: '56px',
                       pc: '96px',
                     },
                     height: 'auto',
@@ -99,6 +122,7 @@ const Home: React.FC = () => {
                   sx={{
                     fontSize: {
                       xs: '12px',
+                      ip13: '15px',
                       pc: '20px',
                     },
                     fontWeight: 400,
@@ -116,28 +140,45 @@ const Home: React.FC = () => {
                   backgroundColor: 'background.primary',
                   height: {
                     xs: '27px',
+                    ip13: '52px',
                     pc: '57px',
                   },
-                  // color: 'text.secondary',
+                  width: {
+                    ip13: '100%',
+                    md: 'max-content',
+                  },
+                  justifySelf: 'center',
+                  alignSelf: 'center',
                   textTransform: 'unset',
                   fontWeight: 400,
                 }}
                 color="burntSienna"
               >
-                {userData ? (
+                {userData?.id ? (
                   <Box
                     component="img"
                     src={Assets.moneyTransactionIcon}
                     sx={{ marginRight: '16px' }}
                   />
                 ) : (
-                  <PersonIcon sx={{ fontSize: '55px', marginRight: '16px' }} />
+                  <PersonIcon
+                    sx={{
+                      fontSize: {
+                        xs: '35px',
+                        ip13: '40px',
+                        pc: '55px',
+                      },
+                      marginRight: '16px',
+                      color: '#000000',
+                    }}
+                  />
                 )}
-                {userData ? (
+                {userData?.id ? (
                   <Link
                     sx={{
                       fontSize: {
                         xs: '12px',
+                        ip13: '18px',
                         pc: '20px',
                       },
                     }}
@@ -148,7 +189,11 @@ const Home: React.FC = () => {
                 ) : (
                   <Link
                     sx={{
-                      fontSize: '12px',
+                      fontSize: {
+                        xs: '12px',
+                        ip13: '18px',
+                        pc: '20px',
+                      },
                     }}
                     href={ROUTERS.SIGN_UP}
                   >
@@ -156,133 +201,150 @@ const Home: React.FC = () => {
                   </Link>
                 )}
               </Button>
-              <Typography
-                sx={{
-                  fontSize: {
-                    xs: '12px',
-                    pc: '20px',
-                  },
-                  lineHeight: '15px',
-                  margin: {
-                    xs: '10px 0',
-                    md: '20px 0',
-                  },
-                }}
-              >
-                Hoặc tiếp tục bằng{' '}
-              </Typography>
-              <Stack direction="row" spacing="24px" justifyContent="center">
-                <Button
-                  sx={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    width: {
-                      xs: '130px',
-                      pc: '252px',
-                    },
-                    backgroundColor: 'background.lightSilver',
-                    textTransform: 'unset',
-                    borderRadius: '0px',
-                  }}
-                >
-                  <Box
-                    component="img"
-                    src={Assets.googleStoreIcon}
-                    sx={{
-                      width: {
-                        xs: '24px',
-                        pc: '42px',
-                      },
-                      height: {
-                        xs: '24px',
-                        pc: '42px',
-                      },
-                      marginRight: '20px',
-                    }}
-                  />
-                  <Typography
-                    sx={{ fontSize: '20px', color: 'text.secondary' }}
-                  >
-                    Download <br />
-                    app android
-                  </Typography>
-                </Button>
-                <Button
-                  sx={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    width: {
-                      xs: '130px',
-                      pc: '252px',
-                    },
-                    backgroundColor: 'background.lightSilver',
-                    textTransform: 'unset',
-                    borderRadius: '0px',
-                  }}
-                >
-                  <Box
-                    component="img"
-                    src={Assets.appleIcon}
-                    sx={{
-                      width: {
-                        xs: '24px',
-                        pc: '42px',
-                      },
-                      height: {
-                        xs: '24px',
-                        pc: '42px',
-                      },
-                      marginRight: '20px',
-                    }}
-                  />
+              {isMd ? null : (
+                <>
                   <Typography
                     sx={{
                       fontSize: {
                         xs: '12px',
+                        md: '20px',
                         pc: '20px',
                       },
-                      color: 'text.secondary',
+                      lineHeight: '15px',
+                      margin: {
+                        xs: '10px 0',
+                        md: '20px 0',
+                      },
                     }}
                   >
-                    Download <br />
-                    app ios
+                    Hoặc tiếp tục bằng{' '}
                   </Typography>
-                </Button>
-              </Stack>
+                  <Stack direction="row" spacing="24px" justifyContent="center">
+                    <Button
+                      sx={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        width: {
+                          xs: '130px',
+                          md: '200px',
+                          pc: '252px',
+                        },
+                        backgroundColor: 'background.lightSilver',
+                        textTransform: 'unset',
+                        borderRadius: '0px',
+                      }}
+                    >
+                      <Box
+                        component="img"
+                        src={Assets.googleStoreIcon}
+                        sx={{
+                          width: {
+                            xs: '24px',
+                            pc: '42px',
+                          },
+                          height: {
+                            xs: '24px',
+                            pc: '42px',
+                          },
+                          marginRight: '20px',
+                        }}
+                      />
+                      <Typography
+                        sx={{
+                          fontSize: {
+                            xs: '12px',
+                            md: '20px',
+                            pc: '20px',
+                          },
+                          color: 'text.secondary',
+                        }}
+                      >
+                        Download <br />
+                        app android
+                      </Typography>
+                    </Button>
+                    <Button
+                      sx={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        width: {
+                          xs: '130px',
+                          md: '200px',
+                          pc: '252px',
+                        },
+                        backgroundColor: 'background.lightSilver',
+                        textTransform: 'unset',
+                        borderRadius: '0px',
+                      }}
+                    >
+                      <Box
+                        component="img"
+                        src={Assets.appleIcon}
+                        sx={{
+                          width: {
+                            xs: '24px',
+                            pc: '42px',
+                          },
+                          height: {
+                            xs: '24px',
+                            pc: '42px',
+                          },
+                          marginRight: '20px',
+                        }}
+                      />
+                      <Typography
+                        sx={{
+                          fontSize: {
+                            xs: '12px',
+                            md: '20px',
+                            pc: '20px',
+                          },
+                          color: 'text.secondary',
+                        }}
+                      >
+                        Download <br />
+                        app ios
+                      </Typography>
+                    </Button>
+                  </Stack>
+                </>
+              )}
             </Stack>
           </Stack>
         </Grid>
-        <Grid item md={6.5}>
-          <Box
-            component="img"
-            src={Assets.deviceImage}
-            sx={{
-              width: {
-                xs: '100%',
-                lg: '100%',
-              },
-              height: {
-                xs: 'auto',
-                // lg: '300px',
-              },
-              objectFit: 'contain',
-            }}
-          />
-          <Typography
-            sx={{
-              fontSize: {
-                xs: '16px',
-                pc: '20px',
-              },
-              lineHeight: '20px',
-              fontWeight: 600,
-              padding: '0 10px',
-            }}
-          >
-            Luôn cập nhật thông tin với ứng dụng trên app và desktop của chúng
-            tôi
-          </Typography>
-        </Grid>
+        {isMd ? null : (
+          <Grid item md={6.5}>
+            <Box
+              component="img"
+              src={Assets.deviceImage}
+              sx={{
+                width: {
+                  xs: '100%',
+                  lg: '100%',
+                },
+                height: {
+                  xs: 'auto',
+                  // lg: '300px',
+                },
+                objectFit: 'contain',
+              }}
+            />
+            <Typography
+              sx={{
+                fontSize: {
+                  xs: '16px',
+                  pc: '20px',
+                },
+                lineHeight: '20px',
+                fontWeight: 600,
+                padding: '0 10px',
+              }}
+            >
+              Luôn cập nhật thông tin với ứng dụng trên app và desktop của chúng
+              tôi
+            </Typography>
+          </Grid>
+        )}
       </Grid>
     );
   };
@@ -290,16 +352,18 @@ const Home: React.FC = () => {
   const _renderNumber = () => {
     return (
       <Grid container sx={{ marginTop: '40px' }} spacing={2}>
-        <Grid item xs={12} sm={4} md={4}>
+        <Grid item xs={12} ip13={6} sm={4} md={4}>
           <Stack direction="column" padding="20px 10px">
             <Typography
               sx={{
                 fontSize: {
                   xs: '32px',
+                  ip13: '25px',
                   pc: '64px',
                 },
                 lineHeight: {
                   xs: '39px',
+                  ip13: '34px',
                   pc: '70px',
                 },
                 fontWeight: 700,
@@ -313,11 +377,13 @@ const Home: React.FC = () => {
               sx={{
                 fontSize: {
                   xs: '13px',
+                  ip13: '20px',
                   pc: '20px',
                 },
                 fontWeight: 400,
                 lineHeight: {
                   xs: '16px',
+                  ip13: '24px',
                   pc: '24px',
                 },
                 maxWidth: {
@@ -331,16 +397,65 @@ const Home: React.FC = () => {
             </Typography>
           </Stack>
         </Grid>
-        <Grid item xs={12} sm={4} md={4}>
+        {isMd ? (
+          <Grid item xs={12} ip13={6} sm={4} md={4}>
+            <Stack direction="column" padding="20px 10px">
+              <Typography
+                sx={{
+                  fontSize: {
+                    xs: '32px',
+                    ip13: '25px',
+                    pc: '64px',
+                  },
+                  lineHeight: {
+                    xs: '39px',
+                    ip13: '34px',
+                    pc: '70px',
+                  },
+                  fontWeight: 700,
+                  marginBottom: '10px',
+                  textAlign: 'left',
+                }}
+              >
+                350 +
+              </Typography>
+              <Typography
+                sx={{
+                  fontSize: {
+                    xs: '13px',
+                    ip13: '20px',
+                    pc: '20px',
+                  },
+                  fontWeight: 400,
+                  lineHeight: {
+                    xs: '16px',
+                    ip13: '24px',
+                    pc: '24px',
+                  },
+                  maxWidth: {
+                    xs: '210px',
+                    pc: '500px',
+                  },
+                  textAlign: 'left',
+                }}
+              >
+                Tiền tệ điện tử được liệt kê
+              </Typography>
+            </Stack>
+          </Grid>
+        ) : null}
+        <Grid item xs={12} ip13={6} sm={4} md={4}>
           <Stack direction="column" padding="20px 10px">
             <Typography
               sx={{
                 fontSize: {
                   xs: '32px',
+                  ip13: '25px',
                   pc: '64px',
                 },
                 lineHeight: {
                   xs: '39px',
+                  ip13: '34px',
                   pc: '70px',
                 },
                 fontWeight: 700,
@@ -354,11 +469,13 @@ const Home: React.FC = () => {
               sx={{
                 fontSize: {
                   xs: '13px',
+                  ip13: '20px',
                   pc: '20px',
                 },
                 fontWeight: 400,
                 lineHeight: {
                   xs: '16px',
+                  ip13: '24px',
                   pc: '24px',
                 },
                 textAlign: 'left',
@@ -368,16 +485,18 @@ const Home: React.FC = () => {
             </Typography>
           </Stack>
         </Grid>
-        <Grid item xs={12} sm={4} md={4}>
+        <Grid item xs={12} ip13={6} sm={4} md={4}>
           <Stack direction="column" padding="20px 10px">
             <Typography
               sx={{
                 fontSize: {
                   xs: '32px',
+                  ip13: '25px',
                   pc: '64px',
                 },
                 lineHeight: {
                   xs: '39px',
+                  ip13: '34px',
                   pc: '70px',
                 },
                 fontWeight: 700,
@@ -392,11 +511,13 @@ const Home: React.FC = () => {
               sx={{
                 fontSize: {
                   xs: '13px',
+                  ip13: '20px',
                   pc: '20px',
                 },
                 fontWeight: 400,
                 lineHeight: {
                   xs: '16px',
+                  ip13: '24px',
                   pc: '24px',
                 },
                 textAlign: 'left',
@@ -416,6 +537,7 @@ const Home: React.FC = () => {
         direction="column"
         marginTop={{
           xs: '60px',
+          ip13: '30px',
           pc: '230px',
         }}
         padding={{
@@ -427,6 +549,7 @@ const Home: React.FC = () => {
           sx={{
             fontSize: {
               xs: '34px',
+              ip13: '36px',
               pc: '70px',
             },
             lineHeight: '41px',
@@ -438,10 +561,9 @@ const Home: React.FC = () => {
         </Typography>
         <Grid
           container
-          // spacing={{
-          //   xs: 6,
-          //   pc: 12,
-          // }}
+          rowSpacing={{
+            xs: 3,
+          }}
           columnSpacing={{
             xs: 6,
             pc: '92px',
@@ -456,7 +578,10 @@ const Home: React.FC = () => {
               direction="column"
               sx={{
                 backgroundColor: 'background.secondary',
-                padding: '30px 14px',
+                padding: {
+                  ip13: '10px',
+                  pc: '30px 14px',
+                },
                 height: '100%',
               }}
             >
@@ -470,16 +595,17 @@ const Home: React.FC = () => {
                   color: 'text.primary',
                   fontSize: {
                     xs: '16px',
+                    ip13: '25px',
                     pc: '28px',
                   },
                   fontWeight: 700,
-                  lienHeight: '20px',
+                  lineHeight: '20px',
                   textAlign: 'left',
                   marginTop: {
                     xs: '10px',
                     pc: '50px',
                   },
-                  padding: '0 30px',
+                  padding: { xs: '0px 24px', pc: '0 30px' },
                 }}
               >
                 Khám phá thế giới NFT{' '}
@@ -488,10 +614,12 @@ const Home: React.FC = () => {
                 sx={{
                   fontSize: {
                     xs: '11px',
+                    ip13: '20px',
                     pc: '20px',
                   },
                   lineHeight: {
                     xs: '14px',
+                    ip13: '28px',
                     pc: '28px',
                   },
                   fontWeight: 400,
@@ -501,7 +629,7 @@ const Home: React.FC = () => {
                     xs: '10px',
                     pc: '24px',
                   },
-                  padding: '0 30px',
+                  padding: { xs: '0px 24px', pc: '0 30px' },
                 }}
               >
                 Mở các hộp bí hiểm, khám phá IGO (đợt phát hành sản phẩm trong
@@ -511,17 +639,19 @@ const Home: React.FC = () => {
                 sx={{
                   fontSize: {
                     xs: '11px',
+                    ip13: '20px',
                     pc: '20px',
                   },
                   lineHeight: {
                     xs: '14px',
+                    ip13: '28px',
                     pc: '28px',
                   },
                   fontWeight: 400,
                   color: 'text.burntSienna',
                   textAlign: 'left',
                   marginTop: '20px',
-                  padding: '0 30px',
+                  padding: { xs: '0px 24px', pc: '0 30px' },
                 }}
               >
                 Tìm hiểu thêm
@@ -542,6 +672,7 @@ const Home: React.FC = () => {
                   color: 'text.primary',
                   fontSize: {
                     xs: '16px',
+                    ip13: '25px',
                     pc: '28px',
                   },
                   fontWeight: 700,
@@ -556,10 +687,12 @@ const Home: React.FC = () => {
                 sx={{
                   fontSize: {
                     xs: '11px',
+                    ip13: '20px',
                     pc: '20px',
                   },
                   lineHeight: {
                     xs: '14px',
+                    ip13: '28px',
                     pc: '28px',
                   },
                   fontWeight: 400,
@@ -580,10 +713,12 @@ const Home: React.FC = () => {
                 sx={{
                   fontSize: {
                     xs: '11px',
+                    ip13: '20px',
                     pc: '20px',
                   },
                   lineHeight: {
                     xs: '14px',
+                    ip13: '28px',
                     pc: '28px',
                   },
                   fontWeight: 400,
@@ -629,6 +764,7 @@ const Home: React.FC = () => {
                   color: 'text.primary',
                   fontSize: {
                     xs: '16px',
+                    ip13: '25px',
                     pc: '28px',
                   },
                   fontWeight: 700,
@@ -647,10 +783,12 @@ const Home: React.FC = () => {
                 sx={{
                   fontSize: {
                     xs: '11px',
+                    ip13: '20px',
                     pc: '20px',
                   },
                   lineHeight: {
                     xs: '14px',
+                    ip13: '28px',
                     pc: '28px',
                   },
                   fontWeight: 400,
@@ -669,10 +807,12 @@ const Home: React.FC = () => {
                 sx={{
                   fontSize: {
                     xs: '11px',
+                    ip13: '20px',
                     pc: '20px',
                   },
                   lineHeight: {
                     xs: '14px',
+                    ip13: '28px',
                     pc: '28px',
                   },
                   fontWeight: 400,
@@ -709,10 +849,12 @@ const Home: React.FC = () => {
               sx={{
                 fontSize: {
                   xs: '34px',
+                  ip13: '36px',
                   pc: '70px',
                 },
                 lineHeight: {
                   xs: '41px',
+                  ip13: '48px',
                   pc: '80px',
                 },
                 fontWeight: 700,
@@ -725,11 +867,13 @@ const Home: React.FC = () => {
               sx={{
                 fontSize: {
                   xs: '13px',
+                  ip13: '15px',
                   pc: '20px',
                 },
                 fontWeight: 400,
                 lineHeight: {
                   xs: '16px',
+                  ip13: '20px',
                   pc: '24px',
                 },
                 textAlign: 'left',
@@ -743,30 +887,45 @@ const Home: React.FC = () => {
               nghiêm ngặt và các biện pháp kĩ thuật đầu ngành{' '}
             </Typography>
           </Grid>
-          <Grid item md={1.5} sx={{ display: 'flex', alignItems: 'flex-end' }}>
-            <Link
-              sx={{
-                fontSize: {
-                  xs: '13px',
-                  pc: '20px',
-                },
-                lineHeight: {
-                  xs: '16px',
-                  pc: '24px',
-                },
-                fontWeight: 400,
-                textAlign: 'left',
-                marginTop: '20px',
-                color: 'text.primary',
-              }}
+          {isMd ? null : (
+            <Grid
+              item
+              md={1.5}
+              sx={{ display: 'flex', alignItems: 'flex-end' }}
             >
-              Tìm hiểu thêm
-              <span style={{ display: 'inline-block', marginLeft: '10px' }}>
-                &gt;
-              </span>
-            </Link>
-          </Grid>
+              <Link
+                sx={{
+                  fontSize: {
+                    xs: '13px',
+                    pc: '20px',
+                  },
+                  lineHeight: {
+                    xs: '16px',
+                    pc: '24px',
+                  },
+                  fontWeight: 400,
+                  textAlign: 'left',
+                  marginTop: '20px',
+                  color: 'text.primary',
+                }}
+              >
+                Tìm hiểu thêm
+                <span style={{ display: 'inline-block', marginLeft: '10px' }}>
+                  &gt;
+                </span>
+              </Link>
+            </Grid>
+          )}
         </Grid>
+        {isMd ? (
+          <Grid item md={12}>
+            <Box
+              component="img"
+              src={Assets.preventImage}
+              sx={{ width: '100%', height: 'auto', objectFit: 'contain' }}
+            />
+          </Grid>
+        ) : null}
         <Grid
           container
           marginTop={{
@@ -776,13 +935,21 @@ const Home: React.FC = () => {
           columnSpacing={8}
         >
           <Grid item md={6}>
-            <Stack direction="row" padding="0 0 0 50px" alignItems="center">
+            <Stack
+              direction="row"
+              padding={{ xs: 0, pc: '0 0 0 50px' }}
+              alignItems={{
+                xs: 'flex-start',
+                pc: 'center',
+              }}
+            >
               <Box
                 component="img"
                 src={Assets.safeIcon}
                 sx={{
                   width: {
                     xs: '50px',
+                    ip13: '37px',
                     pc: '88px',
                   },
                   height: 'auto',
@@ -795,11 +962,13 @@ const Home: React.FC = () => {
                   sx={{
                     fontSize: {
                       xs: '14px',
+                      ip13: '18px',
                       pc: '28px',
                     },
-                    fontWeight: 700,
+                    fontWeight: 600,
                     lineHeight: {
                       xs: '17px',
+                      ip13: '24px',
                       pc: '35px',
                     },
                     textAlign: 'left',
@@ -811,11 +980,13 @@ const Home: React.FC = () => {
                   sx={{
                     fontSize: {
                       xs: '14px',
+                      ip13: '15px',
                       pc: '20px',
                     },
                     fontWeight: 400,
                     lineHeight: {
                       xs: '17px',
+                      ip13: '23px',
                       pc: '28px',
                     },
                     textAlign: 'left',
@@ -832,8 +1003,11 @@ const Home: React.FC = () => {
             </Stack>
             <Stack
               direction="row"
-              padding="0 0 0 50px"
-              alignItems="center"
+              padding={{ xs: 0, pc: '0 0 0 50px' }}
+              alignItems={{
+                xs: 'flex-start',
+                pc: 'center',
+              }}
               marginTop={{
                 xs: '30px',
                 pc: '100px',
@@ -845,6 +1019,7 @@ const Home: React.FC = () => {
                 sx={{
                   width: {
                     xs: '50px',
+                    ip13: '37px',
                     pc: '88px',
                   },
                   height: 'auto',
@@ -857,11 +1032,13 @@ const Home: React.FC = () => {
                   sx={{
                     fontSize: {
                       xs: '14px',
+                      ip13: '18px',
                       pc: '28px',
                     },
-                    fontWeight: 700,
+                    fontWeight: 600,
                     lineHeight: {
                       xs: '17px',
+                      ip13: '24px',
                       pc: '35px',
                     },
                     textAlign: 'left',
@@ -873,11 +1050,13 @@ const Home: React.FC = () => {
                   sx={{
                     fontSize: {
                       xs: '14px',
+                      ip13: '15px',
                       pc: '20px',
                     },
                     fontWeight: 400,
                     lineHeight: {
                       xs: '17px',
+                      ip13: '23px',
                       pc: '28px',
                     },
                     textAlign: 'left',
@@ -895,8 +1074,11 @@ const Home: React.FC = () => {
             </Stack>
             <Stack
               direction="row"
-              padding="0 0 0 50px"
-              alignItems="center"
+              padding={{ xs: 0, pc: '0 0 0 50px' }}
+              alignItems={{
+                xs: 'flex-start',
+                pc: 'center',
+              }}
               marginTop={{
                 xs: '30px',
                 pc: '100px',
@@ -908,6 +1090,7 @@ const Home: React.FC = () => {
                 sx={{
                   width: {
                     xs: '50px',
+                    ip13: '37px',
                     pc: '88px',
                   },
                   height: 'auto',
@@ -920,11 +1103,13 @@ const Home: React.FC = () => {
                   sx={{
                     fontSize: {
                       xs: '14px',
+                      ip13: '18px',
                       pc: '28px',
                     },
-                    fontWeight: 700,
+                    fontWeight: 600,
                     lineHeight: {
                       xs: '17px',
+                      ip13: '24px',
                       pc: '35px',
                     },
                     textAlign: 'left',
@@ -936,11 +1121,13 @@ const Home: React.FC = () => {
                   sx={{
                     fontSize: {
                       xs: '14px',
+                      ip13: '15px',
                       pc: '20px',
                     },
                     fontWeight: 400,
                     lineHeight: {
                       xs: '17px',
+                      ip13: '23px',
                       pc: '28px',
                     },
                     textAlign: 'left',
@@ -957,13 +1144,15 @@ const Home: React.FC = () => {
               </Stack>
             </Stack>
           </Grid>
-          <Grid item md={6}>
-            <Box
-              component="img"
-              src={Assets.preventImage}
-              sx={{ width: '100%', height: 'auto', objectFit: 'contain' }}
-            />
-          </Grid>
+          {isMd ? null : (
+            <Grid item md={6}>
+              <Box
+                component="img"
+                src={Assets.preventImage}
+                sx={{ width: '100%', height: 'auto', objectFit: 'contain' }}
+              />
+            </Grid>
+          )}
         </Grid>
       </Stack>
     );
@@ -985,10 +1174,12 @@ const Home: React.FC = () => {
           sx={{
             fontSize: {
               xs: '34px',
+              ip13: '36px',
               pc: '70px',
             },
             lineHeight: {
               xs: '41px',
+              ip13: '48px',
               pc: '80px',
             },
             fontWeight: 700,
@@ -997,7 +1188,12 @@ const Home: React.FC = () => {
         >
           Lí do nên giao dịch cùng chúng tôi{' '}
         </Typography>
-        <Grid container rowSpacing={7} columnSpacing={3} marginTop="20px">
+        <Grid
+          container
+          rowSpacing={{ xs: 3, pc: 7 }}
+          columnSpacing={3}
+          marginTop={{ xs: '0px', pc: '20px' }}
+        >
           <Grid item md={5.4}>
             <Stack direction="row" alignItems="flex-start">
               <Box
@@ -1006,11 +1202,15 @@ const Home: React.FC = () => {
                 sx={{
                   width: {
                     xs: '80px',
+                    ip13: '58px',
                     pc: '148px',
                   },
                   height: 'auto',
                   objectFit: 'contain',
-                  marginRight: '16px',
+                  marginRight: {
+                    xs: '8px',
+                    pc: '16px',
+                  },
                 }}
               />
               <Stack direction="column">
@@ -1018,10 +1218,12 @@ const Home: React.FC = () => {
                   sx={{
                     fontSize: {
                       xs: '17px',
+                      ip13: '20px',
                       pc: '28px',
                     },
                     lineHeight: {
                       xs: '21px',
+                      ip13: '24px',
                       pc: '34px',
                     },
                     fontWeight: 600,
@@ -1034,10 +1236,12 @@ const Home: React.FC = () => {
                   sx={{
                     fontSize: {
                       xs: '12px',
+                      ip13: '15px',
                       pc: '20px',
                     },
                     lineHeight: {
                       xs: '15px',
+                      ip13: '20px',
                       pc: '28px',
                     },
                     fontWeight: 400,
@@ -1061,11 +1265,15 @@ const Home: React.FC = () => {
                 sx={{
                   width: {
                     xs: '80px',
+                    ip13: '58px',
                     pc: '148px',
                   },
                   height: 'auto',
                   objectFit: 'contain',
-                  marginRight: '16px',
+                  marginRight: {
+                    xs: '8px',
+                    pc: '16px',
+                  },
                 }}
               />{' '}
               <Stack direction="column">
@@ -1073,10 +1281,12 @@ const Home: React.FC = () => {
                   sx={{
                     fontSize: {
                       xs: '17px',
+                      ip13: '20px',
                       pc: '28px',
                     },
                     lineHeight: {
                       xs: '21px',
+                      ip13: '24px',
                       pc: '34px',
                     },
                     fontWeight: 600,
@@ -1089,10 +1299,12 @@ const Home: React.FC = () => {
                   sx={{
                     fontSize: {
                       xs: '12px',
+                      ip13: '15px',
                       pc: '20px',
                     },
                     lineHeight: {
                       xs: '15px',
+                      ip13: '20px',
                       pc: '28px',
                     },
                     fontWeight: 400,
@@ -1115,11 +1327,15 @@ const Home: React.FC = () => {
                 sx={{
                   width: {
                     xs: '80px',
+                    ip13: '58px',
                     pc: '148px',
                   },
                   height: 'auto',
                   objectFit: 'contain',
-                  marginRight: '16px',
+                  marginRight: {
+                    xs: '8px',
+                    pc: '16px',
+                  },
                 }}
               />{' '}
               <Stack direction="column">
@@ -1127,10 +1343,12 @@ const Home: React.FC = () => {
                   sx={{
                     fontSize: {
                       xs: '17px',
+                      ip13: '20px',
                       pc: '28px',
                     },
                     lineHeight: {
                       xs: '21px',
+                      ip13: '24px',
                       pc: '34px',
                     },
                     fontWeight: 600,
@@ -1143,10 +1361,12 @@ const Home: React.FC = () => {
                   sx={{
                     fontSize: {
                       xs: '12px',
+                      ip13: '15px',
                       pc: '20px',
                     },
                     lineHeight: {
                       xs: '15px',
+                      ip13: '20px',
                       pc: '28px',
                     },
                     fontWeight: 400,
@@ -1168,11 +1388,15 @@ const Home: React.FC = () => {
                 sx={{
                   width: {
                     xs: '80px',
+                    ip13: '58px',
                     pc: '148px',
                   },
                   height: 'auto',
                   objectFit: 'contain',
-                  marginRight: '16px',
+                  marginRight: {
+                    xs: '8px',
+                    pc: '16px',
+                  },
                 }}
               />{' '}
               <Stack direction="column">
@@ -1180,10 +1404,12 @@ const Home: React.FC = () => {
                   sx={{
                     fontSize: {
                       xs: '17px',
+                      ip13: '20px',
                       pc: '28px',
                     },
                     lineHeight: {
                       xs: '21px',
+                      ip13: '24px',
                       pc: '34px',
                     },
                     fontWeight: 600,
@@ -1196,10 +1422,12 @@ const Home: React.FC = () => {
                   sx={{
                     fontSize: {
                       xs: '12px',
+                      ip13: '15px',
                       pc: '20px',
                     },
                     lineHeight: {
                       xs: '15px',
+                      ip13: '20px',
                       pc: '28px',
                     },
                     fontWeight: 400,
@@ -1237,6 +1465,7 @@ const Home: React.FC = () => {
           sx={{
             fontSize: {
               xs: '34px',
+              ip13: '32px',
               pc: '80px',
             },
             lineHeight: {
@@ -1249,177 +1478,217 @@ const Home: React.FC = () => {
         >
           Phản hồi từ người dùng{' '}
         </Typography>
-        <Grid container columnSpacing={7} marginTop="60px">
+        <Grid
+          container
+          columnSpacing={7}
+          rowSpacing={2}
+          marginTop={{ xs: '0px', pc: '60px' }}
+        >
           <Grid item md={4}>
-            <Stack direction="column">
+            <Stack direction={{ xs: 'row', pc: 'column' }}>
               <Box
                 component="img"
                 src={Assets.greenIcon}
                 sx={{
-                  width: '162px',
-                  height: '162px',
+                  width: {
+                    xs: '68px',
+                    pc: '162px',
+                  },
+                  height: {
+                    xs: '68px',
+                    pc: '162px',
+                  },
                   objectFit: 'contain',
-                  marginLeft: '-38px',
+                  marginLeft: {
+                    xs: '-10px',
+                    pc: '-38px',
+                  },
                 }}
               />
-              <Typography
-                sx={{
-                  textAlign: 'left',
-                  fontSize: {
-                    xs: '14px',
-                    pc: '20px',
-                  },
-                  fontWeight: 400,
-                  lineHeight: {
-                    xs: '17px',
-                    pc: '28px',
-                  },
-                }}
-              >
-                Rất nhiều đồng coin. Chưa kể Binance vẫn chưa một lần làm tôi
-                thất vọng trong 4 năm giao dịch tiền mã hóa tính đến nay.
-              </Typography>
-              <Typography
-                sx={{
-                  fontSize: {
-                    xs: '14px',
-                    pc: '20px',
-                  },
-                  lineHeight: {
-                    xs: '17px',
-                    pc: '28px',
-                  },
-                  fontWeight: 400,
-                  textAlign: 'left',
-                  marginTop: {
-                    xs: '20px',
-                    pc: '90px',
-                  },
-                }}
-              >
+              <Stack direction="column">
                 <Typography
-                  component="span"
-                  sx={{ color: 'text.burntSienna', fontSize: 'inherit' }}
+                  sx={{
+                    textAlign: 'left',
+                    fontSize: {
+                      xs: '14px',
+                      pc: '20px',
+                    },
+                    fontWeight: 400,
+                    lineHeight: {
+                      xs: '17px',
+                      pc: '28px',
+                    },
+                  }}
                 >
-                  #twitter
-                </Typography>{' '}
-                | by...
-              </Typography>
+                  Rất nhiều đồng coin. Chưa kể Binance vẫn chưa một lần làm tôi
+                  thất vọng trong 4 năm giao dịch tiền mã hóa tính đến nay.
+                </Typography>
+                <Typography
+                  sx={{
+                    fontSize: {
+                      xs: '14px',
+                      pc: '20px',
+                    },
+                    lineHeight: {
+                      xs: '17px',
+                      pc: '28px',
+                    },
+                    fontWeight: 400,
+                    textAlign: 'left',
+                    marginTop: {
+                      xs: '20px',
+                      pc: '90px',
+                    },
+                  }}
+                >
+                  <Typography
+                    component="span"
+                    sx={{ color: 'text.burntSienna', fontSize: 'inherit' }}
+                  >
+                    #twitter
+                  </Typography>{' '}
+                  | by...
+                </Typography>
+              </Stack>
             </Stack>
           </Grid>
           <Grid item md={4}>
-            <Stack direction="column">
+            <Stack direction={{ xs: 'row', pc: 'column' }}>
               <Box
                 component="img"
                 src={Assets.redIcon}
                 sx={{
-                  width: '162px',
-                  height: '162px',
+                  width: {
+                    xs: '68px',
+                    pc: '162px',
+                  },
+                  height: {
+                    xs: '68px',
+                    pc: '162px',
+                  },
                   objectFit: 'contain',
-                  marginLeft: '-38px',
+                  marginLeft: {
+                    xs: '-10px',
+                    pc: '-38px',
+                  },
                 }}
               />{' '}
-              <Typography
-                sx={{
-                  textAlign: 'left',
-                  fontSize: {
-                    xs: '14px',
-                    pc: '20px',
-                  },
-                  fontWeight: 400,
-                  lineHeight: {
-                    xs: '17px',
-                    pc: '28px',
-                  },
-                }}
-              >
-                Cơ chế khớp lệnh nhanh và ổn định của chúng tôi có thể xử lý đến
-                100.000 lệnh mỗi giây, độ trễ tối thiểu chỉ là 5 mili giây.
-              </Typography>
-              <Typography
-                sx={{
-                  fontSize: {
-                    xs: '14px',
-                    pc: '20px',
-                  },
-                  lineHeight: {
-                    xs: '17px',
-                    pc: '28px',
-                  },
-                  fontWeight: 400,
-                  textAlign: 'left',
-                  marginTop: {
-                    xs: '20px',
-                    pc: '90px',
-                  },
-                }}
-              >
+              <Stack direction="column">
                 <Typography
-                  component="span"
-                  sx={{ color: 'text.burntSienna', fontSize: 'inherit' }}
+                  sx={{
+                    textAlign: 'left',
+                    fontSize: {
+                      xs: '14px',
+                      pc: '20px',
+                    },
+                    fontWeight: 400,
+                    lineHeight: {
+                      xs: '17px',
+                      pc: '28px',
+                    },
+                  }}
                 >
-                  #twitter
-                </Typography>{' '}
-                | by...
-              </Typography>
+                  Cơ chế khớp lệnh nhanh và ổn định của chúng tôi có thể xử lý
+                  đến 100.000 lệnh mỗi giây, độ trễ tối thiểu chỉ là 5 mili
+                  giây.
+                </Typography>
+                <Typography
+                  sx={{
+                    fontSize: {
+                      xs: '14px',
+                      pc: '20px',
+                    },
+                    lineHeight: {
+                      xs: '17px',
+                      pc: '28px',
+                    },
+                    fontWeight: 400,
+                    textAlign: 'left',
+                    marginTop: {
+                      xs: '20px',
+                      pc: '90px',
+                    },
+                  }}
+                >
+                  <Typography
+                    component="span"
+                    sx={{ color: 'text.burntSienna', fontSize: 'inherit' }}
+                  >
+                    #twitter
+                  </Typography>{' '}
+                  | by...
+                </Typography>
+              </Stack>
             </Stack>
           </Grid>
           <Grid item md={4}>
-            <Stack direction="column">
+            <Stack direction={{ xs: 'row', pc: 'column' }}>
               <Box
                 component="img"
                 src={Assets.blueIcon}
                 sx={{
-                  width: '162px',
-                  height: '162px',
+                  width: {
+                    xs: '68px',
+                    pc: '162px',
+                  },
+                  height: {
+                    xs: '68px',
+                    pc: '162px',
+                  },
                   objectFit: 'contain',
-                  marginLeft: '-38px',
+                  marginLeft: {
+                    xs: '-3px',
+                    pc: '-38px',
+                  },
                 }}
               />{' '}
-              <Typography
-                sx={{
-                  textAlign: 'left',
-                  fontSize: {
-                    xs: '14px',
-                    pc: '20px',
-                  },
-                  fontWeight: 400,
-                  lineHeight: {
-                    xs: '17px',
-                    pc: '28px',
-                  },
-                }}
-              >
-                Nhanh chóng, dễ dàng, thu nhập cao và phí thấp, Binance mang đến
-                cho bạn tất cả những gì bạn cần với tiền mã hoá, thật tuyệt
-                vời！
-              </Typography>
-              <Typography
-                sx={{
-                  fontSize: {
-                    xs: '14px',
-                    pc: '20px',
-                  },
-                  lineHeight: {
-                    xs: '17px',
-                    pc: '28px',
-                  },
-                  fontWeight: 400,
-                  textAlign: 'left',
-                  marginTop: {
-                    xs: '20px',
-                    pc: '90px',
-                  },
-                }}
-              >
+              <Stack direction="column">
+                {' '}
                 <Typography
-                  component="span"
-                  sx={{ color: 'text.burntSienna', fontSize: 'inherit' }}
+                  sx={{
+                    textAlign: 'left',
+                    fontSize: {
+                      xs: '14px',
+                      pc: '20px',
+                    },
+                    fontWeight: 400,
+                    lineHeight: {
+                      xs: '17px',
+                      pc: '28px',
+                    },
+                  }}
                 >
-                  #twitter
-                </Typography>{' '}
-                | by...
-              </Typography>
+                  Nhanh chóng, dễ dàng, thu nhập cao và phí thấp, Binance mang
+                  đến cho bạn tất cả những gì bạn cần với tiền mã hoá, thật
+                  tuyệt vời！
+                </Typography>
+                <Typography
+                  sx={{
+                    fontSize: {
+                      xs: '14px',
+                      pc: '20px',
+                    },
+                    lineHeight: {
+                      xs: '17px',
+                      pc: '28px',
+                    },
+                    fontWeight: 400,
+                    textAlign: 'left',
+                    marginTop: {
+                      xs: '20px',
+                      pc: '90px',
+                    },
+                  }}
+                >
+                  <Typography
+                    component="span"
+                    sx={{ color: 'text.burntSienna', fontSize: 'inherit' }}
+                  >
+                    #twitter
+                  </Typography>{' '}
+                  | by...
+                </Typography>
+              </Stack>
             </Stack>
           </Grid>
         </Grid>
@@ -1440,6 +1709,7 @@ const Home: React.FC = () => {
           sx={{
             fontSize: {
               xs: '24px',
+              ip13: '20px',
               pc: '64px',
             },
             lineHeight: '29px',
@@ -1454,12 +1724,13 @@ const Home: React.FC = () => {
             xs: '10px',
             pc: '40px',
           }}
-          columnSpacing={4}
+          columnSpacing={{ xs: 2, pc: 6 }}
           rowSpacing={2}
         >
           <Grid
             item
             xs={12}
+            ip13={6}
             md={6}
             display="flex"
             justifyContent={{ xs: 'center', md: 'flex-end' }}
@@ -1510,13 +1781,14 @@ const Home: React.FC = () => {
                 }}
                 href={ROUTERS.SIGN_UP}
               >
-                Mở Tài Khoản (đăng kí)
+                Mở Tài Khoản {isMd ? <br /> : null} (đăng kí)
               </Button>
             )}
           </Grid>
           <Grid
             item
             xs={12}
+            ip13={6}
             md={6}
             display="flex"
             justifyContent={{ xs: 'center', md: 'flex-start' }}
@@ -1567,7 +1839,7 @@ const Home: React.FC = () => {
                 }}
                 href={ROUTERS.SIGN_IN}
               >
-                Giao dịch ngay (đăng nhập){' '}
+                Giao dịch ngay{isMd ? <br /> : null} (đăng nhập){' '}
               </Button>
             )}
           </Grid>
@@ -1580,12 +1852,12 @@ const Home: React.FC = () => {
     return (
       <Box
         component="main"
-        // maxWidth="md"
-        padding="24px"
+        padding={{ xs: '11px', pc: '24px' }}
         sx={{
           maxWidth: '1920px',
           my: { textAlign: '-webkit-center' },
           mx: 'auto',
+          boxSizing: 'border-box',
         }}
       >
         <Grow in timeout={500}>
@@ -1597,14 +1869,17 @@ const Home: React.FC = () => {
         <Grow in timeout={800}>
           {_renderChance()}
         </Grow>
+        {isMd ? <Fade>{_renderReason()}</Fade> : null}
         <Fade>{_renderAbout()}</Fade>
-        <Fade>{_renderReason()}</Fade>
+        {!isMd ? <Fade>{_renderReason()}</Fade> : null}
         <Fade>{_renderFeedback()}</Fade>
         <Fade>{_renderInvite()}</Fade>
       </Box>
     );
   };
-  return <UserLayout content={renderMain()} screenTitle="Binance" />;
+  return (
+    <UserLayout content={renderMain()} screenTitle="Binance" isShowAppBar />
+  );
 };
 
 export default Home;
