@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Grid } from '@mui/material';
+import { Box, Grid } from '@mui/material';
 
 import Widgets from '../Widgets';
 import { useLocation } from 'react-router';
@@ -38,16 +38,23 @@ const AdminLayout: React.FC<SectionProps> = (props: SectionProps) => {
 
   return (
     <Grid container sx={{ background: 'background.default', height: '100vh' }}>
-      <Grid item xs={3} md={2}>
+      <Grid item xs={2.9}>
         <AdminSideBar />
       </Grid>
-      <Grid item xs={9} md={10}>
-        <Container
-          maxWidth="lg"
-          sx={{ height: '100%', maxHeight: '100vh', overflow: 'auto' }}
+      <Grid item xs={9}>
+        <Box
+          sx={{
+            height: '100%',
+            maxHeight: '100vh',
+            overflow: 'auto',
+            padding: {
+              xs: '24px 21px',
+              md: '76px 113px',
+            },
+          }}
         >
           {content}
-        </Container>
+        </Box>
       </Grid>
       <Helmet>
         <title>{screenTitle ? screenTitle : 'Admin'}</title>

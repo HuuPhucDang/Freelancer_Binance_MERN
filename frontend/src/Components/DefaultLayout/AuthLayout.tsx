@@ -1,12 +1,13 @@
 import React from 'react';
 import _ from 'lodash';
 // import { Helmet } from 'react-helmet-async';
-import { Box, Stack } from '@mui/material';
+import { Box, Stack, useMediaQuery, useTheme } from '@mui/material';
 import { Outlet, useLocation } from 'react-router';
 
 import Widgets from '../Widgets';
 import { Utils } from '@/Libs';
 import { ROUTERS } from '@/Constants';
+import AuthAppBar from '../AuthAppBar';
 
 interface SectionProps {
   // content: JSX.Element;
@@ -16,6 +17,8 @@ interface SectionProps {
 
 const AuthLayout: React.FC<SectionProps> = () => {
   // Constructors
+  const theme = useTheme();
+  const isMd = useMediaQuery(theme.breakpoints.down('md'));
   const { pathname } = useLocation();
   const userData = Utils.getUserData();
   const token = Utils.getAccessToken();
@@ -31,13 +34,14 @@ const AuthLayout: React.FC<SectionProps> = () => {
   return (
     <Stack direction="column">
       <Box sx={{ background: 'background.default', flex: 1 }}>
+        {isMd ? <AuthAppBar /> : null}
         <Stack
           sx={{
             width: '100vw',
             height: '100vh',
             display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
+            // alignItems: 'center',
+            // justifyContent: 'center',
           }}
         >
           <Outlet />

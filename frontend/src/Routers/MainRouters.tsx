@@ -44,6 +44,10 @@ const UserRouter = {
       path: ROUTERS.TRANSACTION,
       element: <MainPages.Transaction />,
     },
+        {
+      path: ROUTERS.WALLET,
+      element: <MainPages.Wallet />,
+    },
   ],
 };
 

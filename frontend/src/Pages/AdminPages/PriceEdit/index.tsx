@@ -56,7 +56,7 @@ const Request: React.FC = () => {
       (item: { type: string }) => item.type === type
     );
     return (
-      <Grid container columnSpacing={2} rowSpacing={2}>
+      <Grid container columnSpacing={2} rowSpacing={2} marginBottom="20px">
         {_.map(buttonsType, (item, index) => (
           <Grid item xs={12} key={index}>
             <Grid
@@ -78,6 +78,28 @@ const Request: React.FC = () => {
                   defaultValue={0 || item?.time}
                   required
                   inputProps={{ step: '1' }}
+                  sx={{
+                    label: {
+                      fontSize: {
+                        xs: '4px',
+                        md: '16px',
+                      },
+                      top: {
+                        xs: '8px',
+                        md: '0px',
+                      },
+                    },
+                    input: {
+                      fontSize: {
+                        xs: '4px',
+                        md: '16px',
+                      },
+                      height: {
+                        xs: '0px',
+                        md: '43px',
+                      },
+                    },
+                  }}
                 />
               </Grid>
               <Grid item xs={4} md={3}>
@@ -91,6 +113,28 @@ const Request: React.FC = () => {
                   defaultValue={0 || item?.limitedTime}
                   required
                   inputProps={{ step: '1' }}
+                  sx={{
+                    label: {
+                      fontSize: {
+                        xs: '4px',
+                        md: '16px',
+                      },
+                      top: {
+                        xs: '8px',
+                        md: '0px',
+                      },
+                    },
+                    input: {
+                      fontSize: {
+                        xs: '4px',
+                        md: '16px',
+                      },
+                      height: {
+                        xs: '0px',
+                        md: '43px',
+                      },
+                    },
+                  }}
                 />
               </Grid>
               <Grid item xs={4} md={3}>
@@ -114,6 +158,29 @@ const Request: React.FC = () => {
                       else e.target.value = Math.ceil(e.target.value);
                     } else e.target.value = '';
                   }}
+                  sx={{
+                    label: {
+                      fontSize: {
+                        xs: '4px',
+                        md: '16px',
+                      },
+                      top: {
+                        xs: '8px',
+                        md: '0px',
+                      },
+                    },
+                    input: {
+                      padding: 0,
+                      fontSize: {
+                        xs: '4px',
+                        md: '16px',
+                      },
+                      height: {
+                        xs: '0px',
+                        md: '43px',
+                      },
+                    },
+                  }}
                 />
               </Grid>
               <Grid item xs={12} md={3}>
@@ -122,8 +189,26 @@ const Request: React.FC = () => {
                   variant="contained"
                   fullWidth
                   size="small"
-                  // onClick={() => onSave()}
+                  onClick={(e) => onSave(e, item?.id)}
                   type="submit"
+                  sx={{
+                    height: {
+                      xs: '16px',
+                      md: '60px',
+                    },
+                    borderRadius: {
+                      xs: '4px',
+                      md: '0px',
+                    },
+                    fontSize: {
+                      xs: '4px',
+                      md: '15px',
+                    },
+                    transform: {
+                      xs: 'translateY(-5px)',
+                      md: 'unset',
+                    },
+                  }}
                 >
                   Lưu
                 </Button>
@@ -137,8 +222,18 @@ const Request: React.FC = () => {
 
   const _renderMain = () => {
     return (
-      <Stack sx={{ padding: '20px' }} direction="column">
-        <Typography sx={{ fontSize: '17px', fontWeight: 600 }}>
+      <Stack
+        sx={{
+          padding: {
+            xs: '0px',
+            md: '20px',
+          },
+        }}
+        direction="column"
+      >
+        <Typography
+          sx={{ fontSize: { xs: '10px', pc: '30px' }, fontWeight: 700 }}
+        >
           Chỉnh sửa giá
         </Typography>
         <Grid
@@ -150,7 +245,13 @@ const Request: React.FC = () => {
           {types.map((item: { label: string; value: string }) => {
             return (
               <Grid item xs={12} key={`item-${item.value}`}>
-                <Typography sx={{ fontWeight: 600, mb: '10px' }}>
+                <Typography
+                  sx={{
+                    fontWeight: 600,
+                    mb: { xs: '10px', pc: '30px' },
+                    fontSize: { xs: '8px', pc: '20px' },
+                  }}
+                >
                   {item.label}
                 </Typography>
                 {_renderCards(item.value)}

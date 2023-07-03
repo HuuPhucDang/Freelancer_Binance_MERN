@@ -39,7 +39,7 @@ const Placeholder = (props: PlaceholderProps<IOption>) => {
         <Box
           component="img"
           src={Assets.ballIcon}
-          sx={{ width: '20px', height: '20px', marginRight: '5px' }}
+          sx={{ width: '26px', height: '26px', marginRight: '5px' }}
         />{' '}
         {props.children}
       </Stack>
@@ -95,9 +95,9 @@ const LanguageSelect: React.FC<IProps> = ({ sx = {}, placeholder = '' }) => {
         styles={{
           container: (base) => ({
             ...base,
-            width: '119px',
+            width: '220px',
             boxSizing: 'border-box',
-            fontSize: '12px',
+            fontSize: '20px',
             fontWeight: 400,
             background: '#FFB23F',
             borderRadius: '5px',
@@ -109,14 +109,14 @@ const LanguageSelect: React.FC<IProps> = ({ sx = {}, placeholder = '' }) => {
             color: '#000000',
             boxShadow: props.isFocused ? '0 0 0 1px #E87844' : 'none',
             borderRadius: '5px',
-            minHeight: '26px',
+            minHeight: '54px',
             border: 'none',
             background: '#FFB23F',
           }),
           valueContainer: (base) => ({
             ...base,
             boxSizing: 'border-box',
-            height: '26px',
+            height: '54px',
             padding: '0 6px',
           }),
           menuList: (base) => ({
@@ -137,7 +137,7 @@ const LanguageSelect: React.FC<IProps> = ({ sx = {}, placeholder = '' }) => {
           option: (base, props) => ({
             ...base,
             width: '100%',
-            height: '27px',
+            height: '54px',
             whiteSpace: matchUpMd ? 'nowrap' : 'unset',
             backgroundColor: props.isSelected
               ? 'rgba(255, 221, 0, 1.0)'
@@ -152,14 +152,14 @@ const LanguageSelect: React.FC<IProps> = ({ sx = {}, placeholder = '' }) => {
           }),
           indicatorsContainer: (base) => ({
             ...base,
-            width: '24px',
+            width: '60px',
           }),
         }}
         components={{
           IndicatorSeparator: () => null,
           DropdownIndicator: () => (
             <ExpandMoreOutlinedIcon
-              sx={{ fontSize: '14px', margin: '0 6px', color: '#000000' }}
+              sx={{ fontSize: '40px', margin: '0 6px', color: '#000000' }}
             />
           ),
           SingleValue: SingleValueComponent,

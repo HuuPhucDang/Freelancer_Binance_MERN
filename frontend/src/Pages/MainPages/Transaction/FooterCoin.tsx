@@ -117,10 +117,17 @@ const FooterCoin: React.FC = () => {
             display="flex"
             flexDirection="row"
             alignItems="center"
-            sx={{ fontSize: '11px', color: '#BBAEAE' }}
+            sx={{
+              fontSize: {
+                xs: '11px',
+                pc: '20px',
+              },
+              color: '#BBAEAE',
+            }}
             key={index}
           >
-            {item?.symbol} {item?.price}
+            {item?.symbol}{' '}
+            <span style={{ color: '#F03030' }}>{item?.price}</span>
           </Grid>
         );
       return null;
@@ -193,7 +200,15 @@ const FooterCoin: React.FC = () => {
                   fontSize: '16px',
                 }}
               />
-              <Typography sx={{ fontSize: '12px', color: '#408827' }}>
+              <Typography
+                sx={{
+                  fontSize: {
+                    xs: '12px',
+                    pc: '20px',
+                  },
+                  color: '#408827',
+                }}
+              >
                 Kết nối ổn định
               </Typography>
             </Stack>
@@ -253,7 +268,10 @@ const FooterCoin: React.FC = () => {
                 ) : null}
                 <NotificationsIcon
                   sx={{
-                    fontSize: '16px',
+                    fontSize: {
+                      xs: '16px',
+                      pc: '24px',
+                    },
                     marginRight: '6px',
                     color: '#7D6F6F',
                   }}
@@ -261,7 +279,7 @@ const FooterCoin: React.FC = () => {
               </Stack>
               <Typography
                 sx={{
-                  fontSize: '11px',
+                  fontSize: { xs: '11px', pc: '20px' },
                   fontWeight: 500,
                   color: '#7D6F6F',
                   ':hover': { cursor: 'pointer' },
@@ -275,13 +293,20 @@ const FooterCoin: React.FC = () => {
               <Stack flexDirection="row" alignItems="center">
                 <MarkChatUnreadIcon
                   sx={{
-                    fontSize: '16px',
+                    fontSize: {
+                      xs: '16px',
+                      pc: '24px',
+                    },
                     marginRight: '6px',
                     color: '#7D6F6F',
                   }}
                 />
                 <Typography
-                  sx={{ fontSize: '11px', fontWeight: 500, color: '#7D6F6F' }}
+                  sx={{
+                    fontSize: { xs: '11px', pc: '20px' },
+                    fontWeight: 500,
+                    color: '#7D6F6F',
+                  }}
                 >
                   Hỗ trợ trực tuyến
                 </Typography>

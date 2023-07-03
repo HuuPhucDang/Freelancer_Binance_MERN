@@ -1,4 +1,11 @@
-import { Button, Stack, TextField, Typography } from '@mui/material';
+import {
+  Button,
+  Stack,
+  TextField,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from '@mui/material';
 import _ from 'lodash';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -42,6 +49,8 @@ type FormData = yup.InferType<typeof schema>;
 const { register } = AuthActions;
 
 const SignUp = () => {
+  const theme = useTheme();
+  const isMd = useMediaQuery(theme.breakpoints.down('md'));
   const dispatch = useTypedDispatch();
   const {
     handleSubmit,
@@ -69,24 +78,48 @@ const SignUp = () => {
 
   const _renderMain = () => {
     return (
-      <>
+      <Stack
+        padding={{ xs: '0', pc: '0' }}
+        sx={{
+          width: '100%',
+          maxWidth: '432px',
+          margin: {
+            xs: '40px 0',
+            md: 'auto',
+          },
+        }}
+      >
         <Helmet>
           <title>Đăng ký</title>
         </Helmet>
         <Stack
           direction="column"
           sx={{
-            border: '1px solid #ccc',
+            border: {
+              xs: 'unset',
+              md: '1px solid #ccc',
+            },
             borderRadius: '8px',
-            padding: '30px 15px',
+            padding: {
+              xs: '0 30px',
+              md: '30px 15px',
+            },
             minWidth: '300px',
           }}
         >
           <Typography
-            sx={{ fontSize: '16px', fontWeight: 600, marginBottom: '20px' }}
+            sx={{
+              fontSize: { xs: '24px', pc: '40px' },
+              fontWeight: 700,
+              lineHeight: '40px',
+              marginBottom: '20px',
+            }}
           >
-            Đăng ký
+            {isMd ? 'Tạo tài khoản cá nhân' : 'Đăng ký'}
           </Typography>
+          {isMd ? (
+            <Typography sx={{ fontSize: '20px' }}>Email, Số ĐT</Typography>
+          ) : null}
           <Controller
             name="username"
             control={control}
@@ -97,10 +130,16 @@ const SignUp = () => {
                 size="small"
                 placeholder="Email, Số ĐT *"
                 sx={{
-                  marginTop: '10px',
+                  marginTop: {
+                    xs: 0,
+                    md: '10px',
+                  },
                   color: 'text.secondary',
                   ' .MuiInputBase-root': {
                     backgroundColor: 'background.secondary',
+                  },
+                  input: {
+                    height: { xs: '32px', pc: '42px' },
                   },
                 }}
                 onKeyUp={onEnter}
@@ -110,6 +149,11 @@ const SignUp = () => {
               />
             )}
           />
+          {isMd ? (
+            <Typography sx={{ fontSize: '20px', marginTop: '16px' }}>
+              Mật khẩu
+            </Typography>
+          ) : null}
           <Controller
             name="password"
             control={control}
@@ -121,10 +165,16 @@ const SignUp = () => {
                 placeholder="Mật khẩu *"
                 type="password"
                 sx={{
-                  marginTop: '10px',
+                  marginTop: {
+                    xs: 0,
+                    md: '10px',
+                  },
                   color: 'text.secondary',
                   ' .MuiInputBase-root': {
                     backgroundColor: 'background.secondary',
+                  },
+                  input: {
+                    height: { xs: '32px', pc: '42px' },
                   },
                 }}
                 onKeyUp={onEnter}
@@ -134,6 +184,11 @@ const SignUp = () => {
               />
             )}
           />
+          {isMd ? (
+            <Typography sx={{ fontSize: '20px', marginTop: '16px' }}>
+              Xác nhận mật khẩu
+            </Typography>
+          ) : null}
           <Controller
             name="confirmPassword"
             control={control}
@@ -145,10 +200,16 @@ const SignUp = () => {
                 placeholder="Xác nhận mật khẩu *"
                 type="password"
                 sx={{
-                  marginTop: '10px',
+                  marginTop: {
+                    xs: 0,
+                    md: '10px',
+                  },
                   color: 'text.secondary',
                   ' .MuiInputBase-root': {
                     backgroundColor: 'background.secondary',
+                  },
+                  input: {
+                    height: { xs: '32px', pc: '42px' },
                   },
                 }}
                 onKeyUp={onEnter}
@@ -158,6 +219,11 @@ const SignUp = () => {
               />
             )}
           />
+          {isMd ? (
+            <Typography sx={{ fontSize: '20px', marginTop: '16px' }}>
+              Mã mời
+            </Typography>
+          ) : null}
           <Controller
             name="inviteCode"
             control={control}
@@ -168,10 +234,16 @@ const SignUp = () => {
                 size="small"
                 placeholder="Mã mời *"
                 sx={{
-                  marginTop: '10px',
+                  marginTop: {
+                    xs: 0,
+                    md: '10px',
+                  },
                   color: 'text.secondary',
                   ' .MuiInputBase-root': {
                     backgroundColor: 'background.secondary',
+                  },
+                  input: {
+                    height: { xs: '32px', pc: '42px' },
                   },
                 }}
                 onKeyUp={onEnter}
@@ -184,7 +256,24 @@ const SignUp = () => {
           <Button
             variant="contained"
             sx={{
-              marginTop: '10px',
+              marginTop: {
+                xs: '50px',
+                pc: '30px',
+              },
+              height: { xs: '64px', md: '36px' },
+              fontSize: {
+                xs: '24px',
+                md: '14px',
+              },
+              width: {
+                xs: '252px',
+                md: '100%',
+              },
+              alignSelf: {
+                xs: 'center',
+                md: 'unset',
+              },
+              textTransform: 'unset',
               backgroundColor: 'background.burntSienna',
               ':hover': {
                 backgroundColor: 'background.burntSienna',
@@ -196,23 +285,25 @@ const SignUp = () => {
           >
             Đăng ký
           </Button>
-          <Typography
-            sx={{
-              fontSize: '14px',
-              textDecoration: 'underline',
-              textAlign: 'center',
-              color: 'text.primary',
-              marginTop: '2em',
-              ':hover': {
-                cursor: 'pointer',
-              },
-            }}
-            onClick={() => Utils.redirect(ROUTERS.SIGN_IN)}
-          >
-            Đăng nhập
-          </Typography>
+          {isMd ? null : (
+            <Typography
+              sx={{
+                fontSize: '14px',
+                textDecoration: 'underline',
+                textAlign: 'center',
+                color: 'text.primary',
+                marginTop: '2em',
+                ':hover': {
+                  cursor: 'pointer',
+                },
+              }}
+              onClick={() => Utils.redirect(ROUTERS.SIGN_IN)}
+            >
+              Đăng nhập
+            </Typography>
+          )}
         </Stack>
-      </>
+      </Stack>
     );
   };
 

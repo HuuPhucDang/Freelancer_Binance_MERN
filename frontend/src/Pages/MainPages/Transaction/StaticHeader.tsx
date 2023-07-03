@@ -10,7 +10,10 @@ import {
   useTheme,
 } from '@mui/material';
 import { Utils } from '@/Libs';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import SsidChartIcon from '@mui/icons-material/SsidChart';
+import MenuIcon from '@mui/icons-material/Menu';
+import { ROUTERS } from '../../../Constants';
 interface IStaticHeaderProp {
   symbol: string;
 }
@@ -20,6 +23,7 @@ const StaticHeader: React.FC<IStaticHeaderProp> = ({
 }: IStaticHeaderProp) => {
   // Constructors
   const theme = useTheme();
+  const isMd = useMediaQuery(theme.breakpoints.down('md'));
   const isSm = useMediaQuery(theme.breakpoints.down('sm'));
   const [latest24h, setLatest24h] = React.useState<any>({});
   const [enchangeRate, setEnchangeRate] = React.useState<number>(0);
@@ -71,18 +75,44 @@ const StaticHeader: React.FC<IStaticHeaderProp> = ({
         spacing={isSm ? '10px' : '0'}
       >
         <Stack direction="column">
-          <Typography sx={{ fontSize: '12px' }}>
+          <Typography
+            sx={{
+              fontSize: {
+                xs: '12px',
+                pc: '20px',
+              },
+            }}
+          >
             {Number(latest24h?.lastPrice).toFixed(2)}
           </Typography>
-          <Typography sx={{ fontSize: '12px' }}>
+          <Typography
+            sx={{
+              fontSize: {
+                xs: '12px',
+                pc: '20px',
+              },
+            }}
+          >
             {(enchangeRate * latest24h?.lastPrice || 0).toFixed(2)}
           </Typography>
         </Stack>
         <Stack direction="column">
-          <Typography sx={{ fontSize: 10 }}>Biến động giá 24h</Typography>
           <Typography
             sx={{
-              fontSize: 10,
+              fontSize: {
+                xs: '10px',
+                pc: '20px',
+              },
+            }}
+          >
+            Biến động giá 24h
+          </Typography>
+          <Typography
+            sx={{
+              fontSize: {
+                xs: '10px',
+                pc: '20px',
+              },
               color: Number(latest24h?.priceChange) < 0 ? '#C83535' : '#408827',
             }}
           >
@@ -91,20 +121,68 @@ const StaticHeader: React.FC<IStaticHeaderProp> = ({
           </Typography>
         </Stack>
         <Stack direction="column">
-          <Typography sx={{ fontSize: 10 }}>Giá cao nhất 24h</Typography>
-          <Typography sx={{ fontSize: 10 }}>
+          <Typography
+            sx={{
+              fontSize: {
+                xs: '10px',
+                pc: '20px',
+              },
+            }}
+          >
+            Giá cao nhất 24h
+          </Typography>
+          <Typography
+            sx={{
+              fontSize: {
+                xs: '10px',
+                pc: '20px',
+              },
+            }}
+          >
             {Number(latest24h?.highPrice).toFixed(2)}
           </Typography>
         </Stack>
         <Stack direction="column">
-          <Typography sx={{ fontSize: 10 }}>Giá thấp nhất 24h</Typography>
-          <Typography sx={{ fontSize: 10 }}>
+          <Typography
+            sx={{
+              fontSize: {
+                xs: '10px',
+                pc: '20px',
+              },
+            }}
+          >
+            Giá thấp nhất 24h
+          </Typography>
+          <Typography
+            sx={{
+              fontSize: {
+                xs: '10px',
+                pc: '20px',
+              },
+            }}
+          >
             {Number(latest24h?.lowPrice).toFixed(2)}
           </Typography>
         </Stack>
         <Stack direction="column">
-          <Typography sx={{ fontSize: 10 }}>KL 24h(EDU)</Typography>
-          <Typography sx={{ fontSize: 10 }}>
+          <Typography
+            sx={{
+              fontSize: {
+                xs: '10px',
+                pc: '20px',
+              },
+            }}
+          >
+            KL 24h(EDU)
+          </Typography>
+          <Typography
+            sx={{
+              fontSize: {
+                xs: '10px',
+                pc: '20px',
+              },
+            }}
+          >
             {Number(latest24h?.volume).toFixed(4)}
           </Typography>
         </Stack>
@@ -113,8 +191,148 @@ const StaticHeader: React.FC<IStaticHeaderProp> = ({
     [latest24h]
   );
 
+  const _renderMdBar = () => {
+    const getUSDT = symbol.substring(symbol.length - 4);
+    return (
+      <Stack direction="column">
+        <Stack
+          direction="row"
+          alignItems="center"
+          justifyContent="space-between"
+        >
+          <IconButton onClick={() => Utils.redirect(ROUTERS.HOME)}>
+            <ArrowBackIcon sx={{ color: '#000000' }} />
+          </IconButton>
+          <Typography
+            sx={{
+              fontSize: {
+                xs: '15px',
+                pc: '25px',
+              },
+              fontWeight: 600,
+              marginRight: '4px',
+              lineHeight: '18px',
+            }}
+          >
+            {symbol.replace(getUSDT, '/')}
+            {getUSDT}
+          </Typography>
+          <IconButton>
+            <MenuIcon sx={{ color: '#000000' }} />
+          </IconButton>
+        </Stack>
+        <Stack direction="row">
+          <Stack
+            direction="column"
+            width="150px"
+            sx={{ padding: '10px', overflow: 'hidden' }}
+          >
+            <Typography
+              sx={{
+                fontSize: '20px',
+                fontWeight: 700,
+                color: '#E71616',
+              }}
+            >
+              {Number(latest24h?.lastPrice).toFixed(2)}
+            </Typography>
+            <Typography
+              sx={{
+                fontSize: '12px',
+              }}
+            >
+              {(enchangeRate * latest24h?.lastPrice || 0).toFixed(2)}
+            </Typography>
+          </Stack>
+          <Grid container padding="10px">
+            <Grid item xs={6}>
+              <Stack direction="column">
+                <Typography
+                  sx={{
+                    fontSize: '16px',
+                  }}
+                >
+                  Giá cao nhất 24h
+                </Typography>
+                <Typography
+                  sx={{
+                    fontSize: '16px',
+                  }}
+                >
+                  {Number(latest24h?.highPrice).toFixed(2)}
+                </Typography>
+              </Stack>
+            </Grid>
+            <Grid item xs={6}>
+              <Stack direction="column">
+                <Typography
+                  sx={{
+                    fontSize: '16px',
+                  }}
+                >
+                  Biến động giá 24h
+                </Typography>
+                <Typography
+                  sx={{
+                    fontSize: '16px',
+                    color:
+                      Number(latest24h?.priceChange) < 0
+                        ? '#C83535'
+                        : '#408827',
+                  }}
+                >
+                  {Number(latest24h?.priceChange).toFixed(2)}{' '}
+                  {latest24h?.priceChangePercent}%
+                </Typography>
+              </Stack>
+            </Grid>
+            <Grid item xs={6}>
+              <Stack direction="column">
+                <Typography
+                  sx={{
+                    fontSize: '16px',
+                  }}
+                >
+                  Giá thấp nhất 24h
+                </Typography>
+                <Typography
+                  sx={{
+                    fontSize: '16px',
+                  }}
+                >
+                  {Number(latest24h?.lowPrice).toFixed(2)}
+                </Typography>
+              </Stack>
+            </Grid>
+            <Grid item xs={6}>
+              <Stack direction="column">
+                <Typography
+                  sx={{
+                    fontSize: '16px',
+                  }}
+                >
+                  KL 24h(EDU)
+                </Typography>
+                <Typography
+                  sx={{
+                    fontSize: '16px',
+                  }}
+                >
+                  {Number(latest24h?.volume).toFixed(4)}
+                </Typography>
+              </Stack>
+            </Grid>
+          </Grid>
+        </Stack>
+      </Stack>
+    );
+  };
+
   const renderMain = () => {
     const getUSDT = symbol.substring(symbol.length - 4);
+
+    if (isMd) return _renderMdBar();
+
     return (
       <Grid container height="max-content">
         <Grid item xs={4} md={2.8}>
@@ -132,7 +350,10 @@ const StaticHeader: React.FC<IStaticHeaderProp> = ({
             >
               <Typography
                 sx={{
-                  fontSize: '15px',
+                  fontSize: {
+                    xs: '15px',
+                    pc: '25px',
+                  },
                   fontWeight: 600,
                   marginRight: '4px',
                   lineHeight: '18px',

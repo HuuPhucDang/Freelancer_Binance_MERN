@@ -13,6 +13,8 @@ import {
   Stack,
   TextField,
   Typography,
+  useMediaQuery,
+  useTheme,
 } from '@mui/material';
 import { AdminLayout } from '@/Components/DefaultLayout';
 import Assets from '@/Assets';
@@ -47,6 +49,8 @@ type FormData = yup.InferType<typeof schema>;
 const { getSystemInfo, updateSystemInfo } = SystemInfoActions;
 
 const BankInformation = () => {
+  const theme = useTheme();
+  const isMd = useMediaQuery(theme.breakpoints.down('md'));
   const dispatch = useTypedDispatch();
   const systemInfo: any = useSelector((state: RootState) =>
     _.get(state.SYSTEM_INFO, 'payload')
@@ -107,28 +111,59 @@ const BankInformation = () => {
 
   const _renderMain = () => {
     return (
-      <Stack sx={{ padding: '20px' }} direction="column">
+      <Stack
+        sx={{
+          padding: {
+            xs: '0px',
+            md: '20px',
+          },
+        }}
+        direction="column"
+      >
         <Typography
-          sx={{ fontSize: '17px', fontWeight: 600, marginBottom: '16px' }}
+          sx={{ fontSize: { xs: '10px', pc: '30px' }, fontWeight: 700 }}
         >
           Thông tin ngân hàng
         </Typography>
-        <Grid container maxWidth="800px" spacing={4}>
-          <Grid item xs={12} md={8}>
-            <Stack component="form" direction="column" spacing={2}>
+        <Grid container spacing={4}>
+          <Grid item xs={6} md={6}>
+            <Stack
+              component="form"
+              direction="column"
+              spacing={{ xs: '8px', md: 4 }}
+            >
               <FormControl>
                 <Controller
                   name="fullname"
                   control={control}
                   render={({ field }) => (
                     <TextField
-                      hiddenLabel
-                      variant="outlined"
+                      // variant="outlined"
                       // size="small"
                       label="Họ và tên người nhận"
                       sx={{
                         ' .MuiInputBase-root': {
                           background: '#ffffff',
+                        },
+                        label: {
+                          fontSize: {
+                            xs: '4px',
+                            md: '16px',
+                          },
+                          top: {
+                            xs: '8px',
+                            md: '0px',
+                          },
+                        },
+                        input: {
+                          fontSize: {
+                            xs: '4px',
+                            md: '16px',
+                          },
+                          height: {
+                            xs: '0px',
+                            md: '60px',
+                          },
                         },
                       }}
                       InputProps={{
@@ -157,6 +192,26 @@ const BankInformation = () => {
                         ' .MuiInputBase-root': {
                           background: '#ffffff',
                         },
+                        label: {
+                          fontSize: {
+                            xs: '4px',
+                            md: '16px',
+                          },
+                          top: {
+                            xs: '8px',
+                            md: '0px',
+                          },
+                        },
+                        input: {
+                          fontSize: {
+                            xs: '4px',
+                            md: '16px',
+                          },
+                          height: {
+                            xs: '0px',
+                            md: '60px',
+                          },
+                        },
                       }}
                       InputProps={{
                         sx: {
@@ -183,6 +238,26 @@ const BankInformation = () => {
                       sx={{
                         ' .MuiInputBase-root': {
                           background: '#ffffff',
+                        },
+                        label: {
+                          fontSize: {
+                            xs: '4px',
+                            md: '16px',
+                          },
+                          top: {
+                            xs: '8px',
+                            md: '0px',
+                          },
+                        },
+                        input: {
+                          fontSize: {
+                            xs: '4px',
+                            md: '16px',
+                          },
+                          height: {
+                            xs: '0px',
+                            md: '60px',
+                          },
                         },
                       }}
                       InputProps={{
@@ -211,6 +286,26 @@ const BankInformation = () => {
                         ' .MuiInputBase-root': {
                           background: '#ffffff',
                         },
+                        label: {
+                          fontSize: {
+                            xs: '4px',
+                            md: '16px',
+                          },
+                          top: {
+                            xs: '8px',
+                            md: '0px',
+                          },
+                        },
+                        input: {
+                          fontSize: {
+                            xs: '4px',
+                            md: '16px',
+                          },
+                          height: {
+                            xs: '0px',
+                            md: '60px',
+                          },
+                        },
                       }}
                       InputProps={{
                         sx: {
@@ -226,9 +321,13 @@ const BankInformation = () => {
               </FormControl>
             </Stack>
           </Grid>
-          <Grid item xs={12} md={4}>
-            <Stack direction="column">
-              <input type="file" {...register('QRCode')} />
+          <Grid item xs={5} md={6}>
+            <Stack direction="column" width="100%">
+              <input
+                type="file"
+                {...register('QRCode')}
+                style={{ fontSize: isMd ? '4px' : '16px' }}
+              />
               {QRUrl ? (
                 <Box
                   component="img"
@@ -242,7 +341,12 @@ const BankInformation = () => {
                   }}
                 />
               ) : (
-                <Typography sx={{ fontSize: '14px', marginTop: '10px' }}>
+                <Typography
+                  sx={{
+                    fontSize: { xs: '4px', md: '14px' },
+                    marginTop: '10px',
+                  }}
+                >
                   No image
                 </Typography>
               )}
@@ -258,7 +362,22 @@ const BankInformation = () => {
               <Button
                 variant="contained"
                 color="yellowOrange"
-                sx={{ textTransform: 'unset' }}
+                sx={{
+                  textTransform: 'unset',
+                  fontSize: {
+                    xs: '5px',
+                    md: '16px',
+                  },
+                  width: {
+                    xs: '45px',
+                    md: '176px',
+                  },
+                  height: {
+                    xs: '15px',
+                    md: '60px',
+                  },
+                  borderRadius: '0px',
+                }}
                 onClick={handleSubmit(onSubmit)}
               >
                 Cập nhật

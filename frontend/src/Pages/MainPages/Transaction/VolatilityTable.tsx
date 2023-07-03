@@ -85,7 +85,10 @@ const VolatilityTable: React.FC<IProps> = ({
           <TableCell component="th" scope="row" sx={{ p: 0 }}>
             <Typography
               sx={{
-                fontSize: 9,
+                fontSize: {
+                  xs: '9px',
+                  pc: '19px',
+                },
                 lineHeight: '11px',
                 color: isUp ? '#408827' : '#F21616',
                 p: '4px 0 4px 8px',
@@ -98,7 +101,10 @@ const VolatilityTable: React.FC<IProps> = ({
           <TableCell align="right" sx={{ p: 0 }}>
             <Typography
               sx={{
-                fontSize: 9,
+                fontSize: {
+                  xs: '9px',
+                  pc: '19px',
+                },
                 lineHeight: '11px',
                 color: '#816A6A',
                 p: '4px',
@@ -110,7 +116,10 @@ const VolatilityTable: React.FC<IProps> = ({
           <TableCell align="right" sx={{ p: 0 }}>
             <Typography
               sx={{
-                fontSize: 9,
+                fontSize: {
+                  xs: '9px',
+                  pc: '19px',
+                },
                 lineHeight: '11px',
                 color: '#816A6A',
                 padding: '4px 0',
@@ -151,7 +160,10 @@ const VolatilityTable: React.FC<IProps> = ({
             <TableCell
               align="center"
               sx={{
-                fontSize: '10px',
+                fontSize: {
+                  xs: '10px',
+                  pc: '19px',
+                },
                 fontWeight: 400,
                 padding: '4px 0',
                 color: '#7D6F6F',
@@ -162,7 +174,10 @@ const VolatilityTable: React.FC<IProps> = ({
             <TableCell
               align="right"
               sx={{
-                fontSize: '10px',
+                fontSize: {
+                  xs: '10px',
+                  pc: '19px',
+                },
                 fontWeight: 400,
                 padding: '4px 0',
                 color: '#7D6F6F',
@@ -173,7 +188,10 @@ const VolatilityTable: React.FC<IProps> = ({
             <TableCell
               align="right"
               sx={{
-                fontSize: '10px',
+                fontSize: {
+                  xs: '10px',
+                  pc: '19px',
+                },
                 fontWeight: 400,
                 padding: '4px 0',
                 color: '#7D6F6F',
@@ -194,7 +212,10 @@ const VolatilityTable: React.FC<IProps> = ({
             <TableCell component="th" scope="row" sx={{ p: 0 }}>
               <Typography
                 sx={{
-                  fontSize: 13,
+                  fontSize: {
+                    xs: '13px',
+                    pc: '19px',
+                  },
                   lineHeight: '11px',
                   p: '10px 0 10px 8px',
                   textAlign: 'left',
@@ -206,7 +227,10 @@ const VolatilityTable: React.FC<IProps> = ({
             <TableCell align="right" sx={{ p: 0 }}>
               <Typography
                 sx={{
-                  fontSize: 9,
+                  fontSize: {
+                    xs: '9px',
+                    pc: '19px',
+                  },
                   lineHeight: '11px',
                   p: '4px',
                 }}
@@ -217,7 +241,10 @@ const VolatilityTable: React.FC<IProps> = ({
             <TableCell align="right" sx={{ p: 0 }}>
               <Link
                 sx={{
-                  fontSize: 9,
+                  fontSize: {
+                    xs: '9px',
+                    pc: '19px',
+                  },
                   lineHeight: '11px',
                   padding: '4px 0',
                   color: 'text.primary',

@@ -19,39 +19,65 @@ const navigationItems = [
   {
     label: 'Can Thiệp Giá',
     path: ROUTERS.INTERVENTION,
-    icon: <MonetizationOnIcon sx={{ fontSize: '16px', marginRight: '5px' }} />,
+    icon: (
+      <MonetizationOnIcon
+        sx={{ fontSize: { xs: '16px', pc: '37px' }, marginRight: '5px' }}
+      />
+    ),
   },
   {
     label: 'Người dùng',
     path: ROUTERS.USERS,
-    icon: <PeopleIcon sx={{ fontSize: '16px', marginRight: '5px' }} />,
+    icon: (
+      <PeopleIcon
+        sx={{ fontSize: { xs: '16px', pc: '37px' }, marginRight: '5px' }}
+      />
+    ),
   },
   {
     label: 'Yêu cầu',
     path: ROUTERS.REQUEST,
-    icon: <SyncIcon sx={{ fontSize: '16px', marginRight: '5px' }} />,
+    icon: (
+      <SyncIcon
+        sx={{ fontSize: { xs: '16px', pc: '37px' }, marginRight: '5px' }}
+      />
+    ),
   },
   {
     label: 'Xác minh',
     path: ROUTERS.ADMIN_VERIFY,
-    icon: <GppGoodIcon sx={{ fontSize: '16px', marginRight: '5px' }} />,
+    icon: (
+      <GppGoodIcon
+        sx={{ fontSize: { xs: '16px', pc: '37px' }, marginRight: '5px' }}
+      />
+    ),
   },
   {
     label: 'Giao dịch',
     path: ROUTERS.ADMIN_TRANSACTION,
     icon: (
-      <StackedLineChartIcon sx={{ fontSize: '16px', marginRight: '5px' }} />
+      <StackedLineChartIcon
+        sx={{ fontSize: { xs: '16px', pc: '37px' }, marginRight: '5px' }}
+      />
     ),
   },
   {
     label: 'Chỉnh sửa Moonbot',
     path: ROUTERS.EDIT_PRICE,
-    icon: <TuneIcon sx={{ fontSize: '16px', marginRight: '5px' }} />,
+    icon: (
+      <TuneIcon
+        sx={{ fontSize: { xs: '16px', pc: '37px' }, marginRight: '5px' }}
+      />
+    ),
   },
   {
     label: 'Thông tin ngân hàng',
     path: ROUTERS.BANK_INFORMATION,
-    icon: <AccountBalanceIcon sx={{ fontSize: '16px', marginRight: '5px' }} />,
+    icon: (
+      <AccountBalanceIcon
+        sx={{ fontSize: { xs: '16px', pc: '37px' }, marginRight: '5px' }}
+      />
+    ),
   },
   {
     label: 'Thông tin nạp thưởng',
@@ -61,7 +87,11 @@ const navigationItems = [
   {
     label: 'Hỗ trợ',
     path: ROUTERS.ADMIN_SUPPORT,
-    icon: <ChatIcon sx={{ fontSize: '16px', marginRight: '5px' }} />,
+    icon: (
+      <ChatIcon
+        sx={{ fontSize: { xs: '16px', pc: '37px' }, marginRight: '5px' }}
+      />
+    ),
   },
 ];
 
@@ -90,11 +120,17 @@ const SideBar = () => {
               backgroundColor: isActive
                 ? 'background.primary'
                 : 'background.default',
-              fontSize: { md: '14px', xs: '5px' },
-              height: '40px',
+              fontSize: {
+                xs: '8px',
+                pc: '24px',
+              },
+              height: { xs: '21px', pc: '70px' },
               display: 'flex',
               alignItems: 'center',
-              padding: '0 12px',
+              padding: {
+                xs: '0 4px',
+                md: '0 12px',
+              },
               ':hover': {
                 backgroundColor: isActive
                   ? 'background.primary'
@@ -117,24 +153,41 @@ const SideBar = () => {
     >
       <Typography
         sx={{
-          padding: '10px',
-          fontSize: { md: '16px', xs: '6px' },
+          padding: {
+            xs: '10px 10px 4px',
+            md: '45px 10px 10px 30px',
+          },
+          fontSize: {
+            xs: '10px',
+            pc: '40px',
+          },
           fontWeight: 600,
+          borderBottom: '1px solid #BEBEBE',
         }}
       >
         Trang quản lý
       </Typography>
-      <Stack direction="column" flex={1} padding="16px 0">
+      <Stack
+        direction="column"
+        flex={1}
+        padding={{ xs: '4px 0', md: '16px 0' }}
+      >
         {_renderNavBar()}
         <Typography
           sx={{
             color: 'text.primary',
             backgroundColor: 'background.default',
-            fontSize: { md: '14px', xs: '7px' },
-            height: '40px',
+            fontSize: {
+              xs: '8px',
+              pc: '24px',
+            },
+            height: { xs: '21px', pc: '70px' },
             display: 'flex',
             alignItems: 'center',
-            padding: '0 12px',
+            padding: {
+              xs: '0 4px',
+              md: '0 12px',
+            },
             ':hover': {
               backgroundColor: 'background.lightSilver',
               color: 'text.secondary',
@@ -142,7 +195,9 @@ const SideBar = () => {
           }}
           onClick={() => onSignOut()}
         >
-          <LogoutIcon sx={{ fontSize: '16px', marginRight: '5px' }} />
+          <LogoutIcon
+            sx={{ fontSize: { xs: '16px', pc: '40px' }, marginRight: '5px' }}
+          />
           Đăng xuất
         </Typography>
       </Stack>

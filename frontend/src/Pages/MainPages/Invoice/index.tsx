@@ -15,6 +15,8 @@ import {
   Divider,
   Box,
   Pagination,
+  useTheme,
+  useMediaQuery,
   Avatar,
 } from '@mui/material';
 
@@ -27,7 +29,7 @@ import { TransactionActions } from '@/Reducers/Actions';
 import { RootState, useTypedDispatch } from '@/Reducers/store';
 import { ENUMS } from '@/Constants';
 import { Utils } from '@/Libs';
-import Assets from '@/Assets';
+import utils from '../../../Libs/utils';
 
 interface IFilterParam {
   type: string;
@@ -125,6 +127,9 @@ const status = {
 
 const Invoice: React.FC = () => {
   // Constructors
+  const userData = utils.getUserData();
+  const theme = useTheme();
+  const isMd = useMediaQuery(theme.breakpoints.down('md'));
   const dispatch = useTypedDispatch();
   const payload: IPayload = useSelector((state: RootState) =>
     _.get(state.TRANSACTION, 'payload')
@@ -168,90 +173,426 @@ const Invoice: React.FC = () => {
     return result;
   }, [payload]);
 
-  const _renderListMobile = () => (
-    <Grid container px={3} rowGap={1}>
-      {_.map(rows, (row: ICreateData, index: number) => (
-        <Grid item xs={12} key={index}>
-          <Grid container>
-            <Grid item xs={8}>
-              <Typography sx={{ fontWeight: 500, fontSize: 18 }}>
-                {types[row?.type]}
-              </Typography>
-              <Typography
-                sx={{
-                  fontSize: 15,
-                  color: themeMode === 'dark' ? '#545454' : 'black',
-                }}
-              >
-                {row?.date} {row?.time}
-              </Typography>
-            </Grid>
-            <Grid item xs={4}>
-              <Typography sx={{ fontWeight: 500, fontSize: 18 }}>
-                ${row?.total || 0}
-              </Typography>
-              <Typography
-                sx={{
-                  fontSize: 15,
-                  color: themeMode === 'dark' ? '#545454' : 'black',
-                }}
-              >
-                {status[row?.status]}
-              </Typography>
-            </Grid>
-          </Grid>
-        </Grid>
-      ))}
-    </Grid>
-  );
-
-  const _renderMobile = () => (
-    <Stack
-      direction="column"
-      sx={{
-        ...CommonStyles.displayInMobile,
-        padding: 2,
-      }}
-    >
-      <Typography
-        sx={{ textAlign: 'center', fontWeight: 'bold', fontSize: 24 }}
+  const _renderDesktopTable = () => {
+    return (
+      <TableContainer
+        component={Paper}
+        sx={{
+          width: '100%',
+          marginTop: '20px',
+          boxShadow: 'none',
+          borderRadius: '0',
+        }}
       >
-        Lịch sử nạp rút
-      </Typography>
-      <Stack direction="row" alignItems="center" px={2}>
-        <Avatar src={userData?.avatar || Assets.persionMobile} sx={{ width: 92, height: 92 }} />
-        <Typography
-          sx={{ textAlign: 'center', fontWeight: 'bold', fontSize: 18 }}
+        <Table
+          size="small"
+          sx={{
+            // maxWidth: '100%',
+            backgroundColor: 'background.mainContent',
+          }}
+          aria-label="simple table"
         >
-          {userData.nickname}
-        </Typography>
-      </Stack>
-      <Divider sx={{ width: 1 }} />
-      <Typography sx={{ fontWeight: 500, fontSize: 20, mb: 2 }}>
-        Giao dịch
-      </Typography>
-      {_renderListMobile()}
-    </Stack>
-  );
+          <TableHead>
+            <TableRow>
+              <TableCell
+                sx={{
+                  width: '110px',
+                  fontSize: {
+                    xs: '14px',
+                    pc: '20px',
+                  },
+                  padding: {
+                    xs: '15px 5px',
+                    md: '15px',
+                  },
+                }}
+              >
+                Ngày tháng
+              </TableCell>
+              <TableCell
+                align="center"
+                sx={{
+                  fontSize: {
+                    xs: '14px',
+                    pc: '20px',
+                  },
+                  padding: {
+                    xs: '15px 5px',
+                    md: '15px',
+                  },
+                  width: '110px',
+                }}
+              >
+                Thời gian
+              </TableCell>
+              <TableCell
+                align="center"
+                sx={{
+                  fontSize: {
+                    xs: '14px',
+                    pc: '20px',
+                  },
+                  padding: {
+                    xs: '15px 5px',
+                    md: '15px',
+                  },
+                  width: '110px',
+                }}
+              >
+                Loại
+              </TableCell>
+              <TableCell
+                align="center"
+                sx={{
+                  fontSize: {
+                    xs: '14px',
+                    pc: '20px',
+                  },
+                  padding: {
+                    xs: '15px 5px',
+                    md: '15px',
+                  },
+                  width: '110px',
+                }}
+              >
+                Trạng thái
+              </TableCell>
+              <TableCell
+                align="center"
+                sx={{
+                  fontSize: {
+                    xs: '14px',
+                    pc: '20px',
+                  },
+                  padding: {
+                    xs: '15px 5px',
+                    md: '15px',
+                  },
+                  width: '110px',
+                }}
+              >
+                Số lượng (USDT)
+              </TableCell>
+              <TableCell
+                align="center"
+                sx={{
+                  fontSize: {
+                    xs: '14px',
+                    pc: '20px',
+                  },
+                  padding: {
+                    xs: '15px 5px',
+                    md: '15px',
+                  },
+                  width: '110px',
+                }}
+              >
+                Số dư (USDT)
+              </TableCell>
+              <TableCell
+                align="center"
+                sx={{
+                  fontSize: {
+                    xs: '14px',
+                    pc: '20px',
+                  },
+                  padding: {
+                    xs: '15px 5px',
+                    md: '15px',
+                  },
+                  width: '110px',
+                }}
+              >
+                Hành động
+              </TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {rows.length === 0 && (
+              <TableRow
+                sx={{
+                  '&:last-child td, &:last-child th': { border: 0 },
+                }}
+              >
+                <TableCell
+                  component="th"
+                  scope="row"
+                  sx={{ padding: '15px' }}
+                  colSpan={7}
+                >
+                  <Typography
+                    sx={{
+                      fontSize: {
+                        xs: '13px',
+                        pc: '20px',
+                      },
+                      lineHeight: '24px',
+                      color: 'text.primary',
+                      fontWeight: 600,
+                    }}
+                  >
+                    Không có dữ liệu
+                  </Typography>
+                </TableCell>
+              </TableRow>
+            )}
+            {rows.length > 0 &&
+              rows.map((row: ICreateData, index: number) => (
+                <TableRow
+                  key={`row-${index}`}
+                  sx={{
+                    '&:last-child td, &:last-child th': { border: 0 },
+                  }}
+                >
+                  <TableCell
+                    component="th"
+                    scope="row"
+                    sx={{ padding: '15px' }}
+                  >
+                    <Typography
+                      sx={{
+                        fontSize: { xs: '13px', pc: '20px' },
+                        lineHeight: '24px',
+                        color: 'text.primary',
+                      }}
+                    >
+                      {row.date}
+                    </Typography>
+                  </TableCell>
+                  <TableCell align="center">
+                    <Typography
+                      sx={{
+                        fontSize: { xs: '13px', pc: '20px' },
+                        lineHeight: '24px',
+                        color: 'text.primary',
+                      }}
+                    >
+                      {row.time}
+                    </Typography>
+                  </TableCell>
+                  <TableCell align="center">
+                    <Typography
+                      sx={{
+                        fontSize: { xs: '13px', pc: '20px' },
+                        lineHeight: '24px',
+                        color: 'text.primary',
+                        fontWeight: 600,
+                      }}
+                    >
+                      {types[row?.type]}
+                    </Typography>
+                  </TableCell>
+                  <TableCell align="center">
+                    <Typography
+                      sx={{
+                        fontSize: { xs: '13px', pc: '20px' },
+                        lineHeight: '24px',
+                        color: 'text.primary',
+                        fontWeight: 600,
+                      }}
+                    >
+                      {status[row.status]}
+                    </Typography>
+                  </TableCell>
+                  <TableCell align="center">
+                    <Typography
+                      sx={{
+                        fontSize: { xs: '13px', pc: '20px' },
+                        lineHeight: '24px',
+                        color: 'text.primary',
+                      }}
+                    >
+                      {row.total}
+                    </Typography>
+                  </TableCell>
+                  <TableCell align="center">
+                    <Typography
+                      sx={{
+                        fontSize: { xs: '13px', pc: '20px' },
+                        lineHeight: '24px',
+                        color: 'text.primary',
+                      }}
+                    >
+                      {row.balance}
+                    </Typography>
+                  </TableCell>
+                  <TableCell align="center">
+                    <Typography
+                      sx={{
+                        fontSize: { xs: '13px', pc: '20px' },
+                        lineHeight: '24px',
+                        color: 'text.primary',
+                        opacity: row.status === 'pending' ? 1 : 0.5,
+                        textDecoration:
+                          row.status === 'pending' ? 'underline' : 'unset',
+                        ':hover': {
+                          cursor:
+                            row.status === 'pending'
+                              ? 'pointer'
+                              : 'not-allowed',
+                        },
+                      }}
+                      onClick={() => onCancel(row)}
+                    >
+                      Hủy
+                    </Typography>
+                  </TableCell>
+                </TableRow>
+              ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    );
+  };
+
+  const _renderMobileTable = () => {
+    return (
+      <TableContainer
+        component={Paper}
+        sx={{
+          width: '100%',
+          marginTop: '20px',
+          boxShadow: 'none',
+          borderRadius: '0',
+        }}
+      >
+        <Table
+          size="small"
+          sx={
+            {
+              // maxWidth: '100%',
+            }
+          }
+          aria-label="simple table"
+        >
+          <TableBody>
+            {rows.length === 0 && (
+              <TableRow
+                sx={{
+                  '&:last-child td, &:last-child th': { border: 0 },
+                }}
+              >
+                <TableCell
+                  component="th"
+                  scope="row"
+                  sx={{ padding: '15px' }}
+                  colSpan={7}
+                >
+                  <Typography
+                    sx={{
+                      fontSize: {
+                        xs: '13px',
+                        pc: '20px',
+                      },
+                      lineHeight: '24px',
+                      color: 'text.primary',
+                      fontWeight: 600,
+                    }}
+                  >
+                    Không có dữ liệu
+                  </Typography>
+                </TableCell>
+              </TableRow>
+            )}
+            {rows.length > 0 &&
+              rows.map((row: ICreateData, index: number) => (
+                <TableRow
+                  key={`row-${index}`}
+                  sx={{
+                    '&:last-child td, &:last-child th': { border: 0 },
+                  }}
+                >
+                  <TableCell
+                    component="th"
+                    scope="row"
+                    sx={{ padding: '15px' }}
+                  >
+                    <Stack direction="column">
+                      <Typography
+                        sx={{
+                          fontSize: { xs: '20px', pc: '20px' },
+                          lineHeight: '24px',
+                          color: 'text.primary',
+                          fontWeight: 600,
+                        }}
+                      >
+                        {types[row?.type]}
+                      </Typography>
+                      <Stack direction="row">
+                        <Typography
+                          sx={{
+                            fontSize: { xs: '16px', pc: '20px' },
+                            lineHeight: '24px',
+                            color: '#545454',
+                          }}
+                        >
+                          {row.date}
+                        </Typography>
+                        <Typography
+                          sx={{
+                            fontSize: { xs: '16px', pc: '20px' },
+                            lineHeight: '24px',
+                            color: '#545454',
+                          }}
+                        >
+                          {row.time}
+                        </Typography>
+                      </Stack>
+                    </Stack>
+                  </TableCell>
+                  <TableCell align="center">
+                    {' '}
+                    <Stack direction="column">
+                      <Typography
+                        sx={{
+                          fontSize: { xs: '20px', pc: '20px' },
+                          lineHeight: '24px',
+                          color: 'text.primary',
+                        }}
+                      >
+                        {row.balance}
+                      </Typography>
+                      <Typography
+                        sx={{
+                          fontSize: { xs: '16px', pc: '20px' },
+                          lineHeight: '24px',
+                          color: '#545454',
+                          fontWeight: 600,
+                        }}
+                      >
+                        {status[row.status]}
+                      </Typography>
+                    </Stack>
+                  </TableCell>
+                </TableRow>
+              ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    );
+  };
 
   const renderMain = () => {
     return (
-      <>
-        {_renderMobile()}
-        <Box
-          component="main"
-          sx={{
-            minHeight: 'calc(100vh - 94px)',
-            padding: {
-              xs: 0,
-              // md: '1em 0',
-            },
-            mx: 'auto',
-            // maxWidth: '971px',
-            ...CommonStyles.displayInDesktop,
-          }}
-        >
-          <Grid container>
+      <Box
+        component="main"
+        sx={{
+          display: 'flex',
+          minHeight: {
+            xs: '100%',
+            md: 'calc(100vh - 180px)',
+          },
+          padding: {
+            xs: '0',
+          },
+          margin: {
+            xs: '0',
+            md: '20px auto 0px auto',
+          },
+        }}
+      >
+        <Grid container>
+          {isMd ? null : (
             <Grid
               item
               xs={12}
@@ -266,37 +607,89 @@ const Invoice: React.FC = () => {
                 backgroundColor: 'background.default',
                 zIndex: 1,
               }}
+              borderTop="1px solid rgba(187, 174, 174, 0.9)"
             >
               <Sidebar />
             </Grid>
-            <Grid
-              item
-              xs={12}
-              md={10}
-              borderLeft="1px solid #949494"
-              padding="19px 32px 19px 32px"
+          )}
+          <Grid
+            item
+            xs={12}
+            md={10}
+            borderLeft="1px solid #949494"
+            borderTop="1px solid rgba(187, 174, 174, 0.9)"
+            padding={{
+              xs: '10px',
+              pc: '60px 71px',
+            }}
+          >
+            <Stack
+              direction="column"
+              padding={{
+                xs: '10px',
+                md: '0',
+              }}
             >
-              <Stack
-                direction="column"
-                padding={{
-                  xs: '10px',
-                  md: '0',
+              <Typography
+                sx={{
+                  fontSize: {
+                    xs: '24px',
+                    pc: '64px',
+                  },
+                  lineHeight: {
+                    xs: '34px',
+                    pc: '70px',
+                  },
+                  fontWeight: 600,
+                  marginBottom: {
+                    xs: 0,
+                    md: '20px',
+                  },
+                  alignSelf: {
+                    xs: 'center',
+                    md: 'unset',
+                  },
                 }}
               >
-                <Typography
-                  sx={{ fontSize: '24px', lineHeight: '34px', fontWeight: 600 }}
-                >
-                  Lịch sử nạp rút
+                Lịch sử nạp rút
+              </Typography>
+              {isMd ? (
+                <>
+                  <Stack
+                    direction="row"
+                    alignItems="center"
+                    marginTop="20px"
+                    padding={{ xs: '0 20px', md: 0 }}
+                  >
+                    <Avatar
+                      src={userData.avatar}
+                      sx={{
+                        width: { xs: '60px', pc: '93px' },
+                        height: { xs: '60px', pc: '93px' },
+                        marginRight: '20px',
+                      }}
+                    />
+                    <Typography
+                      sx={{
+                        marginRight: '16px',
+                        fontSize: {
+                          xs: '24px',
+                          pc: '25px',
+                        },
+                        fontWeight: 600,
+                      }}
+                    >
+                      {userData.nickname}
+                    </Typography>
+                  </Stack>
+                  <Divider sx={{ margin: '4px 0' }} />
+                </>
+              ) : null}
+              <Stack direction="row" justifyContent="space-between">
+                <Typography sx={{ fontSize: { xs: '22px', pc: '32px' } }}>
+                  Giao dịch
                 </Typography>
-                <Divider
-                  sx={{
-                    marginTop: '4px',
-                    marginBottom: '40px',
-                    marginRight: '50px',
-                  }}
-                />
-                <Stack direction="row" justifyContent="space-between">
-                  <Typography sx={{ fontSize: '22px' }}>Giao dịch</Typography>
+                {isMd ? null : (
                   <Stack direction="row">
                     <Select
                       placeholder="Loại"
@@ -321,7 +714,7 @@ const Invoice: React.FC = () => {
                       }
                       sx={{
                         marginRight: '10px',
-                        backgroundColor: 'background.invoiceDropdown',
+                        // backgroundColor: 'background.invoiceDropdown',
                       }}
                     />
                     <Select
@@ -355,270 +748,28 @@ const Invoice: React.FC = () => {
                       ) =>
                         setFilterParams({ ...filterParams, status: newValue })
                       }
-                      sx={{
-                        backgroundColor: 'background.invoiceDropdown',
-                      }}
+                      sx={
+                        {
+                          // backgroundColor: 'background.invoiceDropdown',
+                        }
+                      }
                     />
                   </Stack>
-                </Stack>
-                <TableContainer
-                  component={Paper}
-                  sx={{
-                    width: '100%',
-                    marginTop: '20px',
-                    boxShadow: 'none',
-                    borderRadius: '0',
-                  }}
-                >
-                  <Table
-                    size="small"
-                    sx={{
-                      // maxWidth: '100%',
-                      backgroundColor: 'background.mainContent',
-                    }}
-                    aria-label="simple table"
-                  >
-                    <TableHead>
-                      <TableRow>
-                        <TableCell
-                          sx={{
-                            width: '110px',
-                            fontSize: '14px',
-                            padding: {
-                              xs: '15px 5px',
-                              md: '15px',
-                            },
-                          }}
-                        >
-                          Ngày tháng
-                        </TableCell>
-                        <TableCell
-                          align="center"
-                          sx={{
-                            fontSize: '14px',
-                            padding: {
-                              xs: '15px 5px',
-                              md: '15px',
-                            },
-                            width: '110px',
-                          }}
-                        >
-                          Thời gian
-                        </TableCell>
-                        <TableCell
-                          align="center"
-                          sx={{
-                            fontSize: '14px',
-                            padding: {
-                              xs: '15px 5px',
-                              md: '15px',
-                            },
-                            width: '110px',
-                          }}
-                        >
-                          Loại
-                        </TableCell>
-                        <TableCell
-                          align="center"
-                          sx={{
-                            fontSize: '14px',
-                            padding: {
-                              xs: '15px 5px',
-                              md: '15px',
-                            },
-                            width: '110px',
-                          }}
-                        >
-                          Trạng thái
-                        </TableCell>
-                        <TableCell
-                          align="center"
-                          sx={{
-                            fontSize: '14px',
-                            padding: {
-                              xs: '15px 5px',
-                              md: '15px',
-                            },
-                            width: '110px',
-                          }}
-                        >
-                          Số lượng (USDT)
-                        </TableCell>
-                        <TableCell
-                          align="center"
-                          sx={{
-                            fontSize: '14px',
-                            padding: {
-                              xs: '15px 5px',
-                              md: '15px',
-                            },
-                            width: '110px',
-                          }}
-                        >
-                          Số dư (USDT)
-                        </TableCell>
-                        <TableCell
-                          align="center"
-                          sx={{
-                            fontSize: '14px',
-                            padding: {
-                              xs: '15px 5px',
-                              md: '15px',
-                            },
-                            width: '110px',
-                          }}
-                        >
-                          Hành động
-                        </TableCell>
-                      </TableRow>
-                    </TableHead>
-                    <TableBody>
-                      {rows.length === 0 && (
-                        <TableRow
-                          sx={{
-                            '&:last-child td, &:last-child th': { border: 0 },
-                          }}
-                        >
-                          <TableCell
-                            component="th"
-                            scope="row"
-                            sx={{ padding: '15px' }}
-                            colSpan={7}
-                          >
-                            <Typography
-                              sx={{
-                                fontSize: '13px',
-                                lineHeight: '24px',
-                                color: 'text.primary',
-                                fontWeight: 600,
-                              }}
-                            >
-                              Không có dữ liệu
-                            </Typography>
-                          </TableCell>
-                        </TableRow>
-                      )}
-                      {rows.length > 0 &&
-                        rows.map((row: ICreateData, index: number) => (
-                          <TableRow
-                            key={`row-${index}`}
-                            sx={{
-                              '&:last-child td, &:last-child th': { border: 0 },
-                            }}
-                          >
-                            <TableCell
-                              component="th"
-                              scope="row"
-                              sx={{ padding: '15px' }}
-                            >
-                              <Typography
-                                sx={{
-                                  fontSize: '13px',
-                                  lineHeight: '24px',
-                                  color: 'text.primary',
-                                }}
-                              >
-                                {row.date}
-                              </Typography>
-                            </TableCell>
-                            <TableCell align="center">
-                              <Typography
-                                sx={{
-                                  fontSize: '13px',
-                                  lineHeight: '24px',
-                                  color: 'text.primary',
-                                }}
-                              >
-                                {row.time}
-                              </Typography>
-                            </TableCell>
-                            <TableCell align="center">
-                              <Typography
-                                sx={{
-                                  fontSize: '13px',
-                                  lineHeight: '24px',
-                                  color: 'text.primary',
-                                  fontWeight: 600,
-                                }}
-                              >
-                                {types[row?.type]}
-                              </Typography>
-                            </TableCell>
-                            <TableCell align="center">
-                              <Typography
-                                sx={{
-                                  fontSize: '13px',
-                                  lineHeight: '24px',
-                                  color: 'text.primary',
-                                  fontWeight: 600,
-                                }}
-                              >
-                                {status[row.status]}
-                              </Typography>
-                            </TableCell>
-                            <TableCell align="center">
-                              <Typography
-                                sx={{
-                                  fontSize: '13px',
-                                  lineHeight: '24px',
-                                  color: 'text.primary',
-                                }}
-                              >
-                                {row.total}
-                              </Typography>
-                            </TableCell>
-                            <TableCell align="center">
-                              <Typography
-                                sx={{
-                                  fontSize: '13px',
-                                  lineHeight: '24px',
-                                  color: 'text.primary',
-                                }}
-                              >
-                                {row.balance}
-                              </Typography>
-                            </TableCell>
-                            <TableCell align="center">
-                              <Typography
-                                sx={{
-                                  fontSize: '13px',
-                                  lineHeight: '24px',
-                                  color: 'text.primary',
-                                  opacity: row.status === 'pending' ? 1 : 0.5,
-                                  textDecoration:
-                                    row.status === 'pending'
-                                      ? 'underline'
-                                      : 'unset',
-                                  ':hover': {
-                                    cursor:
-                                      row.status === 'pending'
-                                        ? 'pointer'
-                                        : 'not-allowed',
-                                  },
-                                }}
-                                onClick={() => onCancel(row)}
-                              >
-                                Hủy
-                              </Typography>
-                            </TableCell>
-                          </TableRow>
-                        ))}
-                    </TableBody>
-                  </Table>
-                </TableContainer>
-                {payload.totalPages > 0 && (
-                  <Pagination
-                    count={payload.totalPages}
-                    page={payload.page}
-                    onChange={(_e: any, newPage: number) =>
-                      setFilterParams({ ...filterParams, page: newPage })
-                    }
-                    shape="rounded"
-                    sx={{ marginTop: '20px', alignSelf: 'end' }}
-                  />
                 )}
               </Stack>
-            </Grid>
+              {isMd ? _renderMobileTable() : _renderDesktopTable()}
+              {payload.totalPages > 0 && (
+                <Pagination
+                  count={payload.totalPages}
+                  page={payload.page}
+                  onChange={(_e: any, newPage: number) =>
+                    setFilterParams({ ...filterParams, page: newPage })
+                  }
+                  shape="rounded"
+                  sx={{ marginTop: '20px', alignSelf: 'end' }}
+                />
+              )}
+            </Stack>
           </Grid>
         </Box>
       </>

@@ -9,6 +9,9 @@ import {
   InputAdornment,
   Divider,
   TextField,
+  useTheme,
+  useMediaQuery,
+  Avatar,
 } from '@mui/material';
 import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 import ContactEmergencyIcon from '@mui/icons-material/ContactEmergency';
@@ -49,6 +52,8 @@ const { getSelf } = UserActions;
 
 const ConnectBank: React.FC = () => {
   // Constructors
+  const theme = useTheme();
+  const isMd = useMediaQuery(theme.breakpoints.down('md'));
   const userData = Utils.getUserData();
   const dispatch = useTypedDispatch();
   const {
@@ -71,15 +76,21 @@ const ConnectBank: React.FC = () => {
         <Box
           component="form"
           sx={{
-            padding: '6px 50px 45px 27px',
-            backgroundColor: 'background.mainContent',
+            padding: {
+              xs: '0px',
+              md: '6px 50px 45px 27px',
+            },
+            backgroundColor: {
+              xs: 'unset',
+              md: 'background.mainContent',
+            },
           }}
         >
           <Stack direction="column">
             <InputLabel
               sx={{
                 color: 'text.primary',
-                fontSize: '13px',
+                fontSize: { xs: '20px', pc: '20px' },
                 fontWeight: 600,
               }}
             >
@@ -101,8 +112,8 @@ const ConnectBank: React.FC = () => {
                   }}
                   InputProps={{
                     sx: {
-                      height: '32px',
-                      fontSize: '13px',
+                      height: { xs: '55px', pc: '56px' },
+                      fontSize: { xs: '20px', pc: '20px' },
                       fontWeight: 600,
                       color: 'rgba(0,0,0,0.62)',
                     },
@@ -111,7 +122,9 @@ const ConnectBank: React.FC = () => {
                         position="start"
                         sx={{ marginRight: '14px' }}
                       >
-                        <ContactEmergencyIcon sx={{ fontSize: '18px' }} />
+                        <ContactEmergencyIcon
+                          sx={{ fontSize: { xs: '18px', pc: '28px' } }}
+                        />
                       </InputAdornment>
                     ),
                   }}
@@ -122,11 +135,11 @@ const ConnectBank: React.FC = () => {
               )}
             />
           </Stack>
-          <Stack direction="column" marginTop="13px">
+          <Stack direction="column" marginTop={{ xs: '13px', pc: '20px' }}>
             <InputLabel
               sx={{
                 color: 'text.primary',
-                fontSize: '13px',
+                fontSize: { xs: '20px', pc: '20px' },
                 fontWeight: 600,
               }}
             >
@@ -148,8 +161,8 @@ const ConnectBank: React.FC = () => {
                   }}
                   InputProps={{
                     sx: {
-                      height: '32px',
-                      fontSize: '13px',
+                      height: { xs: '55px', pc: '56px' },
+                      fontSize: { xs: '20px', pc: '20px' },
                       fontWeight: 600,
                       color: 'rgba(0,0,0,0.62)',
                     },
@@ -158,7 +171,9 @@ const ConnectBank: React.FC = () => {
                         position="start"
                         sx={{ marginRight: '14px' }}
                       >
-                        <CreditCardIcon sx={{ fontSize: '18px' }} />
+                        <CreditCardIcon
+                          sx={{ fontSize: { xs: '18px', pc: '28px' } }}
+                        />
                       </InputAdornment>
                     ),
                   }}
@@ -169,11 +184,11 @@ const ConnectBank: React.FC = () => {
               )}
             />
           </Stack>
-          <Stack direction="column" marginTop="13px">
+          <Stack direction="column" marginTop={{ xs: '13px', pc: '20px' }}>
             <InputLabel
               sx={{
                 color: 'text.primary',
-                fontSize: '13px',
+                fontSize: { xs: '20px', pc: '20px' },
                 fontWeight: 600,
               }}
             >
@@ -195,8 +210,8 @@ const ConnectBank: React.FC = () => {
                   }}
                   InputProps={{
                     sx: {
-                      height: '32px',
-                      fontSize: '13px',
+                      height: { xs: '55px', pc: '56px' },
+                      fontSize: { xs: '20px', pc: '20px' },
                       fontWeight: 600,
                       color: 'rgba(0,0,0,0.62)',
                     },
@@ -205,7 +220,9 @@ const ConnectBank: React.FC = () => {
                         position="start"
                         sx={{ marginRight: '14px' }}
                       >
-                        <AccountBalanceIcon sx={{ fontSize: '18px' }} />
+                        <AccountBalanceIcon
+                          sx={{ fontSize: { xs: '18px', pc: '28px' } }}
+                        />
                       </InputAdornment>
                     ),
                   }}
@@ -216,11 +233,11 @@ const ConnectBank: React.FC = () => {
               )}
             />
           </Stack>
-          <Stack direction="column" marginTop="13px">
+          <Stack direction="column" marginTop={{ xs: '13px', pc: '20px' }}>
             <InputLabel
               sx={{
                 color: 'text.primary',
-                fontSize: '13px',
+                fontSize: { xs: '20px', pc: '20px' },
                 fontWeight: 600,
               }}
             >
@@ -242,8 +259,8 @@ const ConnectBank: React.FC = () => {
                   }}
                   InputProps={{
                     sx: {
-                      height: '32px',
-                      fontSize: '13px',
+                      height: { xs: '55px', pc: '56px' },
+                      fontSize: { xs: '20px', pc: '20px' },
                       fontWeight: 600,
                       color: 'rgba(0,0,0,0.62)',
                     },
@@ -252,7 +269,9 @@ const ConnectBank: React.FC = () => {
                         position="start"
                         sx={{ marginRight: '14px' }}
                       >
-                        <CommentBankIcon sx={{ fontSize: '18px' }} />
+                        <CommentBankIcon
+                          sx={{ fontSize: { xs: '18px', pc: '28px' } }}
+                        />
                       </InputAdornment>
                     ),
                   }}
@@ -265,8 +284,20 @@ const ConnectBank: React.FC = () => {
           </Stack>
         </Box>
         <Stack direction="row" alignItems="center" padding="16px 16px 8px 16px">
-          <GppGoodIcon sx={{ marginRight: '10px', color: '#545454' }} />
-          <Typography sx={{ fontSize: '13px', color: 'text.primary' }}>
+          <GppGoodIcon
+            sx={{
+              marginRight: '10px',
+              color: '#545454',
+              fontSize: { xs: '50px', pc: '30px' },
+              marginLeft: {
+                xs: '-18px',
+                md: 'unset',
+              },
+            }}
+          />
+          <Typography
+            sx={{ fontSize: { xs: '20px', pc: '20px' }, color: 'text.primary' }}
+          >
             Mọi thông tin của bạn đều được bảo mật theo tiêu chuẩn quốc tế PCI
             DSSDSS
           </Typography>
@@ -275,14 +306,23 @@ const ConnectBank: React.FC = () => {
           <Button
             size="small"
             sx={{
-              fontSize: '12px',
+              fontSize: {
+                xs: '18px',
+                pc: '20px',
+              },
               textTransform: 'unset',
               backgroundColor: 'background.burntSienna',
               color: 'text.secondary',
-              height: '34px',
+              height: {
+                xs: '47px',
+                pc: '73px',
+              },
               padding: '0 15px',
-              width: '148px',
-              fontWeight: 600,
+              width: {
+                xs: '149px',
+                pc: '231px',
+              },
+              fontWeight: 500,
             }}
             onClick={handleSubmit(onSubmit)}
           >
@@ -396,34 +436,53 @@ const ConnectBank: React.FC = () => {
       <Box
         component="main"
         sx={{
-          minHeight: 'calc(100vh - 94px)',
-          padding: {
-            xs: 0,
-            // md: '1em 0',
+          display: 'flex',
+          minHeight: {
+            xs: 'calc(100vh - 70px)',
+            md: 'calc(100vh - 180px)',
           },
-          mx: 'auto',
-          // maxWidth: '971px',
+          padding: {
+            xs: '0',
+          },
+          margin: {
+            xs: 0,
+            md: '20px auto 0px auto',
+          },
         }}
       >
-        <Grid container height="100%">
+        <Grid container>
+          {isMd ? null : (
+            <Grid
+              item
+              xs={12}
+              md={2}
+              width="100%"
+              sx={{
+                position: {
+                  xs: 'sticky',
+                  md: 'unset',
+                },
+                top: '70px',
+                backgroundColor: 'background.default',
+                zIndex: 1,
+              }}
+              borderTop="1px solid rgba(187, 174, 174, 0.9)"
+            >
+              <Sidebar />
+            </Grid>
+          )}
+
           <Grid
             item
             xs={12}
-            md={2}
-            width="100%"
-            sx={{
-              position: {
-                xs: 'sticky',
-                md: 'unset',
-              },
-              top: '70px',
-              backgroundColor: 'background.default',
-              zIndex: 1,
+            md={10}
+            borderLeft="1px solid #949494"
+            padding={{
+              xs: '10px',
+              pc: '60px 71px',
             }}
+            borderTop="1px solid rgba(187, 174, 174, 0.9)"
           >
-            <Sidebar />
-          </Grid>
-          <Grid item xs={12} md={10} borderLeft="1px solid #949494" padding="19px 50px 9px 32px">
             <Stack
               component="form"
               direction="column"
@@ -434,19 +493,62 @@ const ConnectBank: React.FC = () => {
                 },
                 margin: {
                   xs: '10px',
-                  md: 0,
+                  md: 'auto',
                 },
                 width: {
-                  xs: 'calc(100% - 20px)',
-                  md: '100%',
+                  xs: '100%',
                 },
+                maxWidth: '1105px',
               }}
             >
               <Typography
-                sx={{ fontSize: '24px', lineHeight: '34px', fontWeight: 600 }}
+                sx={{
+                  fontSize: {
+                    xs: '24px',
+                    pc: '64px',
+                  },
+                  lineHeight: {
+                    xs: '34px',
+                    pc: '70px',
+                  },
+                  fontWeight: 600,
+                  alignSelf: {
+                    xs: 'center',
+                    md: 'unset',
+                  },
+                }}
               >
                 Liên kết tài khoản ngân hàng
               </Typography>
+              {isMd ? (
+                <Stack
+                  direction="row"
+                  alignItems="center"
+                  marginTop="20px"
+                  padding={{ xs: '0 20px', md: 0 }}
+                >
+                  <Avatar
+                    src={userData.avatar}
+                    sx={{
+                      width: { xs: '60px', pc: '93px' },
+                      height: { xs: '60px', pc: '93px' },
+                      marginRight: '20px',
+                    }}
+                  />
+                  <Typography
+                    sx={{
+                      marginRight: '16px',
+                      fontSize: {
+                        xs: '24px',
+                        pc: '25px',
+                      },
+                      fontWeight: 600,
+                    }}
+                  >
+                    {userData.nickname}
+                  </Typography>
+                </Stack>
+              ) : null}
               <Divider sx={{ marginTop: '6px', marginBottom: '15px' }} />
 
               <Stack direction="column" paddingRight="30px">

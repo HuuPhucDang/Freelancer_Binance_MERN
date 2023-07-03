@@ -14,6 +14,7 @@ const USER_ROUTERS = {
   RECHARGE: `${USER_ROUTER_ROOT}recharge`,
   WITHDRAW_MONEY: `${USER_ROUTER_ROOT}withdraw-money`,
   TRANSACTION: `${USER_ROUTER_ROOT}transaction`,
+  WALLET: `${USER_ROUTER_ROOT}wallet`,
 };
 
 const AUTH_ROUTERS = {

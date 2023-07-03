@@ -67,8 +67,6 @@ const Transaction: React.FC = () => {
     };
   }, []);
 
-  console.log(clientHeight);
-
   const _renderLeftSection = () => {
     return (
       <Stack direction="column" height="100%">
@@ -103,12 +101,16 @@ const Transaction: React.FC = () => {
                     maxWidth: '100%',
                     // flex: 1,
                     background: '#000',
-                    height: {
-                      xs: token ? '350px' : 'calc(350px + 244px)',
-                      sm: token
-                        ? `${clientHeight - partElementHeight - 245}px`
-                        : `${clientHeight - partElementHeight - 35}px`,
-                    },
+                    // height: {
+                    //   xs: token ? '350px' : 'calc(350px + 244px)',
+                    //   sm: token
+                    //     ? `${clientHeight - partElementHeight - 245}px`
+                    //     : `${clientHeight - partElementHeight - 35}px`,
+                    //   pc: token
+                    //     ? `${clientHeight - partElementHeight - 245}px`
+                    //     : `${clientHeight - partElementHeight - 35}px`,
+                    // },
+                    aspectRatio: 919 / 501,
                   }}
                 >
                   <StocksChart symbol={query.get('symbol') || 'BTCUSDT'} />
@@ -195,7 +197,10 @@ const Transaction: React.FC = () => {
         >
           <Typography
             sx={{
-              fontSize: '11px',
+              fontSize: {
+                xs: '11px',
+                pc: '20px',
+              },
               fontWeight: 500,
               textAlign: 'center',
               lineHeight: '13px',
@@ -230,45 +235,74 @@ const Transaction: React.FC = () => {
             xs: 'auto',
             md: 'hidden',
           },
-          maxWidth: '971px',
+          maxWidth: '1830px',
         }}
       >
-        <Grid
-          container
-          display="flex"
-          borderTop="1px solid #BBAEAE"
-          borderBottom="1px solid #BBAEAE"
-          height={{
-            xs: 'auto',
-            md: 'calc(100vh - 84px)',
-          }}
-        >
-          <Grid
-            item
-            xs={12}
-            md={9.2}
-            height={{
-              xs: 'auto',
-              md: '100%',
-            }}
-          >
-            {_renderLeftSection()}
-          </Grid>
-          <Grid
-            item
-            xs={12}
-            md={2.8}
-            borderLeft="1px solid #BBAEAE"
-            borderRight="1px solid #BBAEAE"
-            height={{
-              xs: 'auto',
-              md: '100%',
-            }}
-          >
-            {_renderRightSection()}
-          </Grid>
-        </Grid>
-        <FooterCoin />
+        {isMd ? (
+          <>
+            <StaticHeader symbol={query.get('symbol') || 'BTCUSDT'} />
+            <Stack
+              sx={{
+                width: 1,
+                maxWidth: '100%',
+                // flex: 1,
+                background: '#000',
+                // height: {
+                //   xs: token ? '350px' : 'calc(350px + 244px)',
+                //   sm: token
+                //     ? `${clientHeight - partElementHeight - 245}px`
+                //     : `${clientHeight - partElementHeight - 35}px`,
+                //   pc: token
+                //     ? `${clientHeight - partElementHeight - 245}px`
+                //     : `${clientHeight - partElementHeight - 35}px`,
+                // },
+                aspectRatio: 397 / 368,
+              }}
+            >
+              <StocksChart symbol={query.get('symbol') || 'BTCUSDT'} />
+            </Stack>
+            <TradeField symbol={query.get('symbol') || 'BTCUSDT'} />
+          </>
+        ) : (
+          <>
+            <Grid
+              container
+              display="flex"
+              borderTop="1px solid #BBAEAE"
+              borderBottom="1px solid #BBAEAE"
+              height={{
+                xs: 'auto',
+                md: 'calc(100vh - 84px)',
+              }}
+            >
+              <Grid
+                item
+                xs={12}
+                md={9.2}
+                height={{
+                  xs: 'auto',
+                  md: '100%',
+                }}
+              >
+                {_renderLeftSection()}
+              </Grid>
+              <Grid
+                item
+                xs={12}
+                md={2.8}
+                borderLeft="1px solid #BBAEAE"
+                borderRight="1px solid #BBAEAE"
+                height={{
+                  xs: 'auto',
+                  md: '100%',
+                }}
+              >
+                {_renderRightSection()}
+              </Grid>
+            </Grid>
+            <FooterCoin />
+          </>
+        )}
       </Box>
     );
   };

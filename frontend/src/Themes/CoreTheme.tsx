@@ -31,12 +31,14 @@ declare module '@mui/material/styles' {
 declare module '@mui/material/styles' {
   interface BreakpointOverrides {
     xs: true; // removes the `xs` breakpoint
+    ip13: true;
     sm: true;
     md: true;
     lg: true;
     xl: true;
     mxs: true;
     msm: true;
+    pc: true;
   }
 }
 
@@ -89,12 +91,14 @@ const CoreTheme = createTheme({
   breakpoints: {
     values: {
       xs: 0,
+      ip13: 428,
       mxs: 450,
       sm: 600,
       msm: 790,
       md: 923,
       lg: 1200,
       xl: 1536,
+      pc: 1920,
     },
   },
   palette: {
@@ -139,6 +143,7 @@ const CoreTheme = createTheme({
             securityNotification: 'rgba(237, 146, 81, 0.33)',
             mainContent: 'rgba(219, 216, 216, 0.37)',
             invoiceDropdown: 'rgba(187, 174, 174, 0.5)',
+            authBackground: "#FFFFFF",
           } as any,
         }
       : {
@@ -161,6 +166,7 @@ const CoreTheme = createTheme({
             securityNotification: '#3E3C3C',
             invoiceDropdown: '#545454',
             mainContent: '#3E3C3C',
+            authBackground: "#D9D9D9",
           },
         }),
   },

@@ -11,6 +11,9 @@ import {
   Avatar,
   TextField,
   MenuItem,
+  useTheme,
+  useMediaQuery,
+  Avatar,
 } from '@mui/material';
 // Import local
 import { UserLayout } from '@/Components/DefaultLayout';
@@ -25,6 +28,7 @@ import {
 import { RootState, useTypedDispatch } from '@/Reducers/store';
 import { Utils } from '@/Libs';
 import { CommonStyles } from '@/Components/Common';
+import Assets from '../../../Assets';
 
 const { getSelf } = UserActions;
 const { getSystemInfo } = SystemInfoActions;
@@ -32,6 +36,8 @@ const { requestRecharge, resetTransactionReducer } = TransactionActions;
 const { fetchAllBonus } = BonusActions;
 
 const Recharge: React.FC = () => {
+  const theme = useTheme();
+  const isMd = useMediaQuery(theme.breakpoints.down('md'));
   const dispatch = useTypedDispatch();
   const systemInfo = useSelector((state: RootState) =>
     _.get(state.SYSTEM_INFO, 'payload')
@@ -78,227 +84,438 @@ const Recharge: React.FC = () => {
     else dispatch(requestRecharge({ amount: amount / enchangeRate }));
   };
 
-  const _renderCard = () => {
+  const _renderDesktop = () => {
     return (
-      <Box
-        sx={{
-          position: 'relative',
-          width: 'max-content',
-          maxHeight: 'max-content',
-        }}
-      >
-        <Box
-          src={Assets.bankCardImage}
-          component="img"
-          sx={{ width: 1, maxWidth: 400 }}
-        />
-        <Stack
-          direction="column"
+      <>
+        <Typography
           sx={{
-            position: 'absolute',
-            top: '13%',
-            left: '30%',
-            userSelect: 'none',
+            fontSize: {
+              xs: '12px',
+              pc: '20px',
+            },
+            lineHeight: '24px',
+            fontWeight: 400,
+            marginTop: '6px',
           }}
         >
-          <Typography
+          Nạp tiền qua hệ thống banking ngân hàng
+        </Typography>
+        {systemInfo?.QRUrl ? (
+          <Box
+            component="img"
+            src={`data:image/*;base64,${systemInfo?.QRUrl}`}
             sx={{
-              fontSize: '20px',
-              textTransform: 'uppercase',
-              color: 'text.burntSienna',
-              fontWeight: 500,
+              display: { xs: 'block', md: 'none' },
+              width: '250px',
+              height: 'auto',
+              objectFit: 'contain',
+            }}
+          />
+        ) : null}
+        <Stack direction="column" marginTop="24px">
+          <Box
+            sx={{
+              padding: '16px 24px 40px 24px',
+              backgroundColor: 'background.bankCardInformation',
+              borderRadius: '3px',
             }}
           >
-            {systemInfo?.fullname}
-          </Typography>
-        </Stack>
-        <Stack
-          direction="column"
-          sx={{
-            position: 'absolute',
-            top: '44%',
-            left: '30%',
-            userSelect: 'none',
-          }}
-        >
-          <Typography
+            <Typography
+              sx={{
+                fontWeight: 500,
+                fontSize: { xs: '12px', pc: '20px' },
+              }}
+            >
+              Họ và tên người nhận: <b>{systemInfo?.fullname}</b>
+            </Typography>
+            <Typography
+              sx={{
+                fontWeight: 500,
+                fontSize: { xs: '12px', pc: '20px' },
+                marginTop: '2px',
+              }}
+            >
+              Số tài khoản: <b>{systemInfo?.accountNumber}</b>
+            </Typography>
+            <Typography
+              sx={{
+                fontWeight: 500,
+                fontSize: { xs: '12px', pc: '20px' },
+                marginTop: '2px',
+              }}
+            >
+              Ngân hàng: <b> {systemInfo?.bankName}</b>
+            </Typography>
+            <Typography
+              sx={{
+                fontWeight: 500,
+                fontSize: { xs: '12px', pc: '20px' },
+                marginTop: '2px',
+              }}
+            >
+              Nội dung:{' '}
+              <b>
+                tk:{userData?.username} {systemInfo?.message}
+              </b>
+            </Typography>
+          </Box>
+          <Stack
+            direction="row"
             sx={{
-              fontSize: '20px',
-              textTransform: 'uppercase',
-              color: 'text.burntSienna',
-              fontWeight: 500,
+              height: {
+                xs: '39px',
+                pc: '87px',
+              },
+              fontSize: {
+                xs: '12px',
+                pc: '20px',
+              },
+              paddingLeft: '16px',
+              paddingRight: '16px',
+              marginTop: {
+                xs: '30px',
+                pc: '70px',
+              },
+              backgroundColor: 'background.chargeInput',
+              color: 'text.primary',
+              alignItems: 'center',
+              borderRadius: '4px',
+              border: '1px solid rgba(0, 0, 0, 0.23)',
             }}
           >
-            {systemInfo?.accountNumber}
-          </Typography>
-        </Stack>
-        <Stack
-          direction="column"
-          sx={{
-            position: 'absolute',
-            bottom: '24%',
-            left: '30%',
-            userSelect: 'none',
-          }}
-        >
-          <Typography
+            <CurrencyInput
+              id="validation-example-2-field"
+              placeholder="1,234,567 VNĐ"
+              allowDecimals={false}
+              className={`form-control`}
+              onValueChange={(value: any) => setAmount(value)}
+              step={10}
+              suffix=" VND"
+              value={amount}
+              style={{
+                flex: 1,
+                height: '100%',
+                border: 'none',
+                outline: 'none',
+                background: 'transparent',
+                color: 'inherit',
+                fontSize: 'inherit',
+              }}
+            />
+            <Typography
+              sx={{
+                fontSize: 'inherit',
+                marginLeft: '16px',
+                color: 'text.primary',
+                userSelect: 'none',
+              }}
+            >
+              ~ {amount / enchangeRate} USDT
+            </Typography>
+          </Stack>
+          <Button
             sx={{
-              fontSize: '20px',
-              textTransform: 'uppercase',
-              color: 'text.burntSienna',
-              fontWeight: 500,
+              backgroundColor: 'background.burntSienna',
+              color: 'text.secondary',
+              textTransform: 'unset',
+              height: {
+                xs: '26px',
+                pc: '60px',
+              },
+              width: {
+                xs: '120px',
+                pc: '266px',
+              },
+              fontWeight: 400,
+              fontSize: {
+                xs: '14px',
+                pc: '20px',
+              },
+              marginTop: '20px',
+              alignSelf: 'center',
             }}
+            onClick={() => onSubmit()}
           >
-            {systemInfo?.bankName}
-          </Typography>
+            Gửi lệnh
+          </Button>
         </Stack>
-        <Stack
-          direction="column"
-          sx={{
-            position: 'absolute',
-            bottom: '10%',
-            left: '13%',
-            userSelect: 'none',
-          }}
-        >
-          <Typography
-            sx={{
-              fontSize: '15px',
-              textTransform: 'uppercase',
-              color: 'text.burntSienna',
-              fontWeight: 500,
-            }}
-          >
-            tk:{userData?.username} {systemInfo?.message}
-          </Typography>
-        </Stack>
-      </Box>
+      </>
     );
   };
 
-  const _renderBonusItem = () => (
-    <Grid container gap={2} mt={2} px={4} justifyContent="space-between">
-      {_.map(bonusItems, (item, index) => (
-        <Grid
-          item
-          xs={5.5}
-          key={index}
-          sx={{
-            borderRadius: 2,
-            background: themeMode === 'dark' ? '#29313C;' : '#D9D9D9',
-            color: themeMode === 'dark' ? 'white' : 'black',
-            py: 0.5,
-          }}
-        >
-          <Typography sx={{ textAlign: 'center', fontSize: 15 }}>
-            ${item?.amount}
-          </Typography>
-          <Typography
+  const _renderMobile = () => {
+    return (
+      <Stack direction="column">
+        <Grid container columnSpacing="16px" rowSpacing="24px">
+          <Grid item xs={6}>
+            <Button
+              variant="contained"
+              color="info"
+              fullWidth
+              sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                backgroundColor: '#D9D9D9',
+                boxShadow: 'unset',
+                padding: '0',
+                textTransform: 'unset',
+              }}
+            >
+              <Typography sx={{ fontSize: '20px', color: '#000000' }}>
+                $2500
+              </Typography>
+              <Typography
+                sx={{
+                  fontSize: '20px',
+                  color: '#816A6A',
+                  textTransform: 'unset',
+                }}
+              >
+                + $1250 thưởng
+              </Typography>
+            </Button>
+          </Grid>
+          <Grid item xs={6}>
+            <Button
+              variant="contained"
+              fullWidth
+              color="info"
+              sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                backgroundColor: '#D9D9D9',
+                boxShadow: 'unset',
+                padding: '0',
+                textTransform: 'unset',
+              }}
+            >
+              <Typography sx={{ fontSize: '20px', color: '#000000' }}>
+                $2500
+              </Typography>
+              <Typography
+                sx={{
+                  fontSize: '20px',
+                  color: '#816A6A',
+                  textTransform: 'unset',
+                }}
+              >
+                + $1250 thưởng
+              </Typography>
+            </Button>
+          </Grid>
+          <Grid item xs={6}>
+            <Button
+              variant="contained"
+              fullWidth
+              color="info"
+              sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                backgroundColor: '#D9D9D9',
+                boxShadow: 'unset',
+                padding: '0',
+                textTransform: 'unset',
+              }}
+            >
+              <Typography sx={{ fontSize: '20px', color: '#000000' }}>
+                $2500
+              </Typography>
+              <Typography
+                sx={{
+                  fontSize: '20px',
+                  color: '#816A6A',
+                  textTransform: 'unset',
+                }}
+              >
+                + $1250 thưởng
+              </Typography>
+            </Button>
+          </Grid>
+          <Grid item xs={6}>
+            <Button
+              variant="contained"
+              fullWidth
+              color="info"
+              sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                backgroundColor: '#D9D9D9',
+                boxShadow: 'unset',
+                padding: '0',
+                textTransform: 'unset',
+              }}
+            >
+              <Typography sx={{ fontSize: '20px', color: '#000000' }}>
+                $2500
+              </Typography>
+              <Typography
+                sx={{
+                  fontSize: '20px',
+                  color: '#816A6A',
+                  textTransform: 'unset',
+                }}
+              >
+                + $1250 thưởng
+              </Typography>
+            </Button>
+          </Grid>
+          <Grid item xs={6}>
+            <Button
+              variant="contained"
+              fullWidth
+              color="info"
+              sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                backgroundColor: '#D9D9D9',
+                boxShadow: 'unset',
+                padding: '0',
+                textTransform: 'unset',
+              }}
+            >
+              <Typography sx={{ fontSize: '20px', color: '#000000' }}>
+                $2500
+              </Typography>
+              <Typography
+                sx={{
+                  fontSize: '20px',
+                  color: '#816A6A',
+                  textTransform: 'unset',
+                }}
+              >
+                + $1250 thưởng
+              </Typography>
+            </Button>
+          </Grid>
+          <Grid item xs={6}>
+            <Button
+              variant="contained"
+              fullWidth
+              color="info"
+              sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                backgroundColor: '#D9D9D9',
+                boxShadow: 'unset',
+                padding: '0',
+                textTransform: 'unset',
+              }}
+            >
+              <Typography sx={{ fontSize: '20px', color: '#000000' }}>
+                $2500
+              </Typography>
+              <Typography
+                sx={{
+                  fontSize: '20px',
+                  color: '#816A6A',
+                  textTransform: 'unset',
+                }}
+              >
+                + $1250 thưởng
+              </Typography>
+            </Button>
+          </Grid>
+        </Grid>
+        <Stack direction="row" spacing="16px" marginTop="16px">
+          <Button
+            variant="outlined"
             sx={{
-              textAlign: 'center',
-              fontSize: 15,
-              color:
-                themeMode === 'dark'
-                  ? 'rgba(255, 255, 255, 0.26)!important'
-                  : '#816A6A!important',
+              borderColor: '#000000',
+              color: '#000000',
+              fontWeight: 500,
+              fontSize: '20px',
             }}
           >
-            + ${item?.bonus} Thưởng
-          </Typography>
-        </Grid>
-      ))}
-      <Grid item xs={4}>
-        <TextField
-          select
-          defaultValue={currentType}
-          fullWidth
-          onChange={(e) => setCurrentType(e.target.value)}
+            $ USD
+          </Button>
+          <Stack
+            direction="row"
+            sx={{
+              height: {
+                xs: '64px',
+                pc: '87px',
+              },
+              fontSize: {
+                xs: '20px',
+                pc: '20px',
+              },
+              paddingLeft: '16px',
+              paddingRight: '16px',
+              marginTop: {
+                xs: '30px',
+                pc: '70px',
+              },
+              flex: 1,
+              backgroundColor: 'background.chargeInput',
+              color: 'text.primary',
+              alignItems: 'center',
+              borderRadius: '4px',
+              border: '1px solid #000000',
+            }}
+          >
+            <CurrencyInput
+              id="validation-example-2-field"
+              placeholder="1,234,567 VNĐ"
+              allowDecimals={false}
+              className={`form-control`}
+              onValueChange={(value: any) => setAmount(value)}
+              step={10}
+              // suffix=" VND"
+              value={amount}
+              style={{
+                flex: 1,
+                height: '100%',
+                border: 'none',
+                outline: 'none',
+                background: 'transparent',
+                color: 'inherit',
+                fontSize: 'inherit',
+              }}
+            />
+          </Stack>
+        </Stack>
+        <Button
+          sx={{
+            backgroundColor: 'background.burntSienna',
+            color: 'text.secondary',
+            textTransform: 'unset',
+            height: '60px',
+            width: '143px',
+            fontWeight: 500,
+            fontSize: '20px',
+            marginTop: '40px',
+            alignSelf: 'center',
+          }}
+          onClick={() => onSubmit()}
         >
-          <MenuItem value="USDT">$USDT</MenuItem>
-          <MenuItem value="VND">VND</MenuItem>
-        </TextField>
-      </Grid>
-      <Grid item xs={7}>
-        <TextField
-          fullWidth
-          type="number"
-          helperText={
-            <Box
-              sx={{ color: themeMode === 'dark' ? 'white!important' : 'black' }}
-            >
-              {currentType === 'VND'
-                ? `~ ${amount ? amount / enchangeRate : 0} USDT`
-                : `${amount || 0} USDT`}
-            </Box>
-          }
-          error={_isErr}
-          onChange={(e) => setAmount(parseFloat(e.target.value))}
-        />
-      </Grid>
-    </Grid>
-  );
-
-  const _renderMobile = () => (
-    <Stack
-      direction="column"
-      sx={{
-        ...CommonStyles.displayInMobile,
-        padding: 2,
-      }}
-    >
-      <Typography
-        sx={{ textAlign: 'center', fontWeight: 'bold', fontSize: 24 }}
-      >
-        Nạp Tiền
-      </Typography>
-      <Stack direction="row" alignItems="center" px={2}>
-        <Avatar src={userData?.avatar || Assets.persionMobile} sx={{ width: 92, height: 92 }} />
-        <Typography
-          sx={{ textAlign: 'center', fontWeight: 'bold', fontSize: 18 }}
-        >
-          {userData.nickname}
-        </Typography>
+          Gửi lệnh
+        </Button>
       </Stack>
-      {_renderCard()}
-      {_renderBonusItem()}
-      <Button
-        sx={{
-          backgroundColor: 'background.burntSienna',
-          color: 'text.secondary',
-          textTransform: 'unset',
-          height: 60,
-          width: 143,
-          fontWeight: 500,
-          fontSize: '15px',
-          marginTop: '22px',
-          alignSelf: 'center',
-        }}
-        onClick={() => onSubmit()}
-      >
-        Nạp tiền
-      </Button>
-    </Stack>
-  );
+    );
+  };
 
   // Constructors
   const renderMain = () => {
     return (
-      <>
-        {_renderMobile()}
-        <Box
-          component="main"
-          sx={{
-            minHeight: 'calc(100vh - 94px)',
-            padding: {
-              xs: 0,
-              // md: '1em 0',
-            },
-            mx: 'auto',
-            // maxWidth: '971px',
-            ...CommonStyles.displayInDesktop,
-          }}
-        >
-          <Grid container height="100%">
+      <Box
+        component="main"
+        sx={{
+          display: 'flex',
+          minHeight: {
+            xs: 'calc(100vh - 70px)',
+            md: 'calc(100vh - 180px)',
+          },
+          padding: {
+            xs: '0',
+          },
+          margin: {
+            xs: 0,
+            md: '20px auto 0px auto',
+          },
+        }}
+      >
+        <Grid container>
+          {isMd ? null : (
             <Grid
               item
               xs={12}
@@ -313,169 +530,185 @@ const Recharge: React.FC = () => {
                 backgroundColor: 'background.default',
                 zIndex: 1,
               }}
+              borderTop="1px solid rgba(187, 174, 174, 0.9)"
             >
               <Sidebar />
             </Grid>
-            <Grid
-              item
-              xs={12}
-              md={10}
-              borderLeft="1px solid #949494"
-              padding="19px 32px 19px 32px"
-            >
-              <Grid container columnSpacing={3} padding={0}>
-                <Grid item xs={12}>
-                  <Stack direction="column">
-                    <Typography
-                      sx={{
-                        fontSize: '24px',
-                        lineHeight: '34px',
-                        fontWeight: 600,
-                      }}
-                    >
-                      Nạp tiền
-                    </Typography>
-                    <Typography
-                      sx={{
-                        fontSize: '12px',
-                        lineHeight: '24px',
-                        fontWeight: 400,
-                        marginTop: '6px',
-                      }}
-                    >
-                      Nạp tiền qua hệ thống banking ngân hàng
-                    </Typography>
-                    {systemInfo?.QRUrl ? (
-                      <Box
-                        component="img"
-                        src={`data:image/*;base64,${systemInfo?.QRUrl}`}
-                        sx={{
-                          display: { xs: 'block', md: 'none' },
-                          width: '250px',
-                          height: 'auto',
-                          objectFit: 'contain',
-                        }}
-                      />
-                    ) : null}
-                    <Stack direction="column" marginTop="24px">
-                      <Box
-                        sx={{
-                          padding: '10px 16px',
-                          backgroundColor: 'background.bankCardInformation',
-                          borderRadius: '3px',
-                        }}
-                      >
-                        <Typography sx={{ fontWeight: 500, fontSize: '12px' }}>
-                          Họ và tên người nhận: <b>{systemInfo?.fullname}</b>
-                        </Typography>
-                        <Typography
-                          sx={{
-                            fontWeight: 500,
-                            fontSize: '12px',
-                            marginTop: '2px',
-                          }}
-                        >
-                          Số tài khoản: <b>{systemInfo?.accountNumber}</b>
-                        </Typography>
-                        <Typography
-                          sx={{
-                            fontWeight: 500,
-                            fontSize: '12px',
-                            marginTop: '2px',
-                          }}
-                        >
-                          Ngân hàng: <b> {systemInfo?.bankName}</b>
-                        </Typography>
-                        <Typography
-                          sx={{
-                            fontWeight: 500,
-                            fontSize: '12px',
-                            marginTop: '2px',
-                          }}
-                        >
-                          Nội dung:{' '}
-                          <b>
-                            tk:{userData?.username} {systemInfo?.message}
-                          </b>
-                        </Typography>
-                      </Box>
+          )}
+          <Grid
+            item
+            xs={12}
+            md={10}
+            borderLeft="1px solid #949494"
+            padding={{
+              xs: '10px',
+              md: '19px 32px 19px 55px',
+            }}
+            borderTop="1px solid rgba(187, 174, 174, 0.9)"
+          >
+            <Grid container columnSpacing={3} padding={0}>
+              <Grid item xs={12}>
+                <Stack direction="column">
+                  <Typography
+                    sx={{
+                      fontSize: {
+                        xs: '24px',
+                        pc: '64px',
+                      },
+                      lineHeight: {
+                        xs: '34px',
+                        pc: '70px',
+                      },
+                      fontWeight: 600,
+                    }}
+                  >
+                    Nạp tiền
+                  </Typography>
+                  {isMd ? (
+                    <>
                       <Stack
                         direction="row"
-                        sx={{
-                          height: '39px',
-                          fontSize: '12px',
-                          paddingLeft: '16px',
-                          paddingRight: '16px',
-                          marginTop: '30px',
-                          backgroundColor: 'background.chargeInput',
-                          color: 'text.primary',
-                          alignItems: 'center',
-                          borderRadius: '4px',
-                          border: '1px solid rgba(0, 0, 0, 0.23)',
-                        }}
+                        alignItems="center"
+                        marginTop="10px"
+                        marginBottom="10px"
+                        padding={{ xs: '0 20px', md: 0 }}
                       >
-                        <CurrencyInput
-                          id="validation-example-2-field"
-                          placeholder="1,234,567 VNĐ"
-                          allowDecimals={false}
-                          className={`form-control`}
-                          onValueChange={(value: any) => setAmount(value)}
-                          step={10}
-                          suffix=" VND"
-                          value={amount}
-                          style={{
-                            flex: 1,
-                            height: '100%',
-                            border: 'none',
-                            outline: 'none',
-                            background: 'transparent',
-                            color: 'inherit',
+                        <Avatar
+                          src={userData.avatar}
+                          sx={{
+                            width: { xs: '60px', pc: '93px' },
+                            height: { xs: '60px', pc: '93px' },
+                            marginRight: '20px',
                           }}
                         />
                         <Typography
                           sx={{
-                            fontSize: '12px',
-                            marginLeft: '16px',
-                            color: 'text.primary',
-                            userSelect: 'none',
+                            marginRight: '16px',
+                            fontSize: {
+                              xs: '24px',
+                              pc: '25px',
+                            },
+                            fontWeight: 600,
                           }}
                         >
-                          ~ {amount / enchangeRate} USDT
+                          {userData.nickname}
                         </Typography>
                       </Stack>
-                      <Button
-                        sx={{
-                          backgroundColor: 'background.burntSienna',
-                          color: 'text.secondary',
-                          textTransform: 'unset',
-                          height: '26px',
-                          width: '120px',
-                          fontWeight: 400,
-                          fontSize: '14px',
-                          marginTop: '20px',
-                          alignSelf: 'center',
-                        }}
-                        onClick={() => onSubmit()}
-                      >
-                        Gửi lệnh
-                      </Button>
-                    </Stack>
-                  </Stack>
-                </Grid>
-                <Grid item md={4.5} display={{ xs: 'none', md: 'flex' }}>
-                  {systemInfo?.QRUrl ? (
-                    <Box
-                      component="img"
-                      src={`data:image/*;base64,${systemInfo?.QRUrl}`}
-                      sx={{
-                        width: '100%',
-                        height: 'auto',
-                        maxWidth: '300px',
-                        objectFit: 'contain',
-                      }}
-                    />
+                      {userData?.bank ? (
+                        <Stack direction="column" marginBottom="30px">
+                          <Box
+                            sx={{
+                              position: 'relative',
+                              width: '100%',
+                              maxHeight: 'max-content',
+                            }}
+                          >
+                            <Box
+                              src={Assets.bankCardImage}
+                              component="img"
+                              sx={{ width: '100%' }}
+                            />
+                            <Stack
+                              direction="column"
+                              sx={{
+                                position: 'absolute',
+                                top: '13%',
+                                left: '30%',
+                                userSelect: 'none',
+                              }}
+                            >
+                              <Typography
+                                sx={{
+                                  fontSize: '20px',
+                                  textTransform: 'uppercase',
+                                  color: 'text.burntSienna',
+                                  fontWeight: 500,
+                                }}
+                              >
+                                {userData?.bank?.fullname}
+                              </Typography>
+                            </Stack>
+                            <Stack
+                              direction="column"
+                              sx={{
+                                position: 'absolute',
+                                top: '44%',
+                                left: '30%',
+                                userSelect: 'none',
+                              }}
+                            >
+                              <Typography
+                                sx={{
+                                  fontSize: '20px',
+                                  textTransform: 'uppercase',
+                                  color: 'text.burntSienna',
+                                  fontWeight: 500,
+                                }}
+                              >
+                                {userData?.bank?.accountNumber}
+                              </Typography>
+                            </Stack>
+                            <Stack
+                              direction="column"
+                              sx={{
+                                position: 'absolute',
+                                bottom: '24%',
+                                left: '30%',
+                                userSelect: 'none',
+                              }}
+                            >
+                              <Typography
+                                sx={{
+                                  fontSize: '20px',
+                                  textTransform: 'uppercase',
+                                  color: 'text.burntSienna',
+                                  fontWeight: 500,
+                                }}
+                              >
+                                {userData?.wallet?.balance || 0} USDT
+                              </Typography>
+                            </Stack>
+                            <Stack
+                              direction="column"
+                              sx={{
+                                position: 'absolute',
+                                bottom: '10%',
+                                left: '13%',
+                                userSelect: 'none',
+                              }}
+                            >
+                              <Typography
+                                sx={{
+                                  fontSize: '20px',
+                                  textTransform: 'uppercase',
+                                  color: 'text.burntSienna',
+                                  fontWeight: 500,
+                                }}
+                              >
+                                {userData?.bank?.bankName}
+                              </Typography>
+                            </Stack>
+                          </Box>
+                        </Stack>
+                      ) : null}
+                    </>
                   ) : null}
-                </Grid>
+                  {isMd ? _renderMobile() : _renderDesktop()}
+                </Stack>
+              </Grid>
+              <Grid item md={4.5} display={{ xs: 'none', md: 'flex' }}>
+                {systemInfo?.QRUrl ? (
+                  <Box
+                    component="img"
+                    src={`data:image/*;base64,${systemInfo?.QRUrl}`}
+                    sx={{
+                      width: '100%',
+                      height: 'auto',
+                      maxWidth: '300px',
+                      objectFit: 'contain',
+                    }}
+                  />
+                ) : null}
               </Grid>
             </Grid>
           </Grid>

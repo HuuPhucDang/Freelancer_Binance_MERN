@@ -74,16 +74,26 @@ const Request: React.FC = () => {
   // Renders
   const _renderCards = () =>
     _.map(coinData, (item, index) => (
-      <Grid item xs={12} md={4} key={index}>
-        <Card sx={{ maxWidth: 1 }}>
+      <Grid item xs={4} key={index}>
+        <Card sx={{ maxWidth: 1, borderRadius: '0px' }}>
           <CardHeader
+            sx={{
+              padding: {
+                xs: 0,
+                md: '24px',
+              },
+            }}
             avatar={
-              <Avatar aria-label="recipe" src={item?.icon}>
+              <Avatar
+                aria-label="recipe"
+                src={item?.icon}
+                sx={{ width: { xs: '15px' }, height: { xs: '15px' } }}
+              >
                 R
               </Avatar>
             }
             title={
-              <Typography fontSize={14} fontWeight="bold">
+              <Typography fontSize={{ xs: 6, pc: 20 }} fontWeight="bold">
                 {item?.symbol}
                 {item?.intervention < 0 && (
                   <KeyboardDoubleArrowDownIcon color="error" sx={{ ml: 2 }} />
@@ -94,59 +104,113 @@ const Request: React.FC = () => {
               </Typography>
             }
             subheader={
-              <Typography fontSize={12}>
+              <Typography fontSize={{ xs: 4, pc: 14 }}>
                 {item?.price} ({newIntervention[item?.symbol]})
               </Typography>
             }
           />
-          <CardContent>
-            <Grid
-              container
-              spacing={2}
+          <CardContent
+            sx={{
+              padding: {
+                xs: '0',
+                md: '24px',
+              },
+            }}
+          >
+            <Stack
+              direction="row"
+              spacing={{
+                xs: '2px',
+                md: 2,
+              }}
               justifyContent="space-between"
               alignItems="center"
             >
-              <Grid item xs={12} md={3}>
-                <Button
-                  color="error"
-                  variant="contained"
-                  fullWidth
-                  size="small"
-                  onClick={() => onIncreaseDegreeSymbol(item?.symbol, 'degree')}
-                >
-                  Giảm
-                </Button>
-              </Grid>
-              <Grid item xs={12} md={4}>
-                <TextField
-                  fullWidth
-                  type="number"
-                  size="small"
-                  key={`${item?.symbol}${renderKey}`}
-                  defaultValue={intervention[item?.symbol] || '0.000'}
-                  onChange={(e) =>
-                    setIntervention({
-                      ...intervention,
-                      [item?.symbol]: parseFloat(e.target.value),
-                    })
-                  }
-                  inputProps={{ step: '0.0001', min: 0 }}
-                />
-              </Grid>
-              <Grid item xs={12} md={3}>
-                <Button
-                  color="success"
-                  variant="contained"
-                  fullWidth
-                  size="small"
-                  onClick={() =>
-                    onIncreaseDegreeSymbol(item?.symbol, 'increase')
-                  }
-                >
-                  Tăng
-                </Button>
-              </Grid>
-            </Grid>
+              <Button
+                color="error"
+                variant="contained"
+                size="small"
+                onClick={() => onIncreaseDegreeSymbol(item?.symbol, 'degree')}
+                sx={{
+                  flex: 1,
+                  borderRadius: '0px',
+                  height: {
+                    xs: '10px',
+                    md: '45px',
+                  },
+                  fontSize: {
+                    xs: '4px',
+                    md: '14px',
+                  },
+                  width: {
+                    xs: '24px',
+                    md: 'auto',
+                  },
+                  minWidth: {
+                    xs: '24px',
+                    md: 'auto',
+                  },
+                  textTransform: 'unset',
+                }}
+              >
+                Giảm
+              </Button>
+              <TextField
+                type="number"
+                size="small"
+                key={`${item?.symbol}${renderKey}`}
+                defaultValue={intervention[item?.symbol] || '0.000'}
+                onChange={(e) =>
+                  setIntervention({
+                    ...intervention,
+                    [item?.symbol]: parseFloat(e.target.value),
+                  })
+                }
+                sx={{
+                  flex: 1,
+                  padding: 0,
+                  fontSize: { xs: '4px', md: '14px' },
+                  input: {
+                    fontSize: { xs: '4px', md: '14px' },
+                    padding: 0,
+                    height: {
+                      xs: '13px',
+                      md: '45px',
+                    },
+                  },
+                }}
+                inputProps={{ step: '0.0001', min: 0 }}
+              />
+              <Button
+                color="success"
+                variant="contained"
+                size="small"
+                onClick={() => onIncreaseDegreeSymbol(item?.symbol, 'increase')}
+                sx={{
+                  flex: 1,
+                  borderRadius: '0px',
+                  height: {
+                    xs: '10px',
+                    md: '45px',
+                  },
+                  fontSize: {
+                    xs: '4px',
+                    md: '14px',
+                  },
+                  width: {
+                    xs: '24px',
+                    md: 'auto',
+                  },
+                  minWidth: {
+                    xs: '24px',
+                    md: 'auto',
+                  },
+                  textTransform: 'unset',
+                }}
+              >
+                Tăng
+              </Button>
+            </Stack>
           </CardContent>
           <CardActions disableSpacing>
             {intervention?.[item?.symbol] !== 0 && item?.intervention !== 0 && (
@@ -167,14 +231,22 @@ const Request: React.FC = () => {
   const _renderMain = () => {
     return (
       <Stack sx={{ padding: '20px' }} direction="column">
-        <Typography sx={{ fontSize: '17px', fontWeight: 600 }}>
+        <Typography
+          sx={{ fontSize: { xs: '10px', pc: '30px' }, fontWeight: 700 }}
+        >
           Can Thiệp
         </Typography>
         <Grid
           container
           marginTop="20px"
-          spacing={2}
-          flexWrap="wrap"
+          columnSpacing={{
+            xs: '10px',
+            md: 10,
+          }}
+          rowSpacing={{
+            xs: '20px',
+            md: 3,
+          }}
           justifyContent="space-between"
         >
           {_renderCards()}

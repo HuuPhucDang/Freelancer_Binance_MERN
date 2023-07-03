@@ -155,7 +155,11 @@ const Verify: React.FC = () => {
               onClick={() => setCurrentItem(item)}
               disabled={item.status === 'denied'}
             >
-              <RemoveRedEyeOutlinedIcon />
+              <RemoveRedEyeOutlinedIcon
+                sx={{
+                  fontSize: { xs: '10px', pc: '40px' },
+                }}
+              />
             </IconButton>,
             <Stack direction="row" justifyContent="center">
               <Tooltip title="Chấp nhận">
@@ -167,7 +171,11 @@ const Verify: React.FC = () => {
                     }
                     disabled={item.status !== 'pending'}
                   >
-                    <CheckCircleOutlineIcon />
+                    <CheckCircleOutlineIcon
+                      sx={{
+                        fontSize: { xs: '10px', pc: '40px' },
+                      }}
+                    />
                   </IconButton>
                 </span>
               </Tooltip>
@@ -180,7 +188,11 @@ const Verify: React.FC = () => {
                     }
                     disabled={item.status !== 'pending'}
                   >
-                    <DoDisturbIcon />
+                    <DoDisturbIcon
+                      sx={{
+                        fontSize: { xs: '10px', pc: '40px' },
+                      }}
+                    />
                   </IconButton>
                 </span>
               </Tooltip>
@@ -194,7 +206,15 @@ const Verify: React.FC = () => {
 
   const _renderMain = () => {
     return (
-      <Stack sx={{ padding: '20px' }} direction="column">
+      <Stack
+        sx={{
+          padding: {
+            xs: '0px',
+            md: '20px',
+          },
+        }}
+        direction="column"
+      >
         <VerifyDetails
           item={currentItem}
           open={Boolean(currentItem)}
@@ -202,26 +222,76 @@ const Verify: React.FC = () => {
             setCurrentItem(null);
           }}
         />
-        <Typography sx={{ fontSize: '17px', fontWeight: 600 }}>
+        <Typography
+          sx={{ fontSize: { xs: '10px', pc: '30px' }, fontWeight: 700 }}
+        >
           Xác minh
         </Typography>
         <TableContainer
           component={Paper}
           sx={{
-            marginTop: '30px',
+            marginTop: {
+              xs: '4px',
+              md: '30px',
+            },
           }}
         >
-          <Table sx={{ minWidth: 650 }} aria-label="simple table">
+          <Table
+            sx={{
+              minWidth: {
+                xs: '100%',
+                md: 650,
+              },
+            }}
+            aria-label="simple table"
+          >
             <TableHead>
               <TableRow>
-                <TableCell sx={{ fontWeight: 600 }}>Người dùng</TableCell>
-                <TableCell align="center" sx={{ fontWeight: 600 }}>
+                <TableCell
+                  sx={{
+                    fontWeight: 600,
+                    fontSize: { xs: '5px', md: '14px', pc: '20px' },
+                    padding: {
+                      xs: '4px',
+                    },
+                  }}
+                >
+                  Người dùng
+                </TableCell>
+                <TableCell
+                  align="center"
+                  sx={{
+                    fontWeight: 600,
+                    fontSize: { xs: '5px', md: '14px', pc: '20px' },
+                    padding: {
+                      xs: '4px',
+                    },
+                  }}
+                >
                   Trạng thái
                 </TableCell>
-                <TableCell align="center" sx={{ fontWeight: 600 }}>
+                <TableCell
+                  align="center"
+                  sx={{
+                    fontWeight: 600,
+                    fontSize: { xs: '5px', md: '14px', pc: '20px' },
+                    padding: {
+                      xs: '4px',
+                    },
+                  }}
+                >
                   Xem
                 </TableCell>
-                <TableCell align="center" sx={{ fontWeight: 600 }}>
+                <TableCell
+                  align="center"
+                  sx={{
+                    fontWeight: 600,
+                    fontSize: { xs: '5px', md: '14px', pc: '20px' },
+                    padding: {
+                      xs: '4px',
+                    },
+                  }}
+                >
                   Hành động
                 </TableCell>
               </TableRow>
@@ -238,7 +308,13 @@ const Verify: React.FC = () => {
                     <TableCell
                       component="th"
                       scope="row"
-                      sx={{ padding: '15px' }}
+                      sx={{
+                        fontSize: { xs: '5px', md: '14px', pc: '20px' },
+                        padding: {
+                          xs: '4px',
+                          md: '16px',
+                        },
+                      }}
                     >
                       {row.user?.nickname}
                     </TableCell>
@@ -247,22 +323,63 @@ const Verify: React.FC = () => {
                         color={statusOptions[row.status]?.color}
                         label={statusOptions[row.status]?.label}
                         sx={{
-                          width: '130px',
-                          borderRadius: '5px',
-                          fontWeight: 600,
+                          width: {
+                            xs: '40px',
+                            md: '188px',
+                          },
+                          height: {
+                            xs: '12px',
+                            md: '56px',
+                          },
+                          borderRadius: '4px',
+                          fontSize: { xs: '5px', md: '14px', pc: '20px' },
+                          padding: {
+                            xs: '4px',
+                          },
+                          span: {
+                            padding: 0,
+                          },
                         }}
                         variant="outlined"
                       />
                     </TableCell>
-                    <TableCell align="center">{row.view}</TableCell>
-                    <TableCell align="center">{row.action}</TableCell>
+                    <TableCell
+                      align="center"
+                      sx={{
+                        fontSize: { xs: '5px', md: '14px', pc: '20px' },
+                        padding: {
+                          xs: '4px',
+                          md: '16px',
+                        },
+                      }}
+                    >
+                      {row.view}
+                    </TableCell>
+                    <TableCell
+                      align="center"
+                      sx={{
+                        fontSize: { xs: '5px', md: '14px', pc: '20px' },
+                        padding: {
+                          xs: '4px',
+                          md: '16px',
+                        },
+                      }}
+                    >
+                      {row.action}
+                    </TableCell>
                   </TableRow>
                 ))}
               {rows.length === 0 && (
                 <TableRow
-                  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                  sx={{
+                    '&:last-child td, &:last-child th': { border: 0 },
+                  }}
                 >
-                  <TableCell component="th" scope="row">
+                  <TableCell
+                    component="th"
+                    scope="row"
+                    sx={{ fontSize: { xs: '5px', md: '14px', pc: '20px' } }}
+                  >
                     Không có dữ liệu
                   </TableCell>
                 </TableRow>

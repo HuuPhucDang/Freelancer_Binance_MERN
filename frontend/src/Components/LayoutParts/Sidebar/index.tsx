@@ -20,37 +20,91 @@ interface IMenu {
 
 const menu: IMenu[] = [
   {
-    icon: <PersonIcon />,
+    icon: (
+      <PersonIcon
+        sx={{
+          fontSize: {
+            xs: '12px !important',
+            pc: '38px !important',
+          },
+        }}
+      />
+    ),
     label: 'Tổng quan',
     path: ROUTERS.OVERVIEW,
     isOnlyUser: false,
   },
   {
-    icon: <AdminPanelSettingsIcon />,
+    icon: (
+      <AdminPanelSettingsIcon
+        sx={{
+          fontSize: {
+            xs: '12px !important',
+            pc: '38px !important',
+          },
+        }}
+      />
+    ),
     label: 'Bảo mật',
     path: ROUTERS.SECURITY,
     isOnlyUser: false,
   },
   {
-    icon: <GppGoodIcon />,
+    icon: (
+      <GppGoodIcon
+        sx={{
+          fontSize: {
+            xs: '12px !important',
+            pc: '38px !important',
+          },
+        }}
+      />
+    ),
     label: 'Xác minh',
     path: ROUTERS.VERIFY,
     isOnlyUser: false,
   },
   {
-    icon: <AccountBalanceIcon />,
+    icon: (
+      <AccountBalanceIcon
+        sx={{
+          fontSize: {
+            xs: '12px !important',
+            pc: '38px !important',
+          },
+        }}
+      />
+    ),
     label: 'Liên kết ngân hàng',
     path: ROUTERS.CONNECT_BANK,
     isOnlyUser: false,
   },
   {
-    icon: <AccountBalanceWalletOutlinedIcon />,
+    icon: (
+      <AccountBalanceWalletOutlinedIcon
+        sx={{
+          fontSize: {
+            xs: '12px !important',
+            pc: '38px !important',
+          },
+        }}
+      />
+    ),
     label: 'Lịch sử nạp rút',
     path: ROUTERS.INVOICE,
     isOnlyUser: false,
   },
   {
-    icon: <RecordVoiceOverOutlinedIcon />,
+    icon: (
+      <RecordVoiceOverOutlinedIcon
+        sx={{
+          fontSize: {
+            xs: '12px !important',
+            pc: '38px !important',
+          },
+        }}
+      />
+    ),
     label: 'CSKH trực tuyến',
     path: ROUTERS.SUPPORT,
     isOnlyUser: true,
@@ -95,8 +149,14 @@ const Sidebar = () => {
                 display: 'flex',
                 color: 'text.primary',
                 justifyContent: 'flex-start',
-                fontSize: '12px',
-                height: '40px',
+                fontSize: {
+                  xs: '12px',
+                  pc: '20px',
+                },
+                height: {
+                  xs: '40px',
+                  pc: '55px',
+                },
                 padding: '0 10px',
                 textTransform: 'unset',
                 whiteSpace: 'nowrap',
@@ -114,14 +174,29 @@ const Sidebar = () => {
           );
         })}
         <Button
-          startIcon={<LogoutIcon />}
+          startIcon={
+            <LogoutIcon
+              sx={{
+                fontSize: {
+                  xs: '12px !important',
+                  pc: '38px !important',
+                },
+              }}
+            />
+          }
           variant="text"
           sx={{
             display: 'flex',
             color: 'text.primary',
             justifyContent: 'flex-start',
-            fontSize: '12px',
-            height: '40px',
+            fontSize: {
+              xs: '12px',
+              pc: '20px',
+            },
+            height: {
+              xs: '40px',
+              pc: '55px',
+            },
             padding: '0 10px',
             textTransform: 'unset',
             whiteSpace: 'nowrap',

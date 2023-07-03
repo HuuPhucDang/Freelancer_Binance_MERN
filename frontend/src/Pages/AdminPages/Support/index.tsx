@@ -124,8 +124,14 @@ const Support = () => {
                 >
                   <Avatar
                     sx={{
-                      width: 30,
-                      height: 30,
+                      width: {
+                        xs: '10px',
+                        md: 30,
+                      },
+                      height: {
+                        xs: '10px',
+                        md: 30,
+                      },
                       order: isSender ? 2 : 1,
                       marginRight: isSender ? 0 : 1,
                     }}
@@ -137,7 +143,7 @@ const Support = () => {
                         ? 'background.lightSilver'
                         : 'background.mainContent',
                       borderRadius: '5px',
-                      fontSize: '14px',
+                      fontSize: { xs: '4px', md: '14px' },
                       order: isSender ? 1 : 2,
                       marginRight: isSender ? 1 : 0,
                     }}
@@ -160,12 +166,14 @@ const Support = () => {
             placeholder="Nhập tin nhắn trước khi gửi"
             value={message}
             onChange={(e: any) => setMessage(e.target.value)}
+            sx={{ fontSize: { xs: '4px', md: '16px' } }}
           />
           <Button
             size="small"
             variant="contained"
             disabled={!Boolean(message.trim())}
             onClick={() => onSendMessage()}
+            sx={{ fontSize: { xs: '4px', md: '16px' } }}
           >
             Gửi
           </Button>
@@ -176,7 +184,12 @@ const Support = () => {
 
   const _renderRequiredUser = () => {
     return (
-      <Typography sx={{ fontSize: '14px', padding: '15px' }}>
+      <Typography
+        sx={{
+          fontSize: { xs: '4px', md: '14px' },
+          padding: { xs: '4px', md: '15px' },
+        }}
+      >
         Vui lòng chọn người dùng trước khi hỗ trợ
       </Typography>
     );
@@ -184,9 +197,22 @@ const Support = () => {
 
   const _renderMain = () => {
     return (
-      <Stack sx={{ padding: '20px', height: '100%' }} direction="column">
+      <Stack
+        sx={{
+          padding: {
+            xs: '0px',
+            md: '20px',
+          },
+          height: '100%',
+        }}
+        direction="column"
+      >
         <Typography
-          sx={{ fontSize: '17px', fontWeight: 600, marginBottom: '16px' }}
+          sx={{
+            fontSize: { xs: '10px', pc: '30px' },
+            fontWeight: 700,
+            marginBottom: '20px',
+          }}
         >
           Hỗ trợ trực tuyến
         </Typography>
@@ -234,15 +260,24 @@ const Support = () => {
                       >
                         <Avatar
                           sx={{
-                            width: '40px',
-                            height: '40px',
+                            width: {
+                              xs: '13px',
+                              md: '40px',
+                            },
+                            height: {
+                              xs: '13px',
+                              md: '40px',
+                            },
                             marginRight: '10px',
                           }}
                           src={user.avatar}
                         />
                         <Stack direction="column">
                           <Typography
-                            sx={{ fontSize: '15px', fontWeight: 600 }}
+                            sx={{
+                              fontSize: { xs: '4px', md: '15px' },
+                              fontWeight: 600,
+                            }}
                           >
                             {user.nickname}
                           </Typography>
@@ -256,7 +291,12 @@ const Support = () => {
                   })
                 : null}
               {valueRef.current.length === 0 ? (
-                <Typography sx={{ fontSize: '14px', padding: '15px' }}>
+                <Typography
+                  sx={{
+                    fontSize: { xs: '4px', md: '14px' },
+                    padding: { xs: '4px', md: '15px' },
+                  }}
+                >
                   Không có thông tin về người dùng
                 </Typography>
               ) : null}
