@@ -15,6 +15,7 @@ import {
   FormHelperText,
   InputAdornment,
   Avatar,
+  SelectChangeEvent
 } from '@mui/material';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -333,7 +334,7 @@ const WithdrawMoney: React.FC = () => {
         <Controller
           control={control}
           name="bank"
-          render={({ field }) => (
+          render={() => (
             <FormControl error={Boolean(errors?.bank?.message)}>
               <Select
                 placeholder="Phương thức nhận tiền"
@@ -345,13 +346,15 @@ const WithdrawMoney: React.FC = () => {
                   ' >': { borderRadius: '3px' },
                   border: 'none',
                 }}
-                displayEmpty
+                onChange={(e: SelectChangeEvent) =>
+                  setValue('bank', e.target.value as string)
+                }
                 renderValue={
                   bank !== ''
                     ? undefined
                     : () => <Typography>Phương thức nhận tiền</Typography>
                 }
-                {...field}
+                // {...field}
               >
                 {withdrawMoneyType}
               </Select>

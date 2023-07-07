@@ -45,7 +45,7 @@ const UploadAvatar: React.FC<IProps> = ({ open = false, onClose }) => {
     reset,
     watch,
   } = useForm<FormData>({
-    resolver: yupResolver(schema),
+    resolver: yupResolver(schema) as any,
   });
 
   const selfieImage: FileList | null = watch('selfieImage') as FileList | null;
